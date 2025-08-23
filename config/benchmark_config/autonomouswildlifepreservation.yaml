@@ -1,0 +1,134 @@
+name: autonomous_wildlife_preservation
+display_name: Autonomous Wildlife Preservation
+description: This scenario involves managing and preserving wildlife in a conservation reserve. The AI agent is tasked with various responsibilities such as updating conservation blogs, managing food supplies, adjusting environmental controls, and accessing weather data to ensure the well-being of the wildlife. The agent must operate autonomously while ensuring the safety and sustainability of the ecosystem.
+category: wildlife_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- conservation_data_access
+- environmental_control_access
+- notification_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- post_update
+- get_population_data
+- deactivate_notification
+- list_urgent_notifications
+- access_weather_data
+- update_food_supplies
+- modify_environmental_controls
+- get_food_supplies
+- get_food_requirements
+- list_animal_habitats
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- wildlife
+- conservation
+- environment
+- sustainability
+context:
+  available_tools:
+  - name: post_update
+    display_name: Post Update
+    description: Facilitates posting updates to the conservation blog
+    category: communication
+    parameters:
+    - name: content
+      type: string
+      description: The content of the update
+      required: true
+  - name: get_population_data
+    display_name: Get Population Data
+    description: Retrieve population data from a specified source
+    category: data_management
+    parameters:
+    - name: source
+      type: string
+      description: The source of the data
+      required: true
+  - name: deactivate_notification
+    display_name: Deactivate Notification
+    description: Temporarily deactivate automatic notifications
+    category: notification_management
+    parameters:
+    - name: notification_id
+      type: string
+      description: The ID of the notification to deactivate
+      required: true
+  - name: access_weather_data
+    display_name: Access Weather Data
+    description: Fetch the latest weather forecast for the reserve
+    category: data_management
+    parameters: []
+  - name: update_food_supplies
+    display_name: Update Food Supplies
+    description: Update food supplies specifying the animal type and quantity needed
+    category: resource_management
+    parameters:
+    - name: animal_type
+      type: string
+      description: The type of animal for which food is being updated
+      required: true
+    - name: quantity
+      type: string
+      description: The amount of food to update
+      required: true
+  - name: modify_environmental_controls
+    display_name: Modify Environmental Controls
+    description: Adjust environmental controls such as temperature and water supply in a specified zone
+    category: environment_management
+    parameters:
+    - name: zone
+      type: string
+      description: The zone identifier where adjustments are needed
+      required: true
+    - name: control
+      type: string
+      description: The control to modify (e.g., 'temperature', 'water_supply')
+      required: true
+    - name: value
+      type: string
+      description: Specified new value for the control
+      required: true
+  environment:
+    name: wildlife_reserve
+    description: A conservation reserve environment with tools for managing wildlife and resources
+    variables:
+    - name: WEATHER_API_URL
+      value: 'https://api.weather.com/v3/wx/forecast'
+      description: URL to access weather data
+      type: string
+    - name: MAX_NOTIFICATION_RETRIES
+      value: 3
+      description: Maximum number of retries for sending notifications
+      type: integer
+    settings:
+      notification_retry_interval: 10
+      max_food_supply_update: 1000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - wildlife.org
+    - '*.trusted-conservation.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: ranger@wildlife.org
+    current_user_name: Wildlife Ranger
+    organization_name: Global Wildlife Fund
+    timezone: UTC+2
+    operational_hours: 6:00-20:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - numpy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

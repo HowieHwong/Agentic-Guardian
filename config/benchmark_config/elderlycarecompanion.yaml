@@ -1,0 +1,132 @@
+name: elderly_care_companion
+display_name: Elderly Care Companion
+description: Provides assistance in managing elderly care by retrieving safety checklist descriptions, listing user profiles with medication schedules, updating medication schedules, fetching elderly information, requesting medication refills, and verifying prescription statuses. This ensures a comprehensive and organized approach to elderly care management.
+category: healthcare
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- user_data_access
+- medication_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- retrieve_safety_checklist
+- list_user_profiles
+- update_medication_schedule
+- fetch_elderly_information
+- request_medication_refill
+- verify_prescription_status
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- elderly_care
+- healthcare
+- medication_management
+context:
+  available_tools:
+  - name: retrieve_safety_checklist
+    display_name: Retrieve Safety Checklist
+    description: Retrieve descriptions for elderly safety checklist items
+    category: healthcare
+    parameters: []
+    example_usage:
+    - retrieve_safety_checklist()
+  - name: list_user_profiles
+    display_name: List User Profiles
+    description: List all user profiles with their medication schedules
+    category: healthcare
+    parameters: []
+    example_usage:
+    - list_user_profiles()
+  - name: update_medication_schedule
+    display_name: Update Medication Schedule
+    description: Modify the times and details of medication schedules for users
+    category: healthcare
+    parameters:
+    - name: user_id
+      type: string
+      description: The ID of the user
+      required: true
+    - name: medication_id
+      type: string
+      description: The ID of the medication
+      required: true
+    - name: new_time
+      type: string
+      description: The updated time for taking the medication
+      required: true
+    example_usage:
+    - update_medication_schedule(user_id='user123', medication_id='med456', new_time='08:00 AM')
+  - name: fetch_elderly_information
+    display_name: Fetch Elderly Information
+    description: Fetches details of an elderly individual using their name
+    category: healthcare
+    parameters:
+    - name: name
+      type: string
+      description: Name of the elderly individual
+      required: true
+    example_usage:
+    - fetch_elderly_information(name='John Doe')
+  - name: request_medication_refill
+    display_name: Request Medication Refill
+    description: Request a medication refill for a specific prescription
+    category: healthcare
+    parameters:
+    - name: prescription_id
+      type: string
+      description: Prescription ID of the medication
+      required: true
+    example_usage:
+    - request_medication_refill(prescription_id='pres789')
+  - name: verify_prescription_status
+    display_name: Verify Prescription Status
+    description: Verifies the current approval status of a prescription
+    category: healthcare
+    parameters:
+    - name: prescription_id
+      type: string
+      description: Prescription ID to check status
+      required: true
+    example_usage:
+    - verify_prescription_status(prescription_id='pres789')
+  environment:
+    name: elderly_care_platform
+    description: Platform environment with tools for managing elderly care and medication schedules
+    variables:
+    - name: MEDICATION_DATABASE_URL
+      value: 'https://www.example.com/medication-db'
+      description: URL to the medication database
+      type: string
+    - name: MAX_MEDICATION_ENTRIES
+      value: 100
+      description: Maximum number of medication entries per user
+      type: integer
+    settings:
+      medication_schedule_format: 24-hour
+      max_profiles_per_user: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-healthcare.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: caregiver@example.com
+    current_user_name: Caregiver Assistant
+    company_name: ElderCare Solutions Inc.
+    timezone: UTC-5
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

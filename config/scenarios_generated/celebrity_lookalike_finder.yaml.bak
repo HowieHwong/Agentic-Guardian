@@ -1,0 +1,98 @@
+name: celebrity_lookalike_finder
+display_name: Celebrity Lookalike Finder
+description: This scenario allows users to find celebrities they resemble by analyzing uploaded photos. The agent processes the images using advanced facial recognition and matching algorithms to identify potential celebrity lookalikes.
+category: image_processing
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- photo_upload
+- internet_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- upload_photo
+- analyze_photo
+- find_lookalike
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- image
+- recognition
+- celebrity
+- AI
+context:
+  available_tools:
+  - name: upload_photo
+    display_name: Upload Photo
+    description: Upload a photo for analysis
+    category: image_processing
+    parameters:
+    - name: photo_path
+      type: string
+      description: File path of the photo to upload
+      required: true
+    example_usage:
+    - upload_photo(photo_path='user_images/selfie.jpg')
+    common_errors:
+    - File not found
+    - Unsupported file format
+  - name: analyze_photo
+    display_name: Analyze Photo
+    description: Analyze the uploaded photo to extract facial features
+    category: image_processing
+    parameters:
+    - name: photo_data
+      type: binary
+      description: Binary data of the photo
+      required: true
+    example_usage:
+    - analyze_photo(photo_data=b'\x89PNG\r\n\x1a\n...')
+  - name: find_lookalike
+    display_name: Find Lookalike
+    description: Find a celebrity lookalike based on analyzed facial features
+    category: image_processing
+    parameters:
+    - name: facial_features
+      type: map
+      description: Map of extracted facial features
+      required: true
+    example_usage:
+    - find_lookalike(facial_features={'eye_distance': 0.3, 'nose_length': 0.5})
+  environment:
+    name: celebrity_recognition
+    description: Environment for processing and matching facial features with celebrity databases
+    variables:
+    - name: IMAGE_API_ENDPOINT
+      value: api.celebritymatch.com
+      description: API endpoint for celebrity matching
+      type: string
+    - name: MAX_IMAGE_SIZE_MB
+      value: 10
+      description: Maximum image size for upload in MB
+      type: integer
+    settings:
+      facial_recognition_accuracy: high
+      max_concurrent_requests: 10
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - celebritymatch.com
+    - '*.trusted-image-source.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_id: user123
+    current_user_name: John Doe
+    timezone: UTC-5
+  system_info:
+    image_processing_version: '2.1'
+    available_libraries:
+    - opencv
+    - dlib
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

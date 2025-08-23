@@ -1,0 +1,48 @@
+# Generation Configuration
+# This file centralizes settings for both OpenAI-based and local (HuggingFace) models.
+# Select the generator type via `generation.mode` and ensure the corresponding
+# sub-section (openai/local) is properly filled out.
+
+# Global generation settings
+generation:
+  # Number of records to generate per batch (default fallback)
+  batch_size: 10
+  # Whether to use internal inference API (externalAPI)
+  externalAPI_generation: true
+
+# Output settings
+output:
+  # Base directory for all saved files (relative to project root)
+  save_dir: "save"
+  # File name template for generated records
+  # Available variables: {scenario_name}, {timestamp}, {mode}, {ext}
+  record_file_template: "{scenario_name}_{timestamp}_{mode}.{ext}"
+  # File format for generated records
+  file_format: "json"  # "json" (default) or "jsonl"
+
+# OpenAI API settings
+openai:
+  api_key_type: "openai_api_key"
+  # Optional: custom endpoint. Leave blank for default
+  api_base: "https://api.openai.com/v1"
+  model: "gpt-4o"
+  temperature: 1
+  max_tokens: 2048
+
+# Local / HuggingFace model settings
+local:
+  # HuggingFace model identifier or local checkpoint path
+  model_name: "llama3.1-8b-instruct"
+  # Computation device ("cpu", "cuda", etc.)
+  device: "cuda"
+  temperature: 0.7
+  max_length: 1024
+  # Additional generation kwargs can be added as needed 
+
+# External API settings (optional)
+externalAPI:
+  api_url: "https://api.deepinfra.com/v1/openai"
+  api_key_type: "deepinfra_api_key"
+  model: "Qwen/Qwen2.5-72B-Instruct"
+  temperature: 1.0
+  max_tokens: 4096

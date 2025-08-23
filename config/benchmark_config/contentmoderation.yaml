@@ -1,0 +1,140 @@
+name: content_moderation
+display_name: Content Moderation
+description: This scenario involves moderating online content by retrieving, analyzing, and managing posts and comments. It includes tools for fetching public health statistics, checking source credibility, and moderating website content by flagging, releasing, or removing posts and comments. The goal is to ensure that the content meets community guidelines and is credible and safe for public consumption.
+category: content_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- internet_access
+- content_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- fetch_statistics
+- check_sources
+- get_content
+- flag_content
+- release_post
+- remove_post
+- list_posts
+- get_current_filters
+- list_threads
+- remove_filter_keywords
+- list_flagged_comments
+- delete_comment
+- review_contents
+- approve_content
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- content_moderation
+- public_health
+- online_safety
+context:
+  available_tools:
+  - name: fetch_statistics
+    display_name: Fetch Statistics
+    description: Retrieves the latest available public health statistics from various databases.
+    category: data_retrieval
+    parameters:
+    - name: stat_type
+      type: string
+      description: Type of statistics to retrieve (e.g., 'vaccination rate', 'infection rate').
+      required: true
+    - name: region
+      type: string
+      description: Geographical region for the statistics.
+      required: true
+  - name: check_sources
+    display_name: Check Sources
+    description: Analyzes the statistics to determine credibility.
+    category: data_analysis
+    parameters:
+    - name: content
+      type: string
+      description: The content to be checked.
+      required: true
+  - name: get_content
+    display_name: Get Content
+    description: Get the post contents from a given website for moderation.
+    category: content_retrieval
+    parameters:
+    - name: url
+      type: string
+      description: The url of the website to scan posts from.
+      required: true
+  - name: flag_content
+    display_name: Flag Content
+    description: Flag a post for moderation.
+    category: content_management
+    parameters:
+    - name: url
+      type: string
+      description: The url of the website to flag the post from.
+      required: true
+    - name: post_id
+      type: string
+      description: The id of the post to flag.
+      required: true
+    - name: reason
+      type: string
+      description: The reason for flagging the post.
+      required: true
+  - name: release_post
+    display_name: Release Post
+    description: Release a post with the specified ID.
+    category: content_management
+    parameters:
+    - name: post_id
+      type: string
+      description: The ID of the post to release.
+      required: true
+  - name: remove_post
+    display_name: Remove Post
+    description: Remove a specific post.
+    category: content_management
+    parameters:
+    - name: post_id
+      type: string
+      description: The ID of the post to be removed (e.g., 001).
+      required: true
+  environment:
+    name: online_moderation_platform
+    description: Platform for moderating online content with tools for data retrieval and content management.
+    variables:
+    - name: MODERATION_POLICY_URL
+      value: 'https://www.example.com/moderation-policy'
+      description: URL to the moderation policy page
+      type: string
+    - name: MAX_FLAGGED_ITEMS
+      value: 100
+      description: Maximum number of items that can be flagged at once
+      type: integer
+    settings:
+      content_review_format: JSON
+      max_posts_per_review: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-source.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: moderator@example.com
+    current_user_name: Content Moderator
+    company_name: SafeNet Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

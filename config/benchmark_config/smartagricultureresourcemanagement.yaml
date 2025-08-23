@@ -1,0 +1,120 @@
+name: smart_agriculture_resource_management
+display_name: Smart Agriculture Resource Management
+description: Manages agricultural resources efficiently by adjusting water distribution and supply, listing zones, checking field statuses, and retrieving supplier information. This ensures optimal resource usage and supports sustainable farming practices.
+category: agriculture_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- resource_management_access
+- supplier_data_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_zones
+- adjust_water_distribution
+- adjust_water_supply
+- check_fields
+- get_supplier_info
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- agriculture
+- resource_management
+- sustainability
+context:
+  available_tools:
+  - name: list_zones
+    display_name: List Zones
+    description: List all available zones and their details
+    category: resource_management
+    parameters: []
+    example_usage:
+    - list_zones()
+  - name: adjust_water_distribution
+    display_name: Adjust Water Distribution
+    description: Adjust the water distribution for a specific zone
+    category: resource_management
+    parameters:
+    - name: zone_name
+      type: string
+      description: The name of the zone
+      required: true
+    - name: new_water_allocation
+      type: integer
+      description: The new water allocation for the zone
+      required: true
+    example_usage:
+    - adjust_water_distribution(zone_name='Zone A', new_water_allocation=100)
+  - name: adjust_water_supply
+    display_name: Adjust Water Supply
+    description: Adjust the water supply for a specific field based on the given parameters
+    category: resource_management
+    parameters:
+    - name: field_name
+      type: string
+      description: The name of the field to adjust water supply for
+      required: true
+    - name: water_supply_change
+      type: string
+      description: The change amount of water to supply to the field
+      required: true
+    example_usage:
+    - adjust_water_supply(field_name='Field 1', water_supply_change='-10')
+  - name: check_fields
+    display_name: Check Fields
+    description: Check the status of all the fields
+    category: resource_management
+    parameters: []
+    example_usage:
+    - check_fields()
+  - name: get_supplier_info
+    display_name: Get Supplier Information
+    description: Retrieve the contact information of suppliers for a specified product
+    category: supplier_management
+    parameters:
+    - name: product_name
+      type: string
+      description: The name of the product whose suppliers are required
+      required: true
+    example_usage:
+    - get_supplier_info(product_name='Fertilizer X')
+  environment:
+    name: agriculture_management_system
+    description: An integrated system for managing agricultural resources and supplier information
+    variables:
+    - name: WATER_ALLOCATION_POLICY_URL
+      value: 'https://www.example.com/water-allocation-policy'
+      description: URL to the water allocation policy page
+      type: string
+    - name: MAX_WATER_ALLOCATION
+      value: 500
+      description: Maximum water allocation per zone
+      type: integer
+    settings:
+      water_distribution_format: JSON
+      max_zones_per_request: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-agriculture.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: manager@agriculture.com
+    current_user_name: Resource Manager
+    company_name: AgroTech Solutions
+    timezone: UTC+2
+    business_hours: 6:00-18:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - yaml
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

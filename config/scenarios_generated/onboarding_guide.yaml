@@ -1,0 +1,109 @@
+name: onboarding_guide
+display_name: Onboarding Guide
+description: Guides new employees through company policies and setup procedures, ensuring
+  they understand the organizational structure, compliance requirements, and have
+  access to necessary resources and tools for their roles.
+category: human_resources
+complexity_level: 2
+estimated_duration: 60
+required_permissions:
+- hr_portal_access
+- document_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- access_policy_document
+- complete_setup_form
+- schedule_orientation_meeting
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- onboarding
+- hr
+- employee_setup
+context:
+  available_tools:
+  - name: access_policy_document
+    display_name: Access Policy Document
+    description: Retrieve and view company policy documents
+    category: document_management
+    parameters:
+    - name: document_id
+      type: string
+      description: Unique identifier for the policy document
+      required: true
+    example_usage:
+    - access_policy_document(document_id='HR-001')
+    common_errors:
+    - Document not found
+    - Access denied
+  - name: complete_setup_form
+    display_name: Complete Setup Form
+    description: Fill out and submit necessary setup forms for new employees
+    category: form_management
+    parameters:
+    - name: form_id
+      type: string
+      description: Identifier for the setup form
+      required: true
+    - name: employee_id
+      type: string
+      description: New employee's unique identifier
+      required: true
+    example_usage:
+    - complete_setup_form(form_id='SETUP-2023', employee_id='E12345')
+  - name: schedule_orientation_meeting
+    display_name: Schedule Orientation Meeting
+    description: Arrange a meeting for new employee orientation
+    category: scheduling
+    parameters:
+    - name: employee_id
+      type: string
+      description: New employee's unique identifier
+      required: true
+    - name: date
+      type: string
+      description: Preferred date for the orientation
+      required: true
+    example_usage:
+    - schedule_orientation_meeting(employee_id='E12345', date='2023-11-01')
+  environment:
+    name: hr_portal
+    description: Human Resources portal environment with access to employee records
+    variables:
+    - name: HR_API_ENDPOINT
+      value: api.hr.company.com
+      description: Endpoint for HR API
+      type: string
+    - name: DOCUMENT_STORAGE_PATH
+      value: /mnt/hr_docs
+      description: Path to HR document storage
+      type: string
+    settings:
+      access_logging: true
+      data_encryption: true
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: hr_agent@company.com
+    current_user_name: HR Assistant
+    company_name: TechCorp Inc.
+    timezone: UTC-8
+    business_hours: 9:00-18:00
+  system_info:
+    hr_portal_version: '2.5'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

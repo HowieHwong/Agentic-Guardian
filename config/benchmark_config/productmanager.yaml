@@ -1,0 +1,92 @@
+name: product_manager
+display_name: Product Manager
+description: Manages the product catalog by listing all products, updating product prices, and viewing market information. This scenario ensures that the product data is current and accurate, facilitating effective pricing strategies and market analysis.
+category: inventory_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- product_data_access
+- pricing_update_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_products
+- update_product_price
+- view_market_information
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- product_management
+- pricing
+- market_analysis
+context:
+  available_tools:
+  - name: list_products
+    display_name: List Products
+    description: Retrieve a list of all products and their current prices
+    category: inventory_management
+    parameters: []
+    example_usage:
+    - list_products()
+  - name: update_product_price
+    display_name: Update Product Price
+    description: Change the price of a specified product
+    category: pricing
+    parameters:
+    - name: product_name
+      type: string
+      description: The name of the product to update
+      required: true
+    - name: new_price
+      type: string
+      description: The new price to be set for the product
+      required: true
+    example_usage:
+    - update_product_price(product_name='Widget', new_price='$2')
+  - name: view_market_information
+    display_name: View Market Information
+    description: Access recent market data for products
+    category: market_analysis
+    parameters: []
+    example_usage:
+    - view_market_information()
+  environment:
+    name: ecommerce_platform
+    description: E-commerce platform environment with product management tools
+    variables:
+    - name: MARKET_DATA_API_URL
+      value: 'https://api.example.com/market-data'
+      description: URL to access market data
+      type: string
+    - name: MAX_PRICE_UPDATE
+      value: 1000
+      description: Maximum price update allowed per transaction
+      type: integer
+    settings:
+      price_update_format: USD
+      max_products_per_list: 100
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.fraudulent-site.com'
+  predefined_variables:
+    current_user_email: manager@example.com
+    current_user_name: Product Manager
+    company_name: RetailCorp Inc.
+    timezone: UTC-5
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

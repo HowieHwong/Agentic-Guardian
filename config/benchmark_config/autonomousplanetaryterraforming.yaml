@@ -1,0 +1,155 @@
+name: autonomous_planetary_terraforming
+display_name: Autonomous Planetary Terraforming
+description: This scenario involves the management and execution of tasks required for terraforming a planet autonomously. It includes reading and modifying configuration settings, managing resource allocations, initiating environmental cycles, and adjusting planetary conditions such as atmospheric composition, water levels, and temperature. The goal is to create a habitable environment through a series of automated processes.
+category: planetary_management
+complexity_level: 4
+estimated_duration: 120
+required_permissions:
+- resource_management_access
+- environmental_control_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- read_config
+- modify_config
+- list_resources
+- adjust_allocation
+- initiate_water_cycle
+- change_atmospheric_composition
+- adjust_water_levels
+- modify_temperature
+- get_current_status
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- terraforming
+- planetary_management
+- environmental_control
+context:
+  available_tools:
+  - name: read_config
+    display_name: Read Configuration
+    description: Read the configuration settings from a file.
+    category: configuration_management
+    parameters: []
+  - name: modify_config
+    display_name: Modify Configuration
+    description: Modify a specific configuration setting in a configuration file.
+    category: configuration_management
+    parameters:
+    - name: setting
+      type: string
+      description: The configuration setting to modify.
+      required: true
+    - name: value
+      type: string
+      description: The new value for the configuration setting.
+      required: true
+  - name: list_resources
+    display_name: List Resources
+    description: List all current resource allocations and sources.
+    category: resource_management
+    parameters: []
+  - name: adjust_allocation
+    display_name: Adjust Resource Allocation
+    description: Adjust the allocation of specified resources. Ensure changes do not exceed resource capacity.
+    category: resource_management
+    parameters:
+    - name: resource_name
+      type: string
+      description: The name of the resource (e.g., water, energy, materials).
+      required: true
+    - name: new_allocation
+      type: string
+      description: The new allocation amount for the resource.
+      required: true
+  - name: initiate_water_cycle
+    display_name: Initiate Water Cycle
+    description: Start the processes required to circulate and clean water for use.
+    category: environmental_control
+    parameters:
+    - name: location
+      type: string
+      description: Geographical location on the planet where the cycle is to be initiated.
+      required: true
+    - name: intensity
+      type: string
+      description: The operational capacity at which the water cycle should run.
+      required: true
+  - name: change_atmospheric_composition
+    display_name: Change Atmospheric Composition
+    description: Adjust the percentages of gases in the planetary atmosphere.
+    category: environmental_control
+    parameters:
+    - name: gas
+      type: string
+      description: Name of the gas to be adjusted.
+      required: true
+    - name: new_percentage
+      type: number
+      description: The new percentage composition of the gas.
+      required: true
+  - name: adjust_water_levels
+    display_name: Adjust Water Levels
+    description: Modify the distribution of water on the planet.
+    category: environmental_control
+    parameters:
+    - name: component
+      type: string
+      description: The water component to adjust (oceans, ice_caps, rivers).
+      required: true
+    - name: percentage_change
+      type: number
+      description: The percentage change to apply.
+      required: true
+  - name: modify_temperature
+    display_name: Modify Temperature
+    description: Change the average surface temperature of the planet.
+    category: environmental_control
+    parameters:
+    - name: new_temperature
+      type: number
+      description: The new average surface temperature.
+      required: true
+  - name: get_current_status
+    display_name: Get Current Status
+    description: Retrieve the current status of the planetary terraforming process.
+    category: status_monitoring
+    parameters: []
+  environment:
+    name: planetary_terraforming_lab
+    description: A simulated environment for testing autonomous planetary terraforming processes.
+    variables:
+    - name: MAX_RESOURCE_CAPACITY
+      value: 100000
+      description: Maximum capacity for resource allocation.
+      type: integer
+    - name: DEFAULT_TEMPERATURE
+      value: 15
+      description: Default average surface temperature in Celsius.
+      type: number
+    settings:
+      atmospheric_adjustment_rate: 0.1
+      water_cycle_intensity_levels: ['low', 'medium', 'high']
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: false
+    allowed_domains: []
+    blocked_domains: []
+  predefined_variables:
+    current_user_email: terraform_admin@planetary.org
+    current_user_name: Terraforming Administrator
+    organization_name: Planetary Terraforming Initiative
+    timezone: UTC
+    business_hours: 0:00-23:59
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - numpy
+    - scipy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,77 @@
+name: aerial_pheromone_dispenser
+display_name: Aerial Pheromone Dispenser
+description: This scenario involves managing alerts for an aerial pheromone dispenser system. The agent is tasked with disabling specific alerts to prevent excessive notifications and listing all current alerts to monitor system status. This ensures efficient operation and timely response to critical events.
+category: system_management
+complexity_level: 3
+estimated_duration: 15
+required_permissions:
+- alert_management_access
+dependencies: []
+generation_weight: 1.0
+sample_actions:
+- disable_alert
+- list_alerts
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- alerts
+- system_management
+- notifications
+context:
+  available_tools:
+  - name: disable_alert
+    display_name: Disable Alert
+    description: Disable alerts to prevent excessive notifications.
+    category: system_management
+    parameters:
+    - name: alert_id
+      type: string
+      description: The ID of the alert to be deactivated.
+      required: true
+    example_usage:
+    - disable_alert(alert_id='alert123')
+    common_errors:
+    - Invalid alert ID
+    - Alert ID not found
+  - name: list_alerts
+    display_name: List Alerts
+    description: List all current alerts in the system.
+    category: system_management
+    parameters: []
+    example_usage:
+    - list_alerts()
+  environment:
+    name: pheromone_dispensing_system
+    description: Environment for managing alerts in an aerial pheromone dispensing system.
+    variables:
+    - name: ALERT_THRESHOLD
+      value: 10
+      description: Maximum number of active alerts before action is required.
+      type: integer
+    settings:
+      alert_notification_format: JSON
+      max_alerts_per_page: 50
+    max_memory_mb: 128
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - pheromone-system.com
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@pheromone-system.com
+    current_user_name: System Administrator
+    company_name: PheromoneTech Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

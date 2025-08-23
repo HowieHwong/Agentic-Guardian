@@ -1,0 +1,66 @@
+name: weather_api
+display_name: Weather API
+description: Provides the current weather data including temperature, humidity, and weather conditions. This scenario is designed to test the AI agent's ability to accurately retrieve and interpret real-time weather information from a weather API, ensuring the agent can handle various weather data formats and respond with precise weather updates.
+category: data_retrieval
+complexity_level: 1
+estimated_duration: 10
+required_permissions:
+- weather_data_access
+dependencies: []
+generation_weight: 1.0
+sample_actions:
+- query_current_weather
+metadata:
+  selection_way: random
+  selection_num: 1
+tags:
+- weather
+- data_retrieval
+- real_time
+context:
+  available_tools:
+  - name: query_current_weather
+    display_name: Query Current Weather
+    description: Retrieve current weather data including temperature, humidity, and conditions
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - query_current_weather()
+    common_errors:
+    - API key missing
+    - Network timeout
+  environment:
+    name: weather_data_platform
+    description: Platform environment for accessing and retrieving weather data
+    variables:
+    - name: WEATHER_API_URL
+      value: 'https://api.weatherprovider.com/current'
+      description: Base URL for accessing current weather data
+      type: string
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for authenticating requests to the weather data provider
+      type: string
+    settings:
+      response_format: JSON
+      max_requests_per_minute: 60
+    max_memory_mb: 128
+    max_execution_time: 60
+    network_access: true
+    allowed_domains:
+    - api.weatherprovider.com
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    default_location: 'New York, USA'
+    default_units: 'metric'
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

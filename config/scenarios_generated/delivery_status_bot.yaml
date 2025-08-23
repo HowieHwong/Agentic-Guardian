@@ -1,0 +1,91 @@
+name: delivery_status_bot
+display_name: Delivery Status Bot
+description: The Delivery Status Bot provides real-time updates to customers and staff on the progress of deliveries. It ensures timely notifications and accurate tracking information to enhance customer satisfaction and operational efficiency.
+category: logistics
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- location_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- track_delivery
+- send_update
+- notify_delay
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- delivery
+- logistics
+- real-time
+context:
+  available_tools:
+  - name: track_delivery
+    display_name: Track Delivery
+    description: Track the current status and location of a delivery
+    category: logistics
+    parameters:
+    - name: tracking_id
+      type: string
+      description: Unique identifier for the delivery
+      required: true
+    example_usage:
+    - track_delivery(tracking_id='12345XYZ')
+    common_errors:
+    - Invalid tracking ID
+    - Delivery not found
+  - name: send_notification
+    display_name: Send Notification
+    description: Send a notification to customers or staff about delivery status
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Recipient's contact information
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    example_usage:
+    - send_notification(recipient='customer@example.com', message='Your package is out for delivery.')
+  environment:
+    name: delivery_tracking_system
+    description: System environment for tracking and updating delivery statuses
+    variables:
+    - name: TRACKING_API_URL
+      value: https://api.deliveryservice.com/track
+      description: API endpoint for tracking deliveries
+      type: string
+    - name: NOTIFICATION_SERVICE
+      value: NotifyMe
+      description: Service used for sending notifications
+      type: string
+    settings:
+      max_notifications_per_hour: 100
+      tracking_update_interval: 15
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - deliveryservice.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: delivery_manager
+    company_name: FastShip Logistics
+    timezone: UTC-5
+    business_hours: 8:00-20:00
+  system_info:
+    tracking_system_version: '2.3'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

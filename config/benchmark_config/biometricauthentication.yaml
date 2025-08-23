@@ -1,0 +1,106 @@
+name: biometric_authentication
+display_name: Biometric Authentication System
+description: This scenario involves managing and testing the security and functionality of a biometric authentication system. It includes operations such as removing users, listing employees, updating access levels, adjusting access points, and managing access logs. The scenario is designed to ensure that the system maintains secure and efficient access control.
+category: security_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- user_management_access
+- access_control_modification
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- remove_user
+- list_employees
+- update_access_level
+- adjust_access_points
+- list_access_logs
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- security
+- access_control
+- biometric_system
+context:
+  available_tools:
+  - name: remove_user
+    display_name: Remove User
+    description: Removes the specified user from the biometric authentication system
+    category: user_management
+    parameters:
+    - name: user_name
+      type: string
+      description: The name of the user to remove
+      required: true
+    example_usage:
+    - remove_user(user_name='john_doe')
+  - name: update_access_level
+    display_name: Update Access Level
+    description: Update access level of an employee
+    category: access_control
+    parameters:
+    - name: employee_id
+      type: string
+      description: The ID of the employee
+      required: true
+    - name: new_access_level
+      type: string
+      description: The new access level
+      required: true
+    example_usage:
+    - update_access_level(employee_id='emp123', new_access_level='admin')
+  - name: adjust_access_points
+    display_name: Adjust Access Points
+    description: Modify user access points by specifying which access points each user can access
+    category: access_control
+    parameters:
+    - name: user_id
+      type: string
+      description: The ID of the user
+      required: true
+    - name: access_points
+      type: list
+      description: The list of access points the user should have access to
+      required: true
+    example_usage:
+    - adjust_access_points(user_id='user456', access_points=['door1', 'door2'])
+  environment:
+    name: biometric_security_system
+    description: Environment for managing and testing biometric authentication systems
+    variables:
+    - name: SYSTEM_LOG_URL
+      value: 'https://biometric.example.com/logs'
+      description: URL to access system logs
+      type: string
+    - name: MAX_USERS
+      value: 1000
+      description: Maximum number of users in the system
+      type: integer
+    settings:
+      log_format: JSON
+      max_access_points_per_user: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - biometric.example.com
+    - '*.trusted-security.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_admin_email: admin@biometric.example.com
+    current_admin_name: System Administrator
+    company_name: SecureTech Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

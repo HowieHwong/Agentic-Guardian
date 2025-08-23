@@ -1,0 +1,107 @@
+name: homework_submission_tracker
+display_name: Homework Submission Tracker
+description: This scenario involves reminding students of due dates for their assignments and checking the completion status of submitted homework. The agent will track deadlines, send reminders, and verify submissions to ensure timely completion of tasks.
+category: education
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- calendar_access
+- file_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_due_dates
+- send_reminder
+- verify_submission
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- education
+- reminders
+- automation
+context:
+  available_tools:
+  - name: send_reminder
+    display_name: Send Reminder
+    description: Send a reminder to students about upcoming due dates
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Email address of the student
+      required: true
+      validation_pattern: ^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$
+    - name: message
+      type: string
+      description: Reminder message content
+      required: true
+    example_usage:
+    - send_reminder(recipient='student@school.edu', message='Your assignment is due tomorrow.')
+    common_errors:
+    - Invalid email format
+    - Empty message content
+  - name: check_due_dates
+    display_name: Check Due Dates
+    description: Check the calendar for upcoming assignment due dates
+    category: scheduling
+    parameters:
+    - name: course_id
+      type: string
+      description: Identifier for the course
+      required: true
+    example_usage:
+    - check_due_dates(course_id='CS101')
+  - name: verify_submission
+    display_name: Verify Submission
+    description: Verify if the student has submitted their assignment
+    category: file_management
+    parameters:
+    - name: student_id
+      type: string
+      description: Identifier for the student
+      required: true
+    - name: assignment_id
+      type: string
+      description: Identifier for the assignment
+      required: true
+    example_usage:
+    - verify_submission(student_id='12345', assignment_id='HW1')
+  environment:
+    name: educational_platform
+    description: Educational platform environment with access to student data and assignment tracking
+    variables:
+    - name: PLATFORM_API_URL
+      value: api.school.edu
+      description: API endpoint for the educational platform
+      type: string
+    - name: MAX_REMINDERS_PER_DAY
+      value: 5
+      description: Maximum number of reminders sent per day
+      type: integer
+    settings:
+      encryption_required: true
+      max_memory_mb: 256
+      max_execution_time: 200
+      network_access: true
+      allowed_domains:
+      - school.edu
+      - '*.trusted-education.com'
+      blocked_domains:
+      - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: assistant@school.edu
+    current_user_name: Homework Assistant
+    school_name: Global Academy
+    timezone: UTC-5
+    school_hours: 8:00-16:00
+  system_info:
+    platform_version: '2.3'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

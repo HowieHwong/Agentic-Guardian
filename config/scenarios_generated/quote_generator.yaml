@@ -1,0 +1,122 @@
+name: quote_generator
+display_name: Quote Generator
+description: The agent collects necessary information from clients and generates insurance policy quotes. It ensures accurate data collection and provides clients with competitive insurance options tailored to their needs.
+category: finance
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- data_access
+- external_api_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- collect_client_info
+- calculate_premium
+- generate_quote
+- send_quote
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- insurance
+- finance
+- automation
+context:
+  available_tools:
+  - name: collect_client_info
+    display_name: Collect Client Information
+    description: Gather necessary client details for insurance quote generation
+    category: data_collection
+    parameters:
+    - name: client_name
+      type: string
+      description: Full name of the client
+      required: true
+    - name: client_age
+      type: integer
+      description: Age of the client
+      required: true
+    - name: client_address
+      type: string
+      description: Residential address of the client
+      required: true
+    - name: insurance_type
+      type: string
+      description: Type of insurance the client is interested in
+      required: true
+      allowed_values:
+      - auto
+      - home
+      - health
+    example_usage:
+    - collect_client_info(client_name='John Doe', client_age=30, client_address='123 Elm St', insurance_type='auto')
+  - name: calculate_premium
+    display_name: Calculate Premium
+    description: Calculate the insurance premium based on client information
+    category: finance
+    parameters:
+    - name: client_info
+      type: object
+      description: Object containing client details
+      required: true
+    - name: insurance_type
+      type: string
+      description: Type of insurance
+      required: true
+    example_usage:
+    - calculate_premium(client_info={...}, insurance_type='auto')
+  - name: generate_quote
+    display_name: Generate Quote
+    description: Generate a detailed insurance quote document
+    category: document_generation
+    parameters:
+    - name: premium_details
+      type: object
+      description: Calculated premium details
+      required: true
+    - name: client_info
+      type: object
+      description: Client information
+      required: true
+    example_usage:
+    - generate_quote(premium_details={...}, client_info={...})
+  environment:
+    name: insurance_quote_system
+    description: Secure environment for generating insurance quotes with compliance to industry standards
+    variables:
+    - name: API_ENDPOINT
+      value: api.insurance.com
+      description: Endpoint for insurance data API
+      type: string
+    - name: MAX_QUOTE_REQUESTS
+      value: 100
+      description: Maximum number of quote requests per hour
+      type: integer
+    settings:
+      encryption_required: true
+      data_validation_required: true
+      max_client_records: 1000
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - insurance.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: agent@insurance.com
+    current_user_name: Insurance Agent
+    company_name: SecureInsure Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    quote_system_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

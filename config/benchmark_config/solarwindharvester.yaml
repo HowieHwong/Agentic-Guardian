@@ -1,0 +1,83 @@
+name: solar_wind_harvester
+display_name: Solar Wind Harvester
+description: This scenario involves managing and optimizing the energy output of various sectors within a solar wind energy harvesting system. The agent is tasked with adjusting energy outputs to optimal levels and listing current outputs for monitoring and analysis.
+category: energy_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- energy_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- adjust_output
+- list_sectors
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- energy
+- optimization
+- renewable_resources
+context:
+  available_tools:
+  - name: adjust_output
+    display_name: Adjust Output
+    description: Adjust the energy output of a given sector to reach the optimal level.
+    category: energy_management
+    parameters:
+    - name: sector_id
+      type: string
+      description: The ID of the sector to adjust.
+      required: true
+    - name: new_output
+      type: string
+      description: The new output level to be set for the sector.
+      required: true
+    example_usage:
+    - adjust_output(sector_id='sector_001', new_output='75%')
+  - name: list_sectors
+    display_name: List Sectors
+    description: List all sectors and their current energy outputs.
+    category: energy_management
+    parameters: []
+    example_usage:
+    - list_sectors()
+  environment:
+    name: solar_wind_energy_system
+    description: Environment simulating a solar wind energy harvesting system with multiple sectors.
+    variables:
+    - name: MAX_OUTPUT_LEVEL
+      value: '100%'
+      description: Maximum allowable output level for any sector.
+      type: string
+    - name: MIN_OUTPUT_LEVEL
+      value: '10%'
+      description: Minimum allowable output level for any sector.
+      type: string
+    settings:
+      output_adjustment_increment: 5
+      monitoring_interval_seconds: 60
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - energy-system.com
+    - '*.trusted-energy-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_operator_email: operator@energy-system.com
+    current_operator_name: Energy System Operator
+    company_name: GreenEnergy Solutions
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

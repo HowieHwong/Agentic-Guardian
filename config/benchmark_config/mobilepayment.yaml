@@ -1,0 +1,127 @@
+name: mobile_payment
+display_name: Mobile Payment
+description: Facilitates various mobile payment operations such as sending money, requesting money, handling requests, checking balances, and managing linked accounts. This scenario tests the agent's ability to securely and efficiently manage financial transactions and user interactions within a mobile payment platform.
+category: financial_services
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- transaction_management
+- account_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- send_money
+- request_money
+- handle_request
+- check_balance
+- add_money
+- withdraw_money
+- search_transactions
+- view_friends_list
+- search_users
+- list_linked_accounts
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- mobile_payment
+- financial_transactions
+- user_management
+context:
+  available_tools:
+  - name: send_money
+    display_name: Send Money
+    description: Send money to another Venmo user.
+    category: transaction
+    parameters:
+    - name: recipient_username
+      type: string
+      description: The username of the recipient.
+      required: true
+    - name: amount
+      type: number
+      description: The amount of money to send, must be positive.
+      required: true
+    - name: note
+      type: string
+      description: A note to include with the payment. Default is an empty string.
+      required: false
+    example_usage:
+    - send_money(recipient_username='user123', amount=50.0, note='Dinner')
+  - name: request_money
+    display_name: Request Money
+    description: Request money from another Venmo user.
+    category: transaction
+    parameters:
+    - name: requestee_username
+      type: string
+      description: The username of the person from whom money is being requested.
+      required: true
+    - name: amount
+      type: number
+      description: The amount of money to request, must be positive.
+      required: true
+    - name: note
+      type: string
+      description: A note to include with the request. Default is an empty string.
+      required: false
+    example_usage:
+    - request_money(requestee_username='user456', amount=20.0, note='Lunch')
+  - name: handle_request
+    display_name: Handle Request
+    description: Confirm or decline a pending request.
+    category: transaction
+    parameters:
+    - name: transaction_id
+      type: string
+      description: The unique identifier of the transaction.
+      required: true
+    - name: action
+      type: string
+      description: The action to take, either 'confirm' or 'decline'.
+      required: true
+    - name: note
+      type: string
+      description: A note to include with the confirmation or decline. Default is an empty string.
+      required: false
+    example_usage:
+    - handle_request(transaction_id='txn789', action='confirm', note='Approved')
+  environment:
+    name: venmo_platform
+    description: Mobile payment platform environment with transaction and account management tools.
+    variables:
+    - name: MAX_TRANSACTION_AMOUNT
+      value: 1000
+      description: Maximum amount allowed per transaction.
+      type: number
+    - name: TRANSACTION_FEE_PERCENTAGE
+      value: 1.5
+      description: Percentage fee applied to each transaction.
+      type: number
+    settings:
+      currency: USD
+      max_transactions_per_day: 50
+    max_memory_mb: 512
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - venmo.com
+    - '*.trusted-bank.com'
+    blocked_domains:
+    - '*.fraudulent-site.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: John Doe
+    company_name: Venmo Inc.
+    timezone: UTC-5
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

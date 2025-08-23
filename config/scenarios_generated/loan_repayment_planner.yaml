@@ -1,0 +1,97 @@
+name: loan_repayment_planner
+display_name: Loan Repayment Planner
+description: Calculates payment schedules and suggests strategies for early payoff. This scenario helps users manage their loan repayments efficiently by providing detailed schedules and personalized strategies to minimize interest and pay off loans faster.
+category: financial_management
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- financial_data_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- calculate_schedule
+- suggest_strategy
+- adjust_payment
+- simulate_scenario
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- finance
+- loan_management
+- strategy
+context:
+  available_tools:
+  - name: calculate_schedule
+    display_name: Calculate Schedule
+    description: Compute the loan repayment schedule based on current loan terms
+    category: financial_management
+    parameters:
+    - name: principal
+      type: float
+      description: Principal amount of the loan
+      required: true
+    - name: interest_rate
+      type: float
+      description: Annual interest rate of the loan
+      required: true
+    - name: term_years
+      type: integer
+      description: Loan term in years
+      required: true
+    example_usage:
+    - calculate_schedule(principal=100000, interest_rate=5.5, term_years=30)
+    common_errors:
+    - Negative principal amount
+    - Interest rate out of range
+  - name: suggest_strategy
+    display_name: Suggest Strategy
+    description: Provide strategies for early loan payoff
+    category: financial_management
+    parameters:
+    - name: extra_payment
+      type: float
+      description: Additional payment amount per period
+      required: false
+    - name: frequency
+      type: string
+      description: Frequency of extra payments
+      required: false
+      allowed_values:
+      - monthly
+      - yearly
+    example_usage:
+    - suggest_strategy(extra_payment=200, frequency='monthly')
+  environment:
+    name: financial_planning
+    description: Environment for managing and planning financial strategies
+    variables:
+    - name: CURRENCY
+      value: USD
+      description: Default currency for calculations
+      type: string
+    - name: INTEREST_COMPOUNDING
+      value: monthly
+      description: Compounding frequency for interest calculations
+      type: string
+    settings:
+      max_loan_amount: 1000000
+      min_interest_rate: 0.5
+      max_interest_rate: 25.0
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: false
+  predefined_variables:
+    current_user_name: Financial Advisor AI
+    company_name: FinTech Solutions
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    financial_library_version: '2.3'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

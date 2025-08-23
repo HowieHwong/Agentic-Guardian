@@ -1,0 +1,88 @@
+name: easy_read_converter
+display_name: Easy Read Converter
+description: This scenario involves simplifying complex documents to enhance readability
+  and comprehension for a wider audience. The agent will utilize various tools to
+  break down technical jargon, rephrase complex sentences, and provide summaries
+  for better understanding.
+category: document_processing
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- document_access
+- text_analysis
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_text
+- simplify_language
+- generate_summary
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- document
+- readability
+- text_processing
+context:
+  available_tools:
+  - name: text_analyzer
+    display_name: Text Analyzer
+    description: Analyzes text to identify complex structures and jargon
+    category: text_processing
+    parameters:
+    - name: text
+      type: string
+      description: The text to be analyzed
+      required: true
+    example_usage:
+    - text_analyzer(text='This is a complex document with technical jargon.')
+    common_errors:
+    - Text input is empty
+    - Unsupported language detected
+  - name: language_simplifier
+    display_name: Language Simplifier
+    description: Simplifies complex language into more understandable terms
+    category: text_processing
+    parameters:
+    - name: text
+      type: string
+      description: The text to be simplified
+      required: true
+    example_usage:
+    - language_simplifier(text='Utilize the apparatus to facilitate operations.')
+    common_errors:
+    - Text input is empty
+    - Simplification not possible for given text
+  environment:
+    name: document_processing_env
+    description: Environment for processing and simplifying documents
+    variables:
+    - name: MAX_TEXT_LENGTH
+      value: 10000
+      description: Maximum length of text to process
+      type: integer
+    - name: SUPPORTED_LANGUAGES
+      value: ['en', 'es', 'fr']
+      description: Languages supported for simplification
+      type: list
+    settings:
+      logging_enabled: true
+      error_reporting: detailed
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: false
+  predefined_variables:
+    current_user_role: document_specialist
+    organization_name: Readability Experts Inc.
+    timezone: UTC+0
+    business_hours: 8:00-18:00
+  system_info:
+    text_processing_version: '2.1'
+    available_libraries:
+    - nltk
+    - textblob
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

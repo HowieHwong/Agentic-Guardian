@@ -1,0 +1,95 @@
+name: travel_visa_requirement_checker
+display_name: Travel Visa Requirement Checker
+description: Advises users on the required documents for travel visas and assists in filling out visa applications. This scenario helps users navigate the complexities of international travel documentation by providing guidance and tools to ensure all necessary paperwork is completed accurately and efficiently.
+category: travel
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- document_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- check_visa_requirements
+- fill_visa_application
+- upload_documents
+- submit_application
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- travel
+- visa
+- documentation
+- automation
+context:
+  available_tools:
+  - name: check_visa_requirements
+    display_name: Check Visa Requirements
+    description: Provides information on visa requirements for different countries
+    category: travel
+    parameters:
+    - name: destination_country
+      type: string
+      description: The country for which visa requirements are being checked
+      required: true
+    - name: nationality
+      type: string
+      description: The nationality of the traveler
+      required: true
+    example_usage:
+    - check_visa_requirements(destination_country='France', nationality='US')
+    - check_visa_requirements(destination_country='Japan', nationality='India')
+  - name: fill_visa_application
+    display_name: Fill Visa Application
+    description: Assists in filling out visa application forms
+    category: travel
+    parameters:
+    - name: application_form
+      type: file
+      description: Visa application form to be filled
+      required: true
+    - name: personal_details
+      type: object
+      description: Personal details of the applicant
+      required: true
+    example_usage:
+    - fill_visa_application(application_form='form.pdf', personal_details={'name': 'John Doe', 'passport_number': '123456789'})
+  environment:
+    name: visa_application_system
+    description: Secure environment for handling visa applications and sensitive personal data
+    variables:
+    - name: API_ENDPOINT
+      value: api.visa-checker.com
+      description: API endpoint for visa requirement checks
+      type: string
+    - name: MAX_DOCUMENT_SIZE
+      value: 10
+      description: Maximum document size in MB
+      type: integer
+    settings:
+      encryption_required: true
+      data_validation_required: true
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.visa-checker.com'
+    - '*.government-portal.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_nationality: US
+    current_user_name: AI Assistant
+    default_destination_country: France
+    timezone: UTC-5
+  system_info:
+    application_version: '2.1'
+    available_libraries:
+    - requests
+    - pdfkit
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

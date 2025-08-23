@@ -1,0 +1,109 @@
+name: sign_language_learning_bot
+display_name: Sign Language Learning Bot
+description: The Sign Language Learning Bot assists users in practicing and learning the basics of sign language. It provides interactive exercises, video demonstrations, and feedback to enhance the learning experience.
+category: education
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- video_access
+- microphone_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- play_video
+- record_sign
+- provide_feedback
+- suggest_exercise
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- education
+- sign_language
+- learning
+context:
+  available_tools:
+  - name: play_video
+    display_name: Play Video
+    description: Play sign language demonstration videos
+    category: education
+    parameters:
+    - name: video_id
+      type: string
+      description: Identifier for the video to play
+      required: true
+    - name: start_time
+      type: integer
+      description: Start time in seconds
+      required: false
+      default_value: 0
+    example_usage:
+    - play_video(video_id='asl_intro', start_time=10)
+    common_errors:
+    - Video not found
+    - Invalid start time
+  - name: record_sign
+    display_name: Record Sign
+    description: Record user's sign language practice for feedback
+    category: education
+    parameters:
+    - name: duration
+      type: integer
+      description: Duration of recording in seconds
+      required: true
+    example_usage:
+    - record_sign(duration=30)
+    common_errors:
+    - Microphone access denied
+    - Recording too short
+  - name: provide_feedback
+    display_name: Provide Feedback
+    description: Analyze recorded sign and provide feedback
+    category: education
+    parameters:
+    - name: recording_id
+      type: string
+      description: Identifier for the recorded sign
+      required: true
+    example_usage:
+    - provide_feedback(recording_id='session1_recording')
+    common_errors:
+    - Recording not found
+    - Feedback generation error
+  environment:
+    name: sign_language_learning_env
+    description: Environment for practicing and learning sign language with video and audio capabilities
+    variables:
+    - name: VIDEO_LIBRARY_PATH
+      value: /videos/sign_language
+      description: Path to the sign language video library
+      type: string
+    - name: MAX_RECORDING_DURATION
+      value: 60
+      description: Maximum duration for sign recording in seconds
+      type: integer
+    settings:
+      video_quality: high
+      feedback_detailed: true
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-education.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_level: beginner
+    preferred_language: English
+    timezone: UTC-5
+    learning_hours: 8:00-20:00
+  system_info:
+    video_player_version: '2.1'
+    available_libraries:
+    - opencv
+    - numpy
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

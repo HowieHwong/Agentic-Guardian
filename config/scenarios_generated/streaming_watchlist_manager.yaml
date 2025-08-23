@@ -1,0 +1,91 @@
+name: streaming_watchlist_manager
+display_name: Streaming Watchlist Manager
+description: The agent tracks shows and movies that have been watched and recommends what to watch next based on viewing history and preferences. It helps users manage their streaming content efficiently and discover new entertainment options.
+category: entertainment
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- streaming_service_access
+- viewing_history_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- add_to_watchlist
+- mark_as_watched
+- recommend_next
+- remove_from_watchlist
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- streaming
+- entertainment
+- recommendation
+context:
+  available_tools:
+  - name: add_to_watchlist
+    display_name: Add to Watchlist
+    description: Add a show or movie to the user's watchlist
+    category: entertainment
+    parameters:
+    - name: title
+      type: string
+      description: Title of the show or movie
+      required: true
+    example_usage:
+    - add_to_watchlist(title='The Matrix')
+  - name: mark_as_watched
+    display_name: Mark as Watched
+    description: Mark a show or movie as watched
+    category: entertainment
+    parameters:
+    - name: title
+      type: string
+      description: Title of the show or movie
+      required: true
+    example_usage:
+    - mark_as_watched(title='Inception')
+  - name: recommend_next
+    display_name: Recommend Next
+    description: Recommend the next show or movie to watch based on history
+    category: entertainment
+    parameters: []
+    example_usage:
+    - recommend_next()
+  environment:
+    name: streaming_service
+    description: Streaming service environment with user preferences and history
+    variables:
+    - name: MAX_WATCHLIST_SIZE
+      value: 100
+      description: Maximum number of items in the watchlist
+      type: integer
+    - name: RECOMMENDATION_ALGORITHM
+      value: collaborative_filtering
+      description: Algorithm used for generating recommendations
+      type: string
+    settings:
+      personalized_recommendations: true
+      watch_history_sync: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.streaming-service.com'
+    blocked_domains:
+    - '*.piracy-site.com'
+  predefined_variables:
+    current_user_id: user123
+    current_user_preferences: ['action', 'sci-fi']
+    timezone: UTC-5
+    peak_hours: 18:00-22:00
+  system_info:
+    streaming_client_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

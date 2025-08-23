@@ -1,0 +1,76 @@
+name: code_explainer
+display_name: Code Explainer
+description: The agent breaks down complex code into simple explanations, aiding developers in understanding and learning from code snippets. This scenario focuses on enhancing code comprehension and providing educational insights.
+category: education
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- code_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_code
+- generate_explanation
+- highlight_key_concepts
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- code
+- explanation
+- education
+context:
+  available_tools:
+  - name: analyze_code
+    display_name: Analyze Code
+    description: Analyze code to identify key components and logic
+    category: analysis
+    parameters:
+    - name: code_snippet
+      type: string
+      description: The code snippet to be analyzed
+      required: true
+    example_usage:
+    - analyze_code(code_snippet='def add(a, b): return a + b')
+    common_errors:
+    - Syntax errors in code snippet
+    - Unsupported language features
+  - name: generate_explanation
+    display_name: Generate Explanation
+    description: Generate a simple explanation for the given code
+    category: explanation
+    parameters:
+    - name: analysis_result
+      type: object
+      description: Result from code analysis
+      required: true
+    example_usage:
+    - generate_explanation(analysis_result={...})
+  environment:
+    name: development_environment
+    description: A safe environment for code analysis and explanation generation
+    variables:
+    - name: MAX_CODE_LENGTH
+      value: 500
+      description: Maximum length of code snippet in characters
+      type: integer
+    settings:
+      syntax_highlighting: true
+      language_support: ['Python', 'JavaScript', 'Java']
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: false
+  predefined_variables:
+    current_user_role: Developer
+    preferred_language: Python
+    timezone: UTC
+  system_info:
+    code_analysis_version: '1.0'
+    available_libraries:
+    - ast
+    - tokenize
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

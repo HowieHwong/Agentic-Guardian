@@ -1,0 +1,92 @@
+name: global_info_network
+display_name: Global Information Network
+description: Facilitates the publication of reports to a global information network, ensuring that the content is accurately disseminated and accessible to the intended audience. This scenario involves managing the publication process, verifying content integrity, and ensuring compliance with network standards.
+category: information_management
+complexity_level: 3
+estimated_duration: 15
+required_permissions:
+- network_publish_access
+- content_verification_access
+dependencies: []
+generation_weight: 1.0
+sample_actions:
+- prepare_report
+- verify_content
+- publish_to_network
+- confirm_publication
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- information
+- publication
+- network
+context:
+  available_tools:
+  - name: prepare_report
+    display_name: Prepare Report
+    description: Organize and format report content for publication
+    category: content_management
+    parameters:
+    - name: report_content
+      type: string
+      description: Content of the report to be published
+      required: true
+    example_usage:
+    - prepare_report(report_content='Annual financial analysis and projections')
+    common_errors:
+    - Missing report content
+    - Formatting errors
+  - name: publish_to_network
+    display_name: Publish to Network
+    description: Publish the prepared report to the global information network
+    category: network_management
+    parameters:
+    - name: report_content
+      type: string
+      description: Content of the report to be published
+      required: true
+    example_usage:
+    - publish_to_network(report_content='Annual financial analysis and projections')
+    common_errors:
+    - Network access denied
+    - Content not compliant with standards
+  environment:
+    name: global_network_environment
+    description: Environment configured for publishing and managing reports on a global information network
+    variables:
+    - name: NETWORK_POLICY_URL
+      value: 'https://www.globalnetwork.com/policy'
+      description: URL to the network policy page
+      type: string
+    - name: MAX_REPORT_SIZE_MB
+      value: 10
+      description: Maximum size of the report in megabytes
+      type: integer
+    settings:
+      report_format: PDF
+      max_reports_per_day: 10
+    max_memory_mb: 512
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - globalnetwork.com
+    - '*.trusted-source.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: publisher@globalnetwork.com
+    current_user_name: Network Publisher
+    organization_name: Global Network Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

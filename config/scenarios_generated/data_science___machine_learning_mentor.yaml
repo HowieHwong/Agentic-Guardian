@@ -1,0 +1,105 @@
+name: data_science_machine_learning_mentor
+display_name: Data Science & Machine Learning Mentor
+description: Provides guidance on data science, statistics, and machine learning projects,
+  offering insights into best practices, methodologies, and tools for effective data analysis
+  and model building.
+category: education
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- data_access
+- model_training
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- analyze_data
+- build_model
+- evaluate_model
+- provide_feedback
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- data science
+- machine learning
+- education
+context:
+  available_tools:
+  - name: analyze_data
+    display_name: Analyze Data
+    description: Perform data analysis using statistical methods and visualization
+    category: data_analysis
+    parameters:
+    - name: dataset
+      type: string
+      description: Path to the dataset file
+      required: true
+    - name: analysis_type
+      type: string
+      description: Type of analysis to perform
+      required: true
+      allowed_values:
+      - descriptive
+      - inferential
+      - predictive
+    example_usage:
+    - analyze_data(dataset='data.csv', analysis_type='descriptive')
+  - name: build_model
+    display_name: Build Model
+    description: Construct machine learning models using various algorithms
+    category: model_building
+    parameters:
+    - name: algorithm
+      type: string
+      description: Machine learning algorithm to use
+      required: true
+      allowed_values:
+      - linear_regression
+      - decision_tree
+      - neural_network
+    - name: hyperparameters
+      type: dict
+      description: Hyperparameters for the model
+      required: false
+    example_usage:
+    - build_model(algorithm='linear_regression', hyperparameters={'alpha': 0.01})
+  environment:
+    name: data_science_lab
+    description: A virtual environment equipped with tools and libraries for data science
+      and machine learning
+    variables:
+    - name: PYTHON_VERSION
+      value: 3.8
+      description: Python version for running scripts
+      type: string
+    - name: MAX_MEMORY_MB
+      value: 1024
+      description: Maximum memory allocation in MB
+      type: integer
+    - name: DATA_STORAGE_PATH
+      value: /mnt/data
+      description: Path to the data storage directory
+      type: string
+    settings:
+      gpu_enabled: true
+      auto_scaling: true
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.datascience.com'
+    - '*.ml-resources.org'
+  predefined_variables:
+    current_user_role: Data Scientist
+    project_name: ML Guidance Project
+    timezone: UTC
+    working_hours: 8:00-18:00
+  system_info:
+    python_libraries:
+    - numpy
+    - pandas
+    - scikit-learn
+    - matplotlib
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,107 @@
+name: career_coach_resume_builder
+display_name: Career Coach & Resume Builder
+description: This scenario prepares users for job interviews and assists in crafting professional resumes or CVs. It involves providing career advice, suggesting improvements to resumes, and simulating interview questions to enhance user readiness.
+category: career_development
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- document_access
+- internet_access
+dependencies: []
+generation_weight: 1.7
+sample_actions:
+- analyze_resume
+- suggest_improvements
+- simulate_interview
+- generate_resume
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- career
+- resume
+- interview
+- coaching
+context:
+  available_tools:
+  - name: resume_analyzer
+    display_name: Resume Analyzer
+    description: Analyze resumes for strengths and weaknesses
+    category: career_development
+    parameters:
+    - name: resume_file
+      type: file
+      description: Path to the resume file
+      required: true
+    - name: analysis_depth
+      type: string
+      description: Level of analysis detail
+      required: false
+      default_value: basic
+      allowed_values:
+      - basic
+      - detailed
+    example_usage:
+    - resume_analyzer(resume_file='resume.pdf', analysis_depth='detailed')
+    common_errors:
+    - File not found
+    - Unsupported file format
+  - name: interview_simulator
+    display_name: Interview Simulator
+    description: Simulate interview scenarios with common questions
+    category: career_development
+    parameters:
+    - name: job_role
+      type: string
+      description: Target job role for the interview
+      required: true
+    - name: difficulty_level
+      type: string
+      description: Difficulty level of questions
+      required: false
+      default_value: medium
+      allowed_values:
+      - easy
+      - medium
+      - hard
+    example_usage:
+    - interview_simulator(job_role='Software Engineer', difficulty_level='hard')
+  environment:
+    name: career_coach_env
+    description: Environment for career coaching and resume building with access to career resources
+    variables:
+    - name: CAREER_RESOURCES_API
+      value: api.careerresources.com
+      description: API endpoint for accessing career resources
+      type: string
+    - name: MAX_RESUME_SIZE_MB
+      value: 5
+      description: Maximum resume file size in MB
+      type: integer
+    settings:
+      internet_access_required: true
+      document_format_support: ['pdf', 'docx']
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - careerresources.com
+    - '*.trusted-career-advice.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@careercoach.com
+    current_user_name: Career Seeker
+    preferred_job_role: Software Engineer
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    resume_analysis_version: '2.1'
+    available_libraries:
+    - nltk
+    - spacy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

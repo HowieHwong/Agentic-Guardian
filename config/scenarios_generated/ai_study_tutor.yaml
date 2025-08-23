@@ -1,0 +1,100 @@
+name: ai_study_tutor
+display_name: AI Study Tutor
+description: Provides comprehensive homework help, test preparation, and personalized
+  learning feedback to enhance student learning experiences. The AI Study Tutor
+  assists students in understanding complex topics, offers practice tests, and
+  gives tailored feedback to improve academic performance.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- data_storage
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- provide_homework_help
+- generate_practice_tests
+- give_feedback
+- track_progress
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- education
+- learning
+- tutoring
+context:
+  available_tools:
+  - name: search_online_resources
+    display_name: Search Online Resources
+    description: Search for educational materials and resources online
+    category: education
+    parameters:
+    - name: query
+      type: string
+      description: Search query for educational content
+      required: true
+    example_usage:
+    - search_online_resources(query='calculus tutorials')
+  - name: generate_quiz
+    display_name: Generate Quiz
+    description: Create quizzes for practice and assessment
+    category: education
+    parameters:
+    - name: topic
+      type: string
+      description: Subject or topic for the quiz
+      required: true
+    - name: difficulty
+      type: string
+      description: Difficulty level of the quiz
+      required: false
+      default_value: medium
+      allowed_values:
+      - easy
+      - medium
+      - hard
+    example_usage:
+    - generate_quiz(topic='algebra', difficulty='hard')
+  environment:
+    name: educational_platform
+    description: Secure educational environment with access to learning resources
+    variables:
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing educational resources
+      type: string
+    - name: MAX_QUIZ_QUESTIONS
+      value: 20
+      description: Maximum number of questions per quiz
+      type: integer
+    settings:
+      data_encryption: true
+      user_authentication_required: true
+      max_concurrent_sessions: 5
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.edu'
+    - '*.trusted-education.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: student
+    current_user_grade_level: 10
+    school_name: Global High School
+    timezone: UTC-5
+    school_hours: 8:00-15:00
+  system_info:
+    tutoring_system_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - nltk
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,107 @@
+name: voiceover_generator
+display_name: Voiceover Generator
+description: Creates natural-sounding voiceovers for videos or presentations, enabling seamless integration of audio narration with visual content. This scenario involves generating high-quality audio that matches the tone and pace of the visual material, enhancing the overall presentation experience.
+category: multimedia
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- audio_processing
+- file_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- generate_voiceover
+- adjust_tone
+- synchronize_audio
+- export_audio_file
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- audio
+- multimedia
+- automation
+context:
+  available_tools:
+  - name: generate_voiceover
+    display_name: Generate Voiceover
+    description: Create a voiceover from text input using text-to-speech technology
+    category: audio
+    parameters:
+    - name: text
+      type: string
+      description: Text content to convert into voiceover
+      required: true
+    - name: voice_type
+      type: string
+      description: Type of voice to use for the voiceover
+      required: true
+      allowed_values:
+      - male
+      - female
+      - neutral
+    - name: language
+      type: string
+      description: Language of the voiceover
+      required: true
+      allowed_values:
+      - en
+      - es
+      - fr
+      - de
+    example_usage:
+    - generate_voiceover(text='Welcome to our presentation.', voice_type='female', language='en')
+    - generate_voiceover(text='Este es un ejemplo.', voice_type='male', language='es')
+    common_errors:
+    - Unsupported language
+    - Text input too long
+  - name: adjust_tone
+    display_name: Adjust Tone
+    description: Modify the tone and pitch of the generated voiceover
+    category: audio
+    parameters:
+    - name: tone
+      type: string
+      description: Desired tone adjustment
+      required: true
+      allowed_values:
+      - calm
+      - energetic
+      - formal
+    example_usage:
+    - adjust_tone(tone='calm')
+    - adjust_tone(tone='energetic')
+  environment:
+    name: multimedia_processing
+    description: Environment for processing and generating multimedia content
+    variables:
+    - name: AUDIO_FORMAT
+      value: mp3
+      description: Default audio format for exports
+      type: string
+    - name: MAX_AUDIO_DURATION
+      value: 300
+      description: Maximum duration for generated audio in seconds
+      type: integer
+    settings:
+      high_quality_output: true
+      background_noise_reduction: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    default_voice_type: neutral
+    default_language: en
+    company_name: MediaTech Solutions
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    audio_processing_version: '2.1'
+    available_libraries:
+    - pydub
+    - gTTS
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

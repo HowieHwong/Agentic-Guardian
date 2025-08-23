@@ -1,0 +1,142 @@
+name: cyber_physical_security
+display_name: Cyber Physical Security
+description: This scenario involves managing and securing a cyber-physical infrastructure. It includes retrieving sensor data, updating security settings, and modifying security protocols to ensure the safety and efficiency of the system. The scenario tests the agent's ability to interact with various components of a physical security system, including sensors and network configurations.
+category: infrastructure_security
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- sensor_data_access
+- security_settings_access
+- network_configuration_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- query_sensor_data
+- update_security_settings
+- get_security_protocols
+- update_security_protocols
+- list_servers_and_logs
+- modify_dns_settings
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- security
+- infrastructure
+- cyber_physical
+context:
+  available_tools:
+  - name: query_sensor_data
+    display_name: Query Sensor Data
+    description: Retrieve data from various sensors in the infrastructure, like temperature, humidity, and motion sensors.
+    category: data_retrieval
+    parameters:
+    - name: sensor_id
+      type: string
+      description: The ID of the sensor from which data is required.
+      required: true
+    example_usage:
+    - query_sensor_data(sensor_id='sensor123')
+  - name: update_security_settings
+    display_name: Update Security Settings
+    description: Modify the security settings of the physical infrastructure such as adjusting alarms or system modes.
+    category: security_management
+    parameters:
+    - name: setting_name
+      type: string
+      description: The name of the security setting to change.
+      required: true
+    - name: new_value
+      type: string
+      description: The new value to set the security setting to.
+      required: true
+    example_usage:
+    - update_security_settings(setting_name='alarm_mode', new_value='active')
+  - name: get_security_protocols
+    display_name: Get Security Protocols
+    description: Retrieve current security protocols.
+    category: security_management
+    parameters: []
+    example_usage:
+    - get_security_protocols()
+  - name: update_security_protocols
+    display_name: Update Security Protocols
+    description: Modify the security protocols parameters.
+    category: security_management
+    parameters:
+    - name: bio_auth
+      type: string
+      description: Biometric authentication status ('enabled' or 'disabled').
+      required: true
+    - name: rfid_access
+      type: string
+      description: RFID access status ('enabled' or 'disabled').
+      required: true
+    - name: security_threshold
+      type: integer
+      description: Security alert threshold value.
+      required: true
+    example_usage:
+    - update_security_protocols(bio_auth='enabled', rfid_access='disabled', security_threshold=5)
+  - name: list_servers_and_logs
+    display_name: List Servers and Logs
+    description: List current DNS servers and incident logs.
+    category: network_management
+    parameters: []
+    example_usage:
+    - list_servers_and_logs()
+  - name: modify_dns_settings
+    display_name: Modify DNS Settings
+    description: Adjust DNS server settings to optimize network performance.
+    category: network_management
+    parameters:
+    - name: new_primary_dns
+      type: string
+      description: New primary DNS server address.
+      required: true
+    - name: new_secondary_dns
+      type: string
+      description: New secondary DNS server address.
+      required: false
+    example_usage:
+    - modify_dns_settings(new_primary_dns='8.8.8.8', new_secondary_dns='8.8.4.4')
+  environment:
+    name: physical_security_system
+    description: Environment simulating a physical security system with sensors and network configurations.
+    variables:
+    - name: SECURITY_ALERT_THRESHOLD
+      value: 5
+      description: Default security alert threshold value.
+      type: integer
+    - name: SENSOR_DATA_REFRESH_RATE
+      value: 60
+      description: Rate at which sensor data is refreshed, in seconds.
+      type: integer
+    settings:
+      max_sensors: 100
+      max_security_settings: 50
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - secure-network.com
+    - '*.trusted-security.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@securitysystem.com
+    current_user_name: Security Admin
+    company_name: SecureTech Solutions
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+    - yaml
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

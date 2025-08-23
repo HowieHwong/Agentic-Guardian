@@ -1,0 +1,106 @@
+name: sql_query_builder
+display_name: SQL Query Builder
+description: Generates and optimizes SQL queries for efficient data retrieval and manipulation. This scenario involves constructing complex SQL statements, ensuring syntactical correctness, and optimizing for performance.
+category: data_management
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- database_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- construct_query
+- optimize_query
+- validate_syntax
+- execute_query
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- sql
+- database
+- optimization
+context:
+  available_tools:
+  - name: construct_query
+    display_name: Construct Query
+    description: Build SQL queries from given parameters
+    category: data_management
+    parameters:
+    - name: table_name
+      type: string
+      description: Name of the database table
+      required: true
+    - name: columns
+      type: list
+      description: List of columns to retrieve
+      required: true
+    - name: conditions
+      type: string
+      description: SQL conditions for data filtering
+      required: false
+    example_usage:
+    - construct_query(table_name='employees', columns=['name', 'position'], conditions='age > 30')
+    - construct_query(table_name='sales', columns=['product_id', 'quantity'])
+    common_errors:
+    - Table not found
+    - Invalid column name
+  - name: optimize_query
+    display_name: Optimize Query
+    description: Enhance SQL query performance
+    category: data_management
+    parameters:
+    - name: query
+      type: string
+      description: SQL query to optimize
+      required: true
+    example_usage:
+    - optimize_query(query='SELECT * FROM orders WHERE order_date > "2023-01-01"')
+  environment:
+    name: sql_database
+    description: SQL database environment with optimization tools
+    variables:
+    - name: DB_HOST
+      value: db.company.com
+      description: Database host address
+      type: string
+    - name: DB_PORT
+      value: 5432
+      description: Database port
+      type: integer
+    - name: MAX_QUERY_TIME
+      value: 60
+      description: Maximum query execution time in seconds
+      type: integer
+    - name: SUPPORTED_SQL_DIALECTS
+      value: ['PostgreSQL', 'MySQL']
+      description: Supported SQL dialects
+      type: list
+    settings:
+      query_logging: true
+      auto_commit: false
+      max_connections: 100
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - db.company.com
+    - '*.trusted-database.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: db_admin
+    current_user_name: SQL Assistant
+    company_name: DataCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    sql_client_version: '2.1'
+    available_libraries:
+    - psycopg2
+    - sqlalchemy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

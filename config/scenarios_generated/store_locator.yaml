@@ -1,0 +1,99 @@
+name: store_locator
+display_name: Store Locator
+description: Helps customers find the nearest store based on their location. This scenario involves using geolocation data to identify and suggest the closest physical store locations to the user, enhancing customer convenience and experience.
+category: location_services
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- location_access
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- get_user_location
+- find_nearest_store
+- provide_directions
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- location
+- store
+- customer_service
+context:
+  available_tools:
+  - name: get_user_location
+    display_name: Get User Location
+    description: Retrieve the current geographical location of the user
+    category: location_services
+    parameters:
+    - name: accuracy
+      type: string
+      description: Desired accuracy of the location data
+      required: false
+      allowed_values:
+      - high
+      - medium
+      - low
+    example_usage:
+    - get_user_location(accuracy='high')
+    common_errors:
+    - Location services disabled
+    - Permission denied
+  - name: find_nearest_store
+    display_name: Find Nearest Store
+    description: Identify the closest store based on the user's current location
+    category: location_services
+    parameters:
+    - name: location
+      type: coordinates
+      description: User's current location coordinates
+      required: true
+    - name: store_type
+      type: string
+      description: Type of store to locate
+      required: false
+      allowed_values:
+      - grocery
+      - electronics
+      - clothing
+    example_usage:
+    - find_nearest_store(location=(37.7749, -122.4194), store_type='grocery')
+  environment:
+    name: retail_locator
+    description: Environment for locating retail stores with geolocation services
+    variables:
+    - name: GEO_API_KEY
+      value: your_api_key_here
+      description: API key for geolocation services
+      type: string
+    - name: MAX_SEARCH_RADIUS
+      value: 50
+      description: Maximum search radius in kilometers
+      type: integer
+    settings:
+      location_accuracy: high
+      max_results: 10
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.maps-api.com'
+    - '*.store-locator.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    default_store_type: grocery
+    default_search_radius_km: 10
+    timezone: UTC-5
+    business_hours: 8:00-20:00
+  system_info:
+    location_service_version: '2.1'
+    available_libraries:
+    - geopy
+    - requests
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

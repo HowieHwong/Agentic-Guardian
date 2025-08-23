@@ -1,0 +1,95 @@
+name: history_fact_finder
+display_name: History Fact Finder
+description: The agent answers history questions, creates timelines, and suggests further reading. It is designed to assist users in exploring historical events, understanding their context, and discovering additional resources for in-depth study.
+category: education
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- search_history
+- create_timeline
+- suggest_reading
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- history
+- education
+- research
+context:
+  available_tools:
+  - name: search_history
+    display_name: Search History
+    description: Search for historical facts and events
+    category: research
+    parameters:
+    - name: query
+      type: string
+      description: Search query for historical information
+      required: true
+    example_usage:
+    - search_history(query='World War II')
+    - search_history(query='Renaissance art')
+    common_errors:
+    - No results found for query
+    - Query too broad
+  - name: create_timeline
+    display_name: Create Timeline
+    description: Generate a timeline of events based on a given topic
+    category: organization
+    parameters:
+    - name: topic
+      type: string
+      description: Topic for timeline creation
+      required: true
+    - name: start_year
+      type: integer
+      description: Starting year for the timeline
+      required: false
+    - name: end_year
+      type: integer
+      description: Ending year for the timeline
+      required: false
+    example_usage:
+    - create_timeline(topic='Industrial Revolution', start_year=1760, end_year=1840)
+  environment:
+    name: historical_research
+    description: Environment optimized for historical research and data retrieval
+    variables:
+    - name: API_ENDPOINT
+      value: api.historydata.com
+      description: API endpoint for historical data
+      type: string
+    - name: MAX_RESULTS
+      value: 100
+      description: Maximum number of search results
+      type: integer
+    settings:
+      data_cache_enabled: true
+      max_query_length: 256
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - historydata.com
+    - '*.edu'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: History Enthusiast
+    preferred_era: Modern History
+    timezone: UTC
+    research_hours: 8:00-18:00
+  system_info:
+    research_tool_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

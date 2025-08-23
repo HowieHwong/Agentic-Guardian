@@ -1,0 +1,104 @@
+name: crop_disease_notifier
+display_name: Crop Disease Notifier
+description: The Crop Disease Notifier monitors environmental conditions and disease risk factors to alert farmers about potential crop diseases. This scenario involves analyzing weather data, soil conditions, and historical disease patterns to provide timely notifications and recommendations to farmers, helping them take preventive measures to protect their crops.
+category: agriculture
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- weather_data_access
+- soil_data_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_weather_data
+- assess_soil_conditions
+- notify_farmer
+- recommend_preventive_action
+metadata:
+  selection_way: targeted
+  selection_num: 10
+tags:
+- agriculture
+- disease_prevention
+- monitoring
+context:
+  available_tools:
+  - name: fetch_weather_data
+    display_name: Fetch Weather Data
+    description: Retrieve current and forecasted weather data for analysis
+    category: data_collection
+    parameters:
+    - name: location
+      type: string
+      description: Geographic location for weather data
+      required: true
+    - name: date_range
+      type: string
+      description: Date range for weather data
+      required: false
+    example_usage:
+    - "fetch_weather_data(location='Farmville', date_range='2023-10-01 to 2023-10-07')"
+  - name: analyze_soil_data
+    display_name: Analyze Soil Data
+    description: Analyze soil conditions to assess disease risk
+    category: data_analysis
+    parameters:
+    - name: soil_samples
+      type: list
+      description: List of soil sample data
+      required: true
+    example_usage:
+    - "analyze_soil_data(soil_samples=[{'pH': 6.5, 'moisture': 20}])"
+  - name: send_alert
+    display_name: Send Alert
+    description: Send an alert to farmers about potential disease risks
+    category: communication
+    parameters:
+    - name: farmer_contact
+      type: string
+      description: Contact information of the farmer
+      required: true
+    - name: alert_message
+      type: string
+      description: Message content for the alert
+      required: true
+    example_usage:
+    - "send_alert(farmer_contact='farmer@example.com', alert_message='High risk of blight detected.')"
+  environment:
+    name: agricultural_monitoring
+    description: Environment for monitoring agricultural conditions and disease risks
+    variables:
+    - name: WEATHER_API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing weather data services
+      type: string
+    - name: SOIL_DATA_SOURCE
+      value: 'local_sensor_network'
+      description: Source of soil data
+      type: string
+    settings:
+      data_refresh_rate: 60 # in minutes
+      alert_threshold: 0.7 # risk level threshold for sending alerts
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - weatherapi.com
+    - soil-data.org
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: agricultural_analyst
+    region_of_interest: Midwest
+    alert_frequency: daily
+  system_info:
+    monitoring_system_version: '2.1'
+    available_libraries:
+    - requests
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

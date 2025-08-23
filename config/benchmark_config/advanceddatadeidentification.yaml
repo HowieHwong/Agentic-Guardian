@@ -1,0 +1,100 @@
+name: advanced_data_deidentification
+display_name: Advanced Data De-identification
+description: This scenario involves de-identifying sensitive information in datasets, particularly medical datasets, to protect privacy while maintaining data utility. It includes processes for de-identifying specific columns, applying de-identification methodologies, assessing data utility, and managing datasets for research purposes.
+category: data_privacy
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- dataset_access
+- data_transformation_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- deidentify_data
+- apply_deidentified_transformation
+- assess_data_utility
+- return_data
+- list_datasets
+- deidentify_dataset
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- data_privacy
+- deidentification
+- medical_data
+context:
+  available_tools:
+  - name: deidentify_data
+    display_name: De-identify Data
+    description: De-identify specified columns in a dataset to protect sensitive information.
+    category: data_privacy
+    parameters:
+    - name: columns
+      type: list
+      description: List of column names to be de-identified.
+      required: true
+    example_usage:
+    - deidentify_data(columns=['patient_id', 'ssn'])
+  - name: apply_deidentified_transformation
+    display_name: Apply De-identified Transformation
+    description: Apply de-identification methodologies to medical datasets.
+    category: data_privacy
+    parameters:
+    - name: dataset_name
+      type: string
+      description: The name of the dataset to be de-identified.
+      required: true
+    example_usage:
+    - apply_deidentified_transformation(dataset_name='medical_records')
+  - name: assess_data_utility
+    display_name: Assess Data Utility
+    description: Evaluate if the de-identified dataset meets utility requirements for research.
+    category: data_privacy
+    parameters:
+    - name: dataset_name
+      type: string
+      description: The name of the dataset to assess.
+      required: true
+    example_usage:
+    - assess_data_utility(dataset_name='anonymized_dataset')
+  environment:
+    name: data_processing_platform
+    description: Platform environment for processing and managing datasets with privacy tools.
+    variables:
+    - name: DATA_RETENTION_POLICY_URL
+      value: 'https://www.example.com/data-retention-policy'
+      description: URL to the data retention policy page
+      type: string
+    - name: MAX_DATASET_SIZE_MB
+      value: 500
+      description: Maximum size of datasets allowed for processing
+      type: integer
+    settings:
+      deidentification_method: k-anonymity
+      max_columns_per_deidentification: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-data-provider.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: data.analyst@example.com
+    current_user_name: Data Analyst
+    company_name: HealthData Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - pandas
+    - numpy
+    - sklearn
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

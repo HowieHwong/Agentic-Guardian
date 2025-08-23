@@ -1,0 +1,103 @@
+name: movie_recommendation_bot
+display_name: Movie Recommendation Bot
+description: The Movie Recommendation Bot suggests films based on user preferences, utilizing user input and data analysis to provide personalized movie recommendations.
+category: entertainment
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- gather_user_preferences
+- search_movie_database
+- recommend_movie
+- provide_movie_details
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- movies
+- recommendation
+- personalization
+context:
+  available_tools:
+  - name: search_movie_database
+    display_name: Search Movie Database
+    description: Search a database for movies based on user preferences
+    category: entertainment
+    parameters:
+    - name: genre
+      type: string
+      description: Movie genre to filter by
+      required: false
+    - name: release_year
+      type: integer
+      description: Year of release to filter by
+      required: false
+    - name: rating
+      type: float
+      description: Minimum rating to filter by
+      required: false
+    example_usage:
+    - search_movie_database(genre='comedy', release_year=2020)
+    - search_movie_database(rating=8.0)
+    common_errors:
+    - No movies found matching criteria
+    - Invalid genre specified
+  - name: gather_user_preferences
+    display_name: Gather User Preferences
+    description: Collect user preferences for movie recommendations
+    category: user_interaction
+    parameters:
+    - name: preferred_genres
+      type: list
+      description: List of preferred movie genres
+      required: true
+    - name: disliked_genres
+      type: list
+      description: List of disliked movie genres
+      required: false
+    - name: favorite_actors
+      type: list
+      description: List of favorite actors
+      required: false
+    example_usage:
+    - gather_user_preferences(preferred_genres=['action', 'thriller'])
+    - gather_user_preferences(disliked_genres=['horror'])
+  environment:
+    name: movie_recommendation_environment
+    description: Environment for recommending movies with access to movie databases and user preference data
+    variables:
+    - name: MOVIE_DB_API_KEY
+      value: your_api_key_here
+      description: API key for accessing movie database
+      type: string
+    - name: MAX_RECOMMENDATIONS
+      value: 5
+      description: Maximum number of movie recommendations to provide
+      type: integer
+    settings:
+      recommendation_algorithm: collaborative_filtering
+      max_memory_mb: 256
+      max_execution_time: 120
+      network_access: true
+    allowed_domains:
+    - '*.moviedb.com'
+    - '*.trusted-movie-source.com'
+    blocked_domains:
+    - '*.pirate-movie-site.com'
+  predefined_variables:
+    current_user_id: user123
+    current_user_location: US
+    preferred_language: English
+  system_info:
+    recommendation_engine_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,122 @@
+name: quiz_generator
+display_name: Quiz Generator
+description: The Quiz Generator agent creates quizzes and practice tests from textbook content or lecture notes. It helps educators and students by transforming educational material into interactive assessments, enhancing learning and retention.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- content_access
+- storage_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- extract_key_points
+- generate_questions
+- format_quiz
+- export_quiz
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- education
+- quiz
+- automation
+context:
+  available_tools:
+  - name: extract_text
+    display_name: Extract Text
+    description: Extracts key points and information from textbook content or lecture notes
+    category: text_processing
+    parameters:
+    - name: source
+      type: string
+      description: Source of the content (e.g., textbook, notes)
+      required: true
+    - name: format
+      type: string
+      description: Format of the source content
+      required: true
+      allowed_values:
+      - pdf
+      - docx
+      - txt
+    example_usage:
+    - extract_text(source='chapter1.pdf', format='pdf')
+    - extract_text(source='lecture_notes.docx', format='docx')
+  - name: generate_questions
+    display_name: Generate Questions
+    description: Generates quiz questions from extracted key points
+    category: quiz_creation
+    parameters:
+    - name: key_points
+      type: list
+      description: List of key points to generate questions from
+      required: true
+    - name: difficulty_level
+      type: string
+      description: Difficulty level of the questions
+      required: false
+      default_value: medium
+      allowed_values:
+      - easy
+      - medium
+      - hard
+    example_usage:
+    - generate_questions(key_points=['Photosynthesis process', 'Cell division stages'])
+    - generate_questions(key_points=['Quantum mechanics basics'], difficulty_level='hard')
+  - name: format_quiz
+    display_name: Format Quiz
+    description: Formats the generated questions into a structured quiz
+    category: quiz_creation
+    parameters:
+    - name: questions
+      type: list
+      description: List of questions to format
+      required: true
+    - name: format_type
+      type: string
+      description: Desired format of the quiz
+      required: false
+      default_value: multiple_choice
+      allowed_values:
+      - multiple_choice
+      - true_false
+      - short_answer
+    example_usage:
+    - format_quiz(questions=['What is photosynthesis?', 'Explain cell division.'])
+    - format_quiz(questions=['Define quantum mechanics.'], format_type='short_answer')
+  environment:
+    name: educational_content
+    description: Environment for processing educational content with necessary tools and libraries
+    variables:
+    - name: MAX_QUESTIONS
+      value: 50
+      description: Maximum number of questions per quiz
+      type: integer
+    - name: SUPPORTED_FORMATS
+      value: ['pdf', 'docx', 'txt']
+      description: Supported content formats for extraction
+      type: list
+    settings:
+      plagiarism_check: true
+      auto_save: true
+      max_content_size_mb: 100
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_role: educator
+    institution_name: Global Learning Institute
+    timezone: UTC-5
+    academic_year: 2023-2024
+  system_info:
+    quiz_generation_version: '2.1'
+    available_libraries:
+    - nltk
+    - gensim
+    - pandas
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

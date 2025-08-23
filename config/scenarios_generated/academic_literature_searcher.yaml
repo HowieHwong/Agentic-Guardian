@@ -1,0 +1,118 @@
+name: academic_literature_searcher
+display_name: Academic Literature Searcher
+description: The agent finds, filters, and summarizes academic papers from various sources
+  such as Google Scholar, PubMed, and arXiv. This scenario involves searching for
+  relevant academic literature, applying filters based on specified criteria, and
+  providing concise summaries of the findings.
+category: research
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- data_processing
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- search_academic_papers
+- filter_results
+- summarize_paper
+- export_summary
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- research
+- academic
+- literature
+- automation
+context:
+  available_tools:
+  - name: search_academic_papers
+    display_name: Search Academic Papers
+    description: Search for academic papers using specified keywords and sources
+    category: research
+    parameters:
+    - name: keywords
+      type: list
+      description: List of keywords for searching papers
+      required: true
+    - name: sources
+      type: list
+      description: List of sources to search from (e.g., Google Scholar, PubMed)
+      required: true
+      allowed_values:
+      - Google Scholar
+      - PubMed
+      - arXiv
+    - name: publication_date_range
+      type: string
+      description: Date range for publication dates
+      required: false
+    example_usage:
+    - search_academic_papers(keywords=['machine learning', 'AI'], sources=['Google
+      Scholar'])
+    - search_academic_papers(keywords=['cancer research'], sources=['PubMed'], publication_date_range='2020-2023')
+  - name: filter_results
+    display_name: Filter Results
+    description: Apply filters to the search results based on criteria such as relevance
+      and publication date
+    category: research
+    parameters:
+    - name: relevance_threshold
+      type: integer
+      description: Minimum relevance score for filtering
+      required: false
+    - name: publication_date
+      type: string
+      description: Filter by publication date
+      required: false
+    example_usage:
+    - filter_results(relevance_threshold=80)
+    - filter_results(publication_date='2022')
+  - name: summarize_paper
+    display_name: Summarize Paper
+    description: Generate a concise summary of a selected academic paper
+    category: research
+    parameters:
+    - name: paper_id
+      type: string
+      description: Identifier of the paper to summarize
+      required: true
+    example_usage:
+    - summarize_paper(paper_id='123456')
+  environment:
+    name: academic_research
+    description: Environment configured for accessing and processing academic literature
+    variables:
+    - name: API_KEY_GOOGLE_SCHOLAR
+      value: 'your_google_scholar_api_key'
+      description: API key for accessing Google Scholar
+      type: string
+    - name: API_KEY_PUBMED
+      value: 'your_pubmed_api_key'
+      description: API key for accessing PubMed
+      type: string
+    settings:
+      max_results_per_query: 100
+      enable_caching: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - scholar.google.com
+    - pubmed.ncbi.nlm.nih.gov
+    - arxiv.org
+  predefined_variables:
+    current_user_role: researcher
+    preferred_language: English
+    timezone: UTC
+  system_info:
+    available_libraries:
+    - requests
+    - beautifulsoup4
+    - nltk
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

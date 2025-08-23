@@ -1,0 +1,92 @@
+name: real_estate_assistant
+display_name: Real Estate Assistant
+description: Assists real estate agents by generating scripts based on requirements, listing detailed information about properties, and managing property shortlists for client recommendations. Enhances the efficiency and effectiveness of real estate operations.
+category: real_estate_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- property_data_access
+- script_generation_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- generate_script
+- list_properties
+- shortlist_property
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- real_estate
+- property_management
+- client_services
+context:
+  available_tools:
+  - name: gen_script
+    display_name: Generate Script
+    description: Create a script following specific requirements
+    category: script_generation
+    parameters:
+    - name: requirements
+      type: string
+      description: A piece of text which describes the functions of the script
+      required: true
+    example_usage:
+    - gen_script(requirements='Create a script to automate property listing updates')
+  - name: list_properties
+    display_name: List Properties
+    description: Retrieve and display detailed information about all properties
+    category: property_management
+    parameters: []
+    example_usage:
+    - list_properties()
+  - name: shortlist_property
+    display_name: Shortlist Property
+    description: Add a property to the shortlist for potential recommendation to the client
+    category: client_services
+    parameters:
+    - name: property_id
+      type: string
+      description: The ID of the property to be shortlisted
+      required: true
+    example_usage:
+    - shortlist_property(property_id='prop123')
+  environment:
+    name: real_estate_platform
+    description: Platform environment for managing real estate operations and client interactions
+    variables:
+    - name: PROPERTY_DATABASE_URL
+      value: 'https://www.realestateplatform.com/properties'
+      description: URL to access the property database
+      type: string
+    - name: MAX_SHORTLIST_ITEMS
+      value: 10
+      description: Maximum number of properties allowed in the shortlist
+      type: integer
+    settings:
+      script_format: Markdown
+      max_properties_per_page: 20
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - realestateplatform.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-site.com'
+  predefined_variables:
+    current_user_email: agent@example.com
+    current_user_name: Real Estate Agent
+    company_name: RealtyGroup Inc.
+    timezone: UTC-6
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

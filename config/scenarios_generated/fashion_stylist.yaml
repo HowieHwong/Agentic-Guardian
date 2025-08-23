@@ -1,0 +1,99 @@
+name: fashion_stylist
+display_name: Fashion Stylist
+description: The Fashion Stylist agent recommends outfits based on user preferences, current fashion trends, and seasonal styles. It aims to enhance user wardrobe choices by providing personalized fashion advice and suggestions.
+category: lifestyle
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- internet_access
+- user_profile_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_user_preferences
+- fetch_trend_data
+- recommend_outfit
+- suggest_accessories
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- fashion
+- lifestyle
+- personalization
+context:
+  available_tools:
+  - name: analyze_preferences
+    display_name: Analyze Preferences
+    description: Analyze user preferences to tailor fashion recommendations
+    category: data_analysis
+    parameters:
+    - name: user_data
+      type: object
+      description: User profile data including past preferences
+      required: true
+    example_usage:
+    - "analyze_preferences(user_data={'style': 'casual', 'colors': ['blue', 'black']})"
+  - name: fetch_trends
+    display_name: Fetch Trends
+    description: Fetch current fashion trends from online sources
+    category: data_fetching
+    parameters:
+    - name: season
+      type: string
+      description: Current fashion season
+      required: true
+    example_usage:
+    - "fetch_trends(season='spring')"
+  - name: recommend_outfit
+    display_name: Recommend Outfit
+    description: Recommend an outfit based on analyzed preferences and trends
+    category: recommendation
+    parameters:
+    - name: preferences
+      type: object
+      description: Analyzed user preferences
+      required: true
+    - name: trends
+      type: object
+      description: Current fashion trends
+      required: true
+    example_usage:
+    - "recommend_outfit(preferences={'style': 'casual'}, trends={'colors': ['green', 'white']})"
+  environment:
+    name: fashion_advisor
+    description: Fashion advisory environment with access to trend databases and user profiles
+    variables:
+    - name: TREND_API_URL
+      value: api.fashiontrends.com
+      description: API endpoint for fetching fashion trends
+      type: string
+    - name: MAX_RECOMMENDATIONS
+      value: 5
+      description: Maximum number of outfit recommendations
+      type: integer
+    settings:
+      data_refresh_interval: 24
+      max_user_profiles: 1000
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - fashiontrends.com
+    - '*.trusted-fashion-source.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_style: casual
+    current_season: spring
+    preferred_colors: ['blue', 'black']
+  system_info:
+    fashion_advisor_version: '1.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

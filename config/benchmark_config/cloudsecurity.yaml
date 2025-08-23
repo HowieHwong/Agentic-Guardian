@@ -1,0 +1,140 @@
+name: cloud_security
+display_name: Cloud Security Management
+description: This scenario involves managing security policies in a cloud environment. It includes creating, updating, and managing security policies such as whitelists and blacklists, as well as handling domain blocking and unblocking. The scenario is designed to ensure robust security measures are in place to protect cloud resources from unauthorized access and potential threats.
+category: security_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- policy_management_access
+- log_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- create_policy
+- update_policy
+- get_log_details
+- unblock_domains
+- block_domains
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- security
+- cloud_management
+- policy_management
+context:
+  available_tools:
+  - name: create_policy
+    display_name: Create Policy
+    description: Create a new security policy in the cloud environment
+    category: security_management
+    parameters:
+    - name: policy_name
+      type: string
+      description: The name of the policy
+      required: true
+    - name: policy_type
+      type: string
+      description: The type of the policy. One of ['whitelist', 'blacklist']
+      required: true
+    - name: domains
+      type: list
+      description: List of domains to be added to the policy
+      required: false
+    example_usage:
+    - create_policy(policy_name='NewPolicy', policy_type='whitelist', domains=['example.com', 'trusted.com'])
+  - name: update_policy
+    display_name: Update Policy
+    description: Update an existing security policy
+    category: security_management
+    parameters:
+    - name: policy_id
+      type: string
+      description: The unique identifier of the policy to be updated
+      required: true
+    - name: policy_name
+      type: string
+      description: The new name of the policy
+      required: false
+    - name: policy_type
+      type: string
+      description: The new type of the policy. One of ['whitelist', 'blacklist']
+      required: false
+    - name: domains
+      type: list
+      description: List of domains to be added to the policy
+      required: false
+    example_usage:
+    - update_policy(policy_id='12345', policy_name='UpdatedPolicy', policy_type='blacklist', domains=['malicious.com'])
+  - name: get_log_details
+    display_name: Get Log Details
+    description: Retrieve detailed information about a specific security log
+    category: security_management
+    parameters:
+    - name: log_id
+      type: string
+      description: The unique identifier of the log
+      required: true
+    example_usage:
+    - get_log_details(log_id='log123')
+  - name: unblock_domains
+    display_name: Unblock Domains
+    description: Unblock specified domains in the security policy
+    category: security_management
+    parameters:
+    - name: domains
+      type: list
+      description: List of domain URLs to unblock
+      required: true
+    example_usage:
+    - unblock_domains(domains=['example.com', 'trusted.com'])
+  - name: block_domains
+    display_name: Block Domains
+    description: Block specified domains in the security policy
+    category: security_management
+    parameters:
+    - name: domains
+      type: list
+      description: List of domain URLs to block
+      required: true
+    example_usage:
+    - block_domains(domains=['malicious.com', 'phishing.com'])
+  environment:
+    name: cloud_security_platform
+    description: Cloud platform environment with security management tools
+    variables:
+    - name: SECURITY_POLICY_URL
+      value: 'https://www.cloudsecurity.com/policies'
+      description: URL to the security policy management page
+      type: string
+    - name: MAX_DOMAINS_PER_POLICY
+      value: 100
+      description: Maximum number of domains allowed per policy
+      type: integer
+    settings:
+      policy_format: JSON
+      max_policies_per_user: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - cloudsecurity.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@cloudsecurity.com
+    current_user_name: Security Administrator
+    company_name: CloudSecurity Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

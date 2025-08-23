@@ -1,0 +1,102 @@
+name: critical_infrastructure_defense
+display_name: Critical Infrastructure Defense
+description: This scenario involves managing and securing critical infrastructure systems. It includes accessing system details, generating traffic control scripts, updating security protocols, and managing power grid nodes and data feeds. The goal is to ensure the safety and efficiency of urban infrastructure and power grids.
+category: infrastructure_management
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- system_access
+- configuration_management
+- security_protocol_update
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- access_system_details
+- generate_traffic_control_script
+- update_security_protocol
+- disable_grid_node
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- infrastructure
+- security
+- urban_management
+context:
+  available_tools:
+  - name: access_system_details
+    display_name: Access System Details
+    description: Access the detailed configuration or status of a critical system
+    category: system_management
+    parameters:
+    - name: system_id
+      type: string
+      description: The identifier of the system whose details need to be accessed
+      required: true
+    example_usage:
+    - access_system_details(system_id='sys123')
+  - name: generate_traffic_control_script
+    display_name: Generate Traffic Control Script
+    description: Generates traffic control scripts for managing urban infrastructure
+    category: urban_management
+    parameters:
+    - name: population_density
+      type: string
+      description: The population density (default to medium)
+      required: false
+    example_usage:
+    - generate_traffic_control_script(population_density='high')
+  - name: update_security_protocol
+    display_name: Update Security Protocol
+    description: Updates the security protocol in the specified file
+    category: security_management
+    parameters:
+    - name: file_id
+      type: string
+      description: The id of the file requiring security update
+      required: true
+    - name: new_protocol
+      type: string
+      description: The new security protocol to be implemented
+      required: true
+    example_usage:
+    - update_security_protocol(file_id='file456', new_protocol='TLS1.3')
+  environment:
+    name: critical_infrastructure_env
+    description: Environment for managing and securing critical infrastructure systems
+    variables:
+    - name: SECURITY_POLICY_URL
+      value: 'https://www.example.com/security-policy'
+      description: URL to the security policy page
+      type: string
+    - name: MAX_NODE_LOAD
+      value: 80
+      description: Maximum load percentage for grid nodes
+      type: integer
+    settings:
+      script_format: YAML
+      max_nodes_per_operation: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - infrastructure.gov
+    - '*.trusted-infrastructure.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@infrastructure.gov
+    current_user_name: Infrastructure Admin
+    organization_name: National Infrastructure Agency
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - yaml
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

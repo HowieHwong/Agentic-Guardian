@@ -1,0 +1,110 @@
+name: ethical_hacking_advisor
+display_name: Ethical Hacking Advisor
+description: Provides ethical hacking and cybersecurity guidance to organizations, helping them identify vulnerabilities and improve their security posture.
+category: cybersecurity
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- network_access
+- system_analysis
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- perform_vulnerability_scan
+- analyze_security_logs
+- recommend_security_measures
+- conduct_penetration_test
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- cybersecurity
+- ethical_hacking
+- security_advisory
+context:
+  available_tools:
+  - name: vulnerability_scanner
+    display_name: Vulnerability Scanner
+    description: Scan systems for known vulnerabilities
+    category: security
+    parameters:
+    - name: target_system
+      type: string
+      description: IP address or domain of the target system
+      required: true
+    - name: scan_depth
+      type: string
+      description: Depth of the scan
+      required: false
+      default_value: medium
+      allowed_values:
+      - light
+      - medium
+      - deep
+    example_usage:
+    - vulnerability_scanner(target_system='192.168.1.1', scan_depth='deep')
+    - vulnerability_scanner(target_system='example.com')
+    common_errors:
+    - Invalid target system format
+    - Network timeout
+  - name: security_log_analyzer
+    display_name: Security Log Analyzer
+    description: Analyze security logs for suspicious activities
+    category: security
+    parameters:
+    - name: log_file
+      type: string
+      description: Path to the security log file
+      required: true
+    - name: analysis_type
+      type: string
+      description: Type of analysis
+      required: false
+      default_value: comprehensive
+      allowed_values:
+      - quick
+      - comprehensive
+    example_usage:
+    - security_log_analyzer(log_file='/var/log/security.log', analysis_type='quick')
+    - security_log_analyzer(log_file='/var/log/security.log')
+  environment:
+    name: secure_network
+    description: A secure network environment for ethical hacking activities
+    variables:
+    - name: NETWORK_INTERFACE
+      value: eth0
+      description: Network interface for scanning
+      type: string
+    - name: MAX_SCAN_THREADS
+      value: 10
+      description: Maximum number of concurrent scan threads
+      type: integer
+    - name: LOG_RETENTION_DAYS
+      value: 30
+      description: Number of days to retain security logs
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+      max_memory_mb: 1024
+      max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-network.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_role: Security Analyst
+    organization_name: SecureTech Solutions
+    timezone: UTC
+    working_hours: 8:00-18:00
+  system_info:
+    security_tools_version: '2.3'
+    available_libraries:
+    - nmap
+    - logparser
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

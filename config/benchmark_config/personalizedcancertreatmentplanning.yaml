@@ -1,0 +1,112 @@
+name: personalized_cancer_treatment_planning
+display_name: Personalized Cancer Treatment Planning
+description: Assists in planning personalized cancer treatments by managing patient profiles, updating treatment plans, and handling treatment protocols. This scenario is designed to streamline the process of tailoring cancer treatments to individual patient needs, ensuring that the latest research and protocols are utilized effectively.
+category: healthcare
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- patient_data_access
+- treatment_protocol_management
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_research_papers
+- list_patient_profiles
+- update_treatment_plan
+- list_treatment_protocols
+- disable_protocol
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- healthcare
+- cancer_treatment
+- patient_management
+context:
+  available_tools:
+  - name: get_research_papers
+    display_name: Get Research Papers
+    description: Retrieve a list of recent research papers relevant to cancer treatment.
+    category: research
+    parameters: []
+    example_usage:
+    - get_research_papers()
+  - name: list_patient_profiles
+    display_name: List Patient Profiles
+    description: Lists all current patients and their details for review.
+    category: patient_management
+    parameters: []
+    example_usage:
+    - list_patient_profiles()
+  - name: update_treatment_plan
+    display_name: Update Treatment Plan
+    description: Updates the treatment plan for a specific patient based on new data or protocols.
+    category: treatment_management
+    parameters:
+    - name: patient_id
+      type: string
+      description: The unique ID of the patient.
+      required: true
+    - name: new_treatment_plan
+      type: string
+      description: The updated treatment plan for the patient.
+      required: true
+    example_usage:
+    - update_treatment_plan(patient_id='12345', new_treatment_plan='New Chemotherapy Protocol')
+  - name: list_treatment_protocols
+    display_name: List Treatment Protocols
+    description: List all available treatment protocols within the system.
+    category: protocol_management
+    parameters: []
+    example_usage:
+    - list_treatment_protocols()
+  - name: disable_protocol
+    display_name: Disable Protocol
+    description: Temporarily disable a specific treatment protocol.
+    category: protocol_management
+    parameters:
+    - name: protocol_id
+      type: string
+      description: The ID of the treatment protocol to be disabled.
+      required: true
+    example_usage:
+    - disable_protocol(protocol_id='protocol123')
+  environment:
+    name: healthcare_system
+    description: A secure healthcare system environment with access to patient data and treatment protocols.
+    variables:
+    - name: RESEARCH_API_URL
+      value: 'https://api.researchpapers.com'
+      description: URL to access the research papers API
+      type: string
+    - name: MAX_PATIENTS
+      value: 1000
+      description: Maximum number of patient profiles manageable
+      type: integer
+    settings:
+      treatment_plan_format: JSON
+      max_protocols_per_patient: 5
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - healthcare.com
+    - '*.trusted-medical.org'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: oncologist@healthcare.com
+    current_user_name: Oncologist
+    hospital_name: City Hospital
+    timezone: UTC-4
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

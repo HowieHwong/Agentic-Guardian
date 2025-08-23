@@ -1,0 +1,111 @@
+name: billing_query_bot
+display_name: Billing Query Bot
+description: |
+  The Billing Query Bot is designed to assist users by answering questions related
+  to billing inquiries, such as understanding bills, late fees, and payment plans.
+  It aims to provide accurate and timely information to help users manage their
+  financial obligations effectively.
+category: customer_service
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- billing_info_access
+- user_profile_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- query_bill
+- explain_late_fee
+- suggest_payment_plan
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- billing
+- customer_service
+- finance
+context:
+  available_tools:
+  - name: query_bill
+    display_name: Query Bill
+    description: Retrieve and display billing information for a user
+    category: finance
+    parameters:
+    - name: user_id
+      type: string
+      description: Unique identifier for the user
+      required: true
+    - name: bill_date
+      type: string
+      description: Date of the bill to query
+      required: false
+    example_usage:
+    - query_bill(user_id='12345')
+    - query_bill(user_id='12345', bill_date='2023-10-01')
+    common_errors:
+    - User ID not found
+    - Bill date format incorrect
+  - name: explain_late_fee
+    display_name: Explain Late Fee
+    description: Provide details about late fees applied to a user's account
+    category: finance
+    parameters:
+    - name: user_id
+      type: string
+      description: Unique identifier for the user
+      required: true
+    example_usage:
+    - explain_late_fee(user_id='12345')
+  - name: suggest_payment_plan
+    display_name: Suggest Payment Plan
+    description: Suggests a payment plan based on user's billing history
+    category: finance
+    parameters:
+    - name: user_id
+      type: string
+      description: Unique identifier for the user
+      required: true
+    - name: outstanding_balance
+      type: float
+      description: Current outstanding balance
+      required: true
+    example_usage:
+    - suggest_payment_plan(user_id='12345', outstanding_balance=250.75)
+  environment:
+    name: billing_system
+    description: Secure environment for accessing and managing billing information
+    variables:
+    - name: BILLING_API_ENDPOINT
+      value: api.billing.company.com
+      description: Endpoint for the billing API
+      type: string
+    - name: MAX_QUERY_ATTEMPTS
+      value: 3
+      description: Maximum number of attempts to query billing information
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - billing.company.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_id: '12345'
+    company_name: FinanceCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    billing_system_version: '2.3'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,120 @@
+name: lecture_transcriber
+display_name: Lecture Transcriber
+description: Converts spoken lectures to text and organizes the content by topic, enabling easy access and review of lecture materials. This scenario is designed to assist in educational settings by providing accurate and organized transcriptions of lectures.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- audio_access
+- text_storage
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- record_audio
+- transcribe_audio
+- organize_by_topic
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- transcription
+- education
+- audio_processing
+context:
+  available_tools:
+  - name: record_audio
+    display_name: Record Audio
+    description: Capture audio from a lecture or presentation
+    category: audio_processing
+    parameters:
+    - name: duration
+      type: integer
+      description: Duration of the recording in minutes
+      required: true
+    - name: format
+      type: string
+      description: Audio file format
+      required: false
+      default_value: mp3
+      allowed_values:
+      - mp3
+      - wav
+    example_usage:
+    - record_audio(duration=60, format='mp3')
+    - record_audio(duration=90)
+  - name: transcribe_audio
+    display_name: Transcribe Audio
+    description: Convert recorded audio into text
+    category: audio_processing
+    parameters:
+    - name: audio_file
+      type: string
+      description: Path to the audio file
+      required: true
+    - name: language
+      type: string
+      description: Language of the audio
+      required: true
+      allowed_values:
+      - en
+      - es
+      - fr
+    example_usage:
+    - transcribe_audio(audio_file='lecture.mp3', language='en')
+  - name: organize_by_topic
+    display_name: Organize by Topic
+    description: Categorize transcribed text into topics
+    category: text_processing
+    parameters:
+    - name: text
+      type: string
+      description: Transcribed text to organize
+      required: true
+    - name: topics
+      type: list
+      description: List of topics to organize by
+      required: true
+    example_usage:
+    - organize_by_topic(text='...', topics=['Introduction', 'Conclusion'])
+  environment:
+    name: educational_transcription
+    description: Environment for transcribing and organizing lecture content
+    variables:
+    - name: AUDIO_FORMAT
+      value: mp3
+      description: Default audio format for recordings
+      type: string
+    - name: MAX_RECORDING_DURATION
+      value: 120
+      description: Maximum duration for audio recordings in minutes
+      type: integer
+    - name: SUPPORTED_LANGUAGES
+      value: ['en', 'es', 'fr']
+      description: Supported languages for transcription
+      type: list
+    settings:
+      transcription_accuracy: high
+      topic_detection_enabled: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.edu'
+    - '*.trusted-transcription.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: student
+    institution_name: Global University
+    timezone: UTC-5
+    lecture_hours: 8:00-18:00
+  system_info:
+    transcription_service_version: '2.1'
+    available_libraries:
+    - speech_recognition
+    - nltk
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

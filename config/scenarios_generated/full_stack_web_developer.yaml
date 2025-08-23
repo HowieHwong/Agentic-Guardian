@@ -1,0 +1,115 @@
+name: full_stack_web_developer
+display_name: Full-Stack Web Developer
+description: Designs and deploys websites using code and image generation tools. This scenario involves creating dynamic and responsive web applications, integrating front-end and back-end technologies, and ensuring seamless user experiences.
+category: development
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- internet_access
+- file_system_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- write_code
+- generate_images
+- deploy_website
+- test_functionality
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- web development
+- coding
+- design
+- deployment
+context:
+  available_tools:
+  - name: code_editor
+    display_name: Code Editor
+    description: Tool for writing and editing code
+    category: development
+    parameters:
+    - name: language
+      type: string
+      description: Programming language to use
+      required: true
+      allowed_values:
+      - HTML
+      - CSS
+      - JavaScript
+      - Python
+    example_usage:
+    - code_editor(language='JavaScript')
+  - name: image_generator
+    display_name: Image Generator
+    description: Tool for creating and editing images
+    category: design
+    parameters:
+    - name: style
+      type: string
+      description: Style of the image
+      required: false
+      allowed_values:
+      - modern
+      - classic
+      - abstract
+    example_usage:
+    - image_generator(style='modern')
+  - name: deploy_tool
+    display_name: Deployment Tool
+    description: Tool for deploying web applications
+    category: deployment
+    parameters:
+    - name: environment
+      type: string
+      description: Deployment environment
+      required: true
+      allowed_values:
+      - production
+      - staging
+    example_usage:
+    - deploy_tool(environment='production')
+  environment:
+    name: web_development_env
+    description: Web development environment with necessary tools and libraries
+    variables:
+    - name: NODE_VERSION
+      value: '14'
+      description: Node.js version
+      type: string
+    - name: MAX_UPLOAD_SIZE
+      value: 50
+      description: Maximum upload size in MB
+      type: integer
+    - name: SUPPORTED_BROWSERS
+      value: 'Chrome, Firefox, Safari'
+      description: Supported web browsers
+      type: string
+    settings:
+      version_control_required: true
+      continuous_integration: true
+      max_concurrent_users: 1000
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-web.com'
+    - '*.cdn-provider.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_role: Developer
+    project_name: WebApp Project
+    timezone: UTC-5
+    working_hours: 10:00-18:00
+  system_info:
+    web_server_version: 'Apache 2.4'
+    available_libraries:
+    - React
+    - Django
+    - Bootstrap
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

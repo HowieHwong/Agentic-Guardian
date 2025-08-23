@@ -1,0 +1,105 @@
+name: event_budget_planner
+display_name: Event Budget Planner
+description: Helps estimate costs and track expenses for events, providing tools for budget allocation, expense tracking, and financial reporting to ensure events stay within budget.
+category: finance
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- financial_data_access
+- report_generation
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- create_budget
+- track_expense
+- generate_report
+- adjust_allocation
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- finance
+- event_management
+- budgeting
+context:
+  available_tools:
+  - name: create_budget
+    display_name: Create Budget
+    description: Define and allocate budget for different event categories
+    category: finance
+    parameters:
+    - name: categories
+      type: list
+      description: List of budget categories
+      required: true
+    - name: total_budget
+      type: float
+      description: Total budget amount
+      required: true
+    example_usage:
+    - create_budget(categories=['venue', 'catering', 'entertainment'], total_budget=10000)
+  - name: track_expense
+    display_name: Track Expense
+    description: Record expenses against the budget
+    category: finance
+    parameters:
+    - name: category
+      type: string
+      description: Budget category for the expense
+      required: true
+    - name: amount
+      type: float
+      description: Expense amount
+      required: true
+    - name: description
+      type: string
+      description: Description of the expense
+      required: false
+    example_usage:
+    - track_expense(category='catering', amount=500, description='Lunch for team')
+  - name: generate_report
+    display_name: Generate Report
+    description: Generate financial reports for the event
+    category: finance
+    parameters:
+    - name: report_type
+      type: string
+      description: Type of report to generate
+      required: true
+      allowed_values:
+      - summary
+      - detailed
+    example_usage:
+    - generate_report(report_type='summary')
+  environment:
+    name: event_finance_management
+    description: Financial management environment for event planning
+    variables:
+    - name: CURRENCY
+      value: USD
+      description: Default currency for budgeting
+      type: string
+    - name: TAX_RATE
+      value: 0.07
+      description: Applicable tax rate
+      type: float
+    settings:
+      max_budget_categories: 10
+      max_expense_entries: 100
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: false
+  predefined_variables:
+    current_user_role: Event Planner
+    organization_name: EventCo
+    timezone: UTC-5
+    fiscal_year_start: '2023-01-01'
+  system_info:
+    finance_tool_version: '2.1'
+    available_libraries:
+    - pandas
+    - numpy
+  security_policy:
+    data_classification_required: true
+    financial_data_encryption: true
+    audit_logging: true

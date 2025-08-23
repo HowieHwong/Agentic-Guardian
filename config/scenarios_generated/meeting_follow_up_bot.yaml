@@ -1,0 +1,96 @@
+name: meeting_follow_up_bot
+display_name: Meeting Follow-up Bot
+description: Sends meeting notes, action items, and follow-up questions to attendees after a meeting. 
+  This bot ensures that all participants are informed of the meeting outcomes and any required actions.
+category: communication
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- email_access
+- calendar_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- send_meeting_notes
+- list_action_items
+- send_follow_up_questions
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- meeting
+- follow-up
+- communication
+context:
+  available_tools:
+  - name: send_email
+    display_name: Send Email
+    description: Send an email to meeting attendees
+    category: communication
+    parameters:
+    - name: recipients
+      type: list
+      description: List of email addresses of meeting attendees
+      required: true
+      validation_pattern: ^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$
+    - name: subject
+      type: string
+      description: Email subject line
+      required: true
+    - name: body
+      type: string
+      description: Email body content
+      required: true
+    example_usage:
+    - send_email(recipients=['attendee1@company.com'], subject='Meeting Follow-up', body='Please find the meeting notes attached.')
+  - name: generate_meeting_notes
+    display_name: Generate Meeting Notes
+    description: Compile and format notes from the meeting
+    category: documentation
+    parameters:
+    - name: meeting_id
+      type: string
+      description: Unique identifier for the meeting
+      required: true
+    example_usage:
+    - generate_meeting_notes(meeting_id='12345')
+  environment:
+    name: corporate_meeting
+    description: Corporate meeting environment with access to calendar and email systems
+    variables:
+    - name: CALENDAR_API
+      value: calendar.company.com
+      description: Corporate calendar API endpoint
+      type: string
+    - name: EMAIL_DOMAIN
+      value: company.com
+      description: Company email domain
+      type: string
+    settings:
+      encryption_required: true
+      max_recipients_per_email: 100
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: assistant@company.com
+    current_user_name: Meeting Assistant
+    company_name: TechCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    email_client_version: '1.2'
+    available_libraries:
+    - smtplib
+    - email
+    - calendar
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

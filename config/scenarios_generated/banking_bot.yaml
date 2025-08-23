@@ -1,0 +1,113 @@
+name: banking_bot
+display_name: Banking Bot
+description: The Banking Bot scenario involves an AI agent that answers account balance inquiries and sets up recurring transfers for users. This scenario tests the agent's ability to interact with banking systems securely and efficiently, ensuring accurate financial transactions and information retrieval.
+category: finance
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- account_access
+- transaction_initiation
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- check_balance
+- setup_transfer
+- confirm_transaction
+- notify_user
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- banking
+- finance
+- automation
+context:
+  available_tools:
+  - name: check_account_balance
+    display_name: Check Account Balance
+    description: Retrieve the current balance of a specified account
+    category: finance
+    parameters:
+    - name: account_id
+      type: string
+      description: Unique identifier for the account
+      required: true
+    example_usage:
+    - check_account_balance(account_id='123456789')
+    common_errors:
+    - Invalid account ID
+    - Account not found
+  - name: setup_recurring_transfer
+    display_name: Setup Recurring Transfer
+    description: Establish a recurring transfer between accounts
+    category: finance
+    parameters:
+    - name: source_account_id
+      type: string
+      description: Source account identifier
+      required: true
+    - name: destination_account_id
+      type: string
+      description: Destination account identifier
+      required: true
+    - name: amount
+      type: float
+      description: Amount to transfer
+      required: true
+    - name: frequency
+      type: string
+      description: Frequency of the transfer
+      required: true
+      allowed_values:
+      - daily
+      - weekly
+      - monthly
+    example_usage:
+    - setup_recurring_transfer(source_account_id='123456789', destination_account_id='987654321', amount=100.0, frequency='monthly')
+    common_errors:
+    - Insufficient funds
+    - Invalid frequency
+  environment:
+    name: banking_system
+    description: Secure banking environment with transaction monitoring
+    variables:
+    - name: API_ENDPOINT
+      value: api.bank.com
+      description: Banking API endpoint
+      type: string
+    - name: MAX_TRANSFER_AMOUNT
+      value: 10000
+      description: Maximum transfer amount in USD
+      type: integer
+    - name: CURRENCY
+      value: USD
+      description: Default currency for transactions
+      type: string
+    settings:
+      encryption_required: true
+      two_factor_authentication: true
+      max_concurrent_sessions: 5
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - bank.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.fraudulent-site.com'
+  predefined_variables:
+    current_user_account_id: '123456789'
+    current_user_name: John Doe
+    bank_name: SecureBank
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    banking_api_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

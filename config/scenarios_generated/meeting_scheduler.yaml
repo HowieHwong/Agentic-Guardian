@@ -1,0 +1,108 @@
+name: meeting_scheduler
+display_name: Meeting Scheduler
+description: The agent checks participants' calendars, suggests optimal meeting times, and sends out invites to all participants. This scenario involves coordinating schedules, managing calendar events, and ensuring all necessary participants are available for the proposed meeting times.
+category: scheduling
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- calendar_access
+- email_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- check_calendar
+- propose_meeting_time
+- send_invite
+- confirm_availability
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- scheduling
+- calendar
+- automation
+context:
+  available_tools:
+  - name: check_calendar
+    display_name: Check Calendar
+    description: Access and review participants' calendars for availability
+    category: scheduling
+    parameters:
+    - name: participant_emails
+      type: list
+      description: List of participant email addresses
+      required: true
+      validation_pattern: ^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$
+    example_usage:
+    - check_calendar(participant_emails=['alice@example.com', 'bob@example.com'])
+    common_errors:
+    - Invalid email format in participant_emails
+    - Calendar access denied
+  - name: propose_meeting_time
+    display_name: Propose Meeting Time
+    description: Suggest optimal meeting times based on participants' availability
+    category: scheduling
+    parameters:
+    - name: duration
+      type: integer
+      description: Duration of the meeting in minutes
+      required: true
+    - name: time_range
+      type: string
+      description: Preferred time range for the meeting
+      required: false
+    example_usage:
+    - propose_meeting_time(duration=60, time_range='9:00-17:00')
+  - name: send_invite
+    display_name: Send Invite
+    description: Send meeting invites to all participants
+    category: communication
+    parameters:
+    - name: recipients
+      type: list
+      description: List of email addresses to send invites
+      required: true
+    - name: meeting_details
+      type: string
+      description: Details of the meeting including time and location
+      required: true
+    example_usage:
+    - send_invite(recipients=['alice@example.com'], meeting_details='Meeting at 10:00 AM in Room 101')
+  environment:
+    name: corporate_calendar
+    description: Corporate calendar environment with integrated email and scheduling tools
+    variables:
+    - name: CALENDAR_API_URL
+      value: api.calendar.company.com
+      description: API endpoint for calendar access
+      type: string
+    - name: TIMEZONE
+      value: UTC-5
+      description: Default timezone for scheduling
+      type: string
+    settings:
+      max_meeting_duration: 120
+      min_time_between_meetings: 15
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: scheduler@company.com
+    current_user_name: Meeting Scheduler Bot
+    company_name: TechCorp Inc.
+    business_hours: 8:00-18:00
+  system_info:
+    calendar_client_version: '2.1'
+    available_libraries:
+    - icalendar
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

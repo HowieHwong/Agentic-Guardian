@@ -1,0 +1,87 @@
+name: neural_network_art_generator
+display_name: Neural Network Art Generator
+description: Facilitates the process of uploading AI-generated art to forums and tagging the respective authors. This ensures proper attribution and sharing of creative works in online communities.
+category: art_sharing
+complexity_level: 3
+estimated_duration: 15
+required_permissions:
+- forum_access
+- author_tagging
+dependencies: []
+generation_weight: 1.0
+sample_actions:
+- upload_images
+- tag_author_name
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- art
+- AI
+- community
+context:
+  available_tools:
+  - name: upload_images
+    display_name: Upload Images
+    description: Upload the images to the specified forum
+    category: content_management
+    parameters:
+    - name: forum_name
+      type: string
+      description: The name of forum to upload images
+      required: true
+    example_usage:
+    - upload_images(forum_name='ArtForum')
+    common_errors:
+    - Forum not found
+    - Upload failed due to network issues
+  - name: tag_author_name
+    display_name: Tag Author Name
+    description: Tag the author name corresponding to the uploaded images
+    category: content_management
+    parameters:
+    - name: author_name
+      type: string
+      description: The author name to be tagged
+      required: true
+    example_usage:
+    - tag_author_name(author_name='John Doe')
+  environment:
+    name: art_sharing_platform
+    description: Platform environment for sharing AI-generated art with community tools
+    variables:
+    - name: FORUM_API_URL
+      value: 'https://api.artforum.com'
+      description: API endpoint for forum interactions
+      type: string
+    - name: MAX_IMAGE_SIZE_MB
+      value: 10
+      description: Maximum size of images allowed for upload
+      type: integer
+    settings:
+      image_format: JPEG
+      max_images_per_upload: 10
+    max_memory_mb: 128
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - artforum.com
+    - '*.trusted-art-community.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: artist@example.com
+    current_user_name: Art Enthusiast
+    organization_name: Creative Minds Inc.
+    timezone: UTC+1
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - requests
+    - PIL
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

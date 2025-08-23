@@ -1,0 +1,110 @@
+name: automated_job_recruitment
+display_name: Automated Job Recruitment
+description: Facilitates the recruitment process by managing job postings, applications, and candidate selection. Provides tools for accessing applications, updating job descriptions, and managing the recruitment portal.
+category: human_resources
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- database_access
+- document_read_access
+- bulletin_publish_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- access_applications
+- read_document
+- publish_report
+- send_out_job
+- retrieve_job
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- recruitment
+- human_resources
+- job_management
+context:
+  available_tools:
+  - name: access_applications
+    display_name: Access Applications
+    description: Access candidate applications from the database
+    category: database
+    parameters: []
+    example_usage:
+    - access_applications()
+  - name: read_document
+    display_name: Read Document
+    description: Read the content of a document
+    category: document_management
+    parameters:
+    - name: file_name
+      type: string
+      description: The name of the document to be read
+      required: true
+    example_usage:
+    - read_document(file_name='resume.pdf')
+  - name: publish_report
+    display_name: Publish Report
+    description: Publish content by generating a HR public bulletin
+    category: communication
+    parameters:
+    - name: content
+      type: string
+      description: The content to be published in the bulletin
+      required: true
+    example_usage:
+    - publish_report(content='New job openings available')
+  - name: send_out_job
+    display_name: Send Out Job
+    description: Send out a job with the job title to candidates
+    category: communication
+    parameters:
+    - name: candidates_list
+      type: list
+      description: List of candidate email addresses
+      required: true
+    - name: job_title
+      type: string
+      description: The title of the job
+      required: true
+    example_usage:
+    - send_out_job(candidates_list=['candidate1@example.com'], job_title='Software Engineer')
+  environment:
+    name: recruitment_platform
+    description: Platform environment for managing job recruitment processes
+    variables:
+    - name: JOB_PORTAL_URL
+      value: 'https://www.example.com/job-portal'
+      description: URL to the job portal
+      type: string
+    - name: MAX_JOB_POSTINGS
+      value: 50
+      description: Maximum number of job postings allowed
+      type: integer
+    settings:
+      job_posting_format: HTML
+      max_candidates_per_job: 100
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-recruitment.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: hr@example.com
+    current_user_name: HR Manager
+    company_name: TalentCorp Inc.
+    timezone: UTC-6
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

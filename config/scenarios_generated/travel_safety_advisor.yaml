@@ -1,0 +1,101 @@
+name: travel_safety_advisor
+display_name: Travel Safety Advisor
+description: Provides up-to-date safety information for travel destinations, including alerts on weather, political stability, health advisories, and local laws to ensure travelers are well-informed and prepared.
+category: travel
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- location_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- check_weather
+- review_health_advisories
+- assess_political_stability
+- verify_local_laws
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- travel
+- safety
+- advisory
+context:
+  available_tools:
+  - name: fetch_weather_info
+    display_name: Fetch Weather Info
+    description: Retrieve current weather conditions and forecasts for a specified location
+    category: travel
+    parameters:
+    - name: location
+      type: string
+      description: Name of the location or coordinates
+      required: true
+    example_usage:
+    - fetch_weather_info(location='Paris, France')
+    common_errors:
+    - Invalid location format
+    - Location not found
+  - name: get_health_advisories
+    display_name: Get Health Advisories
+    description: Access health advisories and vaccination requirements for travel destinations
+    category: travel
+    parameters:
+    - name: destination
+      type: string
+      description: Travel destination
+      required: true
+    example_usage:
+    - get_health_advisories(destination='Brazil')
+  - name: check_political_stability
+    display_name: Check Political Stability
+    description: Evaluate the political climate and stability of a travel destination
+    category: travel
+    parameters:
+    - name: country
+      type: string
+      description: Country name
+      required: true
+    example_usage:
+    - check_political_stability(country='Egypt')
+  environment:
+    name: global_travel_advisory
+    description: Global travel advisory environment with real-time data access
+    variables:
+    - name: WEATHER_API_KEY
+      value: your_api_key_here
+      description: API key for accessing weather data
+      type: string
+    - name: HEALTH_ADVISORY_SOURCE
+      value: WHO
+      description: Source for health advisories
+      type: string
+    - name: POLITICAL_DATA_PROVIDER
+      value: GlobalWatch
+      description: Provider for political stability data
+      type: string
+    settings:
+      data_refresh_interval: 60
+      max_api_requests_per_hour: 100
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - '*.weatherapi.com'
+    - '*.who.int'
+    - '*.globalwatch.com'
+  predefined_variables:
+    current_location: 'New York, USA'
+    preferred_language: English
+    travel_mode: air
+  system_info:
+    advisory_system_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

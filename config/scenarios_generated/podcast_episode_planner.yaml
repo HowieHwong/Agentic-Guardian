@@ -1,0 +1,106 @@
+name: podcast_episode_planner
+display_name: Podcast Episode Planner
+description: The agent structures podcast episodes, suggests segments, and prepares guest questions. It assists in organizing content flow, ensuring engaging discussions, and aligning with the podcast's theme and audience expectations.
+category: content_creation
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- internet_access
+- document_editing
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- outline_episode
+- suggest_segments
+- draft_questions
+- schedule_recording
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- podcast
+- content
+- planning
+context:
+  available_tools:
+  - name: outline_episode
+    display_name: Outline Episode
+    description: Create a structured outline for the podcast episode
+    category: content_creation
+    parameters:
+    - name: episode_theme
+      type: string
+      description: Main theme of the episode
+      required: true
+    - name: duration
+      type: integer
+      description: Expected duration of the episode in minutes
+      required: true
+    example_usage:
+    - outline_episode(episode_theme='Technology Trends', duration=45)
+  - name: suggest_segments
+    display_name: Suggest Segments
+    description: Propose segments or topics to cover in the episode
+    category: content_creation
+    parameters:
+    - name: theme
+      type: string
+      description: Theme or focus of the episode
+      required: true
+    - name: audience
+      type: string
+      description: Target audience for the episode
+      required: false
+    example_usage:
+    - suggest_segments(theme='Health and Wellness')
+  - name: draft_questions
+    display_name: Draft Questions
+    description: Prepare questions for guest interviews
+    category: content_creation
+    parameters:
+    - name: guest_name
+      type: string
+      description: Name of the guest
+      required: true
+    - name: topic
+      type: string
+      description: Topic of discussion
+      required: true
+    example_usage:
+    - draft_questions(guest_name='Dr. Smith', topic='Mental Health')
+  environment:
+    name: podcast_planning_env
+    description: Environment for planning and organizing podcast episodes
+    variables:
+    - name: MAX_SEGMENTS
+      value: 10
+      description: Maximum number of segments per episode
+      type: integer
+    - name: DEFAULT_DURATION
+      value: 60
+      description: Default episode duration in minutes
+      type: integer
+    settings:
+      auto_save: true
+      collaboration_enabled: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.podcast-platform.com'
+    - '*.content-research.com'
+  predefined_variables:
+    current_user_role: Podcast Planner
+    podcast_name: The Insightful Pod
+    timezone: UTC-5
+    recording_hours: 10:00-18:00
+  system_info:
+    planning_tool_version: '2.3'
+    available_libraries:
+    - nltk
+    - gensim
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

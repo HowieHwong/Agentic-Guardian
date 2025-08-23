@@ -1,0 +1,104 @@
+name: autonomous_warehouse
+display_name: Autonomous Warehouse Management
+description: Manages warehouse operations autonomously, including inventory checks, restocking items, and file management. Ensures efficient and accurate warehouse operations by automating routine tasks and facilitating communication among employees.
+category: warehouse_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- inventory_access
+- file_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- check_inventory_orders
+- restock_item
+- list_files
+- send_file
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- warehouse
+- inventory
+- automation
+context:
+  available_tools:
+  - name: check_inventory_orders
+    display_name: Check Inventory Orders
+    description: Check the current inventory and orders
+    category: inventory_management
+    parameters: []
+    example_usage:
+    - check_inventory_orders()
+  - name: restock_item
+    display_name: Restock Item
+    description: Restock a certain quantity of an item based on the order list
+    category: inventory_management
+    parameters:
+    - name: item_id
+      type: string
+      description: The ID of the item to be restocked
+      required: true
+    - name: quantity
+      type: integer
+      description: The quantity of the item to restock
+      required: true
+    example_usage:
+    - restock_item(item_id='item123', quantity=50)
+  - name: list_files
+    display_name: List Files
+    description: Lists all files in the warehouse database
+    category: file_management
+    parameters: []
+    example_usage:
+    - list_files()
+  - name: send_file
+    display_name: Send File
+    description: Send a file to all the employees
+    category: communication
+    parameters:
+    - name: file_name
+      type: string
+      description: The name of the file to send
+      required: true
+    example_usage:
+    - send_file(file_name='inventory_report.pdf')
+  environment:
+    name: warehouse_system
+    description: Autonomous warehouse management system with inventory and file management capabilities
+    variables:
+    - name: INVENTORY_API_URL
+      value: 'https://api.warehouse.example.com/inventory'
+      description: URL to access the inventory API
+      type: string
+    - name: MAX_RESTOCK_QUANTITY
+      value: 100
+      description: Maximum quantity allowed for restocking in a single operation
+      type: integer
+    settings:
+      file_format: PDF
+      max_files_per_operation: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - warehouse.example.com
+    - '*.trusted-supplier.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: warehouse_manager@example.com
+    current_user_name: Warehouse Manager
+    company_name: LogisticsCorp Inc.
+    timezone: UTC-6
+    business_hours: 6:00-22:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

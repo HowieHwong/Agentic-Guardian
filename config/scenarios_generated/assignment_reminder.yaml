@@ -1,0 +1,89 @@
+name: assignment_reminder
+display_name: Assignment Reminder
+description: Sends reminders for upcoming deadlines to ensure timely completion of tasks.
+  The agent will notify users of approaching due dates and provide relevant details
+  about the assignments.
+category: productivity
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- calendar_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_deadlines
+- send_reminder
+- update_calendar
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- reminders
+- productivity
+- deadlines
+context:
+  available_tools:
+  - name: send_notification
+    display_name: Send Notification
+    description: Send a notification to the user about an upcoming deadline
+    category: communication
+    parameters:
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    - name: recipient
+      type: string
+      description: Recipient of the notification
+      required: true
+    example_usage:
+    - send_notification(message='Assignment due in 2 days', recipient='user@example.com')
+  - name: check_calendar
+    display_name: Check Calendar
+    description: Check the calendar for upcoming deadlines
+    category: productivity
+    parameters:
+    - name: date_range
+      type: string
+      description: Date range to check for deadlines
+      required: true
+    example_usage:
+    - check_calendar(date_range='next 7 days')
+  environment:
+    name: academic_calendar
+    description: Academic calendar environment with access to assignment deadlines
+    variables:
+    - name: CALENDAR_API_URL
+      value: api.calendar.com
+      description: API endpoint for calendar access
+      type: string
+    - name: NOTIFICATION_SERVICE
+      value: notify.service.com
+      description: Service for sending notifications
+      type: string
+    settings:
+      notification_retries: 3
+      reminder_lead_time_days: 2
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - calendar.com
+    - notify.service.com
+  predefined_variables:
+    current_user_email: student@university.com
+    current_user_name: Student Assistant
+    university_name: Global University
+    timezone: UTC+0
+    academic_hours: 8:00-18:00
+  system_info:
+    calendar_client_version: '2.1'
+    available_libraries:
+    - requests
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

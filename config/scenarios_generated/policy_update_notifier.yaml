@@ -1,0 +1,99 @@
+name: policy_update_notifier
+display_name: Policy Update Notifier
+description: This scenario involves alerting stakeholders to relevant regulatory or policy changes. 
+  The agent is responsible for monitoring updates, compiling relevant information, and notifying 
+  the appropriate parties to ensure compliance and awareness.
+category: compliance
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- notification_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- monitor_policy_updates
+- compile_information
+- send_notifications
+- log_activity
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- compliance
+- notifications
+- policy
+context:
+  available_tools:
+  - name: fetch_policy_updates
+    display_name: Fetch Policy Updates
+    description: Retrieve the latest policy updates from regulatory websites
+    category: information_retrieval
+    parameters:
+    - name: source_urls
+      type: list
+      description: List of URLs to fetch updates from
+      required: true
+    - name: keywords
+      type: list
+      description: Keywords to filter relevant updates
+      required: false
+    example_usage:
+    - fetch_policy_updates(source_urls=['https://regulations.gov'], keywords=['data privacy'])
+    common_errors:
+    - Invalid URL format
+    - No updates found
+  - name: notify_stakeholders
+    display_name: Notify Stakeholders
+    description: Send notifications to stakeholders about policy updates
+    category: communication
+    parameters:
+    - name: recipients
+      type: list
+      description: List of stakeholder email addresses
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    example_usage:
+    - notify_stakeholders(recipients=['compliance@company.com'], message='New data privacy regulations have been updated.')
+  environment:
+    name: policy_update_monitoring
+    description: Environment for monitoring and notifying policy updates with secure communication protocols
+    variables:
+    - name: API_KEY
+      value: your_api_key_here
+      description: API key for accessing regulatory databases
+      type: string
+    - name: MAX_NOTIFICATION_RECIPIENTS
+      value: 100
+      description: Maximum number of recipients per notification
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+      max_memory_mb: 256
+      max_execution_time: 600
+      network_access: true
+      allowed_domains:
+      - '*.gov'
+      - '*.trusted-source.com'
+      blocked_domains:
+      - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: compliance_agent@company.com
+    current_user_name: Compliance Agent
+    company_name: SecureCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    notification_client_version: '2.1'
+    available_libraries:
+    - requests
+    - smtplib
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

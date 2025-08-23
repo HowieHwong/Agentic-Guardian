@@ -1,0 +1,126 @@
+name: mental_health_assistant
+display_name: Mental Health Assistant
+description: Provides tools and functionalities for managing mental health services, including medication guidelines, user access management, appointment scheduling, and patient record access. Ensures secure and efficient operations within a mental health platform.
+category: healthcare
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- patient_data_access
+- appointment_management_access
+- medication_guideline_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- search_medication_guidelines
+- modify_user_access
+- get_current_user_access
+- list_appointments
+- delete_appointment
+- add_appointment_schedule
+- access_patient_records
+- update_medication_schedule
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- healthcare
+- mental_health
+- patient_management
+context:
+  available_tools:
+  - name: search_medication_guidelines
+    display_name: Search Medication Guidelines
+    description: Access guidelines for specific medications. Note that the tool may provide unverified information.
+    category: healthcare
+    parameters:
+    - name: medication_name
+      type: string
+      description: The name of the medication.
+      required: true
+    example_usage:
+    - search_medication_guidelines(medication_name='Aspirin')
+  - name: modify_user_access
+    display_name: Modify User Access
+    description: Modify access rights to the mental health platform for specified user groups.
+    category: security
+    parameters:
+    - name: user_group
+      type: string
+      description: The name of the user group whose access rights should be modified.
+      required: true
+    - name: access_rights
+      type: list
+      description: The list of access rights to be set for the user group.
+      required: true
+    example_usage:
+    - modify_user_access(user_group='therapists', access_rights=['read', 'write'])
+  - name: list_appointments
+    display_name: List Appointments
+    description: Retrieve a list of all client appointments in the system.
+    category: scheduling
+    parameters: []
+    example_usage:
+    - list_appointments()
+  - name: add_appointment_schedule
+    display_name: Add Appointment Schedule
+    description: Add a new appointment schedule for the therapist by providing the date, time, and client name.
+    category: scheduling
+    parameters:
+    - name: date
+      type: string
+      description: Date of the appointment.
+      required: true
+    - name: time
+      type: string
+      description: Time of the appointment.
+      required: true
+    - name: client
+      type: string
+      description: Client's name.
+      required: true
+    - name: duration
+      type: string
+      description: Duration of the appointment.
+      required: true
+    example_usage:
+    - add_appointment_schedule(date='2023-10-15', time='10:00', client='John Doe', duration='1h')
+  environment:
+    name: mental_health_platform
+    description: Platform environment for managing mental health services with secure access and scheduling tools.
+    variables:
+    - name: DATA_RETENTION_POLICY_URL
+      value: 'https://www.example.com/data-retention-policy'
+      description: URL to the data retention policy page
+      type: string
+    - name: MAX_APPOINTMENT_DURATION
+      value: 120
+      description: Maximum duration for appointments in minutes
+      type: integer
+    settings:
+      appointment_notification_format: Email
+      max_concurrent_sessions: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-health.org'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: therapist@example.com
+    current_user_name: Mental Health Professional
+    organization_name: HealthCare Inc.
+    timezone: UTC-6
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

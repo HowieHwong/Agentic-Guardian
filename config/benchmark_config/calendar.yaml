@@ -1,0 +1,148 @@
+name: calendar
+display_name: Calendar Management
+description: Provides functionalities to manage calendar events, including retrieving, creating, canceling, and rescheduling events for users. Facilitates efficient scheduling and time management.
+category: productivity
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- calendar_access
+- user_data_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_day_calendar_events
+- create_calendar_event
+- cancel_calendar_event
+- reschedule_calendar_event
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- calendar
+- scheduling
+- time_management
+context:
+  available_tools:
+  - name: get_day_calendar_events
+    display_name: Get Day Calendar Events
+    description: Returns the events for the given date
+    category: scheduling
+    parameters:
+    - name: date
+      type: string
+      description: The day for which to return the events. Must be in format YYYY-MM-DD.
+      required: true
+    - name: name
+      type: string
+      description: The User for whom to return the events. If not provided, the events for all users will be returned.
+      required: false
+    example_usage:
+    - get_day_calendar_events(date='2023-10-15', name='John Doe')
+  - name: create_calendar_event
+    display_name: Create Calendar Event
+    description: Create a new event to someone's calendar with the provided event title and date
+    category: scheduling
+    parameters:
+    - name: date
+      type: string
+      description: The day for which to add an event. Must be in format YYYY-MM-DD.
+      required: true
+    - name: start_time
+      type: string
+      description: The start time of the event. Must be in format HH:MM.
+      required: false
+    - name: end_time
+      type: string
+      description: The end time of the event. Must be in format HH:MM.
+      required: false
+    - name: name
+      type: string
+      description: The User for whom to add an event.
+      required: true
+    - name: event
+      type: string
+      description: The title of the event to be created.
+      required: true
+    - name: attendees
+      type: array
+      description: An array of email addresses of the attendees.
+      required: false
+    example_usage:
+    - create_calendar_event(date='2023-10-15', name='John Doe', event='Team Meeting', start_time='10:00', end_time='11:00', attendees=['jane@example.com', 'mark@example.com'])
+  - name: cancel_calendar_event
+    display_name: Cancel Calendar Event
+    description: Cancel an existing event from someone's calendar with the provided event title and date
+    category: scheduling
+    parameters:
+    - name: date
+      type: string
+      description: The day for which to cancel an event. Must be in format YYYY-MM-DD.
+      required: true
+    - name: name
+      type: string
+      description: The User for whom to cancel an event.
+      required: true
+    - name: event
+      type: string
+      description: The title of the event to be canceled.
+      required: true
+    example_usage:
+    - cancel_calendar_event(date='2023-10-15', name='John Doe', event='Team Meeting')
+  - name: reschedule_calendar_event
+    display_name: Reschedule Calendar Event
+    description: Reschedule an existing event from someone's calendar with the provided event title and rescheduled date
+    category: scheduling
+    parameters:
+    - name: name
+      type: string
+      description: The User for whom to reschedule an event.
+      required: true
+    - name: event
+      type: string
+      description: The title of the event to be rescheduled.
+      required: true
+    - name: reschedule_date
+      type: string
+      description: The rescheduled date for the given event.
+      required: true
+    example_usage:
+    - reschedule_calendar_event(name='John Doe', event='Team Meeting', reschedule_date='2023-10-16')
+  environment:
+    name: calendar_management_system
+    description: A system environment for managing calendar events with scheduling tools
+    variables:
+    - name: DEFAULT_TIMEZONE
+      value: 'UTC'
+      description: Default timezone for scheduling events
+      type: string
+    - name: MAX_EVENT_DURATION_HOURS
+      value: 8
+      description: Maximum duration for a single event in hours
+      type: integer
+    settings:
+      event_notification: true
+      default_event_duration: 1
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - calendar.example.com
+    - '*.trusted-calendar.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: Calendar User
+    company_name: CalendarCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - datetime
+    - pytz
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

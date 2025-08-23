@@ -1,0 +1,90 @@
+name: price_tracker
+display_name: Price Tracker
+description: The Price Tracker agent monitors specified items for price changes and notifies
+  users of any price drops. This helps users make informed purchasing decisions by
+  keeping track of price fluctuations across different platforms.
+category: e-commerce
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- internet_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- add_item_to_watchlist
+- check_price
+- notify_user
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- e-commerce
+- automation
+- notifications
+context:
+  available_tools:
+  - name: check_price
+    display_name: Check Price
+    description: Retrieve the current price of an item from a specified online store
+    category: e-commerce
+    parameters:
+    - name: item_url
+      type: string
+      description: URL of the item to check the price for
+      required: true
+      validation_pattern: ^https?://[\w\.-]+
+    example_usage:
+    - check_price(item_url='https://store.com/item123')
+    common_errors:
+    - Invalid URL format
+    - Item not found
+  - name: notify_user
+    display_name: Notify User
+    description: Send a notification to the user about a price drop
+    category: notifications
+    parameters:
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    example_usage:
+    - notify_user(message='Price drop detected for item XYZ!')
+  environment:
+    name: online_shopping
+    description: Environment for monitoring and tracking online shopping prices
+    variables:
+    - name: USER_AGENT
+      value: Mozilla/5.0
+      description: User agent string for web requests
+      type: string
+    - name: MAX_CHECK_INTERVAL
+      value: 60
+      description: Maximum interval in minutes between price checks
+      type: integer
+    settings:
+      notification_method: email
+      max_items_per_watchlist: 20
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.store.com'
+    - '*.trusted-ecommerce.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: Shopper
+    preferred_currency: USD
+    timezone: UTC-5
+    shopping_hours: 8:00-22:00
+  system_info:
+    available_libraries:
+    - requests
+    - beautifulsoup4
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

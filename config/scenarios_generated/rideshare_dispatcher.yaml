@@ -1,0 +1,103 @@
+name: rideshare_dispatcher
+display_name: Rideshare Dispatcher
+description: Assigns drivers to passengers based on proximity and demand, optimizing for efficiency and customer satisfaction. The agent must consider traffic conditions, driver availability, and customer preferences to ensure timely and safe rides.
+category: transportation
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- location_access
+- driver_data_access
+- customer_data_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- find_nearest_driver
+- assign_driver
+- update_ride_status
+- calculate_eta
+metadata:
+  selection_way: priority
+  selection_num: 3
+tags:
+- rideshare
+- transportation
+- logistics
+context:
+  available_tools:
+  - name: find_nearest_driver
+    display_name: Find Nearest Driver
+    description: Locate the nearest available driver to a given location
+    category: transportation
+    parameters:
+    - name: location
+      type: string
+      description: Current location of the passenger
+      required: true
+    - name: max_distance
+      type: integer
+      description: Maximum distance to search for drivers in kilometers
+      required: false
+      default_value: 10
+    example_usage:
+    - find_nearest_driver(location='123 Main St', max_distance=5)
+    - find_nearest_driver(location='456 Elm St')
+    common_errors:
+    - No drivers available within the specified distance
+    - Invalid location format
+  - name: calculate_eta
+    display_name: Calculate ETA
+    description: Estimate the time of arrival for a driver to a passenger's location
+    category: transportation
+    parameters:
+    - name: driver_location
+      type: string
+      description: Current location of the driver
+      required: true
+    - name: passenger_location
+      type: string
+      description: Location of the passenger
+      required: true
+    example_usage:
+    - calculate_eta(driver_location='789 Oak St', passenger_location='123 Main St')
+  environment:
+    name: urban_transport_network
+    description: Urban transportation network with real-time traffic data
+    variables:
+    - name: TRAFFIC_API_KEY
+      value: your_traffic_api_key
+      description: API key for accessing real-time traffic data
+      type: string
+    - name: MAX_DRIVER_DISTANCE
+      value: 15
+      description: Maximum distance in kilometers to consider for driver assignment
+      type: integer
+    - name: DEFAULT_CITY
+      value: Metropolis
+      description: Default city for rideshare operations
+      type: string
+    settings:
+      real_time_updates: true
+      max_concurrent_rides: 100
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - trafficdata.com
+    - '*.rideshare-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_city: Metropolis
+    default_currency: USD
+    timezone: UTC-5
+    peak_hours: 7:00-9:00, 17:00-19:00
+  system_info:
+    dispatch_system_version: '2.1'
+    available_libraries:
+    - geopy
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

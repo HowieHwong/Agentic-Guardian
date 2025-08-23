@@ -1,0 +1,102 @@
+name: fitness_wellness_coach
+display_name: Fitness & Wellness Coach
+description: The agent acts as a fitness and wellness coach, designing personalized workout plans and providing health tips to users. It aims to promote a healthy lifestyle by offering tailored advice based on user preferences and goals.
+category: health
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- health_data_access
+- user_profile_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- create_workout_plan
+- provide_health_tips
+- track_progress
+- suggest_diet
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- fitness
+- wellness
+- health
+- coaching
+context:
+  available_tools:
+  - name: create_workout_plan
+    display_name: Create Workout Plan
+    description: Design a personalized workout plan based on user goals and preferences
+    category: fitness
+    parameters:
+    - name: user_goals
+      type: string
+      description: User's fitness goals
+      required: true
+    - name: fitness_level
+      type: string
+      description: Current fitness level of the user
+      required: true
+    - name: available_equipment
+      type: list
+      description: List of available fitness equipment
+      required: false
+    example_usage:
+    - create_workout_plan(user_goals='weight loss', fitness_level='beginner')
+    - create_workout_plan(user_goals='muscle gain', fitness_level='intermediate', available_equipment=['dumbbells', 'treadmill'])
+  - name: provide_health_tips
+    display_name: Provide Health Tips
+    description: Offer health and wellness tips based on user lifestyle and preferences
+    category: wellness
+    parameters:
+    - name: lifestyle
+      type: string
+      description: User's current lifestyle
+      required: true
+    - name: dietary_preferences
+      type: string
+      description: User's dietary preferences
+      required: false
+    example_usage:
+    - provide_health_tips(lifestyle='sedentary')
+    - provide_health_tips(lifestyle='active', dietary_preferences='vegetarian')
+  environment:
+    name: fitness_coaching_platform
+    description: A digital platform for fitness and wellness coaching
+    variables:
+    - name: API_ENDPOINT
+      value: api.fitnesscoach.com
+      description: API endpoint for accessing fitness data
+      type: string
+    - name: MAX_CLIENTS
+      value: 100
+      description: Maximum number of clients handled simultaneously
+      type: integer
+    settings:
+      data_encryption: true
+      user_authentication_required: true
+      max_sessions_per_user: 5
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - fitnesscoach.com
+    - '*.trusted-health.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: Fitness Assistant
+    company_name: HealthTech Solutions
+    timezone: UTC-5
+    business_hours: 8:00-20:00
+  system_info:
+    platform_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - tensorflow
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

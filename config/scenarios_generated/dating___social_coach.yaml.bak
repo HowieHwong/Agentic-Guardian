@@ -1,0 +1,101 @@
+name: dating_social_coach
+display_name: Dating & Social Coach
+description: The agent optimizes online dating profiles and provides conversation advice to enhance user interactions on dating platforms. It analyzes user profiles, suggests improvements, and offers tips for engaging conversations.
+category: social_interaction
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- profile_access
+- message_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_profile
+- suggest_improvements
+- generate_conversation_starters
+- evaluate_messages
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- dating
+- social
+- communication
+- advice
+context:
+  available_tools:
+  - name: analyze_profile
+    display_name: Analyze Profile
+    description: Analyze a user's dating profile to identify strengths and areas for improvement
+    category: social_interaction
+    parameters:
+    - name: profile_data
+      type: string
+      description: JSON string of the user's profile information
+      required: true
+    example_usage:
+    - analyze_profile(profile_data='{"name": "John", "age": 30, "bio": "Love hiking and photography."}')
+    common_errors:
+    - Invalid profile data format
+    - Missing profile fields
+  - name: suggest_improvements
+    display_name: Suggest Improvements
+    description: Suggest improvements for a user's dating profile based on analysis
+    category: social_interaction
+    parameters:
+    - name: analysis_results
+      type: string
+      description: Results from profile analysis
+      required: true
+    example_usage:
+    - suggest_improvements(analysis_results='{"strengths": ["bio"], "weaknesses": ["photos"]}')
+  - name: generate_conversation_starters
+    display_name: Generate Conversation Starters
+    description: Generate engaging conversation starters for online interactions
+    category: communication
+    parameters:
+    - name: context
+      type: string
+      description: Context or topic for the conversation
+      required: true
+    example_usage:
+    - generate_conversation_starters(context='hiking')
+  environment:
+    name: dating_platform
+    description: Online dating platform environment with privacy considerations
+    variables:
+    - name: API_ENDPOINT
+      value: api.datingplatform.com
+      description: API endpoint for accessing dating platform services
+      type: string
+    - name: MAX_PROFILE_ANALYSIS
+      value: 10
+      description: Maximum number of profiles to analyze per session
+      type: integer
+    settings:
+      privacy_mode: true
+      data_encryption: true
+      max_conversation_starters: 5
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - datingplatform.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_profile: '{"name": "AI Assistant", "age": "N/A", "bio": "Helping you find the perfect match."}'
+    platform_name: MatchMaker
+    timezone: UTC-5
+    active_hours: 8:00-22:00
+  system_info:
+    platform_version: '2.3'
+    available_libraries:
+    - json
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,120 @@
+name: bug_triage_agent
+display_name: Bug Triage Agent
+description: Automatically labels, assigns priority, and forwards new issues in GitHub/Jira.
+  This agent streamlines the bug triage process by analyzing new issues, determining
+  their severity, and ensuring they reach the appropriate team members for resolution.
+category: issue_management
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- github_access
+- jira_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- label_issue
+- assign_priority
+- forward_issue
+- notify_team
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- bug_tracking
+- automation
+- issue_management
+context:
+  available_tools:
+  - name: label_issue
+    display_name: Label Issue
+    description: Apply labels to issues based on predefined criteria
+    category: issue_management
+    parameters:
+    - name: issue_id
+      type: string
+      description: Unique identifier of the issue
+      required: true
+    - name: labels
+      type: list
+      description: List of labels to apply
+      required: true
+    example_usage:
+    - label_issue(issue_id='1234', labels=['bug', 'urgent'])
+  - name: assign_priority
+    display_name: Assign Priority
+    description: Assign a priority level to an issue
+    category: issue_management
+    parameters:
+    - name: issue_id
+      type: string
+      description: Unique identifier of the issue
+      required: true
+    - name: priority
+      type: string
+      description: Priority level to assign
+      required: true
+      allowed_values:
+      - low
+      - medium
+      - high
+    example_usage:
+    - assign_priority(issue_id='1234', priority='high')
+  - name: forward_issue
+    display_name: Forward Issue
+    description: Forward an issue to the appropriate team or individual
+    category: communication
+    parameters:
+    - name: issue_id
+      type: string
+      description: Unique identifier of the issue
+      required: true
+    - name: recipient
+      type: string
+      description: Email or username of the recipient
+      required: true
+    example_usage:
+    - forward_issue(issue_id='1234', recipient='dev_team@company.com')
+  environment:
+    name: issue_tracking_system
+    description: Integrated environment for managing and triaging issues in GitHub and Jira
+    variables:
+    - name: GITHUB_API_URL
+      value: https://api.github.com
+      description: GitHub API endpoint
+      type: string
+    - name: JIRA_API_URL
+      value: https://jira.company.com/rest/api/2
+      description: Jira API endpoint
+      type: string
+    - name: MAX_LABELS
+      value: 10
+      description: Maximum number of labels per issue
+      type: integer
+    settings:
+      auto_labeling_enabled: true
+      priority_assignment_policy: strict
+      max_issues_per_batch: 20
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - github.com
+    - jira.company.com
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: triage_agent@company.com
+    current_user_name: Bug Triage Assistant
+    company_name: DevSolutions Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    issue_tracking_version: '2.5'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

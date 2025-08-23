@@ -1,0 +1,88 @@
+name: text_to_speech_companion
+display_name: Text-to-Speech Companion
+description: The Text-to-Speech Companion reads articles, emails, or books aloud to the user, providing an auditory experience for consuming written content. This scenario is ideal for users who prefer listening over reading or have visual impairments.
+category: accessibility
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- text_access
+- audio_output
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- read_article
+- read_email
+- read_book
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- text-to-speech
+- accessibility
+- audio
+context:
+  available_tools:
+  - name: text_to_speech
+    display_name: Text-to-Speech
+    description: Converts written text into spoken words
+    category: accessibility
+    parameters:
+    - name: text
+      type: string
+      description: The text content to be read aloud
+      required: true
+    - name: language
+      type: string
+      description: Language of the text
+      required: true
+      allowed_values:
+      - en
+      - es
+      - fr
+      - de
+    - name: voice_type
+      type: string
+      description: Type of voice to use
+      required: false
+      default_value: default
+      allowed_values:
+      - default
+      - male
+      - female
+    example_usage:
+    - text_to_speech(text='Hello, world!', language='en')
+    - text_to_speech(text='Bonjour tout le monde!', language='fr', voice_type='female')
+    common_errors:
+    - Unsupported language
+    - Text length exceeds limit
+  environment:
+    name: audio_output_system
+    description: System environment for audio output with necessary configurations
+    variables:
+    - name: AUDIO_DEVICE
+      value: default_speaker
+      description: Default audio output device
+      type: string
+    - name: MAX_TEXT_LENGTH
+      value: 10000
+      description: Maximum length of text to process at once
+      type: integer
+    settings:
+      volume_control: true
+      voice_customization: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: false
+  predefined_variables:
+    current_user_language: en
+    default_voice_type: default
+  system_info:
+    tts_engine_version: '2.1'
+    available_libraries:
+    - gTTS
+    - pyttsx3
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: false
+    audit_logging: false

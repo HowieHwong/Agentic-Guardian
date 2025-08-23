@@ -1,0 +1,106 @@
+name: faq_updater
+display_name: FAQ Updater
+description: Monitors new customer questions and suggests updates to the FAQ database to ensure
+  that the information remains current and helpful. The agent analyzes incoming queries,
+  identifies common themes, and proposes modifications or additions to the FAQ content.
+category: information_management
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- database_access
+- content_editing
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- monitor_questions
+- analyze_queries
+- suggest_faq_updates
+- update_faq_database
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- faq
+- customer_support
+- content_management
+context:
+  available_tools:
+  - name: monitor_questions
+    display_name: Monitor Questions
+    description: Track new customer questions from various channels
+    category: data_collection
+    parameters:
+    - name: source_channels
+      type: list
+      description: List of channels to monitor for questions
+      required: true
+      allowed_values:
+      - email
+      - chat
+      - social_media
+    example_usage:
+    - monitor_questions(source_channels=['email', 'chat'])
+    common_errors:
+    - Invalid channel specified
+    - No new questions detected
+  - name: analyze_queries
+    display_name: Analyze Queries
+    description: Analyze customer queries to identify common themes and topics
+    category: data_analysis
+    parameters:
+    - name: query_data
+      type: list
+      description: List of queries to analyze
+      required: true
+    example_usage:
+    - analyze_queries(query_data=['How to reset password?', 'What is the refund policy?'])
+  - name: update_faq_database
+    display_name: Update FAQ Database
+    description: Update the FAQ database with new or modified entries
+    category: content_management
+    parameters:
+    - name: faq_entries
+      type: list
+      description: List of FAQ entries to update
+      required: true
+    example_usage:
+    - update_faq_database(faq_entries=['How to reset password?', 'What is the refund policy?'])
+  environment:
+    name: faq_management_system
+    description: Environment for managing and updating FAQ content
+    variables:
+    - name: DATABASE_URL
+      value: faqdb.company.com
+      description: URL of the FAQ database
+      type: string
+    - name: MAX_QUERY_ANALYSIS
+      value: 100
+      description: Maximum number of queries to analyze at once
+      type: integer
+    settings:
+      auto_backup: true
+      change_tracking: true
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: faq_manager@company.com
+    current_user_name: FAQ Manager
+    company_name: TechCorp Inc.
+    timezone: UTC-8
+    business_hours: 9:00-17:00
+  system_info:
+    faq_system_version: '2.1'
+    available_libraries:
+    - nltk
+    - sklearn
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

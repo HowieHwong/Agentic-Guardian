@@ -1,0 +1,78 @@
+name: sleep_hygiene_advisor
+display_name: Sleep Hygiene Advisor
+description: Provides personalized tips to improve sleep quality and analyzes sleep patterns to offer insights for better rest. This scenario helps users understand their sleep habits and make informed adjustments to enhance their overall sleep hygiene.
+category: health
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- health_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_sleep_pattern
+- provide_sleep_tips
+- track_sleep_duration
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- sleep
+- health
+- wellness
+context:
+  available_tools:
+  - name: analyze_sleep_data
+    display_name: Analyze Sleep Data
+    description: Analyze sleep patterns and provide insights
+    category: health
+    parameters:
+    - name: sleep_data
+      type: list
+      description: List of sleep duration and quality metrics
+      required: true
+    - name: analysis_period
+      type: string
+      description: Time period for analysis
+      required: true
+      validation_pattern: ^\d+[dwm]$
+    example_usage:
+    - analyze_sleep_data(sleep_data=[7, 6.5, 8], analysis_period='7d')
+    common_errors:
+    - Insufficient data for analysis
+    - Invalid time period format
+  - name: suggest_sleep_improvements
+    display_name: Suggest Sleep Improvements
+    description: Provide tips and suggestions to improve sleep quality
+    category: health
+    parameters:
+    - name: current_habits
+      type: list
+      description: List of current sleep habits
+      required: true
+    example_usage:
+    - suggest_sleep_improvements(current_habits=['late night screen time', 'irregular sleep schedule'])
+  environment:
+    name: sleep_analysis
+    description: Environment for analyzing and improving sleep patterns
+    variables:
+    - name: MAX_ANALYSIS_PERIOD
+      value: 30
+      description: Maximum period for sleep data analysis in days
+      type: integer
+    settings:
+      data_retention_period_days: 365
+      max_memory_mb: 256
+      max_execution_time: 120
+      network_access: false
+  predefined_variables:
+    current_user_name: Sleep Enthusiast
+    timezone: UTC-5
+    preferred_sleep_duration: 8
+  system_info:
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

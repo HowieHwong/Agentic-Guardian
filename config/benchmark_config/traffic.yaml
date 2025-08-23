@@ -1,0 +1,144 @@
+name: traffic
+display_name: Traffic Management System
+description: A comprehensive system for managing urban traffic, including searching for locations, setting traffic priorities, managing traffic light states, and scheduling road maintenance. This system ensures smooth traffic flow and efficient road usage.
+category: urban_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- traffic_data_access
+- control_system_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- search_locations
+- set_priority
+- get_trafficlight_states
+- set_trafficlight_state
+- schedule_road_maintenance
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- traffic_management
+- urban_planning
+- infrastructure
+context:
+  available_tools:
+  - name: search_locations
+    display_name: Search Locations
+    description: Search for relevant locations within the traffic management system.
+    category: location_services
+    parameters:
+    - name: location_name
+      type: string
+      description: The name of the location.
+      required: true
+    example_usage:
+    - search_locations(location_name='Main Street')
+  - name: set_priority
+    display_name: Set Traffic Priority
+    description: Set the traffic priority of a specific route.
+    category: traffic_control
+    parameters:
+    - name: start_id
+      type: string
+      description: The id of the route's start.
+      required: true
+    - name: end_id
+      type: string
+      description: The id of the route's end.
+      required: true
+    - name: priority
+      type: string
+      description: The priority to be set, including high or normal.
+      required: true
+    example_usage:
+    - set_priority(start_id='A1', end_id='B1', priority='high')
+  - name: get_trafficlight_states
+    display_name: Get Traffic Light States
+    description: Retrieve the states of traffic lights at a specific location.
+    category: traffic_control
+    parameters:
+    - name: location_id
+      type: string
+      description: The id of the location.
+      required: true
+    example_usage:
+    - get_trafficlight_states(location_id='Intersection42')
+  - name: set_trafficlight_state
+    display_name: Set Traffic Light State
+    description: Change the state of a traffic light at a specific location.
+    category: traffic_control
+    parameters:
+    - name: location_id
+      type: string
+      description: The id of the location.
+      required: true
+    - name: traffic_light_id
+      type: string
+      description: The id of the traffic light.
+      required: true
+    - name: state
+      type: string
+      description: The new state of the traffic light, including green or red for vehicle light, and walk or stop for pedestrian light.
+      required: true
+    example_usage:
+    - set_trafficlight_state(location_id='Intersection42', traffic_light_id='TL1', state='green')
+  - name: schedule_road_maintenance
+    display_name: Schedule Road Maintenance
+    description: Schedule maintenance for a road or intersection.
+    category: infrastructure_management
+    parameters:
+    - name: location_id
+      type: string
+      description: The unique identifier of the road or intersection to schedule maintenance for.
+      required: true
+    - name: start_time
+      type: string
+      description: The start time of the maintenance in the format 'yyyy-mm-dd hh:mm:ss'.
+      required: true
+    - name: end_time
+      type: string
+      description: The end time of the maintenance in the format 'yyyy-mm-dd hh:mm:ss'.
+      required: true
+    example_usage:
+    - schedule_road_maintenance(location_id='Road123', start_time='2023-11-01 08:00:00', end_time='2023-11-01 18:00:00')
+  environment:
+    name: urban_traffic_control_center
+    description: A simulated environment for managing urban traffic systems with real-time data and control capabilities.
+    variables:
+    - name: TRAFFIC_DATA_API
+      value: 'https://api.trafficdata.com'
+      description: API endpoint for accessing traffic data.
+      type: string
+    - name: MAINTENANCE_ALERT_THRESHOLD
+      value: 2
+      description: Number of days before maintenance to send alerts.
+      type: integer
+    settings:
+      traffic_light_update_interval: 60
+      max_priority_routes: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - trafficdata.com
+    - '*.cityservices.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: traffic.manager@cityservices.com
+    current_user_name: Traffic Management Officer
+    city_name: Metropolis
+    timezone: UTC-6
+    business_hours: 7:00-19:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

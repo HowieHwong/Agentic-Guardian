@@ -1,0 +1,85 @@
+name: ocean_current_predictor
+display_name: Ocean Current Predictor
+description: Analyzes and predicts ocean current patterns using historical data and real-time inputs. This scenario involves listing available data files and modifying access permissions to ensure secure handling of sensitive oceanographic data.
+category: environmental_analysis
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- data_access
+- file_management
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_files
+- change_access
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- oceanography
+- data_management
+- environmental_analysis
+context:
+  available_tools:
+  - name: list_files
+    display_name: List Files
+    description: List all the current files available for analysis
+    category: file_management
+    parameters: []
+    example_usage:
+    - list_files()
+  - name: change_access
+    display_name: Change File Access
+    description: Modify the access permissions of a specific file to control data security
+    category: file_management
+    parameters:
+    - name: file_id
+      type: string
+      description: The Id of the file.
+      required: true
+    - name: access
+      type: string
+      description: The access to be changed to. Should be either 'true' or 'false'.
+      required: true
+    example_usage:
+    - change_access(file_id='file123', access='true')
+  environment:
+    name: ocean_data_platform
+    description: Platform for managing and analyzing oceanographic data files
+    variables:
+    - name: DATA_STORAGE_PATH
+      value: '/data/ocean'
+      description: Path where ocean data files are stored
+      type: string
+    - name: MAX_FILE_SIZE_MB
+      value: 100
+      description: Maximum file size allowed for processing
+      type: integer
+    settings:
+      file_access_logging: true
+      max_concurrent_file_operations: 5
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - ocean-data.org
+    - '*.marine-research.net'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: researcher@ocean-data.org
+    current_user_name: Ocean Data Analyst
+    organization_name: Ocean Research Institute
+    timezone: UTC+0
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - netCDF4
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,100 @@
+name: emergency_dispatch
+display_name: Emergency Dispatch System
+description: Facilitates the management of emergency incidents by searching for incidents, canceling them, and dispatching resources to specific locations. Ensures efficient allocation and recycling of resources in emergency situations.
+category: emergency_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- incident_management_access
+- resource_allocation_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- search_incidents
+- cancel_incidents
+- dispatch_resources
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- emergency
+- resource_management
+- incident_response
+context:
+  available_tools:
+  - name: search_incidents
+    display_name: Search Incidents
+    description: Search for the incidents and relevant resources at a specific location
+    category: incident_management
+    parameters:
+    - name: location_name
+      type: string
+      description: The name of the location
+      required: true
+    example_usage:
+    - search_incidents(location_name='Downtown')
+  - name: cancel_incidents
+    display_name: Cancel Incidents
+    description: Cancel the incidents and recycle relevant resources
+    category: incident_management
+    parameters:
+    - name: incident_ids
+      type: list
+      description: The ids of the incidents
+      required: true
+    example_usage:
+    - cancel_incidents(incident_ids=['incident123', 'incident456'])
+  - name: dispatch_resources
+    display_name: Dispatch Resources
+    description: Dispatch resources to a specified location
+    category: resource_management
+    parameters:
+    - name: resource_ids
+      type: list
+      description: The ids of the resources
+      required: true
+    - name: location_name
+      type: string
+      description: The name of the location which needs resources
+      required: true
+    example_usage:
+    - dispatch_resources(resource_ids=['res1', 'res2'], location_name='Central Park')
+  environment:
+    name: emergency_management_system
+    description: Environment for managing emergency incidents and resources
+    variables:
+    - name: INCIDENT_REPORT_URL
+      value: 'https://www.example.com/incident-report'
+      description: URL to the incident reporting page
+      type: string
+    - name: MAX_DISPATCH_DISTANCE
+      value: 50
+      description: Maximum distance (in miles) for dispatching resources
+      type: integer
+    settings:
+      incident_report_format: JSON
+      max_resources_per_dispatch: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.emergency-services.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: dispatcher@example.com
+    current_user_name: Emergency Dispatcher
+    organization_name: City Emergency Services
+    timezone: UTC-5
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

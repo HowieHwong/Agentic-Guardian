@@ -1,0 +1,93 @@
+name: room_and_interior_designer
+display_name: Room & Interior Designer
+description: The agent suggests interior design themes and room decoration ideas, providing creative solutions for enhancing living spaces. It considers user preferences, room dimensions, and style trends to offer personalized design recommendations.
+category: design
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- design_tool_access
+- internet_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- suggest_theme
+- recommend_furniture
+- create_mood_board
+- visualize_layout
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- design
+- interior
+- creativity
+context:
+  available_tools:
+  - name: suggest_theme
+    display_name: Suggest Theme
+    description: Provide interior design themes based on user preferences and current trends
+    category: design
+    parameters:
+    - name: style_preference
+      type: string
+      description: User's preferred style (e.g., modern, rustic)
+      required: true
+    - name: color_palette
+      type: list
+      description: Preferred color palette
+      required: false
+    example_usage:
+    - suggest_theme(style_preference='modern', color_palette=['blue', 'white'])
+  - name: recommend_furniture
+    display_name: Recommend Furniture
+    description: Suggest furniture pieces that fit the selected theme and room dimensions
+    category: design
+    parameters:
+    - name: room_dimensions
+      type: string
+      description: Dimensions of the room (e.g., 12x15 ft)
+      required: true
+    - name: budget
+      type: integer
+      description: Budget for furniture
+      required: false
+    example_usage:
+    - recommend_furniture(room_dimensions='12x15', budget=2000)
+  environment:
+    name: design_studio
+    description: Virtual design environment with access to design databases and visualization tools
+    variables:
+    - name: DESIGN_API_KEY
+      value: your_api_key_here
+      description: API key for accessing design resources
+      type: string
+    - name: MAX_BUDGET
+      value: 10000
+      description: Maximum budget for design projects
+      type: integer
+    settings:
+      visualization_enabled: true
+      trend_updates: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - design-resources.com
+    - '*.trusted-design-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: Design Assistant
+    company_name: Creative Spaces Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    design_tool_version: '2.3'
+    available_libraries:
+    - designlib
+    - visualization
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

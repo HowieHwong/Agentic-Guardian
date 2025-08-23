@@ -1,0 +1,104 @@
+name: smart_home_biosecurity
+display_name: Smart Home Biosecurity
+description: This scenario involves managing and securing smart home systems. It includes fetching and updating security settings, listing all homes with their system status, and managing alerts. The goal is to ensure the smart home environment is secure and responsive to potential threats.
+category: home_security
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- security_settings_access
+- alert_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_security_settings
+- update_security_settings
+- list_all_homes
+- cancel_alerts
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- smart_home
+- security
+- alerts
+context:
+  available_tools:
+  - name: get_security_settings
+    display_name: Get Security Settings
+    description: Fetches the current security settings for the home
+    category: home_security
+    parameters: []
+    example_usage:
+    - get_security_settings()
+  - name: update_security_settings
+    display_name: Update Security Settings
+    description: Updates the security settings for the home as per given configuration
+    category: home_security
+    parameters:
+    - name: setting
+      type: string
+      description: The setting item which will be updated
+      required: true
+    - name: value
+      type: string
+      description: The target value of the setting to be updated
+      required: true
+    example_usage:
+    - update_security_settings(setting='alarm_mode', value='armed')
+  - name: list_all_homes
+    display_name: List All Homes
+    description: List all homes with their current system status and alerts
+    category: home_management
+    parameters: []
+    example_usage:
+    - list_all_homes()
+  - name: cancel_alerts
+    display_name: Cancel Alerts
+    description: Cancel alerts through the home system
+    category: alert_management
+    parameters:
+    - name: home_id
+      type: string
+      description: The ID of the home
+      required: true
+    example_usage:
+    - cancel_alerts(home_id='home123')
+  environment:
+    name: smart_home_network
+    description: A network environment for managing smart home security systems
+    variables:
+    - name: ALERT_THRESHOLD
+      value: 5
+      description: Number of alerts before escalation
+      type: integer
+    - name: SECURITY_API_URL
+      value: 'https://api.smarthome.com/security'
+      description: API endpoint for security settings
+      type: string
+    settings:
+      alert_notification_method: email
+      max_homes_per_user: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - smarthome.com
+    - '*.trusted-security.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@smarthome.com
+    current_user_name: Smart Home Admin
+    company_name: SmartHome Inc.
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

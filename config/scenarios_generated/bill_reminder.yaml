@@ -1,0 +1,90 @@
+name: bill_reminder
+display_name: Bill Reminder
+description: The Bill Reminder agent alerts users before their bills are due and provides a summary of monthly payments. This helps users manage their finances effectively and avoid late fees by ensuring timely payments.
+category: finance
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- calendar_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_due_dates
+- send_alert
+- summarize_payments
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- finance
+- reminders
+- automation
+context:
+  available_tools:
+  - name: send_notification
+    display_name: Send Notification
+    description: Send a notification to alert the user about upcoming bills
+    category: notification
+    parameters:
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    - name: recipient
+      type: string
+      description: Recipient of the notification
+      required: true
+    example_usage:
+    - send_notification(message='Your electricity bill is due in 3 days.', recipient='user')
+    common_errors:
+    - Invalid recipient format
+    - Empty message content
+  - name: fetch_due_dates
+    display_name: Fetch Due Dates
+    description: Retrieve upcoming bill due dates from the user's calendar
+    category: finance
+    parameters:
+    - name: date_range
+      type: string
+      description: Date range to search for due dates
+      required: true
+    example_usage:
+    - fetch_due_dates(date_range='next 30 days')
+  environment:
+    name: personal_finance_management
+    description: Personal finance management environment with access to calendar and notification systems
+    variables:
+    - name: NOTIFICATION_SERVICE
+      value: notify.service.com
+      description: Notification service endpoint
+      type: string
+    - name: CALENDAR_API
+      value: calendar.api.com
+      description: Calendar API endpoint
+      type: string
+    settings:
+      notification_priority: high
+      alert_time_before_due: 3
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.trusted-finance.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: User
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    notification_client_version: '1.2'
+    available_libraries:
+    - requests
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

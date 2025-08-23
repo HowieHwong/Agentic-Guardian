@@ -1,0 +1,99 @@
+name: comment_moderator
+display_name: Comment Moderator
+description: The agent filters and manages comments on your blog or social media platforms, ensuring that only appropriate and relevant content is displayed. It helps maintain a positive and engaging environment for users by automatically detecting and handling spam, offensive language, and other unwanted content.
+category: content_management
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- comment_access
+- moderation_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- review_comment
+- approve_comment
+- delete_comment
+- flag_comment
+metadata:
+  selection_way: random
+  selection_num: 10
+tags:
+- moderation
+- content
+- automation
+context:
+  available_tools:
+  - name: review_comment
+    display_name: Review Comment
+    description: Analyze and review a comment for appropriateness
+    category: content_management
+    parameters:
+    - name: comment_text
+      type: string
+      description: The text of the comment to be reviewed
+      required: true
+    example_usage:
+    - review_comment(comment_text='This is a great post!')
+    - review_comment(comment_text='Buy cheap products at spam.com')
+    common_errors:
+    - Empty comment text
+    - Inappropriate language not detected
+  - name: manage_comments
+    display_name: Manage Comments
+    description: Approve, delete, or flag comments based on review
+    category: content_management
+    parameters:
+    - name: action
+      type: string
+      description: Action to perform on the comment
+      required: true
+      allowed_values:
+      - approve
+      - delete
+      - flag
+    - name: comment_id
+      type: string
+      description: Unique identifier of the comment
+      required: true
+    example_usage:
+    - manage_comments(action='approve', comment_id='12345')
+    - manage_comments(action='delete', comment_id='67890')
+  environment:
+    name: social_media_moderation
+    description: Environment for moderating comments on social media and blogs
+    variables:
+    - name: MODERATION_API_URL
+      value: api.moderationplatform.com
+      description: API endpoint for moderation actions
+      type: string
+    - name: MAX_COMMENT_LENGTH
+      value: 500
+      description: Maximum allowed length for comments
+      type: integer
+    settings:
+      profanity_filter_enabled: true
+      spam_detection_enabled: true
+      max_comments_per_hour: 100
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - moderationplatform.com
+    - '*.trusted-content.com'
+    blocked_domains:
+    - '*.spam-domain.com'
+  predefined_variables:
+    current_user_role: moderator
+    platform_name: BlogMaster
+    timezone: UTC-5
+    moderation_hours: 8:00-20:00
+  system_info:
+    moderation_client_version: '2.3'
+    available_libraries:
+    - nltk
+    - re
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

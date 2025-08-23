@@ -1,0 +1,105 @@
+name: health_tracker
+display_name: Health Tracker
+description: Monitors daily steps, sleep, or calorie intake and provides progress updates to help users maintain a healthy lifestyle. This scenario involves tracking health metrics and offering insights based on collected data.
+category: health_monitoring
+complexity_level: 2
+estimated_duration: 60
+required_permissions:
+- health_data_access
+- activity_tracking
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- track_steps
+- monitor_sleep
+- log_calories
+- provide_progress_update
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- health
+- fitness
+- monitoring
+- lifestyle
+context:
+  available_tools:
+  - name: track_steps
+    display_name: Track Steps
+    description: Monitor and record the number of steps taken daily
+    category: activity_tracking
+    parameters:
+    - name: step_goal
+      type: integer
+      description: Daily step goal
+      required: false
+    example_usage:
+    - track_steps(step_goal=10000)
+    common_errors:
+    - Device not connected
+    - Step count not updating
+  - name: monitor_sleep
+    display_name: Monitor Sleep
+    description: Track sleep duration and quality
+    category: health_monitoring
+    parameters:
+    - name: sleep_goal
+      type: string
+      description: Desired sleep duration
+      required: false
+    example_usage:
+    - monitor_sleep(sleep_goal='8h')
+    common_errors:
+    - Inaccurate sleep detection
+  - name: log_calories
+    display_name: Log Calories
+    description: Record daily calorie intake
+    category: nutrition
+    parameters:
+    - name: calorie_limit
+      type: integer
+      description: Daily calorie limit
+      required: false
+    example_usage:
+    - log_calories(calorie_limit=2000)
+    common_errors:
+    - Incorrect calorie data
+  environment:
+    name: personal_health_tracker
+    description: Personal health tracking environment with privacy controls
+    variables:
+    - name: DEVICE_ID
+      value: tracker_001
+      description: Unique identifier for the tracking device
+      type: string
+    - name: TIMEZONE
+      value: UTC
+      description: User's timezone for accurate tracking
+      type: string
+    settings:
+      data_sync_enabled: true
+      notifications_enabled: true
+      max_data_storage_mb: 100
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - healthdata.com
+    - '*.trusted-health.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: Health Enthusiast
+    preferred_unit: metric
+    daily_step_goal: 10000
+    daily_calorie_limit: 2000
+  system_info:
+    tracker_version: '2.5'
+    available_libraries:
+    - healthkit
+    - fitbit
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

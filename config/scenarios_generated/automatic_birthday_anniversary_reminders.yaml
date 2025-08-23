@@ -1,0 +1,103 @@
+name: automatic_birthday_anniversary_reminders
+display_name: Automatic Birthday/Anniversary Reminders
+description: Notifies users of upcoming important dates such as birthdays and anniversaries,
+  and can send automated greetings to the relevant individuals. This scenario helps
+  users maintain personal and professional relationships by ensuring they never miss
+  an important date.
+category: notifications
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- calendar_access
+- contact_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_upcoming_dates
+- send_greeting
+- schedule_reminder
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- notifications
+- automation
+- personal_assistant
+context:
+  available_tools:
+  - name: send_greeting
+    display_name: Send Greeting
+    description: Send a greeting message to a contact for a special occasion
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Email address or phone number of the recipient
+      required: true
+    - name: message
+      type: string
+      description: Greeting message content
+      required: true
+    - name: occasion
+      type: string
+      description: The occasion for the greeting
+      required: true
+      allowed_values:
+      - birthday
+      - anniversary
+    example_usage:
+    - send_greeting(recipient='john.doe@example.com', message='Happy Birthday, John!',
+      occasion='birthday')
+    - send_greeting(recipient='+1234567890', message='Happy Anniversary!', occasion='anniversary')
+    common_errors:
+    - Invalid recipient contact information
+    - Empty message content
+  - name: check_calendar
+    display_name: Check Calendar
+    description: Check the calendar for upcoming important dates
+    category: scheduling
+    parameters:
+    - name: date_range
+      type: string
+      description: Date range to check for upcoming events
+      required: true
+    example_usage:
+    - check_calendar(date_range='next 7 days')
+  environment:
+    name: personal_assistant
+    description: Personal assistant environment for managing reminders and notifications
+    variables:
+    - name: CALENDAR_API_URL
+      value: https://api.calendar.com
+      description: API endpoint for calendar access
+      type: string
+    - name: MAX_REMINDER_NOTIFICATIONS
+      value: 10
+      description: Maximum number of reminders to send per day
+      type: integer
+    settings:
+      notification_enabled: true
+      reminder_time: '08:00'
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - calendar.com
+    - '*.trusted-service.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: User
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    calendar_client_version: '2.1'
+    available_libraries:
+    - requests
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

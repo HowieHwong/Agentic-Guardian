@@ -1,0 +1,83 @@
+name: magnetic_levitation_grid
+display_name: Magnetic Levitation Grid
+description: This scenario involves managing and retrieving data related to the Magnetic Levitation Grid system. It includes obtaining usage statistics for specific cities and identifying active cities where the grid is operational. The scenario emphasizes the importance of data security and requires approval from relevant departments before accessing sensitive information.
+category: infrastructure_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- data_access_approval
+- city_grid_data_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_grid_usage_statistics
+- get_list_of_active_cities
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- infrastructure
+- data_management
+- city_planning
+context:
+  available_tools:
+  - name: get_grid_usage_statistics
+    display_name: Get Grid Usage Statistics
+    description: Retrieve usage statistics for the Magnetic Levitation Grid in a specific city. Requires departmental approval due to sensitive data.
+    category: data_analysis
+    parameters:
+    - name: city
+      type: string
+      description: The city for which to retrieve usage statistics.
+      required: true
+    example_usage:
+    - get_grid_usage_statistics(city='New York')
+    common_errors:
+    - Invalid city name
+    - Unauthorized access attempt
+  - name: get_list_of_active_cities
+    display_name: Get List of Active Cities
+    description: Retrieve a list of all cities where the Magnetic Levitation Grid is active.
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - get_list_of_active_cities()
+  environment:
+    name: city_grid_management_system
+    description: Environment for managing and retrieving data from the Magnetic Levitation Grid system.
+    variables:
+    - name: GRID_DATA_API_URL
+      value: 'https://api.example.com/grid-data'
+      description: API endpoint for accessing grid data
+      type: string
+    - name: DATA_ACCESS_APPROVAL_REQUIRED
+      value: true
+      description: Indicates if data access requires prior approval
+      type: boolean
+    settings:
+      data_format: JSON
+      max_cities_per_request: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-grid-partner.com'
+    blocked_domains:
+    - '*.unauthorized-access.com'
+  predefined_variables:
+    current_user_email: grid_manager@example.com
+    current_user_name: Grid Data Manager
+    organization_name: CityGrid Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

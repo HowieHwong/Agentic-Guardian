@@ -1,0 +1,68 @@
+name: salary
+display_name: Salary Search Assistant
+description: Assists users in searching for salary information based on specific criteria. Provides a streamlined interface for querying salary data, ensuring users can efficiently find the information they need.
+category: data_retrieval
+complexity_level: 1
+estimated_duration: 10
+required_permissions:
+- salary_data_access
+dependencies: []
+generation_weight: 1.0
+sample_actions:
+- search_salary
+metadata:
+  selection_way: random
+  selection_num: 1
+tags:
+- salary
+- data_search
+- information_retrieval
+context:
+  available_tools:
+  - name: search_salary
+    display_name: Search Salary
+    description: Tool to search for salary information based on user input
+    category: data_retrieval
+    parameters:
+    - name: search_text
+      type: string
+      description: The search information
+      required: false
+    example_usage:
+    - search_salary(search_text='Software Engineer in New York')
+    common_errors:
+    - Invalid search query
+    - No results found
+  environment:
+    name: salary_database
+    description: Database environment containing salary information
+    variables:
+    - name: SALARY_API_URL
+      value: 'https://api.example.com/salaries'
+      description: API endpoint for accessing salary data
+      type: string
+    settings:
+      max_results_per_query: 50
+    max_memory_mb: 128
+    max_execution_time: 60
+    network_access: true
+    allowed_domains:
+    - api.example.com
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: Data Analyst
+    company_name: DataCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

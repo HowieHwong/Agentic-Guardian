@@ -1,0 +1,100 @@
+name: universal_translator_device
+display_name: Universal Translator Device
+description: Facilitates seamless communication by translating phrases and documents between multiple languages. The device can list available phrases for translation, translate specific phrases, and handle document translations, making it an essential tool for multilingual communication.
+category: language_translation
+complexity_level: 3
+estimated_duration: 15
+required_permissions:
+- translation_service_access
+- document_handling_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_phrases
+- translate_phrase
+- translate_document
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- translation
+- multilingual
+- communication
+context:
+  available_tools:
+  - name: list_phrases
+    display_name: List Phrases
+    description: List all phrases available in the device for translation
+    category: language_management
+    parameters: []
+    example_usage:
+    - list_phrases()
+  - name: translate_phrase
+    display_name: Translate Phrase
+    description: Translate the given phrase to the specified language
+    category: language_translation
+    parameters:
+    - name: phrase_id
+      type: string
+      description: The ID of the phrase to translate
+      required: true
+    - name: target_language
+      type: string
+      description: The target language for translation
+      required: true
+    example_usage:
+    - translate_phrase(phrase_id='greeting', target_language='es')
+  - name: translate_document
+    display_name: Translate Document
+    description: Translates a document from one language to another
+    category: document_translation
+    parameters:
+    - name: document_name
+      type: string
+      description: The name of the document to be translated
+      required: true
+    - name: target_language
+      type: string
+      description: The language to translate the document into
+      required: true
+    example_usage:
+    - translate_document(document_name='report.pdf', target_language='fr')
+  environment:
+    name: translation_device_environment
+    description: Environment equipped with language translation tools and document handling capabilities
+    variables:
+    - name: SUPPORTED_LANGUAGES
+      value: ['en', 'es', 'fr', 'de', 'zh']
+      description: List of languages supported by the translation device
+      type: list
+    - name: MAX_DOCUMENT_SIZE_MB
+      value: 10
+      description: Maximum size of documents allowed for translation
+      type: integer
+    settings:
+      default_language: en
+      translation_accuracy_threshold: 0.95
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - translationapi.com
+    - '*.trusted-translation-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: translator@example.com
+    current_user_name: Translation Specialist
+    company_name: GlobalTrans Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - googletrans
+    - pdfminer
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,91 @@
+name: product_recommendation_bot
+display_name: Product Recommendation Bot
+description: The agent suggests products to users based on their browsing or purchase history,
+  enhancing the shopping experience by providing personalized recommendations.
+category: ecommerce
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- user_data_access
+- browsing_history_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_browsing_history
+- generate_recommendations
+- display_product_suggestions
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- recommendation
+- ecommerce
+- personalization
+context:
+  available_tools:
+  - name: analyze_browsing_history
+    display_name: Analyze Browsing History
+    description: Analyze user's browsing history to identify interests and preferences
+    category: data_analysis
+    parameters:
+    - name: user_id
+      type: string
+      description: Unique identifier for the user
+      required: true
+    example_usage:
+    - "analyze_browsing_history(user_id='12345')"
+    common_errors:
+    - User ID not found
+    - Insufficient browsing data
+  - name: generate_recommendations
+    display_name: Generate Recommendations
+    description: Generate product recommendations based on analyzed data
+    category: recommendation_engine
+    parameters:
+    - name: user_profile
+      type: object
+      description: User profile data including interests and past purchases
+      required: true
+    example_usage:
+    - "generate_recommendations(user_profile={interests: ['electronics', 'books']})"
+    common_errors:
+    - Incomplete user profile
+    - No matching products found
+  environment:
+    name: ecommerce_platform
+    description: E-commerce platform environment with user data and product catalog
+    variables:
+    - name: API_ENDPOINT
+      value: api.ecommerce.com
+      description: API endpoint for accessing user and product data
+      type: string
+    - name: MAX_RECOMMENDATIONS
+      value: 10
+      description: Maximum number of recommendations to generate
+      type: integer
+    settings:
+      data_encryption: true
+      user_consent_required: true
+    max_memory_mb: 1024
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - ecommerce.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_id: 12345
+    platform_name: ShopEase
+    timezone: UTC-5
+    business_hours: 8:00-20:00
+  system_info:
+    recommendation_engine_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - scikit-learn
+  security_policy:
+    data_classification_required: true
+    user_data_protection: true
+    audit_logging: true

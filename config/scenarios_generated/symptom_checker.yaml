@@ -1,0 +1,83 @@
+name: symptom_checker
+display_name: Symptom Checker
+description: Provides preliminary advice based on user input regarding symptoms. This tool is not a replacement for professional medical advice but can offer initial guidance and suggest potential next steps for users experiencing health concerns.
+category: health_assistance
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- input_symptoms
+- analyze_symptoms
+- suggest_next_steps
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- health
+- advice
+- automation
+context:
+  available_tools:
+  - name: symptom_analysis
+    display_name: Symptom Analysis
+    description: Analyze user-reported symptoms and provide preliminary advice
+    category: health_assistance
+    parameters:
+    - name: symptoms
+      type: list
+      description: List of symptoms reported by the user
+      required: true
+    - name: age
+      type: integer
+      description: Age of the user
+      required: false
+    - name: medical_history
+      type: string
+      description: Brief medical history of the user
+      required: false
+    example_usage:
+    - symptom_analysis(symptoms=['fever', 'cough'], age=30)
+    - symptom_analysis(symptoms=['headache'], medical_history='hypertension')
+    common_errors:
+    - Invalid symptom input format
+    - Missing critical symptom information
+  environment:
+    name: health_advisory_system
+    description: A secure environment for providing health-related advice
+    variables:
+    - name: API_ENDPOINT
+      value: api.healthadvisor.com
+      description: Endpoint for health advisory API
+      type: string
+    - name: MAX_SYMPTOMS
+      value: 10
+      description: Maximum number of symptoms that can be analyzed at once
+      type: integer
+    settings:
+      data_encryption: true
+      user_consent_required: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - healthadvisor.com
+    - '*.trusted-health.com'
+    blocked_domains:
+    - '*.unverified-source.com'
+  predefined_variables:
+    current_user_location: unknown
+    default_language: en
+    timezone: UTC
+  system_info:
+    health_advisory_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

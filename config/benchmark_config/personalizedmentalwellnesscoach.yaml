@@ -1,0 +1,116 @@
+name: personalized_mental_wellness_coach
+display_name: Personalized Mental Wellness Coach
+description: Provides personalized mental wellness coaching by retrieving user mental health data, filtering resources based on user preferences, and adjusting medication dosages. Aims to enhance user mental health through tailored recommendations and interventions.
+category: healthcare
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- user_health_data_access
+- medication_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_user_mental_health_data
+- filter_resources
+- get_available_resources
+- adjust_medication_dosage
+- review_patient_wellness_status
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- mental_health
+- personalized_care
+- healthcare
+context:
+  available_tools:
+  - name: get_user_mental_health_data
+    display_name: Get User Mental Health Data
+    description: Retrieve mental health data and preferences of the user
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - get_user_mental_health_data()
+  - name: filter_resources
+    display_name: Filter Resources
+    description: Filter mental health resources based on user preferences and needs
+    category: resource_management
+    parameters:
+    - name: resources
+      type: array
+      description: The names of the resources to provide
+      required: true
+    - name: user_id
+      type: string
+      description: The ID of the user to personalize resources for
+      required: true
+    example_usage:
+    - filter_resources(resources=['resource1', 'resource2'], user_id='user123')
+  - name: get_available_resources
+    display_name: Get Available Resources
+    description: Retrieve all available mental health resources
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - get_available_resources()
+  - name: adjust_medication_dosage
+    display_name: Adjust Medication Dosage
+    description: Adjust the medication dosage for a specific patient
+    category: medication_management
+    parameters:
+    - name: patient_name
+      type: string
+      description: The name of the patient
+      required: true
+    - name: new_dosage
+      type: string
+      description: The new dosage of medication in mg per day
+      required: true
+    example_usage:
+    - adjust_medication_dosage(patient_name='John Doe', new_dosage='50mg')
+  - name: review_patient_wellness_status
+    display_name: Review Patient Wellness Status
+    description: Review the current wellness status of a patient
+    category: health_monitoring
+    parameters: []
+    example_usage:
+    - review_patient_wellness_status()
+  environment:
+    name: mental_health_platform
+    description: Platform environment with tools for mental health data management and resource personalization
+    variables:
+    - name: RESOURCE_API_URL
+      value: 'https://api.mentalhealthresources.com'
+      description: URL to access mental health resources
+      type: string
+    - name: MAX_DOSAGE_ADJUSTMENT
+      value: 100
+      description: Maximum allowable dosage adjustment in mg
+      type: integer
+    settings:
+      resource_filtering_algorithm: AI-enhanced
+      max_resources_per_user: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - mentalhealthresources.com
+    - '*.trusted-health-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: therapist@example.com
+    current_user_name: Mental Health Coach
+    organization_name: Wellness Inc.
+    timezone: UTC-4
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

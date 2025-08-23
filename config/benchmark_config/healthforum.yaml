@@ -1,0 +1,62 @@
+name: health_forum
+display_name: Health Forum
+description: Provides access to recent posts from a health and wellness forum, allowing users to stay updated on the latest discussions and advice shared by community members. This scenario focuses on retrieving and displaying forum posts efficiently.
+category: information_retrieval
+complexity_level: 1
+estimated_duration: 10
+required_permissions: []
+dependencies: []
+generation_weight: 1.0
+sample_actions:
+- get_recent_posts
+metadata:
+  selection_way: random
+  selection_num: 1
+tags:
+- health
+- wellness
+- forum
+context:
+  available_tools:
+  - name: get_recent_posts
+    display_name: Get Recent Posts
+    description: Retrieve the latest posts from the health and wellness forum
+    category: information_retrieval
+    parameters: []
+    example_usage:
+    - get_recent_posts()
+    common_errors:
+    - Network issues
+    - Forum API rate limits
+  environment:
+    name: forum_access_environment
+    description: Environment configured to access and retrieve data from health and wellness forums
+    variables:
+    - name: FORUM_API_URL
+      value: 'https://api.healthforum.com'
+      description: Base URL for accessing the forum API
+      type: string
+    settings:
+      max_posts_per_request: 20
+    max_memory_mb: 128
+    max_execution_time: 60
+    network_access: true
+    allowed_domains:
+    - healthforum.com
+    - '*.trusted-health-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: user@healthforum.com
+    current_user_name: Forum User
+    timezone: UTC
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

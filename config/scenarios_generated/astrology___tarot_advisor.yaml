@@ -1,0 +1,91 @@
+name: astrology_tarot_advisor
+display_name: Astrology & Tarot Advisor
+description: Provides astrology charts or tarot readings based on user input. The agent interprets astrological data or tarot card spreads to offer insights and guidance. Users can inquire about personal life, career, relationships, and more, receiving personalized readings based on their questions.
+category: divination
+complexity_level: 4
+estimated_duration: 45
+required_permissions: []
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- generate_astrology_chart
+- interpret_tarot_spread
+- provide_reading_summary
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- astrology
+- tarot
+- divination
+- guidance
+context:
+  available_tools:
+  - name: generate_astrology_chart
+    display_name: Generate Astrology Chart
+    description: Create a detailed astrology chart based on user's birth details
+    category: divination
+    parameters:
+    - name: birth_date
+      type: string
+      description: User's birth date in YYYY-MM-DD format
+      required: true
+    - name: birth_time
+      type: string
+      description: User's birth time in HH:MM format
+      required: false
+    - name: birth_location
+      type: string
+      description: User's birth location
+      required: true
+    example_usage:
+    - generate_astrology_chart(birth_date='1990-01-01', birth_time='12:00', birth_location='New York')
+    common_errors:
+    - Invalid date format
+    - Missing birth location
+  - name: interpret_tarot_spread
+    display_name: Interpret Tarot Spread
+    description: Analyze a tarot card spread to provide insights
+    category: divination
+    parameters:
+    - name: spread_type
+      type: string
+      description: Type of tarot spread (e.g., Celtic Cross, Three-Card)
+      required: true
+    - name: question
+      type: string
+      description: User's question or focus for the reading
+      required: true
+    example_usage:
+    - interpret_tarot_spread(spread_type='Celtic Cross', question='What does the future hold?')
+  environment:
+    name: divination_environment
+    description: Secure environment for generating and interpreting divination readings
+    variables:
+    - name: ASTROLOGY_API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing astrology data services
+      type: string
+    - name: TAROT_DECK
+      value: 'Rider-Waite'
+      description: Default tarot deck used for readings
+      type: string
+    settings:
+      data_encryption: true
+      user_data_privacy: true
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - astrology-api.com
+    - tarot-services.com
+  predefined_variables:
+    current_user_name: Seeker
+    default_timezone: UTC
+  system_info:
+    astrology_library_version: '2.1'
+    tarot_interpretation_version: '1.5'
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

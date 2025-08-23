@@ -1,0 +1,197 @@
+name: map
+display_name: Map Navigation and Location Services
+description: Provides a comprehensive suite of tools for location-based services, including searching for locations, obtaining directions, geocoding, and managing an address book. This scenario is designed to assist users in navigating and managing location data efficiently.
+category: location_services
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- location_data_access
+- address_book_management
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_current_location
+- search_locations
+- get_location_details
+- get_directions
+- geocoding
+- reverse_geocoding
+- get_location_reviews
+- search_address_book
+- add_address
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- navigation
+- geocoding
+- location_management
+context:
+  available_tools:
+  - name: get_current_location
+    display_name: Get Current Location
+    description: Retrieve the current geographic location of the user.
+    category: location_services
+    parameters: []
+    example_usage:
+    - get_current_location()
+  - name: search_locations
+    display_name: Search Locations
+    description: Search for locations using various filters such as keywords, distance, and rating.
+    category: location_services
+    parameters:
+    - name: keywords
+      type: string
+      description: The keywords to search for locations.
+      required: true
+    - name: open_now
+      type: boolean
+      description: Whether the location is open now.
+      required: false
+    - name: min_rating
+      type: number
+      description: The minimum rating of the location.
+      required: false
+    - name: base_location_address
+      type: string
+      description: The base location address for distance calculation.
+      required: false
+    - name: max_distance
+      type: number
+      description: The maximum distance in miles for the search.
+      required: false
+    - name: max_results
+      type: integer
+      description: The maximum number of results to return.
+      required: false
+    example_usage:
+    - search_locations(keywords='coffee shop', open_now=true, min_rating=4)
+  - name: get_location_details
+    display_name: Get Location Details
+    description: Retrieve detailed information about a specific location.
+    category: location_services
+    parameters:
+    - name: location_address
+      type: string
+      description: The address of the location.
+      required: true
+    example_usage:
+    - get_location_details(location_address='123 Main St, Anytown, USA')
+  - name: get_directions
+    display_name: Get Directions
+    description: Obtain directions between two or more locations using different modes of transportation.
+    category: navigation
+    parameters:
+    - name: start_location_address
+      type: string
+      description: The starting location address.
+      required: false
+    - name: end_location
+      type: string
+      description: The ending location address.
+      required: true
+    - name: mode
+      type: string
+      description: The mode of transportation.
+      required: true
+    example_usage:
+    - get_directions(start_location_address='123 Main St, Anytown, USA', end_location='456 Elm St, Othertown, USA', mode='driving')
+  - name: geocoding
+    display_name: Geocoding
+    description: Convert a location address to geographic coordinates.
+    category: location_services
+    parameters:
+    - name: location_address
+      type: string
+      description: The address of the location.
+      required: true
+    example_usage:
+    - geocoding(location_address='123 Main St, Anytown, USA')
+  - name: reverse_geocoding
+    display_name: Reverse Geocoding
+    description: Convert geographic coordinates to a location address.
+    category: location_services
+    parameters:
+    - name: coordinates
+      type: string
+      description: The geographic coordinates.
+      required: true
+    example_usage:
+    - reverse_geocoding(coordinates='37.7749,-122.4194')
+  - name: get_location_reviews
+    display_name: Get Location Reviews
+    description: Retrieve reviews for a specific location.
+    category: location_services
+    parameters:
+    - name: location_address
+      type: string
+      description: The address of the location.
+      required: true
+    example_usage:
+    - get_location_reviews(location_address='123 Main St, Anytown, USA')
+  - name: search_address_book
+    display_name: Search Address Book
+    description: Search for locations within the address book using keywords.
+    category: address_book_management
+    parameters:
+    - name: keywords
+      type: string
+      description: The keywords to search for in the address book.
+      required: true
+    example_usage:
+    - search_address_book(keywords='office')
+  - name: add_address
+    display_name: Add Address
+    description: Add a new address to the address book.
+    category: address_book_management
+    parameters:
+    - name: name
+      type: string
+      description: The name associated with the address.
+      required: true
+    - name: address
+      type: string
+      description: The address to add.
+      required: true
+    - name: note
+      type: string
+      description: A note about the address.
+      required: true
+    example_usage:
+    - add_address(name='Home', address='123 Main St, Anytown, USA', note='Primary residence')
+  environment:
+    name: location_services_platform
+    description: Platform providing comprehensive location-based services and tools.
+    variables:
+    - name: DEFAULT_SEARCH_RADIUS
+      value: 10
+      description: Default search radius in miles for location searches.
+      type: integer
+    - name: MAX_RESULTS_LIMIT
+      value: 50
+      description: Maximum number of results that can be returned from a search.
+      type: integer
+    settings:
+      default_transport_mode: driving
+      max_address_book_entries: 1000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - maps.example.com
+    - '*.trusted-mapping-service.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_location: '37.7749,-122.4194'
+    default_timezone: UTC-8
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - geopy
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

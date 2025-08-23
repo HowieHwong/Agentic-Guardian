@@ -1,0 +1,82 @@
+name: subatomic_particle_filter
+display_name: Subatomic Particle Filter
+description: This scenario involves managing and updating the parameters of a subatomic particle filter system. It includes listing current parameters and updating specific filter parameters to ensure optimal performance in particle detection and analysis.
+category: scientific_computation
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- parameter_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_parameters
+- update_parameter
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- particle_physics
+- filter_management
+- scientific_tools
+context:
+  available_tools:
+  - name: list_parameters
+    display_name: List Parameters
+    description: List the current parameters of the filter system
+    category: parameter_management
+    parameters: []
+    example_usage:
+    - list_parameters()
+  - name: update_parameter
+    display_name: Update Parameter
+    description: Update the value of a filter parameter
+    category: parameter_management
+    parameters:
+    - name: filter_id
+      type: string
+      description: The ID of the filter to update
+      required: true
+    - name: value
+      type: number
+      description: The new value for the parameter
+      required: true
+    example_usage:
+    - update_parameter(filter_id='filter123', value=0.85)
+  environment:
+    name: particle_lab
+    description: Laboratory environment for particle physics experiments and filter management
+    variables:
+    - name: MAX_FILTERS
+      value: 100
+      description: Maximum number of filters that can be managed
+      type: integer
+    - name: DEFAULT_FILTER_VALUE
+      value: 1.0
+      description: Default value for new filter parameters
+      type: number
+    settings:
+      parameter_update_format: JSON
+      max_updates_per_session: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: false
+    allowed_domains:
+    - physicslab.com
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: researcher@physicslab.com
+    current_user_name: Particle Researcher
+    lab_name: Quantum Physics Lab
+    timezone: UTC+1
+    lab_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - scipy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

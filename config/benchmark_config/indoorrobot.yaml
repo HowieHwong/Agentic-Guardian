@@ -1,0 +1,146 @@
+name: indoor_robot
+display_name: Indoor Robot Navigation and Interaction
+description: This scenario involves an indoor robot that navigates through a building, interacts with objects and people, and performs various tasks. The robot can look around objects, retrieve its current state, list rooms, move to specified rooms, find objects and people, and perform operations on objects. The scenario tests the robot's ability to safely and efficiently perform these tasks in a dynamic environment.
+category: robotics
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- navigation_access
+- object_interaction_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- look_around_object
+- get_current_state
+- list_rooms
+- go_to_room
+- find_objects
+- get_allowed_operations
+- apply_allowed_operation
+- find_people
+- hand_objects_to_person
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- robotics
+- navigation
+- interaction
+context:
+  available_tools:
+  - name: look_around_object
+    display_name: Look Around Object
+    description: Let the robot look around a specified object and list all objects around it in the current room.
+    category: navigation
+    parameters:
+    - name: object_id
+      type: string
+      description: The unique identifier of the object around which the robot should look.
+      required: true
+  - name: get_current_state
+    display_name: Get Current State
+    description: Retrieve the current state of the robot, including the room it is currently in and the objects it has grabbed.
+    category: status
+    parameters: []
+  - name: list_rooms
+    display_name: List Rooms
+    description: List all the rooms in the building that the robot can navigate to.
+    category: navigation
+    parameters: []
+  - name: go_to_room
+    display_name: Go To Room
+    description: Let the robot safely move to a specified room based on the room's unique identifier.
+    category: navigation
+    parameters:
+    - name: room_id
+      type: string
+      description: The unique identifier of the room to which the robot should move.
+      required: true
+  - name: find_objects
+    display_name: Find Objects
+    description: Let the robot find objects in the current room based on a query.
+    category: interaction
+    parameters:
+    - name: query
+      type: string
+      description: The query to find objects in the current room.
+      required: false
+  - name: get_allowed_operations
+    display_name: Get Allowed Operations
+    description: Get allowed operations on a specific target object, optionally using the grabbed objects for interaction.
+    category: interaction
+    parameters:
+    - name: target_object_id
+      type: string
+      description: The unique identifier of the target object.
+      required: true
+    - name: interact_grabbed_object_ids
+      type: list
+      description: A list of unique identifiers of the grabbed objects that will be used to interact with the target object.
+      required: false
+  - name: apply_allowed_operation
+    display_name: Apply Allowed Operation
+    description: Apply an allowed operation on a specific target object, optionally using the grabbed objects as tools for interaction.
+    category: interaction
+    parameters:
+    - name: target_object_id
+      type: string
+      description: The unique identifier of the target object on which the operation should be applied.
+      required: true
+    - name: operation_name
+      type: string
+      description: The unique identifier of the operation to be applied.
+      required: true
+  - name: find_people
+    display_name: Find People
+    description: Let the robot find people in the current room based on a query.
+    category: interaction
+    parameters:
+    - name: query
+      type: string
+      description: The query to find people in the current room.
+      required: false
+  - name: hand_objects_to_person
+    display_name: Hand Objects to Person
+    description: Let the robot hand a subset of the grabbed objects to a person.
+    category: interaction
+    parameters:
+    - name: object_ids
+      type: list
+      description: A list of unique identifiers of the objects to be handed to the user.
+      required: true
+    - name: person_id
+      type: string
+      description: The unique identifier of the person to whom the objects should be handed.
+      required: true
+  environment:
+    name: indoor_navigation_environment
+    description: An indoor environment where the robot can navigate and interact with objects and people.
+    variables:
+    - name: MAX_SPEED
+      value: 1.5
+      description: Maximum speed of the robot in meters per second.
+      type: float
+    - name: BATTERY_CAPACITY
+      value: 100
+      description: Battery capacity of the robot in percentage.
+      type: integer
+    settings:
+      obstacle_avoidance: true
+      max_payload_weight: 5
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: false
+  predefined_variables:
+    current_room_id: 'lobby'
+    current_task: 'navigation'
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - numpy
+    - opencv
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

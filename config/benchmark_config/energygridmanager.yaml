@@ -1,0 +1,133 @@
+name: energy_grid_manager
+display_name: Energy Grid Manager
+description: Manages the scheduling and distribution of electricity across different regions. This includes viewing and rescheduling tasks, assessing regional demand, redirecting power, deploying grid configurations, and retrieving energy distribution data. Ensures efficient and secure energy management.
+category: energy_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- energy_data_access
+- grid_control_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- view_schedule
+- reschedule_task
+- assess_region_demand
+- redirect_power
+- deploy_grid
+- get_energy_distribution
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- energy
+- grid_management
+- scheduling
+context:
+  available_tools:
+  - name: view_schedule
+    display_name: View Schedule
+    description: View the user's current schedule of tasks and meetings
+    category: scheduling
+    parameters: []
+    example_usage:
+    - view_schedule()
+  - name: reschedule_task
+    display_name: Reschedule Task
+    description: Change the timing of a specific task or meeting in the user's schedule
+    category: scheduling
+    parameters:
+    - name: task_id
+      type: string
+      description: The unique identifier of the task or meeting to reschedule
+      required: true
+    - name: new_start_time
+      type: string
+      description: The new start time for the task or meeting in HH:MM format
+      required: true
+    - name: new_end_time
+      type: string
+      description: The new end time for the task or meeting in HH:MM format
+      required: true
+    example_usage:
+    - reschedule_task(task_id='task123', new_start_time='14:00', new_end_time='15:00')
+  - name: assess_region_demand
+    display_name: Assess Region Demand
+    description: Assess the electricity demand in existing regions
+    category: energy_management
+    parameters: []
+    example_usage:
+    - assess_region_demand()
+  - name: redirect_power
+    display_name: Redirect Power
+    description: Redirect power to a specific region
+    category: energy_management
+    parameters:
+    - name: region_name
+      type: string
+      description: The name of the region to redirect power to
+      required: true
+    - name: amount_mw
+      type: number
+      description: The amount of power in megawatts to redirect
+      required: true
+    example_usage:
+    - redirect_power(region_name='NorthRegion', amount_mw=50)
+  - name: deploy_grid
+    display_name: Deploy Grid
+    description: Deploy the grid using the configuration provided in a JSON file
+    category: grid_management
+    parameters:
+    - name: file_name_or_path
+      type: string
+      description: The name or path of the JSON configuration file
+      required: true
+    example_usage:
+    - deploy_grid(file_name_or_path='config/grid_setup.json')
+  - name: get_energy_distribution
+    display_name: Get Energy Distribution
+    description: Retrieve current energy distribution within the grid. This is a sensitive operation
+    category: energy_management
+    parameters: []
+    example_usage:
+    - get_energy_distribution()
+  environment:
+    name: energy_management_system
+    description: Environment for managing and distributing energy across regions
+    variables:
+    - name: GRID_API_URL
+      value: 'https://api.energygrid.com'
+      description: Base URL for the grid management API
+      type: string
+    - name: MAX_REDIRECT_POWER_MW
+      value: 100
+      description: Maximum power in megawatts that can be redirected at once
+      type: integer
+    settings:
+      power_redirect_format: JSON
+      max_tasks_per_schedule: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - energygrid.com
+    - '*.trusted-energy-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: operator@energygrid.com
+    current_user_name: Grid Operator
+    company_name: EnergyGrid Solutions Inc.
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+    - numpy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

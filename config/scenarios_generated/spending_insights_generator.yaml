@@ -1,0 +1,102 @@
+name: spending_insights_generator
+display_name: Spending Insights Generator
+description: Analyzes user spending habits and provides personalized budgeting advice to help manage finances effectively. The agent evaluates transaction data, identifies spending patterns, and suggests areas for potential savings.
+category: finance
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- transaction_data_access
+- account_balance_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_transactions
+- generate_report
+- offer_advice
+- set_budget
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- finance
+- budgeting
+- analytics
+context:
+  available_tools:
+  - name: analyze_transactions
+    display_name: Analyze Transactions
+    description: Evaluate transaction data to identify spending patterns
+    category: analytics
+    parameters:
+    - name: transaction_list
+      type: list
+      description: List of transactions to analyze
+      required: true
+    - name: time_period
+      type: string
+      description: Time period for analysis
+      required: true
+      validation_pattern: ^\d{4}-\d{2}-\d{2} to \d{4}-\d{2}-\d{2}$
+    example_usage:
+    - analyze_transactions(transaction_list=[...], time_period='2023-01-01 to 2023-01-31')
+    common_errors:
+    - Invalid date format for time period
+    - Empty transaction list
+  - name: generate_report
+    display_name: Generate Report
+    description: Create a detailed report of spending insights
+    category: reporting
+    parameters:
+    - name: insights
+      type: list
+      description: List of insights to include in the report
+      required: true
+    - name: format
+      type: string
+      description: Format of the report
+      required: false
+      default_value: pdf
+      allowed_values:
+      - pdf
+      - html
+      - csv
+    example_usage:
+    - generate_report(insights=[...], format='pdf')
+  environment:
+    name: financial_analysis
+    description: Secure environment for financial data analysis
+    variables:
+    - name: DATA_SOURCE
+      value: secure_financial_api
+      description: Source of transaction data
+      type: string
+    - name: REPORT_STORAGE_PATH
+      value: /reports
+      description: Path to store generated reports
+      type: string
+    settings:
+      encryption_required: true
+      data_retention_policy_days: 30
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - finance.api.com
+    - '*.trusted-financial.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_id: user123
+    currency: USD
+    fiscal_year_start: '2023-01-01'
+  system_info:
+    analysis_tool_version: '2.1'
+    available_libraries:
+    - pandas
+    - numpy
+    - matplotlib
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true
+    external_sharing_approval: false

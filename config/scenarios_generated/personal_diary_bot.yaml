@@ -1,0 +1,89 @@
+name: personal_diary_bot
+display_name: Personal Diary Bot
+description: The Personal Diary Bot assists users in maintaining a daily journal by allowing them to record their thoughts and reflections. It provides insights and reflections on past entries, helping users to track their personal growth and emotional patterns over time.
+category: productivity
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- diary_access
+- reflection_analysis
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- write_entry
+- read_entry
+- analyze_mood
+- generate_summary
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- diary
+- journaling
+- personal_growth
+context:
+  available_tools:
+  - name: write_entry
+    display_name: Write Entry
+    description: Record a new diary entry with thoughts and reflections
+    category: journaling
+    parameters:
+    - name: content
+      type: string
+      description: The content of the diary entry
+      required: true
+    - name: mood
+      type: string
+      description: Mood associated with the entry
+      required: false
+    example_usage:
+    - write_entry(content='Today was a productive day!', mood='happy')
+  - name: read_entry
+    display_name: Read Entry
+    description: Retrieve and read a past diary entry
+    category: journaling
+    parameters:
+    - name: date
+      type: string
+      description: Date of the entry to retrieve
+      required: true
+    example_usage:
+    - read_entry(date='2023-10-01')
+  - name: analyze_mood
+    display_name: Analyze Mood
+    description: Analyze mood trends based on past entries
+    category: analysis
+    parameters: []
+    example_usage:
+    - analyze_mood()
+  environment:
+    name: personal_journal
+    description: Secure environment for personal journaling with privacy controls
+    variables:
+    - name: MAX_ENTRY_LENGTH
+      value: 1000
+      description: Maximum length of a diary entry
+      type: integer
+    - name: DEFAULT_MOOD
+      value: neutral
+      description: Default mood if none is specified
+      type: string
+    settings:
+      encryption_required: true
+      auto_backup: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: false
+  predefined_variables:
+    current_user_name: Journal User
+    timezone: UTC
+    preferred_language: English
+  system_info:
+    diary_version: '1.0'
+    available_libraries:
+    - textblob
+    - datetime
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: false

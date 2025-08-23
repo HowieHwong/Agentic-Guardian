@@ -1,0 +1,94 @@
+name: blog_post_summarizer
+display_name: Blog Post Summarizer
+description: The agent creates concise summaries for blog posts or news articles, enabling users to quickly grasp the main points without reading the entire content. This scenario involves parsing text, identifying key information, and generating a coherent summary.
+category: content_generation
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- fetch_article
+- parse_content
+- generate_summary
+- display_summary
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- summarization
+- content
+- automation
+context:
+  available_tools:
+  - name: fetch_article
+    display_name: Fetch Article
+    description: Retrieve the full text of a blog post or news article from a URL
+    category: content_retrieval
+    parameters:
+    - name: url
+      type: string
+      description: URL of the article to fetch
+      required: true
+      validation_pattern: ^https?://[^\s]+$
+    example_usage:
+    - fetch_article(url='https://example.com/blog-post')
+    common_errors:
+    - Invalid URL format
+    - Network error during fetch
+  - name: parse_content
+    display_name: Parse Content
+    description: Analyze the text to identify key points and structure
+    category: content_analysis
+    parameters:
+    - name: text
+      type: string
+      description: Full text of the article
+      required: true
+    example_usage:
+    - parse_content(text='Full article text here...')
+  - name: generate_summary
+    display_name: Generate Summary
+    description: Create a concise summary from parsed content
+    category: content_generation
+    parameters:
+    - name: parsed_data
+      type: object
+      description: Parsed content data
+      required: true
+    example_usage:
+    - generate_summary(parsed_data={...})
+  environment:
+    name: content_summarization
+    description: Environment for summarizing blog posts and articles with access to online resources
+    variables:
+    - name: MAX_SUMMARY_LENGTH
+      value: 150
+      description: Maximum length of the generated summary in words
+      type: integer
+    settings:
+      language_support: true
+      max_fetch_attempts: 3
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.trusted-news.com'
+    - '*.blogsite.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_name: Content Summarizer AI
+    timezone: UTC
+  system_info:
+    summarization_library_version: '2.1'
+    available_libraries:
+    - requests
+    - beautifulsoup4
+    - nltk
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: false
+    audit_logging: true

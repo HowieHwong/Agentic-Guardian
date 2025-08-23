@@ -1,0 +1,99 @@
+name: cart_abandonment_notifier
+display_name: Cart Abandonment Notifier
+description: Detects when a customer leaves items in their cart and sends reminders to encourage completion of the purchase. This involves monitoring user activity on the e-commerce platform and triggering notifications to the customer through various communication channels.
+category: e-commerce
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- user_activity_access
+- notification_sending
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- monitor_cart_activity
+- send_reminder_notification
+- log_abandonment_event
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- e-commerce
+- notifications
+- user_engagement
+context:
+  available_tools:
+  - name: monitor_cart_activity
+    display_name: Monitor Cart Activity
+    description: Track user activity related to cart interactions on the e-commerce platform
+    category: monitoring
+    parameters:
+    - name: user_id
+      type: string
+      description: Unique identifier for the user
+      required: true
+    - name: cart_id
+      type: string
+      description: Unique identifier for the cart
+      required: true
+    example_usage:
+    - monitor_cart_activity(user_id='12345', cart_id='67890')
+    common_errors:
+    - User ID not found
+    - Cart ID not found
+  - name: send_reminder_notification
+    display_name: Send Reminder Notification
+    description: Send a reminder notification to the user about their abandoned cart
+    category: communication
+    parameters:
+    - name: user_contact
+      type: string
+      description: Contact information for the user (email or phone)
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    example_usage:
+    - send_reminder_notification(user_contact='user@example.com', message='You have items left in your cart!')
+    common_errors:
+    - Invalid contact information
+    - Message content empty
+  environment:
+    name: e_commerce_platform
+    description: E-commerce platform environment with user activity tracking and notification capabilities
+    variables:
+    - name: API_ENDPOINT
+      value: api.ecommerce.com
+      description: API endpoint for accessing e-commerce services
+      type: string
+    - name: MAX_NOTIFICATION_RETRIES
+      value: 3
+      description: Maximum number of retries for sending notifications
+      type: integer
+    settings:
+      encryption_required: true
+      notification_logging: true
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - ecommerce.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: notifier@ecommerce.com
+    current_user_name: Cart Notifier Bot
+    company_name: ShopSmart Inc.
+    timezone: UTC-5
+    business_hours: 8:00-20:00
+  system_info:
+    platform_version: '2.3'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

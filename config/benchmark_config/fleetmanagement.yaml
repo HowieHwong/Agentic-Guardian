@@ -1,0 +1,124 @@
+name: fleet_management
+display_name: Fleet Management
+description: Manage a fleet of vehicles by listing their status, scheduling appointments, checking and optimizing routes, and communicating with drivers. This scenario ensures efficient fleet operations and effective communication with drivers.
+category: logistics
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- vehicle_data_access
+- communication_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_vehicles
+- schedule_vehicle
+- check_routes
+- optimize_route
+- communicate_with_driver
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- fleet
+- logistics
+- communication
+context:
+  available_tools:
+  - name: list_vehicles
+    display_name: List Vehicles
+    description: List all vehicles and their current status
+    category: logistics
+    parameters: []
+    example_usage:
+    - list_vehicles()
+  - name: schedule_vehicle
+    display_name: Schedule Vehicle
+    description: Schedule a vehicle for an appointment
+    category: logistics
+    parameters:
+    - name: vehicle_id
+      type: string
+      description: The ID of the vehicle
+      required: true
+    - name: meeting_id
+      type: string
+      description: The ID of the meeting
+      required: true
+    example_usage:
+    - schedule_vehicle(vehicle_id='V123', meeting_id='M456')
+  - name: check_routes
+    display_name: Check Routes
+    description: Check the existing routes
+    category: logistics
+    parameters: []
+    example_usage:
+    - check_routes()
+  - name: optimize_route
+    display_name: Optimize Route
+    description: Optimize the delivery route for a vehicle
+    category: logistics
+    parameters:
+    - name: vehicle_id
+      type: string
+      description: The ID of the vehicle to optimize the route for
+      required: true
+    - name: prioritize
+      type: string
+      description: Criteria to prioritize in the route optimization, e.g., 'speed' or 'fuel efficiency'
+      required: true
+    example_usage:
+    - optimize_route(vehicle_id='V123', prioritize='speed')
+  - name: communicate_with_driver
+    display_name: Communicate with Driver
+    description: Send a message to a driver
+    category: communication
+    parameters:
+    - name: vehicle_id
+      type: string
+      description: The ID of the vehicle whose driver the message is being sent to
+      required: true
+    - name: message
+      type: string
+      description: The message to send to the driver
+      required: true
+    example_usage:
+    - communicate_with_driver(vehicle_id='V123', message='Please proceed to the next stop')
+  environment:
+    name: fleet_management_system
+    description: Fleet management system with tools for vehicle scheduling, route optimization, and driver communication
+    variables:
+    - name: FLEET_API_URL
+      value: 'https://api.fleetmanagement.com'
+      description: Base URL for the fleet management API
+      type: string
+    - name: MAX_VEHICLES
+      value: 100
+      description: Maximum number of vehicles managed by the system
+      type: integer
+    settings:
+      route_optimization_algorithm: Dijkstra
+      max_communication_delay: 5
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - fleetmanagement.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: fleetmanager@example.com
+    current_user_name: Fleet Manager
+    company_name: LogisticsCorp Inc.
+    timezone: UTC
+    business_hours: 7:00-19:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

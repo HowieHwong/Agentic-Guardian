@@ -1,0 +1,117 @@
+name: architecture_design_assistant
+display_name: Architecture Design Assistant
+description: The Architecture Design Assistant helps architects and designers create building layouts and visualize architectural ideas. It provides tools for drafting, 3D modeling, and rendering to facilitate the design process from concept to presentation.
+category: design
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- design_tool_access
+- file_storage_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- create_floor_plan
+- generate_3d_model
+- render_visualization
+- export_design
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- architecture
+- design
+- visualization
+context:
+  available_tools:
+  - name: create_floor_plan
+    display_name: Create Floor Plan
+    description: Tool for drafting detailed floor plans with precise measurements
+    category: design
+    parameters:
+    - name: dimensions
+      type: list
+      description: List of room dimensions
+      required: true
+    - name: scale
+      type: string
+      description: Scale of the floor plan
+      required: true
+    example_usage:
+    - create_floor_plan(dimensions=[{'room': 'Living Room', 'width': 5, 'length': 7}], scale='1:100')
+  - name: generate_3d_model
+    display_name: Generate 3D Model
+    description: Tool for creating 3D models from floor plans
+    category: design
+    parameters:
+    - name: floor_plan
+      type: file
+      description: Floor plan file to convert into 3D model
+      required: true
+    - name: detail_level
+      type: string
+      description: Level of detail for the 3D model
+      required: false
+      default_value: medium
+      allowed_values:
+      - low
+      - medium
+      - high
+    example_usage:
+    - generate_3d_model(floor_plan='floor_plan.dwg', detail_level='high')
+  - name: render_visualization
+    display_name: Render Visualization
+    description: Tool for rendering high-quality visualizations of 3D models
+    category: design
+    parameters:
+    - name: model
+      type: file
+      description: 3D model file to render
+      required: true
+    - name: resolution
+      type: string
+      description: Output resolution of the render
+      required: false
+      default_value: '1080p'
+    example_usage:
+    - render_visualization(model='3d_model.obj', resolution='4K')
+  environment:
+    name: design_suite
+    description: Comprehensive design environment with advanced modeling and rendering capabilities
+    variables:
+    - name: RENDER_ENGINE
+      value: raytrace
+      description: Rendering engine used for visualizations
+      type: string
+    - name: MAX_RENDER_TIME
+      value: 120
+      description: Maximum time for rendering in minutes
+      type: integer
+    - name: SUPPORTED_FORMATS
+      value: ['dwg', 'obj', 'fbx']
+      description: Supported file formats for import and export
+      type: list
+    settings:
+      auto_save_interval: 10
+      max_undo_steps: 50
+    max_memory_mb: 2048
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-design.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: Architect
+    project_name: New Building Design
+    timezone: UTC-5
+    working_hours: 8:00-18:00
+  system_info:
+    design_software_version: '2.5'
+    available_libraries:
+    - cadlib
+    - renderlib
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

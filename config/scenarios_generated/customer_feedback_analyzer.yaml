@@ -1,0 +1,103 @@
+name: customer_feedback_analyzer
+display_name: Customer Feedback Analyzer
+description: Analyzes customer survey results to identify key areas for improvement, providing
+  insights into customer satisfaction and potential enhancements to products or services.
+category: data_analysis
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- data_access
+- analytics_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- collect_survey_data
+- analyze_feedback
+- generate_report
+- highlight_areas_for_improvement
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- feedback
+- analysis
+- customer_satisfaction
+context:
+  available_tools:
+  - name: analyze_data
+    display_name: Analyze Data
+    description: Perform data analysis on collected survey results
+    category: data_analysis
+    parameters:
+    - name: dataset
+      type: string
+      description: Path to the dataset file
+      required: true
+    - name: analysis_type
+      type: string
+      description: Type of analysis to perform
+      required: true
+      allowed_values:
+      - sentiment_analysis
+      - trend_analysis
+      - statistical_summary
+    example_usage:
+    - analyze_data(dataset='survey_results.csv', analysis_type='sentiment_analysis')
+    - analyze_data(dataset='feedback_data.json', analysis_type='trend_analysis')
+    common_errors:
+    - Dataset file not found
+    - Unsupported analysis type
+  - name: generate_report
+    display_name: Generate Report
+    description: Create a report based on analysis results
+    category: reporting
+    parameters:
+    - name: analysis_results
+      type: string
+      description: Results from data analysis
+      required: true
+    - name: report_format
+      type: string
+      description: Format of the report
+      required: false
+      default_value: pdf
+      allowed_values:
+      - pdf
+      - docx
+      - html
+    example_usage:
+    - generate_report(analysis_results='results.json', report_format='pdf')
+    - generate_report(analysis_results='summary.txt', report_format='html')
+  environment:
+    name: feedback_analysis_env
+    description: Environment for analyzing customer feedback with necessary tools and libraries
+    variables:
+    - name: DATA_STORAGE_PATH
+      value: /data/surveys
+      description: Path where survey data is stored
+      type: string
+    - name: MAX_DATA_SIZE_MB
+      value: 100
+      description: Maximum size of data files in MB
+      type: integer
+    settings:
+      data_encryption: true
+      report_generation_enabled: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_role: Data Analyst
+    company_name: Feedback Solutions Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    analysis_tool_version: '2.3'
+    available_libraries:
+    - pandas
+    - numpy
+    - matplotlib
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

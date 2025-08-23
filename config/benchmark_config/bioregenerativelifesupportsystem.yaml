@@ -1,0 +1,95 @@
+name: bioregenerative_life_support_system
+display_name: Bioregenerative Life Support System
+description: This scenario involves managing and optimizing a Bioregenerative Life Support System (BLSS) in a space habitat. The system is responsible for maintaining life-supporting conditions by managing resources such as oxygen, light exposure, and other environmental parameters. The agent will interact with various components to ensure optimal conditions for sustaining life in a closed-loop ecosystem.
+category: space_habitat_management
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- system_control_access
+- environmental_data_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_greenhouses
+- adjust_light_exposure
+- adjust_resource
+- list_resources
+- get_atmospheric_conditions
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- space
+- life_support
+- environmental_management
+context:
+  available_tools:
+  - name: list_greenhouses
+    display_name: List Greenhouses
+    description: List all available greenhouses in the system.
+    category: environmental_management
+    parameters: []
+    example_usage:
+    - list_greenhouses()
+  - name: adjust_light_exposure
+    display_name: Adjust Light Exposure
+    description: Adjust the light exposure duration for a specified greenhouse.
+    category: environmental_management
+    parameters:
+    - name: greenhouse_id
+      type: string
+      description: The ID of the greenhouse to adjust.
+      required: true
+    - name: light_exposure_hours
+      type: number
+      description: The new light exposure duration in hours.
+      required: true
+    example_usage:
+    - adjust_light_exposure(greenhouse_id='GH01', light_exposure_hours=12)
+  - name: adjust_resource
+    display_name: Adjust Resource Allocation
+    description: Adjust resource allocation for life support systems.
+    category: resource_management
+    parameters:
+    - name: resource_name
+      type: string
+      description: The resource name.
+      required: true
+    - name: new_replenishment_rate
+      type: string
+      description: The new replenishment rate.
+      required: true
+    example_usage:
+    - adjust_resource(resource_name='water', new_replenishment_rate='5L/day')
+  environment:
+    name: space_habitat
+    description: A controlled environment simulating a space habitat with bioregenerative life support systems.
+    variables:
+    - name: MAX_OXYGEN_LEVEL
+      value: 21
+      description: Maximum safe oxygen level percentage.
+      type: integer
+    - name: LIGHT_CYCLE_DURATION
+      value: 24
+      description: Duration of the light cycle in hours.
+      type: integer
+    settings:
+      oxygen_adjustment_precision: 0.1
+      max_light_exposure_hours: 18
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: false
+  predefined_variables:
+    current_user_role: System Operator
+    habitat_location: Low Earth Orbit
+    mission_duration_days: 365
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

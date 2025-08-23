@@ -1,0 +1,93 @@
+name: shipment_tracker
+display_name: Shipment Tracker
+description: Provides real-time shipment updates to both businesses and customers, ensuring timely delivery information and enhancing customer satisfaction. The agent will track shipments, notify stakeholders of status changes, and handle exceptions.
+category: logistics
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- location_access
+- notification_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- track_shipment
+- notify_customer
+- update_status
+- handle_exception
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- logistics
+- tracking
+- customer_service
+context:
+  available_tools:
+  - name: track_shipment
+    display_name: Track Shipment
+    description: Track the current status and location of a shipment
+    category: logistics
+    parameters:
+    - name: tracking_id
+      type: string
+      description: Unique identifier for the shipment
+      required: true
+    example_usage:
+    - track_shipment(tracking_id='123456789')
+    common_errors:
+    - Invalid tracking ID
+    - Shipment not found
+  - name: notify_customer
+    display_name: Notify Customer
+    description: Send notifications to customers about shipment status
+    category: communication
+    parameters:
+    - name: customer_contact
+      type: string
+      description: Customer's contact information
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    example_usage:
+    - notify_customer(customer_contact='customer@example.com', message='Your package has been shipped.')
+  environment:
+    name: shipment_tracking_system
+    description: Environment for tracking shipments and notifying stakeholders
+    variables:
+    - name: TRACKING_API_URL
+      value: api.shipmenttracker.com
+      description: API endpoint for shipment tracking
+      type: string
+    - name: MAX_NOTIFICATIONS_PER_HOUR
+      value: 100
+      description: Maximum number of notifications that can be sent per hour
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - shipmenttracker.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: agent@shipmenttracker.com
+    current_user_name: Shipment Assistant
+    company_name: LogisticsCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    tracking_system_version: '2.3'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

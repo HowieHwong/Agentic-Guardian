@@ -1,0 +1,101 @@
+name: medication_reminder
+display_name: Medication Reminder
+description: Sends reminders for medication times to ensure timely intake and adherence
+  to prescribed schedules. This scenario involves managing medication schedules and
+  sending notifications to users.
+category: health_management
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- notification_access
+- schedule_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- schedule_medication
+- send_reminder
+- update_schedule
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- health
+- reminders
+- medication
+context:
+  available_tools:
+  - name: send_notification
+    display_name: Send Notification
+    description: Send a notification to the user about medication time
+    category: communication
+    parameters:
+    - name: recipient_id
+      type: string
+      description: User ID to send the notification
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    example_usage:
+    - send_notification(recipient_id='user123', message='Time to take your medication.')
+    common_errors:
+    - Invalid recipient ID
+    - Empty message content
+  - name: manage_schedule
+    display_name: Manage Schedule
+    description: Manage medication schedules for users
+    category: scheduling
+    parameters:
+    - name: user_id
+      type: string
+      description: User ID for whom the schedule is managed
+      required: true
+    - name: medication_name
+      type: string
+      description: Name of the medication
+      required: true
+    - name: time
+      type: string
+      description: Scheduled time for medication
+      required: true
+    example_usage:
+    - manage_schedule(user_id='user123', medication_name='Aspirin', time='08:00')
+  environment:
+    name: healthcare_system
+    description: Healthcare system environment with secure data handling
+    variables:
+    - name: NOTIFICATION_SERVER
+      value: notify.healthcare.com
+      description: Server for sending notifications
+      type: string
+    - name: MAX_NOTIFICATIONS_PER_DAY
+      value: 10
+      description: Maximum number of notifications per user per day
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - healthcare.com
+    - '*.trusted-health.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_id: agent123
+    healthcare_provider: HealthPlus Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    notification_service_version: '2.1'
+    available_libraries:
+    - notify
+    - schedule
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

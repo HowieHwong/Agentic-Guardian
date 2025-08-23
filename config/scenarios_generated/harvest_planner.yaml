@@ -1,0 +1,101 @@
+name: harvest_planner
+display_name: Harvest Planner
+description: The Harvest Planner agent suggests optimal harvest dates based on crop type, weather forecasts, and market conditions. It also arranges transport logistics to ensure timely delivery to markets or storage facilities.
+category: agriculture
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- weather_data_access
+- logistics_management
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_weather
+- calculate_harvest_date
+- arrange_transport
+- notify_farmers
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- agriculture
+- logistics
+- planning
+context:
+  available_tools:
+  - name: analyze_weather
+    display_name: Analyze Weather
+    description: Analyze weather patterns to determine optimal harvest times
+    category: data_analysis
+    parameters:
+    - name: location
+      type: string
+      description: Geographic location for weather analysis
+      required: true
+    - name: crop_type
+      type: string
+      description: Type of crop for which to analyze weather impact
+      required: true
+    example_usage:
+    - analyze_weather(location='Iowa', crop_type='corn')
+    common_errors:
+    - Invalid location format
+    - Unsupported crop type
+  - name: arrange_transport
+    display_name: Arrange Transport
+    description: Arrange logistics for transporting harvested crops
+    category: logistics
+    parameters:
+    - name: destination
+      type: string
+      description: Destination for the harvested crops
+      required: true
+    - name: quantity
+      type: integer
+      description: Quantity of crops to transport
+      required: true
+    - name: transport_type
+      type: string
+      description: Type of transport (e.g., truck, train)
+      required: false
+      default_value: truck
+    example_usage:
+    - arrange_transport(destination='Chicago', quantity=1000)
+    - arrange_transport(destination='New York', quantity=500, transport_type='train')
+  environment:
+    name: agricultural_management_system
+    description: Environment for managing agricultural operations and logistics
+    variables:
+    - name: WEATHER_API_KEY
+      value: your_api_key_here
+      description: API key for accessing weather data
+      type: string
+    - name: MAX_TRANSPORT_CAPACITY
+      value: 2000
+      description: Maximum transport capacity in tons
+      type: integer
+    settings:
+      data_refresh_rate: daily
+      max_harvest_suggestions: 5
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - weatherapi.com
+    - '*.logistics-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: Farm Manager
+    region: Midwest
+    preferred_transport_partner: AgriTrans Inc.
+  system_info:
+    software_version: '2.1'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

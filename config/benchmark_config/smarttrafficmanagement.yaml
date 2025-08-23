@@ -1,0 +1,124 @@
+name: smart_traffic_management
+display_name: Smart Traffic Management
+description: This scenario involves managing and optimizing traffic lights at various intersections to ensure smooth traffic flow. It includes setting traffic light colors and timings, adjusting signal timings, and checking traffic light policies. The goal is to enhance traffic efficiency and safety in urban environments.
+category: traffic_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- traffic_control_access
+- policy_check_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- set_north_south_traffic_light
+- set_west_east_traffic_light
+- get_traffic_lights
+- control_traffic_lights
+- check_traffic_light_policy
+- turn_off_traffic_light
+- adjust_traffic_signals
+- check_intersections
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- traffic
+- urban_planning
+- safety
+context:
+  available_tools:
+  - name: set_north_south_traffic_light
+    display_name: Set North-South Traffic Light
+    description: Set the color and time of north-south traffic light.
+    category: traffic_control
+    parameters:
+    - name: color
+      type: string
+      description: The color to be changed, which should be green, yellow or red.
+      required: true
+    - name: time
+      type: string
+      description: The second time that the light should hold the changed color for.
+      required: true
+  - name: set_west_east_traffic_light
+    display_name: Set West-East Traffic Light
+    description: Set the color and time of west-east traffic light.
+    category: traffic_control
+    parameters:
+    - name: color
+      type: string
+      description: The color to be changed, which should be green, yellow or red.
+      required: true
+    - name: time
+      type: string
+      description: The second time that the light should hold the changed color for.
+      required: true
+  - name: control_traffic_lights
+    display_name: Control Traffic Lights
+    description: Adjust traffic light status.
+    category: traffic_control
+    parameters:
+    - name: location
+      type: string
+      description: Location of the traffic lights.
+      required: true
+    - name: target_status
+      type: string
+      description: New status for the traffic lights (e.g., 'automatic', 'manual').
+      required: true
+  - name: adjust_traffic_signals
+    display_name: Adjust Traffic Signals
+    description: Adjust the signal timing at a specific intersection to optimize traffic flow.
+    category: traffic_control
+    parameters:
+    - name: intersection_name
+      type: string
+      description: The name of the intersection.
+      required: true
+    - name: north_south_signal_timing
+      type: string
+      description: Timing for North-South signals.
+      required: true
+    - name: east_west_signal_timing
+      type: string
+      description: Timing for East-West signals.
+      required: true
+  environment:
+    name: urban_traffic_system
+    description: Urban traffic management environment with tools for controlling and monitoring traffic lights.
+    variables:
+    - name: TRAFFIC_POLICY_URL
+      value: 'https://www.citytraffic.com/policy'
+      description: URL to the traffic light policy page
+      type: string
+    - name: MAX_SIGNAL_DURATION
+      value: 120
+      description: Maximum duration for a traffic signal in seconds
+      type: integer
+    settings:
+      default_signal_color: red
+      max_intersections: 50
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - citytraffic.com
+    - '*.trusted-traffic-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_operator_email: traffic.operator@citytraffic.com
+    current_operator_name: Traffic Control Operator
+    city_name: Metropolis
+    timezone: UTC-6
+    business_hours: 6:00-22:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

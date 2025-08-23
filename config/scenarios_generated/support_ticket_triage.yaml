@@ -1,0 +1,94 @@
+name: support_ticket_triage
+display_name: Support Ticket Triage
+description: Categorizes incoming support tickets based on content and urgency, and routes them to the appropriate support team for resolution. This process ensures efficient handling of customer issues and optimizes support team workflows.
+category: customer_support
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- ticket_access
+- team_directory_access
+dependencies: []
+generation_weight: 1.7
+sample_actions:
+- analyze_ticket_content
+- determine_ticket_priority
+- assign_ticket_to_team
+- notify_team
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- support
+- ticketing
+- automation
+- customer_service
+context:
+  available_tools:
+  - name: analyze_ticket
+    display_name: Analyze Ticket
+    description: Analyze the content of a support ticket to determine its category and priority
+    category: analysis
+    parameters:
+    - name: ticket_content
+      type: string
+      description: The content of the support ticket
+      required: true
+    example_usage:
+    - analyze_ticket(ticket_content='Customer cannot access their account.')
+    common_errors:
+    - Empty ticket content
+    - Unrecognized ticket category
+  - name: route_ticket
+    display_name: Route Ticket
+    description: Route the ticket to the appropriate support team based on analysis
+    category: routing
+    parameters:
+    - name: team_id
+      type: string
+      description: Identifier of the support team
+      required: true
+    - name: ticket_id
+      type: string
+      description: Identifier of the support ticket
+      required: true
+    example_usage:
+    - route_ticket(team_id='tech_support', ticket_id='12345')
+  environment:
+    name: support_ticket_system
+    description: Environment for managing and routing support tickets with integrated team directories
+    variables:
+    - name: TICKET_SYSTEM_API
+      value: api.supportsystem.com
+      description: API endpoint for the support ticket system
+      type: string
+    - name: MAX_TICKETS_PER_HOUR
+      value: 100
+      description: Maximum number of tickets processed per hour
+      type: integer
+    settings:
+      priority_handling_enabled: true
+      auto_escalation: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - supportsystem.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: support_agent@supportsystem.com
+    current_user_name: Support AI
+    company_name: HelpDesk Solutions Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    ticketing_system_version: '2.3'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

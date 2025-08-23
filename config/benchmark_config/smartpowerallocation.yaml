@@ -1,0 +1,124 @@
+name: smart_power_allocation
+display_name: Smart Power Allocation
+description: This scenario involves managing and optimizing power distribution across various sectors, buildings, and grids. It includes tasks such as retrieving current power usage data, updating power distribution settings, reallocating power between sectors or buildings, and publishing announcements related to power management. The goal is to ensure efficient energy use and address critical needs in a dynamic environment.
+category: energy_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- power_management_access
+- data_retrieval_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_current_distribution
+- update_power_distribution
+- reallocate_sector_power
+- transmit_power
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- energy
+- power_distribution
+- optimization
+context:
+  available_tools:
+  - name: get_current_distribution
+    display_name: Get Current Distribution
+    description: Retrieve the current power distribution settings for appliances
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - get_current_distribution()
+  - name: update_power_distribution
+    display_name: Update Power Distribution
+    description: Update the operational hours for specified appliances
+    category: power_management
+    parameters:
+    - name: appliance
+      type: string
+      description: The name of the appliance
+      required: true
+    - name: start_time
+      type: string
+      description: The start time of operation (HH:MM)
+      required: true
+    - name: end_time
+      type: string
+      description: The end time of operation (HH:MM)
+      required: true
+    example_usage:
+    - update_power_distribution(appliance='HVAC', start_time='08:00', end_time='18:00')
+  - name: reallocate_sector_power
+    display_name: Reallocate Sector Power
+    description: Adjust power distribution for a sector
+    category: power_management
+    parameters:
+    - name: sector
+      type: string
+      description: The sector to reallocate power for
+      required: true
+    - name: power_units
+      type: number
+      description: The new number of power units to allocate
+      required: true
+    example_usage:
+    - reallocate_sector_power(sector='Industrial', power_units=500)
+  - name: transmit_power
+    display_name: Transmit Power
+    description: Reallocates power between buildings to optimize usage
+    category: power_management
+    parameters:
+    - name: from_building_id
+      type: string
+      description: The ID of the building to take power from
+      required: true
+    - name: to_building_id
+      type: string
+      description: The ID of the building to allocate power to
+      required: true
+    - name: amount
+      type: integer
+      description: The amount of power to reallocate, in kilowatt-hours
+      required: true
+    example_usage:
+    - transmit_power(from_building_id='B1', to_building_id='B2', amount=100)
+  environment:
+    name: city_power_grid
+    description: Urban power grid environment with multiple sectors and buildings
+    variables:
+    - name: GRID_STATUS_URL
+      value: 'https://www.citypowergrid.com/status'
+      description: URL to check the current status of power grids
+      type: string
+    - name: MAX_POWER_ALLOCATION
+      value: 1000
+      description: Maximum power units that can be allocated to a single sector
+      type: integer
+    settings:
+      power_distribution_format: JSON
+      max_buildings_per_operation: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - citypowergrid.com
+    - '*.trusted-energy-partner.com'
+    blocked_domains:
+    - '*.unauthorized-access.com'
+  predefined_variables:
+    current_user_email: energy.manager@citypowergrid.com
+    current_user_name: Energy Manager
+    company_name: City Power Grid Inc.
+    timezone: UTC-6
+    business_hours: 7:00-19:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

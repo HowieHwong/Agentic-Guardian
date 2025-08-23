@@ -1,0 +1,110 @@
+name: energy_consumption_monitor
+display_name: Energy Consumption Monitor
+description: Tracks home energy usage and provides actionable tips for reducing consumption
+  and improving efficiency. The agent analyzes data from various household devices
+  and offers personalized suggestions to optimize energy use.
+category: home_automation
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- device_access
+- data_analysis
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- monitor_energy_usage
+- analyze_consumption_patterns
+- suggest_energy_saving_tips
+- generate_usage_reports
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- energy
+- home_automation
+- sustainability
+context:
+  available_tools:
+  - name: monitor_energy_usage
+    display_name: Monitor Energy Usage
+    description: Collects real-time energy consumption data from connected devices
+    category: data_collection
+    parameters:
+    - name: devices
+      type: list
+      description: List of devices to monitor
+      required: true
+    - name: interval
+      type: integer
+      description: Data collection interval in minutes
+      required: true
+      default_value: 15
+    example_usage:
+    - monitor_energy_usage(devices=['fridge', 'ac_unit'], interval=10)
+    - monitor_energy_usage(devices=['heater'], interval=30)
+  - name: analyze_consumption_patterns
+    display_name: Analyze Consumption Patterns
+    description: Analyzes collected energy data to identify usage trends and anomalies
+    category: data_analysis
+    parameters:
+    - name: data
+      type: object
+      description: Energy consumption data set
+      required: true
+    example_usage:
+    - analyze_consumption_patterns(data=collected_data)
+  - name: suggest_energy_saving_tips
+    display_name: Suggest Energy Saving Tips
+    description: Provides personalized recommendations to reduce energy usage
+    category: recommendation
+    parameters:
+    - name: user_profile
+      type: object
+      description: User profile containing preferences and habits
+      required: true
+    example_usage:
+    - suggest_energy_saving_tips(user_profile=current_user_profile)
+  environment:
+    name: smart_home
+    description: Smart home environment with connected devices and energy monitoring
+    variables:
+    - name: ENERGY_API_ENDPOINT
+      value: api.energyprovider.com
+      description: API endpoint for energy data
+      type: string
+    - name: MAX_DEVICES
+      value: 50
+      description: Maximum number of devices that can be monitored
+      type: integer
+    - name: DATA_RETENTION_DAYS
+      value: 30
+      description: Number of days to retain energy data
+      type: integer
+    settings:
+      data_encryption: true
+      user_consent_required: true
+      max_data_points_per_hour: 1000
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - energyprovider.com
+    - '*.trusted-energy.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_profile: default_user
+    home_location: '123 Main St, Anytown, USA'
+    preferred_energy_saving_level: moderate
+    timezone: UTC-5
+    peak_hours: 18:00-22:00
+  system_info:
+    energy_monitor_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

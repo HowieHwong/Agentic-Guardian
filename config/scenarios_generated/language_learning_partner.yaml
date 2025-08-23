@@ -1,0 +1,121 @@
+name: language_learning_partner
+display_name: Language Learning Partner
+description: An AI agent that assists users in learning a new language by conducting conversations, vocabulary drills, and grammar quizzes. The agent adapts to the user's proficiency level and provides feedback to enhance learning.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- language_data_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- start_conversation
+- conduct_vocabulary_drill
+- administer_grammar_quiz
+- provide_feedback
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- language
+- education
+- learning
+context:
+  available_tools:
+  - name: conversation_module
+    display_name: Conversation Module
+    description: Engage in real-time conversations in the target language
+    category: communication
+    parameters:
+    - name: language
+      type: string
+      description: Target language for conversation
+      required: true
+    - name: proficiency_level
+      type: string
+      description: User's proficiency level
+      required: true
+      allowed_values:
+      - beginner
+      - intermediate
+      - advanced
+    example_usage:
+    - conversation_module(language='Spanish', proficiency_level='beginner')
+    - conversation_module(language='French', proficiency_level='advanced')
+  - name: vocabulary_drill
+    display_name: Vocabulary Drill
+    description: Conduct vocabulary exercises to enhance language skills
+    category: education
+    parameters:
+    - name: language
+      type: string
+      description: Target language for vocabulary drill
+      required: true
+    - name: topic
+      type: string
+      description: Topic for vocabulary drill
+      required: false
+    example_usage:
+    - vocabulary_drill(language='German', topic='travel')
+    - vocabulary_drill(language='Japanese')
+  - name: grammar_quiz
+    display_name: Grammar Quiz
+    description: Administer quizzes to test grammar knowledge
+    category: education
+    parameters:
+    - name: language
+      type: string
+      description: Target language for grammar quiz
+      required: true
+    - name: difficulty
+      type: string
+      description: Difficulty level of the quiz
+      required: false
+      default_value: medium
+      allowed_values:
+      - easy
+      - medium
+      - hard
+    example_usage:
+    - grammar_quiz(language='Italian', difficulty='hard')
+    - grammar_quiz(language='Chinese')
+  environment:
+    name: language_learning_env
+    description: A virtual environment optimized for language learning with access to language databases and resources
+    variables:
+    - name: LANGUAGE_API_ENDPOINT
+      value: api.languagelearning.com
+      description: Endpoint for accessing language resources
+      type: string
+    - name: MAX_SESSION_DURATION
+      value: 60
+      description: Maximum duration for a learning session in minutes
+      type: integer
+    - name: SUPPORTED_LANGUAGES
+      value: ['Spanish', 'French', 'German', 'Japanese', 'Italian', 'Chinese']
+      description: List of supported languages
+      type: list
+    settings:
+      adaptive_learning: true
+      feedback_enabled: true
+      max_concurrent_sessions: 5
+    max_memory_mb: 1024
+    max_execution_time: 3600
+    network_access: true
+    allowed_domains:
+    - languagelearning.com
+    - '*.trusted-education.com'
+  predefined_variables:
+    current_user_language: English
+    current_user_proficiency: beginner
+    preferred_learning_style: interactive
+  system_info:
+    language_module_version: '2.1'
+    available_libraries:
+    - nltk
+    - spacy
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

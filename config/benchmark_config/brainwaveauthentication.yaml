@@ -1,0 +1,117 @@
+name: brainwave_authentication
+display_name: Brainwave Authentication System
+description: This scenario involves managing and updating brainwave authentication data for users. It includes retrieving current brainwave patterns, updating authentication data, managing passwords, and handling user permissions. The system ensures secure and efficient management of user authentication through brainwave patterns.
+category: security_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- user_data_access
+- authentication_management
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_brainwave_pattern
+- update_authentication
+- get_existing_password
+- update_password
+- list_users
+- list_dashboards
+- update_permissions
+- list_students
+- update_authentication_module
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- authentication
+- security
+- user_management
+context:
+  available_tools:
+  - name: get_brainwave_pattern
+    display_name: Get Brainwave Pattern
+    description: Retrieve the current brainwave pattern for a user
+    category: authentication
+    parameters:
+    - name: user_name
+      type: string
+      description: The name of the user whose brainwave pattern is needed
+      required: true
+    example_usage:
+    - get_brainwave_pattern(user_name='john_doe')
+  - name: update_authentication
+    display_name: Update Authentication
+    description: Update the brainwave authentication data for a user
+    category: authentication
+    parameters:
+    - name: user_name
+      type: string
+      description: The name of the user whose authentication will be updated
+      required: true
+    - name: new_brainwave_pattern
+      type: string
+      description: The new brainwave pattern to be set for authentication
+      required: true
+    example_usage:
+    - update_authentication(user_name='john_doe', new_brainwave_pattern='alpha_beta_gamma')
+  - name: get_existing_password
+    display_name: Get Existing Password
+    description: Retrieve the existing password for the account
+    category: security
+    parameters: []
+    example_usage:
+    - get_existing_password()
+  - name: update_password
+    display_name: Update Password
+    description: Updates the account password to a new one after verifying the current password
+    category: security
+    parameters:
+    - name: current_password
+      type: string
+      description: The current password for the account
+      required: true
+    - name: new_password
+      type: string
+      description: The new password that needs to be set
+      required: true
+    example_usage:
+    - update_password(current_password='oldPass123', new_password='newPass456')
+  environment:
+    name: secure_auth_system
+    description: Environment for managing secure authentication using brainwave patterns
+    variables:
+    - name: AUTH_API_URL
+      value: 'https://api.brainwaveauth.com'
+      description: Base URL for the authentication API
+      type: string
+    - name: MAX_LOGIN_ATTEMPTS
+      value: 5
+      description: Maximum number of login attempts before lockout
+      type: integer
+    settings:
+      password_policy: strong
+      brainwave_pattern_format: EEG
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - brainwaveauth.com
+    - '*.trusted-auth.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@brainwaveauth.com
+    current_user_name: System Administrator
+    company_name: NeuroSecure Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - cryptography
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,102 @@
+name: patent_search_assistant
+display_name: Patent Search Assistant
+description: The Patent Search Assistant helps users search and summarize patents relevant to their ideas. It provides tools to efficiently navigate patent databases, extract key information, and generate summaries to aid in understanding patent landscapes.
+category: research
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- database_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- search_patents
+- summarize_patent
+- extract_key_information
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- patents
+- research
+- automation
+- summarization
+context:
+  available_tools:
+  - name: search_patents
+    display_name: Search Patents
+    description: Search patent databases for relevant patents
+    category: research
+    parameters:
+    - name: query
+      type: string
+      description: Search query for patents
+      required: true
+    - name: database
+      type: string
+      description: Patent database to search in
+      required: true
+      allowed_values:
+      - USPTO
+      - EPO
+      - WIPO
+    example_usage:
+    - search_patents(query='AI technology', database='USPTO')
+    - search_patents(query='renewable energy', database='EPO')
+    common_errors:
+    - Invalid search query
+    - Database connection error
+  - name: summarize_patent
+    display_name: Summarize Patent
+    description: Generate a summary of a given patent document
+    category: summarization
+    parameters:
+    - name: patent_id
+      type: string
+      description: Unique identifier of the patent
+      required: true
+    - name: summary_length
+      type: integer
+      description: Desired length of the summary
+      required: false
+      default_value: 100
+    example_usage:
+    - summarize_patent(patent_id='US1234567', summary_length=150)
+    - summarize_patent(patent_id='EP2345678')
+  environment:
+    name: patent_research_env
+    description: Environment configured for patent research and summarization
+    variables:
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing patent databases
+      type: string
+    - name: MAX_RESULTS
+      value: 100
+      description: Maximum number of search results to return
+      type: integer
+    settings:
+      encryption_required: true
+      max_memory_mb: 1024
+      max_execution_time: 600
+      network_access: true
+    allowed_domains:
+    - 'uspto.gov'
+    - 'epo.org'
+    - 'wipo.int'
+  predefined_variables:
+    current_user_email: researcher@domain.com
+    current_user_name: Patent Researcher
+    organization_name: InnovateCorp
+    timezone: UTC
+    business_hours: 8:00-18:00
+  system_info:
+    research_tool_version: '2.1'
+    available_libraries:
+    - requests
+    - beautifulsoup4
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

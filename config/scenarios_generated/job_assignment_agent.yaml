@@ -1,0 +1,100 @@
+name: job_assignment_agent
+display_name: Job Assignment Agent
+description: Assigns technicians or workers to jobs based on their availability and location,
+  ensuring optimal resource allocation and efficiency in task management.
+category: workforce_management
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- location_access
+- schedule_access
+dependencies: []
+generation_weight: 1.7
+sample_actions:
+- check_availability
+- assign_job
+- update_schedule
+- notify_worker
+metadata:
+  selection_way: priority
+  selection_num: 3
+tags:
+- workforce
+- scheduling
+- optimization
+context:
+  available_tools:
+  - name: check_availability
+    display_name: Check Availability
+    description: Check the availability of technicians or workers for job assignments
+    category: scheduling
+    parameters:
+    - name: worker_id
+      type: string
+      description: Unique identifier for the worker
+      required: true
+    - name: date
+      type: string
+      description: Date for checking availability
+      required: true
+      validation_pattern: ^\d{4}-\d{2}-\d{2}$
+    example_usage:
+    - check_availability(worker_id='12345', date='2023-10-15')
+    common_errors:
+    - Worker ID not found
+    - Invalid date format
+  - name: assign_job
+    display_name: Assign Job
+    description: Assign a job to a worker based on availability and location
+    category: task_management
+    parameters:
+    - name: job_id
+      type: string
+      description: Unique identifier for the job
+      required: true
+    - name: worker_id
+      type: string
+      description: Unique identifier for the worker
+      required: true
+    - name: location
+      type: string
+      description: Job location
+      required: true
+    example_usage:
+    - assign_job(job_id='67890', worker_id='12345', location='Warehouse A')
+  environment:
+    name: workforce_management_system
+    description: System for managing workforce assignments and schedules
+    variables:
+    - name: MAX_JOBS_PER_WORKER
+      value: 5
+      description: Maximum number of jobs a worker can be assigned per day
+      type: integer
+    - name: LOCATION_RADIUS
+      value: 50
+      description: Maximum distance in kilometers for job assignments
+      type: integer
+    settings:
+      real_time_updates: true
+      conflict_resolution: automatic
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - company-internal.com
+    - '*.trusted-partner.com'
+  predefined_variables:
+    current_user_role: dispatcher
+    company_name: ServiceTech Solutions
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    workforce_management_version: '2.3'
+    available_libraries:
+    - pandas
+    - geopy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

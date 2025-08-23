@@ -1,0 +1,133 @@
+name: crm_assistant
+display_name: CRM Assistant
+description: The CRM Assistant logs interactions with clients via calls and emails, sets follow-up reminders, and updates contact information to ensure accurate and up-to-date client records. This scenario involves managing client communications and maintaining a comprehensive contact database.
+category: customer_relationship_management
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- contact_access
+- calendar_access
+- email_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- log_call
+- send_email
+- set_reminder
+- update_contact_info
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- CRM
+- client_management
+- communication
+context:
+  available_tools:
+  - name: log_call
+    display_name: Log Call
+    description: Record details of a call with a client
+    category: communication
+    parameters:
+    - name: client_id
+      type: string
+      description: Unique identifier for the client
+      required: true
+    - name: call_summary
+      type: string
+      description: Summary of the call
+      required: true
+    - name: follow_up_date
+      type: string
+      description: Date for follow-up
+      required: false
+    example_usage:
+    - log_call(client_id='12345', call_summary='Discussed project timeline.')
+  - name: send_email
+    display_name: Send Email
+    description: Send an email to a client
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Email address of the client
+      required: true
+    - name: subject
+      type: string
+      description: Subject of the email
+      required: true
+    - name: body
+      type: string
+      description: Body content of the email
+      required: true
+    example_usage:
+    - send_email(recipient='client@business.com', subject='Meeting Follow-up', body='Thank you for your time today.')
+  - name: set_reminder
+    display_name: Set Reminder
+    description: Set a reminder for a follow-up action
+    category: productivity
+    parameters:
+    - name: reminder_date
+      type: string
+      description: Date for the reminder
+      required: true
+    - name: note
+      type: string
+      description: Note for the reminder
+      required: false
+    example_usage:
+    - set_reminder(reminder_date='2023-11-01', note='Follow-up on proposal.')
+  - name: update_contact_info
+    display_name: Update Contact Info
+    description: Update the contact information of a client
+    category: data_management
+    parameters:
+    - name: client_id
+      type: string
+      description: Unique identifier for the client
+      required: true
+    - name: new_info
+      type: map
+      description: New contact information
+      required: true
+    example_usage:
+    - update_contact_info(client_id='12345', new_info={'email': 'newemail@business.com'})
+  environment:
+    name: crm_system
+    description: CRM system environment with integrated communication tools
+    variables:
+    - name: CRM_API_ENDPOINT
+      value: api.crm-system.com
+      description: Endpoint for CRM API
+      type: string
+    - name: MAX_LOG_ENTRIES
+      value: 1000
+      description: Maximum number of log entries per client
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - crm-system.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: agent@crm-system.com
+    current_user_name: CRM Assistant
+    company_name: ClientCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    crm_client_version: '2.5'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

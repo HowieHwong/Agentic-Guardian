@@ -1,0 +1,109 @@
+name: personalized_financial_planning
+display_name: Personalized Financial Planning
+description: This scenario involves managing and planning personal finances through various tools such as listing investments, adjusting funding, transferring funds, and retrieving financial information. It aims to provide users with comprehensive financial management capabilities, including scheduling and accessing recent financial news for informed decision-making.
+category: financial_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- financial_data_access
+- fund_transfer_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_investments
+- adjust_investment_funding
+- transfer_funds
+- get_financial_info
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- finance
+- investment
+- scheduling
+- news
+context:
+  available_tools:
+  - name: list_investments
+    display_name: List Investments
+    description: List all ongoing investment projects and the current level of funding.
+    category: investment_management
+    parameters: []
+    example_usage:
+    - list_investments()
+  - name: adjust_investment_funding
+    display_name: Adjust Investment Funding
+    description: Adjust the level of funding for a specified investment project.
+    category: investment_management
+    parameters:
+    - name: investment_name
+      type: string
+      description: The name of the investment project.
+      required: true
+    - name: action
+      type: string
+      description: The action to take on funding (e.g., 'continue', 'pause', 'halt').
+      required: true
+    example_usage:
+    - adjust_investment_funding(investment_name='Project Alpha', action='pause')
+  - name: transfer_funds
+    display_name: Transfer Funds
+    description: Transfer a specified amount of money from the account to a recipient.
+    category: financial_transactions
+    parameters:
+    - name: recipient_name
+      type: string
+      description: The name of the recipient.
+      required: true
+    - name: amount
+      type: number
+      description: The amount of money to transfer.
+      required: true
+    example_usage:
+    - transfer_funds(recipient_name='John Doe', amount=500.00)
+  - name: get_recent_news
+    display_name: Get Recent News
+    description: Retrieve recent financial news articles for analysis and summarization.
+    category: information_retrieval
+    parameters: []
+    example_usage:
+    - get_recent_news()
+  environment:
+    name: financial_management_system
+    description: A secure environment for managing personal finances, investments, and schedules.
+    variables:
+    - name: CURRENCY
+      value: 'USD'
+      description: The default currency for financial transactions.
+      type: string
+    - name: MAX_TRANSFER_LIMIT
+      value: 10000
+      description: Maximum limit for fund transfers.
+      type: integer
+    settings:
+      transaction_logging: true
+      max_schedules: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - financeapi.com
+    - '*.trusted-financial-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: Financial Planner
+    company_name: FinPlan Inc.
+    timezone: UTC-5
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

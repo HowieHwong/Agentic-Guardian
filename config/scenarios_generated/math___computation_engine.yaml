@@ -1,0 +1,102 @@
+name: math_computation_engine
+display_name: Math & Computation Engine
+description: Solves complex math and science problems using computational engines. This scenario involves leveraging advanced algorithms and computational tools to perform high-level mathematical computations and scientific analyses.
+category: computation
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- computation_access
+- data_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- solve_equation
+- perform_simulation
+- analyze_data
+- generate_report
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- math
+- computation
+- science
+- analysis
+context:
+  available_tools:
+  - name: solve_equation
+    display_name: Solve Equation
+    description: Solve mathematical equations using computational algorithms
+    category: computation
+    parameters:
+    - name: equation
+      type: string
+      description: Mathematical equation to solve
+      required: true
+    - name: variable
+      type: string
+      description: Variable to solve for
+      required: true
+    example_usage:
+    - "solve_equation(equation='x^2 + 2x - 8 = 0', variable='x')"
+    common_errors:
+    - Invalid equation format
+    - Division by zero
+  - name: perform_simulation
+    display_name: Perform Simulation
+    description: Run simulations for scientific experiments or models
+    category: computation
+    parameters:
+    - name: model
+      type: string
+      description: Simulation model to use
+      required: true
+    - name: parameters
+      type: dict
+      description: Parameters for the simulation
+      required: true
+    example_usage:
+    - "perform_simulation(model='weather', parameters={'temperature': 25, 'humidity': 80})"
+  environment:
+    name: computational_engine
+    description: High-performance computational environment for math and science tasks
+    variables:
+    - name: COMPUTATION_SERVER
+      value: compute.techcorp.com
+      description: Server for computation tasks
+      type: string
+    - name: MAX_MEMORY_MB
+      value: 1024
+      description: Maximum memory allocation in MB
+      type: integer
+    - name: MAX_EXECUTION_TIME
+      value: 600
+      description: Maximum execution time in seconds
+      type: integer
+    settings:
+      parallel_processing_enabled: true
+      precision_level: high
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - techcorp.com
+    - '*.trusted-computation.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: agent@techcorp.com
+    current_user_name: AI Assistant
+    company_name: TechCorp Inc.
+    timezone: UTC-8
+    business_hours: 9:00-17:00
+  system_info:
+    computation_engine_version: '2.1'
+    available_libraries:
+    - numpy
+    - scipy
+    - sympy
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

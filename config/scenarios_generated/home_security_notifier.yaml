@@ -1,0 +1,107 @@
+name: home_security_notifier
+display_name: Home Security Notifier
+description: Sends alerts about suspicious activity detected by smart cameras. The agent
+  monitors live feeds from smart cameras and sends notifications to users when unusual
+  movements or activities are detected, ensuring prompt awareness and response to potential
+  security threats.
+category: security
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- camera_access
+- notification_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- monitor_camera_feed
+- detect_motion
+- send_alert
+- log_activity
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- security
+- surveillance
+- automation
+context:
+  available_tools:
+  - name: send_alert
+    display_name: Send Alert
+    description: Send an alert notification to users about detected activities
+    category: notification
+    parameters:
+    - name: recipient
+      type: string
+      description: User's contact information for receiving alerts
+      required: true
+    - name: message
+      type: string
+      description: Alert message content
+      required: true
+    example_usage:
+    - send_alert(recipient='user@home.com', message='Suspicious activity detected in
+      the backyard.')
+    common_errors:
+    - Invalid recipient contact information
+    - Empty message content
+  - name: monitor_camera_feed
+    display_name: Monitor Camera Feed
+    description: Continuously monitor live camera feeds for activity
+    category: surveillance
+    parameters:
+    - name: camera_id
+      type: string
+      description: Identifier for the camera to monitor
+      required: true
+    - name: sensitivity
+      type: integer
+      description: Sensitivity level for motion detection
+      required: false
+      default_value: 5
+    example_usage:
+    - monitor_camera_feed(camera_id='front_door_cam', sensitivity=7)
+  environment:
+    name: home_security_system
+    description: Home security environment with integrated smart cameras and notification
+      services
+    variables:
+    - name: CAMERA_API_ENDPOINT
+      value: api.smartcamera.com
+      description: API endpoint for accessing camera feeds
+      type: string
+    - name: ALERT_SERVICE_URL
+      value: alerts.home-security.com
+      description: URL for the alert notification service
+      type: string
+    - name: MAX_ALERTS_PER_HOUR
+      value: 10
+      description: Maximum number of alerts that can be sent per hour
+      type: integer
+    settings:
+      encryption_required: true
+      max_camera_feeds: 5
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - smartcamera.com
+    - home-security.com
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: homeowner@home.com
+    current_user_name: Homeowner
+    home_location: '1234 Elm Street, Springfield'
+    timezone: UTC-5
+    monitoring_hours: 24/7
+  system_info:
+    camera_firmware_version: '2.3'
+    available_libraries:
+    - opencv
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

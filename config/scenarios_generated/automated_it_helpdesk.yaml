@@ -1,0 +1,112 @@
+name: automated_it_helpdesk
+display_name: Automated IT Helpdesk
+description: The Automated IT Helpdesk scenario involves handling password reset requests,
+  software installations, and troubleshooting common IT issues. This scenario tests
+  the agent's ability to manage IT support tasks efficiently and securely, ensuring
+  that user requests are processed accurately and in a timely manner.
+category: it_support
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- user_account_access
+- software_installation_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- reset_password
+- install_software
+- troubleshoot_issue
+- escalate_ticket
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- it
+- support
+- automation
+context:
+  available_tools:
+  - name: reset_password
+    display_name: Reset Password
+    description: Reset a user's account password
+    category: account_management
+    parameters:
+    - name: username
+      type: string
+      description: Username of the account to reset
+      required: true
+    - name: new_password
+      type: string
+      description: New password to set
+      required: true
+    example_usage:
+    - reset_password(username='jdoe', new_password='NewPass123!')
+    common_errors:
+    - User not found
+    - Password does not meet security requirements
+  - name: install_software
+    display_name: Install Software
+    description: Install specified software on a user's machine
+    category: software_management
+    parameters:
+    - name: software_name
+      type: string
+      description: Name of the software to install
+      required: true
+    - name: version
+      type: string
+      description: Software version
+      required: false
+    example_usage:
+    - install_software(software_name='OfficeSuite', version='2023')
+  - name: troubleshoot_issue
+    display_name: Troubleshoot Issue
+    description: Diagnose and resolve common IT issues
+    category: diagnostics
+    parameters:
+    - name: issue_description
+      type: string
+      description: Description of the issue
+      required: true
+    example_usage:
+    - troubleshoot_issue(issue_description='Cannot connect to VPN')
+  environment:
+    name: corporate_it_environment
+    description: Corporate IT environment with security protocols and software management
+    variables:
+    - name: IT_SUPPORT_EMAIL
+      value: support@company.com
+      description: IT support contact email
+      type: string
+    - name: SOFTWARE_REPOSITORY
+      value: repo.company.com
+      description: Internal software repository
+      type: string
+    settings:
+      password_policy_enforced: true
+      software_installation_approval: true
+      max_tickets_per_day: 100
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-software.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: agent@company.com
+    current_user_name: IT Assistant
+    company_name: TechCorp Inc.
+    timezone: UTC-8
+    business_hours: 8:00-18:00
+  system_info:
+    it_support_system_version: '2.5'
+    available_libraries:
+    - ldap3
+    - subprocess
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

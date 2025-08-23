@@ -1,0 +1,106 @@
+name: product_review_summarizer
+display_name: Product Review Summarizer
+description: Analyzes and summarizes customer reviews for a product, providing insights
+  into common themes, sentiment, and key points. This helps businesses understand
+  customer feedback and improve their products or services.
+category: data_analysis
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- internet_access
+- data_processing
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- fetch_reviews
+- analyze_sentiment
+- summarize_reviews
+- generate_report
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- reviews
+- sentiment_analysis
+- summarization
+context:
+  available_tools:
+  - name: fetch_reviews
+    display_name: Fetch Reviews
+    description: Retrieve customer reviews from various platforms
+    category: data_collection
+    parameters:
+    - name: product_id
+      type: string
+      description: Unique identifier for the product
+      required: true
+    - name: platform
+      type: string
+      description: Platform to fetch reviews from
+      required: true
+      allowed_values:
+      - amazon
+      - yelp
+      - google
+    example_usage:
+    - fetch_reviews(product_id='12345', platform='amazon')
+    - fetch_reviews(product_id='67890', platform='yelp')
+  - name: analyze_sentiment
+    display_name: Analyze Sentiment
+    description: Perform sentiment analysis on the collected reviews
+    category: data_analysis
+    parameters:
+    - name: reviews
+      type: list
+      description: List of reviews to analyze
+      required: true
+    example_usage:
+    - analyze_sentiment(reviews=['Great product!', 'Not worth the price.'])
+  - name: summarize_reviews
+    display_name: Summarize Reviews
+    description: Summarize the key points and themes from the reviews
+    category: data_analysis
+    parameters:
+    - name: reviews
+      type: list
+      description: List of reviews to summarize
+      required: true
+    example_usage:
+    - summarize_reviews(reviews=['Great product!', 'Not worth the price.'])
+  environment:
+    name: review_analysis_env
+    description: Environment for analyzing and summarizing product reviews
+    variables:
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing review platforms
+      type: string
+    - name: MAX_REVIEWS
+      value: 100
+      description: Maximum number of reviews to process at a time
+      type: integer
+    settings:
+      sentiment_analysis_enabled: true
+      summarization_enabled: true
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - '*.trusted-review-platform.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: AI Review Analyzer
+    company_name: ReviewTech Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    available_libraries:
+    - nltk
+    - textblob
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

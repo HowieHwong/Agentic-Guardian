@@ -1,0 +1,123 @@
+name: slack_teams_bot
+display_name: Slack/Teams Bot
+description: The Slack/Teams Bot is designed to enhance productivity by summarizing channel discussions, managing polls, and automating announcements. It helps streamline communication and ensures important information is highlighted and easily accessible to team members.
+category: communication
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- channel_access
+- message_read
+- message_write
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- summarize_discussion
+- create_poll
+- post_announcement
+- schedule_message
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- collaboration
+- automation
+- productivity
+context:
+  available_tools:
+  - name: summarize_discussion
+    display_name: Summarize Discussion
+    description: Summarize the key points from a channel discussion
+    category: communication
+    parameters:
+    - name: channel_id
+      type: string
+      description: ID of the channel to summarize
+      required: true
+    - name: time_range
+      type: string
+      description: Time range for the discussion to summarize
+      required: false
+    example_usage:
+    - summarize_discussion(channel_id='C123456', time_range='last 24 hours')
+    common_errors:
+    - Invalid channel ID
+    - No messages found in the specified time range
+  - name: create_poll
+    display_name: Create Poll
+    description: Create a poll in a channel for team members to vote
+    category: communication
+    parameters:
+    - name: question
+      type: string
+      description: Poll question
+      required: true
+    - name: options
+      type: list
+      description: List of poll options
+      required: true
+    - name: channel_id
+      type: string
+      description: ID of the channel to post the poll
+      required: true
+    example_usage:
+    - create_poll(question='Lunch options?', options=['Pizza', 'Sushi'], channel_id='C123456')
+    common_errors:
+    - Duplicate poll options
+    - Invalid channel ID
+  - name: post_announcement
+    display_name: Post Announcement
+    description: Post an important announcement in a channel
+    category: communication
+    parameters:
+    - name: message
+      type: string
+      description: Announcement message
+      required: true
+    - name: channel_id
+      type: string
+      description: ID of the channel to post the announcement
+      required: true
+    example_usage:
+    - post_announcement(message='Team meeting at 3 PM', channel_id='C123456')
+    common_errors:
+    - Invalid channel ID
+    - Message exceeds character limit
+  environment:
+    name: team_collaboration
+    description: Team collaboration environment for Slack and Teams
+    variables:
+    - name: API_ENDPOINT
+      value: api.slack.com
+      description: API endpoint for Slack
+      type: string
+    - name: MAX_MESSAGE_LENGTH
+      value: 4000
+      description: Maximum message length in characters
+      type: integer
+    settings:
+      encryption_required: true
+      max_channels_per_bot: 10
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - slack.com
+    - teams.microsoft.com
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_id: U123456
+    current_user_name: AI Bot
+    organization_name: TechCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    bot_version: '2.1'
+    available_libraries:
+    - slack_sdk
+    - ms_teams_sdk
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

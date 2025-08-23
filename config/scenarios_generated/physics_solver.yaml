@@ -1,0 +1,91 @@
+name: physics_solver
+display_name: Physics Solver
+description: The Physics Solver agent is designed to answer physics questions, solve complex problems, and demonstrate fundamental principles of physics. It is equipped with tools to perform calculations, simulate experiments, and provide detailed explanations of physical phenomena.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions: []
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- solve_equation
+- simulate_experiment
+- explain_concept
+- calculate_force
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- physics
+- education
+- problem-solving
+context:
+  available_tools:
+  - name: equation_solver
+    display_name: Equation Solver
+    description: Solves mathematical equations related to physics problems
+    category: computation
+    parameters:
+    - name: equation
+      type: string
+      description: The equation to be solved
+      required: true
+    example_usage:
+    - equation_solver(equation='F=ma')
+    - equation_solver(equation='E=mc^2')
+    common_errors:
+    - Invalid equation format
+    - Division by zero
+  - name: physics_simulator
+    display_name: Physics Simulator
+    description: Simulates physical experiments and scenarios
+    category: simulation
+    parameters:
+    - name: scenario
+      type: string
+      description: Description of the scenario to simulate
+      required: true
+    - name: variables
+      type: map
+      description: Key-value pairs of variables and their values
+      required: false
+    example_usage:
+    - "physics_simulator(scenario='free fall', variables={'height': 100})"
+    - "physics_simulator(scenario='projectile motion', variables={'angle': 45, 'velocity': 20})"
+  environment:
+    name: physics_lab
+    description: Virtual physics lab environment with simulation capabilities
+    variables:
+    - name: GRAVITY
+      value: 9.81
+      description: Gravitational constant in m/s^2
+      type: float
+    - name: SPEED_OF_LIGHT
+      value: 299792458
+      description: Speed of light in m/s
+      type: integer
+    - name: PLANCK_CONSTANT
+      value: 6.62607015e-34
+      description: Planck's constant in Js
+      type: float
+    settings:
+      simulation_accuracy: high
+      max_simulation_time: 600
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_role: physics_student
+    institution_name: Science Academy
+    timezone: UTC
+    study_hours: 8:00-20:00
+  system_info:
+    physics_engine_version: '2.1'
+    available_libraries:
+    - numpy
+    - scipy
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: false

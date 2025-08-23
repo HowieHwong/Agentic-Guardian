@@ -1,0 +1,99 @@
+name: doctor_finder
+display_name: Doctor Finder
+description: The agent suggests nearby doctors or specialists based on user symptoms and preferences,
+  providing users with options for medical consultations and treatments. It utilizes location data
+  and user input to tailor recommendations effectively.
+category: healthcare
+complexity_level: 4
+estimated_duration: 20
+required_permissions:
+- location_access
+- internet_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- search_doctors
+- filter_specialists
+- provide_contact_info
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- healthcare
+- location
+- recommendation
+context:
+  available_tools:
+  - name: search_doctors
+    display_name: Search Doctors
+    description: Find doctors or specialists based on symptoms and location
+    category: healthcare
+    parameters:
+    - name: symptoms
+      type: list
+      description: List of symptoms provided by the user
+      required: true
+    - name: location
+      type: string
+      description: User's current location or preferred area for search
+      required: true
+    - name: specialty
+      type: string
+      description: Medical specialty to filter results
+      required: false
+    example_usage:
+    - search_doctors(symptoms=['headache', 'fever'], location='New York')
+    - search_doctors(symptoms=['back pain'], location='San Francisco', specialty='Orthopedics')
+    common_errors:
+    - Invalid location format
+    - No doctors found for given symptoms
+  - name: filter_specialists
+    display_name: Filter Specialists
+    description: Narrow down search results to specific medical specialties
+    category: healthcare
+    parameters:
+    - name: specialty
+      type: string
+      description: Medical specialty to filter results
+      required: true
+    example_usage:
+    - filter_specialists(specialty='Cardiology')
+    - filter_specialists(specialty='Dermatology')
+  environment:
+    name: healthcare_recommendation
+    description: Environment for recommending healthcare professionals with access to medical databases
+    variables:
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing medical databases
+      type: string
+    - name: MAX_RESULTS
+      value: 10
+      description: Maximum number of doctors to return in a search
+      type: integer
+    settings:
+      data_encryption: true
+      location_accuracy: high
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.healthcare-provider.com'
+    - '*.trusted-medical.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_location: 'unknown'
+    preferred_specialty: 'General Practice'
+    timezone: UTC-5
+    operating_hours: 8:00-18:00
+  system_info:
+    api_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

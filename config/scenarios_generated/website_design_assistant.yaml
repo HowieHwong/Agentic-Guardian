@@ -1,0 +1,113 @@
+name: website_design_assistant
+display_name: Website Design Assistant
+description: Rapidly generates and edits multipage websites for startups and small businesses,
+  providing customizable templates, responsive design features, and integration with
+  popular content management systems.
+category: web_development
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- web_access
+- file_system_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- create_website
+- edit_page
+- add_template
+- publish_website
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- web_design
+- automation
+- startups
+context:
+  available_tools:
+  - name: create_website
+    display_name: Create Website
+    description: Generate a new multipage website using predefined templates
+    category: web_development
+    parameters:
+    - name: template
+      type: string
+      description: Template name to use for website creation
+      required: true
+    - name: pages
+      type: list
+      description: List of pages to include in the website
+      required: true
+    - name: domain
+      type: string
+      description: Domain name for the website
+      required: true
+      validation_pattern: ^[\w\.-]+\.[a-zA-Z]{2,}$
+    example_usage:
+    - create_website(template='startup', pages=['home', 'about', 'contact'], domain='mybusiness.com')
+    common_errors:
+    - Invalid domain format
+    - Template not found
+  - name: edit_page
+    display_name: Edit Page
+    description: Modify content and layout of an existing webpage
+    category: web_development
+    parameters:
+    - name: page_name
+      type: string
+      description: Name of the page to edit
+      required: true
+    - name: content
+      type: string
+      description: New content for the page
+      required: true
+    - name: layout
+      type: string
+      description: Layout style to apply
+      required: false
+    example_usage:
+    - edit_page(page_name='home', content='Welcome to our startup!', layout='modern')
+  environment:
+    name: web_design_env
+    description: Web design environment with tools for rapid development and deployment
+    variables:
+    - name: CMS_API_KEY
+      value: your_cms_api_key
+      description: API key for content management system
+      type: string
+    - name: MAX_PAGES
+      value: 50
+      description: Maximum number of pages per website
+      type: integer
+    - name: DEFAULT_TEMPLATE
+      value: 'basic'
+      description: Default template for new websites
+      type: string
+    settings:
+      responsive_design_enabled: true
+      seo_optimization: true
+      max_templates: 10
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-cms.com'
+    - '*.design-resources.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: designer@webagency.com
+    current_user_name: Web Designer
+    agency_name: WebAgency Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    web_design_tool_version: '2.5'
+    available_libraries:
+    - bootstrap
+    - jquery
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

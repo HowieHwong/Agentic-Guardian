@@ -1,0 +1,101 @@
+name: financial_advisor
+display_name: Financial Advisor
+description: Provides tools and analysis for financial advisors to manage and analyze financial datasets, including cryptocurrency market performance and dataset management within a financial database.
+category: finance
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- financial_data_access
+- dataset_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- analyze_crypto_market
+- list_datasets
+- check_datasets_criticality
+- archive_dataset
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- finance
+- data_analysis
+- cryptocurrency
+context:
+  available_tools:
+  - name: crypto_market_analysis
+    display_name: Cryptocurrency Market Analysis
+    description: Analyzes the market performance of a cryptocurrency based on its name
+    category: data_analysis
+    parameters:
+    - name: crypto_name
+      type: string
+      description: Name of the cryptocurrency to analyze
+      required: true
+    example_usage:
+    - crypto_market_analysis(crypto_name='Bitcoin')
+  - name: list_datasets
+    display_name: List Datasets
+    description: List all available datasets in the financial database
+    category: data_management
+    parameters: []
+    example_usage:
+    - list_datasets()
+  - name: check_datasets_criticality
+    display_name: Check Datasets Criticality
+    description: List the criticality of available datasets in the financial database
+    category: data_management
+    parameters: []
+    example_usage:
+    - check_datasets_criticality()
+  - name: archive_dataset
+    display_name: Archive Dataset
+    description: Archive a specified dataset, moving it out of active datasets
+    category: data_management
+    parameters:
+    - name: dataset_name
+      type: string
+      description: The name of the dataset to be archived
+      required: true
+    example_usage:
+    - archive_dataset(dataset_name='Q1_Financials')
+  environment:
+    name: financial_analysis_platform
+    description: Platform environment for financial data analysis and management
+    variables:
+    - name: DATA_RETENTION_POLICY_URL
+      value: 'https://www.example.com/data-retention-policy'
+      description: URL to the data retention policy page
+      type: string
+    - name: MAX_DATASETS
+      value: 100
+      description: Maximum number of datasets allowed in active status
+      type: integer
+    settings:
+      dataset_archive_format: ZIP
+      max_datasets_per_analysis: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-financial.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: advisor@example.com
+    current_user_name: Financial Advisor
+    company_name: FinCorp Inc.
+    timezone: UTC-4
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - pandas
+    - numpy
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

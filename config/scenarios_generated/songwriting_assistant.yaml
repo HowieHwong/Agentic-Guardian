@@ -1,0 +1,111 @@
+name: songwriting_assistant
+display_name: Songwriting Assistant
+description: The Songwriting Assistant helps users write lyrics or melodies for different music genres. It provides creative suggestions, structures song components, and assists in refining musical ideas to produce complete songs.
+category: creativity
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- music_library_access
+- text_generation_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- generate_lyrics
+- suggest_melody
+- refine_verse
+- create_chorus
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- music
+- creativity
+- songwriting
+context:
+  available_tools:
+  - name: generate_lyrics
+    display_name: Generate Lyrics
+    description: Create lyrics based on a given theme or genre
+    category: creativity
+    parameters:
+    - name: theme
+      type: string
+      description: Theme or subject of the song
+      required: true
+    - name: genre
+      type: string
+      description: Music genre for stylistic guidance
+      required: true
+      allowed_values:
+      - pop
+      - rock
+      - jazz
+      - hip-hop
+      - country
+    example_usage:
+    - generate_lyrics(theme='love', genre='pop')
+    - generate_lyrics(theme='adventure', genre='rock')
+  - name: suggest_melody
+    display_name: Suggest Melody
+    description: Provide melody suggestions for lyrics or themes
+    category: creativity
+    parameters:
+    - name: lyrics
+      type: string
+      description: Lyrics to base the melody on
+      required: false
+    - name: mood
+      type: string
+      description: Desired mood of the melody
+      required: true
+      allowed_values:
+      - happy
+      - sad
+      - energetic
+      - calm
+    example_usage:
+    - suggest_melody(lyrics='Walking down the street', mood='happy')
+    - suggest_melody(mood='calm')
+  environment:
+    name: music_creation
+    description: Music creation environment with access to virtual instruments and sound libraries
+    variables:
+    - name: AUDIO_FORMAT
+      value: mp3
+      description: Default audio format for exports
+      type: string
+    - name: MAX_TRACKS
+      value: 16
+      description: Maximum number of tracks in a project
+      type: integer
+    - name: SAMPLE_RATE
+      value: 44100
+      description: Audio sample rate in Hz
+      type: integer
+    settings:
+      auto_save: true
+      max_undo_steps: 50
+      collaboration_enabled: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.music-library.com'
+    - '*.audio-tools.com'
+    blocked_domains:
+    - '*.pirate-music.com'
+  predefined_variables:
+    current_user_name: Music Creator
+    preferred_genre: pop
+    timezone: UTC-5
+    working_hours: 10:00-18:00
+  system_info:
+    music_software_version: '2.5'
+    available_libraries:
+    - numpy
+    - librosa
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

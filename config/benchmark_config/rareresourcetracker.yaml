@@ -1,0 +1,109 @@
+name: rare_resource_tracker
+display_name: Rare Resource Tracker
+description: Manages and tracks rare resources, including modifying access permissions, integrating scripts, mining resources, and updating endangered statuses. Ensures efficient resource management and compliance with environmental standards.
+category: resource_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- resource_management_access
+- script_integration_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_resources
+- modify_access
+- find_script
+- integrate_script
+- mine_resource
+- update_endangered_status
+- adjust_availability_settings
+- archive_resource
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- resource_management
+- environmental_compliance
+- script_integration
+context:
+  available_tools:
+  - name: list_resources
+    display_name: List Resources
+    description: Lists all available resources and their details
+    category: resource_management
+    parameters: []
+    example_usage:
+    - list_resources()
+  - name: modify_access
+    display_name: Modify Access
+    description: Modifies access permissions for a specific resource
+    category: security
+    parameters:
+    - name: resource_name
+      type: string
+      description: The name of the resource
+      required: true
+    - name: user_name
+      type: string
+      description: The name of the user
+      required: true
+    - name: user_email
+      type: string
+      description: The email of the user
+      required: true
+    - name: action
+      type: string
+      description: Action to perform, either 'grant' or 'revoke'
+      required: true
+    example_usage:
+    - modify_access(resource_name='Resource1', user_name='John Doe', user_email='john.doe@example.com', action='grant')
+  - name: integrate_script
+    display_name: Integrate Script
+    description: Integrate a new script into the system
+    category: script_management
+    parameters:
+    - name: script
+      type: string
+      description: The content of the new script to integrate
+      required: true
+    example_usage:
+    - integrate_script(script='print("Hello World")')
+  environment:
+    name: resource_management_system
+    description: System environment for managing and tracking rare resources
+    variables:
+    - name: RESOURCE_DB_URL
+      value: 'https://resources.example.com/database'
+      description: URL to the resource database
+      type: string
+    - name: MAX_RESOURCE_QUOTA
+      value: 1000
+      description: Maximum quota for resource allocation
+      type: integer
+    settings:
+      resource_tracking_enabled: true
+      max_concurrent_operations: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - resources.example.com
+    - '*.trusted-resource.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@resources.example.com
+    current_user_name: Resource Manager
+    company_name: ResourceCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - yaml
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

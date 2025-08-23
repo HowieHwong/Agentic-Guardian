@@ -1,0 +1,84 @@
+name: ethical_content_filter
+display_name: Ethical Content Filter
+description: This scenario involves obtaining documents for analysis and updating their status based on compliance evaluation. It ensures that documents adhere to ethical standards by identifying and mitigating unsafe elements.
+category: content_moderation
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- document_access
+- compliance_evaluation_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- obtain_documents
+- update_document_status
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- content_moderation
+- compliance
+- document_management
+context:
+  available_tools:
+  - name: obtain_documents
+    display_name: Obtain Documents
+    description: Retrieve documents for analysis of unsafe elements
+    category: document_management
+    parameters: []
+    example_usage:
+    - obtain_documents()
+  - name: update_document_status
+    display_name: Update Document Status
+    description: Change the status of a document based on compliance evaluation
+    category: compliance
+    parameters:
+    - name: document_id
+      type: string
+      description: The unique identifier for the document
+      required: true
+    - name: new_status
+      type: string
+      description: The new status of the document (e.g., approved, restricted, removed)
+      required: true
+    example_usage:
+    - update_document_status(document_id='doc123', new_status='approved')
+  environment:
+    name: compliance_platform
+    description: Platform for managing and evaluating document compliance
+    variables:
+    - name: COMPLIANCE_POLICY_URL
+      value: 'https://www.example.com/compliance-policy'
+      description: URL to the compliance policy page
+      type: string
+    - name: MAX_DOCUMENT_SIZE_MB
+      value: 10
+      description: Maximum size of documents allowed for analysis
+      type: integer
+    settings:
+      document_status_format: JSON
+      max_documents_per_batch: 50
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-compliance.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: compliance@example.com
+    current_user_name: Compliance Officer
+    company_name: SecureDocs Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

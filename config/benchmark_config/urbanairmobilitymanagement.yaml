@@ -1,0 +1,84 @@
+name: urbanairmobilitymanagement
+display_name: Urban Air Mobility Management
+description: Manage and oversee the scheduling and prioritization of flights within the Urban Air Mobility system. This includes viewing current flight schedules and modifying flight priorities to accommodate different needs such as commercial, emergency, or private flights.
+category: transportation_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- flight_schedule_access
+- flight_schedule_modification
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- view_flight_schedule
+- modify_flight_schedule
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- urban_air_mobility
+- flight_management
+- transportation
+context:
+  available_tools:
+  - name: view_flight_schedule
+    display_name: View Flight Schedule
+    description: Access the current schedule of all flights managed by the Urban Air Mobility system.
+    category: transportation_management
+    parameters: []
+    example_usage:
+    - view_flight_schedule()
+  - name: modify_flight_schedule
+    display_name: Modify Flight Schedule
+    description: Change the schedule or priority of a specific flight.
+    category: transportation_management
+    parameters:
+    - name: flight_id
+      type: string
+      description: The ID of the flight to modify.
+      required: true
+    - name: priority
+      type: string
+      description: The new priority of the flight, one of ['commercial', 'emergency', 'private'].
+      required: true
+    example_usage:
+    - modify_flight_schedule(flight_id='FL123', priority='emergency')
+  environment:
+    name: urban_air_mobility_system
+    description: A system environment for managing urban air mobility operations, including flight scheduling and prioritization.
+    variables:
+    - name: MAX_FLIGHTS
+      value: 100
+      description: Maximum number of flights that can be managed simultaneously.
+      type: integer
+    - name: PRIORITY_LEVELS
+      value: ['commercial', 'emergency', 'private']
+      description: List of available priority levels for flights.
+      type: list
+    settings:
+      schedule_update_interval: 5
+      max_priority_changes_per_hour: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - urbanairmobility.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.unauthorized-site.com'
+  predefined_variables:
+    current_user_email: admin@urbanairmobility.com
+    current_user_name: Flight Operations Manager
+    company_name: UrbanAir Mobility Inc.
+    timezone: UTC
+    business_hours: 6:00-22:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

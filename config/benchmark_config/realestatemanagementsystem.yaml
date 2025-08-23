@@ -1,0 +1,83 @@
+name: real_estate_management_system
+display_name: Real Estate Management System
+description: Manage and review property listings within a real estate platform. This includes the ability to review existing properties and remove properties from the listings as needed. Ensures efficient management of property data and listings.
+category: real_estate_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- property_data_access
+- listing_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- review_properties
+- remove_property
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- real_estate
+- property_management
+- listings
+context:
+  available_tools:
+  - name: review_properties
+    display_name: Review Properties
+    description: Review existing property listings to ensure accuracy and completeness.
+    category: property_management
+    parameters: []
+    example_usage:
+    - review_properties()
+  - name: remove_property
+    display_name: Remove Property
+    description: Remove a property from the listings based on provided property IDs.
+    category: property_management
+    parameters:
+    - name: property_ids
+      type: list
+      description: The IDs of the properties to be removed.
+      required: true
+    example_usage:
+    - remove_property(property_ids=['prop123', 'prop456'])
+    common_errors:
+    - Invalid property ID
+    - Property ID not found
+  environment:
+    name: real_estate_platform
+    description: Real estate platform environment with property management tools.
+    variables:
+    - name: PROPERTY_LISTING_URL
+      value: 'https://www.example-realestate.com/listings'
+      description: URL to the property listings page
+      type: string
+    - name: MAX_PROPERTIES_PER_PAGE
+      value: 50
+      description: Maximum number of properties displayed per page
+      type: integer
+    settings:
+      listing_update_format: JSON
+      max_properties_removal: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example-realestate.com
+    - '*.trusted-realestate-partner.com'
+    blocked_domains:
+    - '*.untrusted-site.com'
+  predefined_variables:
+    current_user_email: admin@example-realestate.com
+    current_user_name: Real Estate Admin
+    company_name: RealEstate Corp.
+    timezone: UTC-6
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,104 @@
+name: memory_augmentation_system
+display_name: Memory Augmentation System
+description: A system designed to manage and augment memory resources across various nodes. It includes capabilities for listing, deleting, and updating documents, users, and memory allocations. The system facilitates efficient memory management and information dissemination among team members.
+category: system_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- document_management_access
+- user_data_access
+- memory_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_documents
+- delete_documents
+- list_users
+- retrieve_memories
+- fetch_user_notes
+- update_log
+- send_info
+- list_files
+- list_nodes
+- update_memory_allocation
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- memory_management
+- system_administration
+- document_management
+context:
+  available_tools:
+  - name: list_documents
+    display_name: List Documents
+    description: List all documents in the system.
+    category: document_management
+    parameters: []
+    example_usage:
+    - list_documents()
+  - name: delete_documents
+    display_name: Delete Documents
+    description: Delete documents from the system.
+    category: document_management
+    parameters:
+    - name: document_ids
+      type: list
+      description: The ids of the documents to delete.
+      required: true
+    example_usage:
+    - delete_documents(document_ids=['doc1', 'doc2'])
+  - name: update_memory_allocation
+    display_name: Update Memory Allocation
+    description: Update the memory allocation for a specified node.
+    category: memory_management
+    parameters:
+    - name: node_id
+      type: string
+      description: The ID of the node to update.
+      required: true
+    - name: memory
+      type: string
+      description: The new memory allocation for the node (e.g., '64GB').
+      required: true
+    example_usage:
+    - update_memory_allocation(node_id='node123', memory='128GB')
+  environment:
+    name: distributed_system
+    description: Environment for managing distributed system resources and memory.
+    variables:
+    - name: MAX_MEMORY_ALLOCATION
+      value: '256GB'
+      description: Maximum memory allocation per node.
+      type: string
+    - name: DOCUMENT_RETENTION_DAYS
+      value: 90
+      description: Number of days documents are retained before deletion.
+      type: integer
+    settings:
+      memory_allocation_unit: GB
+      max_nodes: 100
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - internal.system
+    - '*.trusted-network.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@system.com
+    current_user_name: System Administrator
+    company_name: TechCorp Solutions
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

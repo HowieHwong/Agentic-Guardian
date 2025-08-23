@@ -1,0 +1,96 @@
+name: reproducible_report_generator
+display_name: Reproducible Report Generator
+description: This scenario involves creating comprehensive technical documentation, code comments, and READMEs. The agent will generate reports that are consistent, clear, and maintainable, ensuring that all technical aspects are well-documented for future reference and collaboration.
+category: documentation
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- document_access
+- codebase_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- generate_readme
+- add_code_comments
+- create_technical_documentation
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- documentation
+- technical_writing
+- automation
+context:
+  available_tools:
+  - name: generate_readme
+    display_name: Generate README
+    description: Create a README file for a project with relevant details and instructions
+    category: documentation
+    parameters:
+    - name: project_name
+      type: string
+      description: Name of the project
+      required: true
+    - name: description
+      type: string
+      description: Brief project description
+      required: true
+    - name: installation_steps
+      type: list
+      description: Steps to install and set up the project
+      required: true
+    - name: usage_examples
+      type: list
+      description: Examples of how to use the project
+      required: false
+    example_usage:
+    - generate_readme(project_name='DataAnalyzer', description='A tool for data analysis', installation_steps=['Install Python', 'Run setup.py'])
+  - name: add_code_comments
+    display_name: Add Code Comments
+    description: Insert comments into code to explain functionality and logic
+    category: documentation
+    parameters:
+    - name: code_snippet
+      type: string
+      description: The code snippet to comment
+      required: true
+    - name: comment_style
+      type: string
+      description: Style of comments (e.g., inline, block)
+      required: false
+      default_value: inline
+    example_usage:
+    - add_code_comments(code_snippet='def add(a, b): return a + b', comment_style='inline')
+  environment:
+    name: documentation_environment
+    description: Environment configured for generating and managing technical documentation
+    variables:
+    - name: DOCS_OUTPUT_DIR
+      value: /docs
+      description: Directory for storing generated documentation
+      type: string
+    - name: MAX_DOC_SIZE_MB
+      value: 10
+      description: Maximum size for a single document in MB
+      type: integer
+    settings:
+      version_control_required: true
+      auto_save_interval: 10
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_name: DocumentationBot
+    organization_name: TechDocs Inc.
+    timezone: UTC
+    working_hours: 8:00-18:00
+  system_info:
+    documentation_tool_version: '2.1'
+    available_libraries:
+    - markdown
+    - sphinx
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

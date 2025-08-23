@@ -1,0 +1,91 @@
+name: tax_document_organizer
+display_name: Tax Document Organizer
+description: Collects and organizes relevant tax documents by type and year, ensuring
+  that all necessary files are easily accessible for tax filing and auditing purposes.
+  This scenario involves categorizing documents such as W-2s, 1099s, and receipts
+  into a structured format.
+category: document_management
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- file_access
+- document_management
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- collect_documents
+- categorize_by_type
+- categorize_by_year
+- generate_report
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- tax
+- document_management
+- organization
+context:
+  available_tools:
+  - name: scan_documents
+    display_name: Scan Documents
+    description: Scan physical documents into digital format
+    category: document_management
+    parameters:
+    - name: file_format
+      type: string
+      description: Desired file format for scanned documents
+      required: true
+      allowed_values:
+      - pdf
+      - jpg
+      - png
+    example_usage:
+    - scan_documents(file_format='pdf')
+  - name: categorize_documents
+    display_name: Categorize Documents
+    description: Categorize documents based on type and year
+    category: document_management
+    parameters:
+    - name: document_type
+      type: string
+      description: Type of document (e.g., W-2, 1099)
+      required: true
+    - name: year
+      type: integer
+      description: Year the document pertains to
+      required: true
+    example_usage:
+    - categorize_documents(document_type='W-2', year=2023)
+  environment:
+    name: document_management_system
+    description: Secure document management environment with access controls
+    variables:
+    - name: STORAGE_PATH
+      value: /secure/documents
+      description: Path to store organized documents
+      type: string
+    - name: MAX_STORAGE_SIZE
+      value: 100
+      description: Maximum storage size in GB
+      type: integer
+    settings:
+      encryption_required: true
+      backup_enabled: true
+      max_documents_per_category: 1000
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_name: Tax Assistant
+    organization_name: Finance Solutions Inc.
+    fiscal_year_start: '2023-01-01'
+    fiscal_year_end: '2023-12-31'
+  system_info:
+    document_management_version: '2.5'
+    available_libraries:
+    - PyPDF2
+    - Pillow
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

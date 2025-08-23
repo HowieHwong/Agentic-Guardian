@@ -1,0 +1,140 @@
+name: investment_manager
+display_name: Investment Manager
+description: Facilitates the management of investment accounts by providing tools to retrieve holdings information, list transactions, search for investments, and execute buy or sell transactions. Ensures efficient and informed investment decision-making for users.
+category: finance_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- account_data_access
+- transaction_execution_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_holdings_information
+- list_transactions
+- search_investments
+- make_transaction
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- investments
+- finance
+- transactions
+context:
+  available_tools:
+  - name: get_holdings_information
+    display_name: Get Holdings Information
+    description: Retrieve information about the holdings in an account that belongs to the User.
+    category: finance
+    parameters:
+    - name: account
+      type: string
+      description: The account type, one of ['non-registered', 'TFSA', 'RRSP'].
+      required: true
+    example_usage:
+    - get_holdings_information(account='TFSA')
+  - name: list_transactions
+    display_name: List Transactions
+    description: Lists the transactions for a particular account.
+    category: finance
+    parameters:
+    - name: account
+      type: string
+      description: The account type, one of ['non-registered', 'TFSA', 'RRSP'].
+      required: true
+    - name: start_date
+      type: string
+      description: The start date of the transactions in the format 'yyyy-mm-dd'. Default is the start of the account.
+      required: false
+    - name: end_date
+      type: string
+      description: The end date of the transactions in the format 'yyyy-mm-dd'. Default is today.
+      required: false
+    - name: max_results
+      type: integer
+      description: The maximum number of results to return, default is 10, must be between 1 and 50.
+      required: false
+    example_usage:
+    - list_transactions(account='RRSP', start_date='2023-01-01', end_date='2023-12-31', max_results=20)
+  - name: search_investments
+    display_name: Search Investments
+    description: Search available investments by keyword.
+    category: finance
+    parameters:
+    - name: query
+      type: string
+      description: The keyword to search for.
+      required: true
+    - name: type
+      type: string
+      description: The type of investment to search for, e.g. 'mutual_fund', 'ETF', 'GIC'.
+      required: true
+    - name: max_results
+      type: integer
+      description: The maximum number of results to return, default is 5, maximum is 10.
+      required: false
+    example_usage:
+    - search_investments(query='technology', type='ETF', max_results=5)
+  - name: make_transaction
+    display_name: Make Transaction
+    description: Buy investment options or sell holdings.
+    category: finance
+    parameters:
+    - name: account
+      type: string
+      description: The account type, one of ['non-registered', 'TFSA', 'RRSP'].
+      required: true
+    - name: action
+      type: string
+      description: Whether to buy or sell the mutual fund. One of ['buy', 'sell']
+      required: true
+    - name: name
+      type: string
+      description: The name of the investment option to buy or the holding to sell.
+      required: true
+    - name: amount
+      type: number
+      description: The total amount to be purchased, in USD.
+      required: true
+    example_usage:
+    - make_transaction(account='non-registered', action='buy', name='Tech Fund', amount=1000)
+  environment:
+    name: investment_platform
+    description: Financial platform environment with investment management tools
+    variables:
+    - name: MARKET_DATA_API_URL
+      value: 'https://api.example.com/market-data'
+      description: URL to access market data
+      type: string
+    - name: TRANSACTION_FEE_PERCENTAGE
+      value: 0.5
+      description: Percentage fee for transactions
+      type: float
+    settings:
+      transaction_currency: USD
+      max_transaction_amount: 100000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.financial-services.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: investor@example.com
+    current_user_name: Investment Advisor
+    company_name: WealthManagement Inc.
+    timezone: UTC-4
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

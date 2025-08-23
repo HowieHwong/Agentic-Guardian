@@ -1,0 +1,80 @@
+name: space_debris_tracker
+display_name: Space Debris Tracker
+description: Monitors and manages the trajectories of space debris objects to prevent collisions and ensure the safety of space operations. Provides tools to list current trajectories and update trajectory details for specific debris objects.
+category: space_operations
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- trajectory_data_access
+- update_trajectory_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_trajectories
+- update_trajectory
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- space
+- safety
+- operations
+context:
+  available_tools:
+  - name: list_trajectories
+    display_name: List Trajectories
+    description: List all current space debris trajectories.
+    category: space_operations
+    parameters: []
+    example_usage:
+    - list_trajectories()
+  - name: update_trajectory
+    display_name: Update Trajectory
+    description: Update the trajectory details of a specified space debris object.
+    category: space_operations
+    parameters:
+    - name: object_id
+      type: string
+      description: The ID of the object to update.
+      required: true
+    - name: new_trajectory
+      type: string
+      description: The updated trajectory information.
+      required: true
+    example_usage:
+    - update_trajectory(object_id='debris123', new_trajectory='new_path_456')
+  environment:
+    name: space_monitoring_system
+    description: A system environment for monitoring and managing space debris trajectories.
+    variables:
+    - name: MAX_DEBRIS_OBJECTS
+      value: 10000
+      description: Maximum number of debris objects that can be tracked simultaneously.
+      type: integer
+    settings:
+      trajectory_update_frequency: 60
+      max_trajectory_length: 1000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - nasa.gov
+    - '*.space-agency.org'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: operator@spaceagency.org
+    current_user_name: Space Operations Specialist
+    agency_name: Global Space Agency
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

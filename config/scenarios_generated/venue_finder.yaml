@@ -1,0 +1,101 @@
+name: venue_finder
+display_name: Venue Finder
+description: The agent suggests suitable venues based on event type, location, and guest count. It helps users find the perfect venue for their events by considering various factors such as availability, amenities, and budget constraints.
+category: event_planning
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- location_access
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- search_venues
+- filter_by_capacity
+- check_availability
+- compare_prices
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- venue
+- event
+- planning
+- recommendation
+context:
+  available_tools:
+  - name: search_venues
+    display_name: Search Venues
+    description: Find venues based on location, event type, and guest count
+    category: event_planning
+    parameters:
+    - name: location
+      type: string
+      description: Location to search for venues
+      required: true
+    - name: event_type
+      type: string
+      description: Type of event (e.g., wedding, conference)
+      required: true
+    - name: guest_count
+      type: integer
+      description: Number of guests expected
+      required: true
+    example_usage:
+    - search_venues(location='New York', event_type='wedding', guest_count=150)
+    - search_venues(location='San Francisco', event_type='conference', guest_count=300)
+    common_errors:
+    - Invalid location format
+    - Guest count exceeds venue capacity
+  - name: check_availability
+    display_name: Check Availability
+    description: Check if a venue is available on a specific date
+    category: event_planning
+    parameters:
+    - name: venue_id
+      type: string
+      description: Unique identifier for the venue
+      required: true
+    - name: date
+      type: string
+      description: Date to check availability (YYYY-MM-DD)
+      required: true
+    example_usage:
+    - check_availability(venue_id='12345', date='2023-12-25')
+  environment:
+    name: venue_search
+    description: Environment for searching and evaluating event venues
+    variables:
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing venue databases
+      type: string
+    - name: MAX_RESULTS
+      value: 50
+      description: Maximum number of venues to return per search
+      type: integer
+    settings:
+      data_refresh_interval: 24
+      max_search_radius_km: 100
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.trusted-venue.com'
+    - '*.event-planner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_location: 'New York, NY'
+    preferred_event_type: 'conference'
+    default_guest_count: 100
+  system_info:
+    venue_search_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

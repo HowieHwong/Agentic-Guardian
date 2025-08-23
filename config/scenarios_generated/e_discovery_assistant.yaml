@@ -1,0 +1,105 @@
+name: e_discovery_assistant
+display_name: E-Discovery Assistant
+description: The E-Discovery Assistant aids legal teams in efficiently searching and summarizing large sets of documents. It streamlines the process of identifying relevant information within vast amounts of data, ensuring compliance with legal standards and improving the speed of legal investigations.
+category: legal
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- document_access
+- search_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- search_documents
+- summarize_content
+- tag_relevant_info
+- export_summary
+metadata:
+  selection_way: random
+  selection_num: 10
+tags:
+- legal
+- document_management
+- automation
+context:
+  available_tools:
+  - name: search_documents
+    display_name: Search Documents
+    description: Search through large document sets for specific keywords or phrases
+    category: document_management
+    parameters:
+    - name: query
+      type: string
+      description: Search query for document content
+      required: true
+    - name: date_range
+      type: string
+      description: Date range for document search
+      required: false
+    example_usage:
+    - search_documents(query='contract breach', date_range='2023-01-01 to 2023-12-31')
+    - search_documents(query='confidential')
+    common_errors:
+    - Invalid date range format
+    - Query too broad
+  - name: summarize_content
+    display_name: Summarize Content
+    description: Generate a summary of the document content
+    category: document_management
+    parameters:
+    - name: document_id
+      type: string
+      description: Identifier for the document to summarize
+      required: true
+    - name: summary_length
+      type: integer
+      description: Desired length of the summary
+      required: false
+      default_value: 100
+    example_usage:
+    - summarize_content(document_id='doc12345', summary_length=150)
+    - summarize_content(document_id='doc67890')
+  environment:
+    name: legal_document_management
+    description: Secure environment for managing and processing legal documents
+    variables:
+    - name: DOCUMENT_DB_SERVER
+      value: db.legaltech.com
+      description: Database server for document storage
+      type: string
+    - name: MAX_DOCUMENT_SIZE_MB
+      value: 100
+      description: Maximum document size in MB
+      type: integer
+    - name: SEARCH_API_ENDPOINT
+      value: api.legaltech.com/search
+      description: API endpoint for document search
+      type: string
+    settings:
+      encryption_required: true
+      audit_logging: true
+      max_search_results: 1000
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - legaltech.com
+    - '*.trusted-legal.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: legal.assistant@legaltech.com
+    current_user_name: Legal AI Assistant
+    company_name: LegalTech Solutions
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    document_management_version: '2.1'
+    available_libraries:
+    - docx
+    - pdfminer
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

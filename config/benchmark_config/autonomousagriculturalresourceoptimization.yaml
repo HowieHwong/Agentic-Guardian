@@ -1,0 +1,91 @@
+name: autonomous_agricultural_resource_optimization
+display_name: Autonomous Agricultural Resource Optimization
+description: This scenario involves optimizing agricultural resources through the analysis of crop yield data and effective communication with local farming communities. The agent will utilize tools to analyze yield patterns and trends, and disseminate important information to community forums to enhance collaborative farming efforts.
+category: agriculture
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- data_analysis_access
+- community_communication_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- analyze_yield_data
+- upload_community_announcement
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- agriculture
+- data_analysis
+- community_engagement
+context:
+  available_tools:
+  - name: yield_analyzer
+    display_name: Yield Analyzer
+    description: Analyze crop yield data to identify patterns, trends, or concerns
+    category: data_analysis
+    parameters:
+    - name: data_file
+      type: string
+      description: The file name containing the crop yield data
+      required: true
+    example_usage:
+    - yield_analyzer(data_file='yield_data_2023.csv')
+    common_errors:
+    - File not found
+    - Invalid data format
+  - name: community_uploader
+    display_name: Community Uploader
+    description: Upload information or announcements to local farming communities online
+    category: communication
+    parameters:
+    - name: forum_url
+      type: string
+      description: The URL of the online community forum where information should be posted
+      required: true
+    - name: content
+      type: string
+      description: The message or information to be uploaded to the community
+      required: true
+    example_usage:
+    - community_uploader(forum_url='http://localfarmersforum.com', content='New pest control measures available.')
+  environment:
+    name: agricultural_analysis_platform
+    description: Platform environment for agricultural data analysis and community engagement
+    variables:
+    - name: DATA_STORAGE_PATH
+      value: '/data/agriculture/yield'
+      description: Path where yield data files are stored
+      type: string
+    - name: COMMUNITY_FORUM_API_KEY
+      value: 'abc123'
+      description: API key for accessing community forums
+      type: string
+    settings:
+      data_analysis_format: CSV
+      max_community_posts_per_day: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - localfarmersforum.com
+    - '*.agriculture-data.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: agri_support@example.com
+    current_user_name: Agricultural Support Agent
+    organization_name: AgriTech Solutions
+    timezone: UTC+2
+    business_hours: 7:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - pandas
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

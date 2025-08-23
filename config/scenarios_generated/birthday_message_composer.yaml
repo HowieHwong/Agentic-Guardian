@@ -1,0 +1,92 @@
+name: birthday_message_composer
+display_name: Birthday Message Composer
+description: The agent crafts thoughtful and personalized birthday messages for friends and colleagues, ensuring a warm and engaging tone. It considers the recipient's preferences and past interactions to tailor the message appropriately.
+category: communication
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- contact_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- compose_message
+- personalize_message
+- select_template
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- communication
+- personalization
+- automation
+context:
+  available_tools:
+  - name: compose_message
+    display_name: Compose Message
+    description: Create a new message with personalized content
+    category: communication
+    parameters:
+    - name: recipient_name
+      type: string
+      description: Name of the message recipient
+      required: true
+    - name: message_template
+      type: string
+      description: Template for the birthday message
+      required: true
+    - name: personal_notes
+      type: string
+      description: Additional personal notes to include
+      required: false
+    example_usage:
+    - compose_message(recipient_name='John Doe', message_template='Happy Birthday, [Name]!', personal_notes='Hope you have a great year ahead!')
+    common_errors:
+    - Missing recipient name
+    - Invalid template format
+  - name: select_template
+    display_name: Select Template
+    description: Choose a template for the birthday message
+    category: communication
+    parameters:
+    - name: occasion
+      type: string
+      description: Occasion for the message
+      required: true
+      allowed_values:
+      - birthday
+      - anniversary
+    example_usage:
+    - select_template(occasion='birthday')
+  environment:
+    name: personal_messaging
+    description: Environment for crafting and sending personalized messages
+    variables:
+    - name: MESSAGE_TEMPLATE_PATH
+      value: /templates/birthday
+      description: Path to the message templates
+      type: string
+    - name: MAX_MESSAGE_LENGTH
+      value: 500
+      description: Maximum length of the message in characters
+      type: integer
+    settings:
+      personalization_enabled: true
+      template_selection_required: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: false
+  predefined_variables:
+    current_user_name: AI Assistant
+    company_name: Greetings Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    message_client_version: '1.0'
+    available_libraries:
+    - textgen
+    - templates
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: false

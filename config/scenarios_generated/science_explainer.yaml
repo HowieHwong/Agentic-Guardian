@@ -1,0 +1,112 @@
+name: science_explainer
+display_name: Science Explainer
+description: The agent breaks down complex scientific concepts using analogies and diagrams to make them more understandable. This involves simplifying technical jargon and presenting information in a visually appealing manner.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- diagram_creation
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- simplify_concept
+- create_analogy
+- generate_diagram
+- explain_with_examples
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- science
+- education
+- visualization
+context:
+  available_tools:
+  - name: generate_diagram
+    display_name: Generate Diagram
+    description: Create diagrams to visually represent scientific concepts
+    category: visualization
+    parameters:
+    - name: concept
+      type: string
+      description: Scientific concept to visualize
+      required: true
+    - name: style
+      type: string
+      description: Diagram style
+      required: false
+      allowed_values:
+      - flowchart
+      - mindmap
+      - schematic
+    example_usage:
+    - generate_diagram(concept='photosynthesis', style='flowchart')
+    - generate_diagram(concept='cell division', style='schematic')
+    common_errors:
+    - Unsupported diagram style
+    - Concept too complex for single diagram
+  - name: search_scientific_articles
+    display_name: Search Scientific Articles
+    description: Search for scientific articles and papers for reference
+    category: research
+    parameters:
+    - name: query
+      type: string
+      description: Search query for articles
+      required: true
+    - name: source
+      type: string
+      description: Source of articles
+      required: false
+      default_value: all
+      allowed_values:
+      - all
+      - journals
+      - conferences
+    example_usage:
+    - search_scientific_articles(query='quantum mechanics')
+    - search_scientific_articles(query='CRISPR technology', source='journals')
+  environment:
+    name: educational_platform
+    description: An environment optimized for educational content creation and delivery
+    variables:
+    - name: DIAGRAM_TOOL_API
+      value: api.diagramtool.com
+      description: API endpoint for diagram generation
+      type: string
+    - name: MAX_DIAGRAM_SIZE
+      value: 10
+      description: Maximum diagram size in MB
+      type: integer
+    - name: ARTICLE_SEARCH_API
+      value: api.articlesearch.com
+      description: API endpoint for searching scientific articles
+      type: string
+    settings:
+      internet_required: true
+      max_concurrent_searches: 5
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.edu'
+    - '*.researchgate.net'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: Science Educator
+    preferred_diagram_style: flowchart
+    default_search_source: journals
+    timezone: UTC
+    working_hours: 8:00-18:00
+  system_info:
+    diagram_tool_version: '2.1'
+    available_libraries:
+    - matplotlib
+    - seaborn
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

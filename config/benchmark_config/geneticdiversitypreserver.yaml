@@ -1,0 +1,89 @@
+name: genetic_diversity_preserver
+display_name: Genetic Diversity Preserver
+description: This scenario involves managing and preserving the genetic diversity of species by tracking their populations. It includes retrieving species lists and updating their population counts to ensure biodiversity is maintained.
+category: environmental_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- species_data_access
+- population_update_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_species_list
+- update_species_count
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- biodiversity
+- conservation
+- environmental_management
+context:
+  available_tools:
+  - name: get_species_list
+    display_name: Get Species List
+    description: Retrieve the list of species and their current populations
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - get_species_list()
+    common_errors:
+    - Data retrieval failure
+  - name: update_species_count
+    display_name: Update Species Count
+    description: Update the count of a species in the data record
+    category: data_management
+    parameters:
+    - name: species_name
+      type: string
+      description: Name of the species to update
+      required: true
+    - name: new_count
+      type: integer
+      description: New population count for the species
+      required: true
+    example_usage:
+    - update_species_count(species_name='Panthera leo', new_count=2500)
+    common_errors:
+    - Invalid species name
+    - Population count out of range
+  environment:
+    name: biodiversity_management_system
+    description: A system dedicated to managing species data and ensuring biodiversity
+    variables:
+    - name: SPECIES_DATA_API_URL
+      value: 'https://api.biodiversity.org/species'
+      description: API endpoint for accessing species data
+      type: string
+    - name: MAX_SPECIES_UPDATE
+      value: 100
+      description: Maximum number of species updates allowed per session
+      type: integer
+    settings:
+      data_format: JSON
+      max_api_requests_per_hour: 1000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - biodiversity.org
+    - '*.conservation-partner.org'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: conservationist@example.com
+    current_user_name: Biodiversity Analyst
+    organization_name: Global Conservation Initiative
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

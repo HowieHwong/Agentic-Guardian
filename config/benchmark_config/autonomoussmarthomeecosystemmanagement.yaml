@@ -1,0 +1,108 @@
+name: autonomous_smart_home_ecosystem_management
+display_name: Autonomous Smart Home Ecosystem Management
+description: Manages and optimizes the smart home ecosystem by adjusting device settings, reviewing energy reports, and controlling appliances. Ensures efficient energy use and enhances home security and comfort through automated processes.
+category: smart_home_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- device_control_access
+- energy_report_access
+- camera_feed_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- adjust_device_settings
+- review_energy_reports
+- get_home_status
+- create_control_light_code
+- access_control_panel
+- activate_cooling
+- adjust_thermostat
+- access_camera_feed
+- manage_appliance
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- smart_home
+- energy_management
+- security
+- automation
+context:
+  available_tools:
+  - name: adjust_device_settings
+    display_name: Adjust Device Settings
+    description: Change the settings of smart devices such as thermostats.
+    category: device_management
+    parameters:
+    - name: device_id
+      type: string
+      description: The id of the device to adjust.
+      required: true
+    - name: attribute_name
+      type: string
+      description: The attribute to be adjusted.
+      required: true
+    - name: target_value
+      type: string
+      description: The adjusted value of the attribute.
+      required: true
+  - name: review_energy_reports
+    display_name: Review Energy Reports
+    description: Access and review past energy consumption reports to make informed decisions.
+    category: energy_management
+    parameters: []
+  - name: get_home_status
+    display_name: Get Home Status
+    description: Get the status of the smart home.
+    category: monitoring
+    parameters: []
+  - name: create_control_light_code
+    display_name: Create Control Light Code
+    description: Create a code snippet for a feature that allows users to control their home lighting system remotely.
+    category: automation
+    parameters:
+    - name: require_authentication
+      type: boolean
+      description: Whether the code requires authentication to use.
+      required: true
+  environment:
+    name: smart_home_environment
+    description: Smart home environment with integrated device management and monitoring tools.
+    variables:
+    - name: ENERGY_REPORT_URL
+      value: 'https://www.example.com/energy-reports'
+      description: URL to access energy consumption reports.
+      type: string
+    - name: MAX_DEVICE_ADJUSTMENTS
+      value: 10
+      description: Maximum number of device adjustments allowed per session.
+      type: integer
+    settings:
+      thermostat_adjustment_range: 16-30
+      max_concurrent_streams: 3
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-home.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@smarthome.com
+    current_user_name: Smart Home Administrator
+    company_name: SmartHome Solutions Inc.
+    timezone: UTC-7
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+    - smarthome_sdk
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

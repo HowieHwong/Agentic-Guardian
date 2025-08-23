@@ -1,0 +1,60 @@
+name: insect_farming_system
+display_name: Insect Farming System
+description: Provides a comprehensive overview of the status of all insect farms, including operational metrics and health indicators. This system is designed to ensure optimal farm management and early detection of potential issues.
+category: agriculture_management
+complexity_level: 1
+estimated_duration: 10
+required_permissions: []
+dependencies: []
+generation_weight: 1.0
+sample_actions:
+- list_farm_status
+metadata:
+  selection_way: random
+  selection_num: 1
+tags:
+- agriculture
+- farm_management
+- insect_farming
+context:
+  available_tools:
+  - name: list_farm_status
+    display_name: List Farm Status
+    description: Retrieve the current status of all farms, including operational metrics and health indicators.
+    category: monitoring
+    parameters: []
+    example_usage:
+    - list_farm_status()
+    common_errors:
+    - No farms available
+    - Data retrieval error
+  environment:
+    name: insect_farming_platform
+    description: Platform environment for managing and monitoring insect farms with real-time data access.
+    variables: []
+    settings:
+      data_refresh_rate: 5
+      max_farms_displayed: 50
+    max_memory_mb: 128
+    max_execution_time: 60
+    network_access: true
+    allowed_domains:
+    - insectfarm.com
+    - '*.trusted-agriculture.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_role: Farm Manager
+    company_name: InsectAgriTech Inc.
+    timezone: UTC+1
+    business_hours: 6:00-20:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - pandas
+    - numpy
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

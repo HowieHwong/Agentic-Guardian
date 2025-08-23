@@ -1,0 +1,93 @@
+name: chore_scheduler
+display_name: Chore Scheduler
+description: Assigns and reminds household members of chores, ensuring tasks are distributed evenly and reminders are sent to keep everyone on track.
+category: household_management
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- calendar_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- assign_chore
+- send_reminder
+- update_chore_status
+- view_chore_schedule
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- chores
+- household
+- scheduling
+context:
+  available_tools:
+  - name: assign_chore
+    display_name: Assign Chore
+    description: Assign a specific chore to a household member
+    category: task_management
+    parameters:
+    - name: member_name
+      type: string
+      description: Name of the household member
+      required: true
+    - name: chore
+      type: string
+      description: Description of the chore
+      required: true
+    - name: due_date
+      type: string
+      description: Due date for the chore completion
+      required: true
+      validation_pattern: ^\d{4}-\d{2}-\d{2}$
+    example_usage:
+    - assign_chore(member_name='John', chore='Take out trash', due_date='2023-11-01')
+    - assign_chore(member_name='Jane', chore='Wash dishes', due_date='2023-11-02')
+  - name: send_reminder
+    display_name: Send Reminder
+    description: Send a reminder to a household member about their assigned chore
+    category: notification
+    parameters:
+    - name: member_name
+      type: string
+      description: Name of the household member
+      required: true
+    - name: chore
+      type: string
+      description: Description of the chore
+      required: true
+    example_usage:
+    - send_reminder(member_name='John', chore='Take out trash')
+    - send_reminder(member_name='Jane', chore='Wash dishes')
+  environment:
+    name: household_management
+    description: Environment for managing household chores and schedules
+    variables:
+    - name: TIMEZONE
+      value: UTC-5
+      description: Timezone for scheduling chores
+      type: string
+    - name: MAX_REMINDERS_PER_DAY
+      value: 5
+      description: Maximum number of reminders sent per day
+      type: integer
+    settings:
+      notification_enabled: true
+      calendar_sync: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: false
+  predefined_variables:
+    current_user_name: Home Assistant
+    household_name: Smith Family
+    default_reminder_time: '18:00'
+  system_info:
+    available_libraries:
+    - datetime
+    - calendar
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,105 @@
+name: content_moderation_assistant
+display_name: Content Moderation Assistant
+description: The Content Moderation Assistant is designed to flag potentially harmful or inappropriate user-generated content. It helps maintain a safe and respectful environment by analyzing text, images, and other media for violations of community guidelines.
+category: moderation
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- content_access
+- moderation_tools_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_text
+- flag_content
+- review_flagged_items
+- generate_report
+metadata:
+  selection_way: rule_based
+  selection_num: 10
+tags:
+- moderation
+- safety
+- automation
+context:
+  available_tools:
+  - name: analyze_text
+    display_name: Analyze Text
+    description: Analyze text content for harmful or inappropriate language
+    category: moderation
+    parameters:
+    - name: text
+      type: string
+      description: Text content to analyze
+      required: true
+    example_usage:
+    - analyze_text(text='This is a sample user comment.')
+    common_errors:
+    - Text exceeds maximum length
+    - Unsupported language detected
+  - name: analyze_image
+    display_name: Analyze Image
+    description: Analyze images for inappropriate content
+    category: moderation
+    parameters:
+    - name: image_path
+      type: string
+      description: Path to the image file
+      required: true
+    example_usage:
+    - analyze_image(image_path='uploads/user_image.png')
+    common_errors:
+    - Image file not found
+    - Unsupported image format
+  - name: flag_content
+    display_name: Flag Content
+    description: Flag content that violates guidelines
+    category: moderation
+    parameters:
+    - name: content_id
+      type: string
+      description: Identifier of the content to flag
+      required: true
+    - name: reason
+      type: string
+      description: Reason for flagging
+      required: true
+    example_usage:
+    - flag_content(content_id='12345', reason='Hate speech detected')
+  environment:
+    name: content_moderation_env
+    description: Environment for content moderation with necessary tools and policies
+    variables:
+    - name: MAX_TEXT_LENGTH
+      value: 10000
+      description: Maximum length of text content to analyze
+      type: integer
+    - name: SUPPORTED_IMAGE_FORMATS
+      value: ['jpg', 'png', 'gif']
+      description: Supported image formats for analysis
+      type: list
+    settings:
+      logging_enabled: true
+      max_concurrent_analyses: 20
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-content.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_role: Moderator
+    platform_name: SafeSpace
+    timezone: UTC
+    moderation_hours: 24/7
+  system_info:
+    moderation_tool_version: '2.5'
+    available_libraries:
+    - nltk
+    - opencv
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,107 @@
+name: resume_screener
+display_name: Resume Screener
+description: The agent reviews resumes, scores candidates based on predefined criteria,
+  and generates shortlists for recruitment purposes. This involves analyzing candidate
+  qualifications, experience, and skills to match job requirements.
+category: recruitment
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- document_access
+- data_analysis
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- parse_resume
+- score_candidate
+- generate_shortlist
+- send_feedback
+metadata:
+  selection_way: criteria_based
+  selection_num: 10
+tags:
+- recruitment
+- hr
+- automation
+context:
+  available_tools:
+  - name: parse_resume
+    display_name: Parse Resume
+    description: Extracts information from resumes such as name, contact details,
+      education, and work experience
+    category: data_extraction
+    parameters:
+    - name: resume_file
+      type: file
+      description: Resume file to be parsed
+      required: true
+      validation_pattern: ^.*\.(pdf|docx)$
+    example_usage:
+    - parse_resume(resume_file='candidate1.pdf')
+    common_errors:
+    - Unsupported file format
+    - Missing required fields in resume
+  - name: score_candidate
+    display_name: Score Candidate
+    description: Scores a candidate based on predefined criteria and weights
+    category: data_analysis
+    parameters:
+    - name: candidate_data
+      type: object
+      description: Parsed candidate information
+      required: true
+    - name: scoring_criteria
+      type: list
+      description: List of criteria with weights
+      required: true
+    example_usage:
+    - score_candidate(candidate_data=parsed_data, scoring_criteria=[{'experience': 0.4}, {'education': 0.3}, {'skills': 0.3}])
+  - name: generate_shortlist
+    display_name: Generate Shortlist
+    description: Compiles a shortlist of top candidates based on scores
+    category: decision_making
+    parameters:
+    - name: scored_candidates
+      type: list
+      description: List of candidates with scores
+      required: true
+    - name: max_candidates
+      type: integer
+      description: Maximum number of candidates to shortlist
+      required: true
+    example_usage:
+    - generate_shortlist(scored_candidates=candidates, max_candidates=5)
+  environment:
+    name: recruitment_platform
+    description: Secure environment for processing and analyzing candidate data
+    variables:
+    - name: MAX_RESUME_SIZE_MB
+      value: 10
+      description: Maximum resume file size in MB
+      type: integer
+    - name: SUPPORTED_FORMATS
+      value: [pdf, docx]
+      description: Supported resume file formats
+      type: list
+    settings:
+      data_encryption: true
+      logging_enabled: true
+      max_candidates_per_batch: 100
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_role: HR Specialist
+    company_name: TalentCorp
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    resume_parser_version: '2.1'
+    available_libraries:
+    - pdfminer
+    - docx
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

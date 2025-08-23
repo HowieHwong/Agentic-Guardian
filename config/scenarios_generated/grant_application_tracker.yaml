@@ -1,0 +1,115 @@
+name: grant_application_tracker
+display_name: Grant Application Tracker
+description: Monitors grant deadlines and status, ensuring timely application submissions
+  and updates on application progress. This scenario helps organizations manage their
+  grant applications efficiently by tracking important dates and statuses.
+category: project_management
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- calendar_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_deadline
+- update_status
+- send_notification
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- grants
+- project_management
+- tracking
+context:
+  available_tools:
+  - name: check_deadline
+    display_name: Check Deadline
+    description: Check the deadline for a specific grant application
+    category: project_management
+    parameters:
+    - name: grant_id
+      type: string
+      description: Unique identifier for the grant
+      required: true
+    example_usage:
+    - check_deadline(grant_id='grant123')
+    common_errors:
+    - Grant ID not found
+    - Deadline date not available
+  - name: update_status
+    display_name: Update Status
+    description: Update the status of a grant application
+    category: project_management
+    parameters:
+    - name: grant_id
+      type: string
+      description: Unique identifier for the grant
+      required: true
+    - name: status
+      type: string
+      description: New status of the application
+      required: true
+      allowed_values:
+      - submitted
+      - under_review
+      - approved
+      - rejected
+    example_usage:
+    - update_status(grant_id='grant123', status='submitted')
+  - name: send_notification
+    display_name: Send Notification
+    description: Send a notification about a grant application update
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Email address of the recipient
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    example_usage:
+    - send_notification(recipient='user@organization.com', message='Grant application
+      deadline is approaching.')
+  environment:
+    name: grant_management_system
+    description: Environment for managing and tracking grant applications
+    variables:
+    - name: API_ENDPOINT
+      value: api.grantsystem.com
+      description: API endpoint for grant management system
+      type: string
+    - name: MAX_NOTIFICATIONS_PER_DAY
+      value: 100
+      description: Maximum number of notifications that can be sent per day
+      type: integer
+    settings:
+      notification_enabled: true
+      deadline_reminder_days: 7
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - grantsystem.com
+    - '*.trusted-partner.org'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: agent@organization.com
+    current_user_name: Grant Manager
+    organization_name: NonProfit Org
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    application_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

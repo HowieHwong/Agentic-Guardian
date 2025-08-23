@@ -1,0 +1,103 @@
+name: video_scriptwriter
+display_name: Video Scriptwriter
+description: Assists in writing and formatting scripts for YouTube or TikTok videos, focusing on engaging content and optimal structure for digital platforms.
+category: content_creation
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- text_editing_access
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- brainstorm_ideas
+- draft_script
+- format_script
+- review_script
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- video
+- scriptwriting
+- content_creation
+context:
+  available_tools:
+  - name: text_editor
+    display_name: Text Editor
+    description: Tool for writing and editing scripts
+    category: content_creation
+    parameters:
+    - name: text
+      type: string
+      description: Script text content
+      required: true
+    - name: format
+      type: string
+      description: Desired script format
+      required: false
+      allowed_values:
+      - plain_text
+      - markdown
+      - screenplay
+    example_usage:
+    - text_editor(text='Welcome to our channel...', format='markdown')
+  - name: idea_generator
+    display_name: Idea Generator
+    description: Generates creative ideas for video content
+    category: content_creation
+    parameters:
+    - name: topic
+      type: string
+      description: Topic for idea generation
+      required: true
+    - name: style
+      type: string
+      description: Style of content
+      required: false
+      default_value: informal
+      allowed_values:
+      - informal
+      - formal
+      - educational
+    example_usage:
+    - idea_generator(topic='technology trends', style='educational')
+  environment:
+    name: digital_content_creation
+    description: Environment optimized for creating digital video scripts
+    variables:
+    - name: MAX_SCRIPT_LENGTH
+      value: 10000
+      description: Maximum length of the script in characters
+      type: integer
+    - name: SUPPORTED_FORMATS
+      value: ['plain_text', 'markdown', 'screenplay']
+      description: Supported script formats
+      type: list
+    settings:
+      auto_save: true
+      version_control: true
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.content-platform.com'
+    - '*.video-hosting.com'
+    blocked_domains:
+    - '*.distracting-site.com'
+  predefined_variables:
+    current_user_role: scriptwriter
+    platform_focus: YouTube
+    content_style: engaging
+    timezone: UTC-5
+    working_hours: 10:00-18:00
+  system_info:
+    script_editor_version: '2.3'
+    available_libraries:
+    - nltk
+    - textblob
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

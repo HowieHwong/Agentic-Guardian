@@ -1,0 +1,94 @@
+name: insurance_claim_assistant
+display_name: Insurance Claim Assistant
+description: The Insurance Claim Assistant helps users fill out claim forms by guiding them through each step and explaining the required documents. It ensures that all necessary information is collected and verified for a successful claim submission.
+category: assistance
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- form_access
+- document_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- fill_form
+- verify_document
+- submit_claim
+- explain_requirement
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- insurance
+- claims
+- documentation
+context:
+  available_tools:
+  - name: fill_form
+    display_name: Fill Form
+    description: Assist in filling out insurance claim forms
+    category: assistance
+    parameters:
+    - name: form_type
+      type: string
+      description: Type of insurance form
+      required: true
+      allowed_values:
+      - auto
+      - health
+      - home
+    - name: user_data
+      type: object
+      description: User information required for the form
+      required: true
+    example_usage:
+    - "fill_form(form_type='auto', user_data={'name': 'John Doe', 'policy_number': '12345'})"
+  - name: verify_document
+    display_name: Verify Document
+    description: Check the validity and completeness of required documents
+    category: assistance
+    parameters:
+    - name: document_list
+      type: list
+      description: List of documents to verify
+      required: true
+    example_usage:
+    - "verify_document(document_list=['ID Card', 'Proof of Insurance'])"
+  environment:
+    name: insurance_portal
+    description: Secure environment for processing insurance claims
+    variables:
+    - name: API_ENDPOINT
+      value: api.insurancecompany.com
+      description: Endpoint for insurance API
+      type: string
+    - name: MAX_UPLOAD_SIZE
+      value: 10
+      description: Maximum document upload size in MB
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - insurancecompany.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_policy_number: '12345'
+    current_user_name: 'John Doe'
+    insurance_company_name: 'SecureInsure Inc.'
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    form_processing_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

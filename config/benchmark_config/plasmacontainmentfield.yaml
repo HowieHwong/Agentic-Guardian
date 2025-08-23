@@ -1,0 +1,153 @@
+name: plasma_containment_field
+display_name: Plasma Containment Field Management
+description: This scenario involves managing and adjusting the parameters of a plasma containment field. The tasks include removing alarms, listing past plasma parameters, adjusting energy levels, and managing magnetic coils and field intensities. The goal is to ensure the stability and safety of the plasma containment environment.
+category: scientific_research
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- field_management_access
+- parameter_adjustment_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- remove_alarms
+- list_parameters
+- get_current_settings
+- adjust_parameters
+- list_coils
+- adjust_magnetic_coils
+- list_fields
+- adjust_field_intensity
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- plasma
+- containment
+- magnetic_fields
+- energy_management
+context:
+  available_tools:
+  - name: remove_alarms
+    display_name: Remove Alarms
+    description: Remove the existing alarms in the system.
+    category: system_management
+    parameters: []
+    example_usage:
+    - remove_alarms()
+  - name: list_parameters
+    display_name: List Plasma Parameters
+    description: List the past successful plasma parameters.
+    category: data_analysis
+    parameters: []
+    example_usage:
+    - list_parameters()
+  - name: get_current_settings
+    display_name: Get Current Settings
+    description: Retrieve the current parameter settings of the plasma containment field.
+    category: system_management
+    parameters: []
+    example_usage:
+    - get_current_settings()
+  - name: adjust_parameters
+    display_name: Adjust Plasma Parameters
+    description: Adjust the energy levels and related parameters for the plasma containment field.
+    category: parameter_adjustment
+    parameters:
+    - name: energy_levels
+      type: string
+      description: The desired energy level setting.
+      required: true
+    - name: magnetic_field_strength
+      type: string
+      description: The desired magnetic field strength.
+      required: true
+    - name: plasma_temperature
+      type: string
+      description: The desired plasma temperature.
+      required: true
+    example_usage:
+    - adjust_parameters(energy_levels='high', magnetic_field_strength='medium', plasma_temperature='5000K')
+  - name: list_coils
+    display_name: List Magnetic Coils
+    description: List the information of all coils in the system.
+    category: system_management
+    parameters: []
+    example_usage:
+    - list_coils()
+  - name: adjust_magnetic_coils
+    display_name: Adjust Magnetic Coils
+    description: Adjust settings of magnetic coils to stabilize field strength.
+    category: parameter_adjustment
+    parameters:
+    - name: coil_id
+      type: string
+      description: The ID of the coil to adjust.
+      required: true
+    - name: new_strength
+      type: number
+      description: The new field strength for the coil.
+      required: true
+    example_usage:
+    - adjust_magnetic_coils(coil_id='coil_1', new_strength=3.5)
+  - name: list_fields
+    display_name: List Containment Fields
+    description: List all containment zones and their current magnetic field intensities.
+    category: data_analysis
+    parameters: []
+    example_usage:
+    - list_fields()
+  - name: adjust_field_intensity
+    display_name: Adjust Field Intensity
+    description: Adjust the magnetic field intensity of a specified containment zone.
+    category: parameter_adjustment
+    parameters:
+    - name: field_name
+      type: string
+      description: The name of the containment zone to adjust.
+      required: true
+    - name: new_intensity_megagauss
+      type: number
+      description: The new intensity level in megagauss.
+      required: true
+    example_usage:
+    - adjust_field_intensity(field_name='zone_1', new_intensity_megagauss=1.2)
+  environment:
+    name: plasma_lab
+    description: A controlled laboratory environment for plasma containment research.
+    variables:
+    - name: SAFETY_PROTOCOL_URL
+      value: 'https://www.example.com/safety-protocol'
+      description: URL to the safety protocol documentation
+      type: string
+    - name: MAX_ENERGY_LEVEL
+      value: 'high'
+      description: Maximum allowable energy level for plasma containment
+      type: string
+    settings:
+      field_intensity_unit: megagauss
+      max_coil_adjustments: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: false
+    allowed_domains:
+    - example.com
+    - '*.research-lab.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: researcher@example.com
+    current_user_name: Plasma Researcher
+    organization_name: Plasma Research Institute
+    timezone: UTC+1
+    lab_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - scipy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

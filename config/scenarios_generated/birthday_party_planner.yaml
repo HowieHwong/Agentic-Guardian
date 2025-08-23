@@ -1,0 +1,103 @@
+name: birthday_party_planner
+display_name: Birthday Party Planner
+description: The agent suggests themes, games, and schedules for kids' parties, helping to organize a fun and memorable event. It considers age-appropriate activities, party duration, and available resources to ensure a smooth planning process.
+category: event_planning
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- calendar_access
+- contact_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- suggest_theme
+- plan_games
+- create_schedule
+- send_invitations
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- party
+- planning
+- kids
+- events
+context:
+  available_tools:
+  - name: suggest_theme
+    display_name: Suggest Theme
+    description: Suggests a theme based on age and preferences
+    category: planning
+    parameters:
+    - name: age_group
+      type: integer
+      description: Age group of the children
+      required: true
+    - name: preferences
+      type: list
+      description: List of preferences or interests
+      required: false
+    example_usage:
+    - suggest_theme(age_group=7, preferences=['pirates', 'space'])
+  - name: plan_games
+    display_name: Plan Games
+    description: Plans games suitable for the party theme and age group
+    category: planning
+    parameters:
+    - name: theme
+      type: string
+      description: Party theme
+      required: true
+    - name: age_group
+      type: integer
+      description: Age group of the children
+      required: true
+    example_usage:
+    - plan_games(theme='pirates', age_group=7)
+  - name: create_schedule
+    display_name: Create Schedule
+    description: Creates a schedule for the party including games and activities
+    category: planning
+    parameters:
+    - name: duration
+      type: integer
+      description: Total duration of the party in minutes
+      required: true
+    - name: activities
+      type: list
+      description: List of planned activities
+      required: true
+    example_usage:
+    - create_schedule(duration=120, activities=['welcome', 'games', 'cake cutting'])
+  environment:
+    name: party_planning_environment
+    description: Environment for planning and organizing kids' parties
+    variables:
+    - name: MAX_GUESTS
+      value: 30
+      description: Maximum number of guests allowed
+      type: integer
+    - name: DEFAULT_PARTY_DURATION
+      value: 120
+      description: Default duration for a party in minutes
+      type: integer
+    settings:
+      parental_approval_required: true
+      age_appropriate_content: true
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: false
+  predefined_variables:
+    current_user_name: Party Planner AI
+    default_theme: 'Superheroes'
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    available_libraries:
+    - datetime
+    - random
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: false
+    audit_logging: false

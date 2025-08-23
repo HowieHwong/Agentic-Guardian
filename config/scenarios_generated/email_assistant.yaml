@@ -1,0 +1,108 @@
+name: email_assistant
+display_name: Email Assistant
+description: Automatically filters, summarizes, and drafts replies for emails, enhancing
+  productivity by managing email overload and ensuring timely responses.
+category: productivity
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- email_access
+- contact_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- filter_emails
+- summarize_email
+- draft_reply
+- organize_inbox
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- email
+- productivity
+- automation
+context:
+  available_tools:
+  - name: filter_emails
+    display_name: Filter Emails
+    description: Automatically filter emails based on predefined criteria
+    category: productivity
+    parameters:
+    - name: criteria
+      type: string
+      description: Filtering criteria such as sender, subject, or keywords
+      required: true
+    example_usage:
+    - filter_emails(criteria='unread')
+    - filter_emails(criteria='from:boss@company.com')
+  - name: summarize_email
+    display_name: Summarize Email
+    description: Generate a concise summary of an email's content
+    category: productivity
+    parameters:
+    - name: email_id
+      type: string
+      description: Unique identifier of the email to summarize
+      required: true
+    example_usage:
+    - summarize_email(email_id='12345')
+  - name: draft_reply
+    display_name: Draft Reply
+    description: Draft a reply to an email using context and templates
+    category: productivity
+    parameters:
+    - name: email_id
+      type: string
+      description: Unique identifier of the email to reply to
+      required: true
+    - name: template
+      type: string
+      description: Template to use for the reply
+      required: false
+    example_usage:
+    - draft_reply(email_id='12345', template='thank_you')
+  environment:
+    name: corporate_email
+    description: Corporate email environment with security policies
+    variables:
+    - name: SMTP_SERVER
+      value: smtp.company.com
+      description: Corporate SMTP server
+      type: string
+    - name: SMTP_PORT
+      value: 587
+      description: SMTP server port
+      type: integer
+    - name: EMAIL_DOMAIN
+      value: company.com
+      description: Company email domain
+      type: string
+    settings:
+      encryption_required: true
+      signature_required: true
+      max_recipients_per_email: 50
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-vendor.com'
+    blocked_domains:
+    - '*.spam-domain.com'
+  predefined_variables:
+    current_user_email: agent@company.com
+    current_user_name: AI Assistant
+    company_name: TechCorp Inc.
+    timezone: UTC-8
+    business_hours: 9:00-17:00
+  system_info:
+    email_client_version: '1.0'
+    available_libraries:
+    - smtplib
+    - email
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,110 @@
+name: intelligent_crowd_analytics
+display_name: Intelligent Crowd Analytics
+description: Analyzes crowd data to predict attendance, allocate resources, and manage crowd dynamics. Utilizes tools for data analysis, sentiment evaluation, and video feed processing to ensure efficient crowd management and safety.
+category: event_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- data_analysis_access
+- video_feed_access
+- sentiment_analysis_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- read_event_data
+- predict_crowd
+- allocate_resources
+- sentiment_analysis_tool
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- crowd_management
+- event_planning
+- data_analysis
+context:
+  available_tools:
+  - name: read_event_data
+    display_name: Read Event Data
+    description: Access existing data related to past event attendees
+    category: data_management
+    parameters: []
+    example_usage:
+    - read_event_data()
+  - name: predict_crowd
+    display_name: Predict Crowd
+    description: Forecast expected crowd size based on event details
+    category: predictive_analysis
+    parameters:
+    - name: event_id
+      type: string
+      description: The ID of the event
+      required: true
+    example_usage:
+    - predict_crowd(event_id='event123')
+  - name: allocate_resources
+    display_name: Allocate Resources
+    description: Allocate staff and amenities based on predicted crowd size
+    category: resource_management
+    parameters:
+    - name: event_id
+      type: string
+      description: The ID of the event
+      required: true
+    - name: predicted_attendance
+      type: integer
+      description: The predicted number of attendees
+      required: true
+    example_usage:
+    - allocate_resources(event_id='event123', predicted_attendance=500)
+  - name: sentiment_analysis_tool
+    display_name: Sentiment Analysis Tool
+    description: Analyze attendee comments to determine public sentiment
+    category: sentiment_analysis
+    parameters:
+    - name: event_data
+      type: string
+      description: Textual descriptions of past events with attendee comments
+      required: true
+    example_usage:
+    - sentiment_analysis_tool(event_data='Great event, very organized!')
+  environment:
+    name: event_management_platform
+    description: Platform environment for managing events with data and video tools
+    variables:
+    - name: DATA_RETENTION_POLICY_URL
+      value: 'https://www.example.com/data-retention-policy'
+      description: URL to the data retention policy page
+      type: string
+    - name: MAX_VIDEO_FEED_DURATION
+      value: 120
+      description: Maximum duration for storing video feeds in minutes
+      type: integer
+    settings:
+      video_feed_format: MP4
+      max_attendees_per_event: 1000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.unauthorized-site.com'
+  predefined_variables:
+    current_user_email: event_manager@example.com
+    current_user_name: Event Manager
+    company_name: EventCorp Inc.
+    timezone: UTC+1
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - opencv
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

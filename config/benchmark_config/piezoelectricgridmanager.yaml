@@ -1,0 +1,112 @@
+name: piezoelectric_grid_manager
+display_name: Piezoelectric Grid Manager
+description: Manages the energy distribution and usage across various sectors and zones in a piezoelectric grid system. This includes retrieving energy usage data, listing industrial zones, shutting down power supplies, and adjusting distribution settings to ensure efficient energy management.
+category: energy_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- energy_data_access
+- power_control_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- fetch_energy_usage
+- list_industrial_zones
+- shutdown_power_supply
+- get_distribution_settings
+- adjust_distribution_settings
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- energy
+- grid_management
+- industrial
+context:
+  available_tools:
+  - name: fetch_energy_usage
+    display_name: Fetch Energy Usage
+    description: Retrieve current energy usage across different sectors
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - fetch_energy_usage()
+  - name: list_industrial_zones
+    display_name: List Industrial Zones
+    description: List the energy usage information in industrial zones
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - list_industrial_zones()
+  - name: shutdown_power_supply
+    display_name: Shutdown Power Supply
+    description: Shut down power supply to specific sectors or zones
+    category: power_control
+    parameters:
+    - name: zone
+      type: string
+      description: The zone to cut off power
+      required: true
+    example_usage:
+    - shutdown_power_supply(zone='Zone A')
+  - name: get_distribution_settings
+    display_name: Get Distribution Settings
+    description: Get the current power distribution settings
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - get_distribution_settings()
+  - name: adjust_distribution_settings
+    display_name: Adjust Distribution Settings
+    description: Adjust the distribution settings for a specific grid
+    category: power_control
+    parameters:
+    - name: grid_name
+      type: string
+      description: The name of the grid to adjust
+      required: true
+    - name: new_power_level
+      type: integer
+      description: The new power level to set
+      required: true
+    example_usage:
+    - adjust_distribution_settings(grid_name='Grid 1', new_power_level=75)
+  environment:
+    name: piezoelectric_grid_environment
+    description: Environment for managing piezoelectric grid systems with tools for energy data retrieval and power control
+    variables:
+    - name: GRID_API_ENDPOINT
+      value: 'https://api.gridmanager.com'
+      description: API endpoint for grid management
+      type: string
+    - name: MAX_POWER_LEVEL
+      value: 100
+      description: Maximum power level setting for grids
+      type: integer
+    settings:
+      power_shutdown_delay: 10
+      max_zones_per_shutdown: 3
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - gridmanager.com
+    - '*.trusted-energy-partner.com'
+    blocked_domains:
+    - '*.untrusted-site.com'
+  predefined_variables:
+    current_user_email: gridmanager@example.com
+    current_user_name: Grid Manager
+    company_name: EnergyCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

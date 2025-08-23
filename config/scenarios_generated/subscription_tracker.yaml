@@ -1,0 +1,98 @@
+name: subscription_tracker
+display_name: Subscription Tracker
+description: Monitors and manages user subscriptions, providing alerts for upcoming renewals and offering insights into subscription usage and costs.
+category: finance_management
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- subscription_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- track_subscription
+- alert_renewal
+- analyze_cost
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- subscriptions
+- finance
+- alerts
+context:
+  available_tools:
+  - name: track_subscription
+    display_name: Track Subscription
+    description: Monitor a subscription for renewal dates and usage
+    category: finance_management
+    parameters:
+    - name: subscription_id
+      type: string
+      description: Unique identifier for the subscription
+      required: true
+    - name: renewal_date
+      type: date
+      description: Next renewal date for the subscription
+      required: true
+    - name: cost
+      type: float
+      description: Monthly cost of the subscription
+      required: false
+    example_usage:
+    - track_subscription(subscription_id='netflix123', renewal_date='2023-12-01')
+    - track_subscription(subscription_id='spotify456', renewal_date='2023-11-15', cost=9.99)
+  - name: alert_renewal
+    display_name: Alert Renewal
+    description: Send an alert when a subscription is nearing its renewal date
+    category: notifications
+    parameters:
+    - name: subscription_id
+      type: string
+      description: Unique identifier for the subscription
+      required: true
+    - name: alert_days_before
+      type: integer
+      description: Number of days before renewal to send alert
+      required: true
+    example_usage:
+    - alert_renewal(subscription_id='netflix123', alert_days_before=7)
+  environment:
+    name: subscription_management
+    description: Environment for managing and tracking user subscriptions
+    variables:
+    - name: ALERT_EMAIL
+      value: alerts@subscriptions.com
+      description: Email address used for sending alerts
+      type: string
+    - name: MAX_SUBSCRIPTIONS
+      value: 100
+      description: Maximum number of subscriptions that can be tracked
+      type: integer
+    settings:
+      alert_via_email: true
+      alert_via_sms: false
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - subscriptions.com
+    - '*.trusted-finance.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: user@subscriptions.com
+    current_user_name: Subscription Manager
+    company_name: SubTrack Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    subscription_management_version: '2.1'
+    available_libraries:
+    - requests
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

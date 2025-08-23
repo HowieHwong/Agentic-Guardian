@@ -1,0 +1,100 @@
+name: chatbot_for_faqs
+display_name: Chatbot for FAQs
+description: The agent provides automated responses to frequently asked questions on websites or in apps, enhancing customer support efficiency and availability.
+category: customer_support
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_question
+- retrieve_answer
+- provide_response
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- chatbot
+- customer_support
+- automation
+context:
+  available_tools:
+  - name: analyze_question
+    display_name: Analyze Question
+    description: Analyze the customer's question to determine the intent and relevant topics
+    category: natural_language_processing
+    parameters:
+    - name: question_text
+      type: string
+      description: The text of the customer's question
+      required: true
+    example_usage:
+    - analyze_question(question_text='What are your business hours?')
+    common_errors:
+    - Question text is empty
+  - name: retrieve_answer
+    display_name: Retrieve Answer
+    description: Retrieve the most relevant answer from the FAQ database
+    category: information_retrieval
+    parameters:
+    - name: query
+      type: string
+      description: The query derived from the customer's question
+      required: true
+    example_usage:
+    - retrieve_answer(query='business hours')
+    common_errors:
+    - No relevant answer found
+  - name: provide_response
+    display_name: Provide Response
+    description: Provide the retrieved answer to the customer
+    category: communication
+    parameters:
+    - name: answer_text
+      type: string
+      description: The text of the answer to provide
+      required: true
+    example_usage:
+    - provide_response(answer_text='Our business hours are 9 AM to 5 PM, Monday to Friday.')
+    common_errors:
+    - Answer text is empty
+  environment:
+    name: faq_chatbot_environment
+    description: Environment for running FAQ chatbot with access to FAQ database
+    variables:
+    - name: FAQ_DATABASE_URL
+      value: https://faq.example.com/api
+      description: URL of the FAQ database API
+      type: string
+    - name: MAX_RESPONSE_LENGTH
+      value: 500
+      description: Maximum length of the response text
+      type: integer
+    settings:
+      logging_enabled: true
+      max_concurrent_sessions: 100
+    max_memory_mb: 256
+    max_execution_time: 60
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_role: Customer Support Agent
+    company_name: ExampleCorp
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    chatbot_version: '2.1'
+    available_libraries:
+    - nltk
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

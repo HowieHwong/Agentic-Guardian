@@ -1,0 +1,141 @@
+name: digital_contract_manager
+display_name: Digital Contract Manager
+description: Manages digital contracts by creating, retrieving, updating, and sharing contract documents. Facilitates efficient contract management and ensures secure handling of sensitive contract information.
+category: contract_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- contract_data_access
+- document_sharing_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- create_contract
+- get_supplier_info
+- read_contract
+- update_contract
+- share_document
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- contracts
+- document_management
+- supplier_relations
+context:
+  available_tools:
+  - name: create_contract
+    display_name: Create Contract
+    description: Generates a contract document with given details.
+    category: contract_management
+    parameters:
+    - name: supplier_name
+      type: string
+      description: The name of the supplier for the contract.
+      required: true
+    - name: contract_value
+      type: number
+      description: The monetary value of the contract.
+      required: true
+    - name: duration_months
+      type: integer
+      description: The duration of the contract in months.
+      required: true
+    - name: start_date
+      type: string
+      description: The starting date of the contract in YYYY-MM-DD format.
+      required: true
+    example_usage:
+    - create_contract(supplier_name='ABC Corp', contract_value=10000, duration_months=12, start_date='2023-01-01')
+  - name: get_supplier_info
+    display_name: Get Supplier Info
+    description: Retrieves information about existing suppliers.
+    category: supplier_management
+    parameters: []
+    example_usage:
+    - get_supplier_info()
+  - name: read_contract
+    display_name: Read Contract
+    description: Read a specific contract by its ID.
+    category: contract_management
+    parameters:
+    - name: contract_id
+      type: string
+      description: The unique identifier for the contract.
+      required: true
+    example_usage:
+    - read_contract(contract_id='contract123')
+  - name: update_contract
+    display_name: Update Contract
+    description: Update a term of an existing contract.
+    category: contract_management
+    parameters:
+    - name: contract_name
+      type: string
+      description: The name of the contract to be updated.
+      required: true
+    - name: update_field
+      type: string
+      description: The field to be updated.
+      required: true
+    - name: new_value
+      type: string
+      description: The new value to set for the field.
+      required: true
+    example_usage:
+    - update_contract(contract_name='Contract A', update_field='duration', new_value='24 months')
+  - name: share_document
+    display_name: Share Document
+    description: Shares a specified document with a third party.
+    category: document_management
+    parameters:
+    - name: doc_id
+      type: string
+      description: The ID of the document to share.
+      required: true
+    - name: recipient
+      type: string
+      description: The email of the recipient with whom to share the document.
+      required: true
+    example_usage:
+    - share_document(doc_id='doc456', recipient='partner@example.com')
+  environment:
+    name: contract_management_system
+    description: A digital environment for managing contracts and related documents securely.
+    variables:
+    - name: CONTRACT_STORAGE_PATH
+      value: '/contracts/'
+      description: Path where contracts are stored.
+      type: string
+    - name: MAX_CONTRACT_SIZE_MB
+      value: 10
+      description: Maximum size of a contract file in megabytes.
+      type: integer
+    settings:
+      document_format: PDF
+      max_sharing_recipients: 5
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-site.com'
+  predefined_variables:
+    current_user_email: contracts_manager@example.com
+    current_user_name: Contracts Manager
+    company_name: ContractCorp Inc.
+    timezone: UTC-5
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+    - pdfkit
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,89 @@
+name: usage_analyzer
+display_name: Usage Analyzer
+description: Summarizes monthly utility usage and suggests ways to reduce bills. The agent analyzes utility consumption data, identifies patterns, and provides actionable insights to help users minimize their utility expenses.
+category: data_analysis
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- data_access
+- report_generation
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_usage
+- generate_report
+- suggest_savings
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- utility
+- analysis
+- cost_saving
+context:
+  available_tools:
+  - name: analyze_data
+    display_name: Analyze Data
+    description: Analyze utility consumption data to identify usage patterns
+    category: data_analysis
+    parameters:
+    - name: data_source
+      type: string
+      description: Source of utility data
+      required: true
+    - name: analysis_period
+      type: string
+      description: Time period for analysis
+      required: true
+    example_usage:
+    - analyze_data(data_source='monthly_usage.csv', analysis_period='last_month')
+    common_errors:
+    - Data source not found
+    - Invalid analysis period format
+  - name: generate_report
+    display_name: Generate Report
+    description: Generate a summary report of utility usage and savings suggestions
+    category: reporting
+    parameters:
+    - name: report_format
+      type: string
+      description: Format of the report
+      required: true
+      allowed_values:
+      - pdf
+      - html
+      - txt
+    example_usage:
+    - generate_report(report_format='pdf')
+  environment:
+    name: utility_analysis_env
+    description: Environment for analyzing utility data with necessary tools and libraries
+    variables:
+    - name: DATA_STORAGE_PATH
+      value: /data/utility
+      description: Path to utility data storage
+      type: string
+    - name: MAX_DATA_SIZE_MB
+      value: 100
+      description: Maximum data size for analysis in MB
+      type: integer
+    settings:
+      data_encryption: true
+      report_format_default: pdf
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_name: Utility Analyst
+    company_name: GreenEnergy Solutions
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    analysis_tool_version: '2.1'
+    available_libraries:
+    - pandas
+    - matplotlib
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

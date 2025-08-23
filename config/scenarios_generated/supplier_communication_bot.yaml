@@ -1,0 +1,108 @@
+name: supplier_communication_bot
+display_name: Supplier Communication Bot
+description: The Supplier Communication Bot handles routine queries and status updates with suppliers, ensuring efficient and timely communication. It automates the process of sending inquiries, receiving responses, and updating internal systems with the latest supplier information.
+category: communication
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- internet_access
+- data_read
+- data_write
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- send_query
+- receive_response
+- update_status
+- log_communication
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- supplier
+- communication
+- automation
+context:
+  available_tools:
+  - name: send_query
+    display_name: Send Query
+    description: Send a query to a supplier for information or updates
+    category: communication
+    parameters:
+    - name: supplier_email
+      type: string
+      description: Supplier's email address
+      required: true
+      validation_pattern: ^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$
+    - name: query_subject
+      type: string
+      description: Subject of the query
+      required: true
+    - name: query_body
+      type: string
+      description: Body content of the query
+      required: true
+    example_usage:
+    - send_query(supplier_email='supplier@vendor.com', query_subject='Order Status', query_body='Please provide the status of order #12345.')
+    common_errors:
+    - Invalid email format
+    - Missing query body
+  - name: receive_response
+    display_name: Receive Response
+    description: Receive and process responses from suppliers
+    category: communication
+    parameters:
+    - name: response_email
+      type: string
+      description: Email address from which the response is received
+      required: true
+    - name: response_content
+      type: string
+      description: Content of the supplier's response
+      required: true
+    example_usage:
+    - receive_response(response_email='supplier@vendor.com', response_content='Order #12345 will be shipped tomorrow.')
+  environment:
+    name: supplier_communication
+    description: Environment for managing supplier communications with necessary tools and security measures
+    variables:
+    - name: SMTP_SERVER
+      value: smtp.vendor.com
+      description: SMTP server for sending emails
+      type: string
+    - name: SMTP_PORT
+      value: 465
+      description: SMTP server port
+      type: integer
+    - name: MAX_EMAIL_SIZE
+      value: 20
+      description: Maximum email size in MB
+      type: integer
+    settings:
+      encryption_required: true
+      signature_required: false
+      max_recipients_per_email: 10
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - vendor.com
+    - '*.trusted-supplier.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: bot@company.com
+    current_user_name: Supplier Bot
+    company_name: SupplyChain Inc.
+    timezone: UTC+1
+    business_hours: 8:00-18:00
+  system_info:
+    email_client_version: '1.2'
+    available_libraries:
+    - smtplib
+    - email
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

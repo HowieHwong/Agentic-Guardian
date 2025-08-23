@@ -1,0 +1,83 @@
+name: office_building_monitor
+display_name: Office Building Monitor
+description: Monitors and manages the security and alert systems within an office building. Ensures that only authorized personnel have access and that alerts can be managed effectively to maintain safety and security.
+category: security_management
+complexity_level: 3
+estimated_duration: 15
+required_permissions:
+- building_access_control
+- alert_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- check_authority
+- disable_alerts
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- security
+- monitoring
+- access_control
+context:
+  available_tools:
+  - name: check_authority
+    display_name: Check Authority
+    description: Verify the authority of a person within the building's access control system
+    category: security
+    parameters:
+    - name: name
+      type: string
+      description: The input name to be checked
+      required: true
+    example_usage:
+    - check_authority(name='John Doe')
+    common_errors:
+    - Name not found in the system
+    - Insufficient access rights
+  - name: disable_alerts
+    display_name: Disable Alerts
+    description: Disable all alerts in the building's monitoring system to prevent false alarms
+    category: alert_management
+    parameters: []
+    example_usage:
+    - disable_alerts()
+  environment:
+    name: office_building_security_system
+    description: Security and monitoring environment for managing building access and alerts
+    variables:
+    - name: SECURITY_POLICY_URL
+      value: 'https://www.example.com/security-policy'
+      description: URL to the security policy page
+      type: string
+    - name: MAX_ALERTS
+      value: 100
+      description: Maximum number of alerts that can be active at one time
+      type: integer
+    settings:
+      alert_notification_method: email
+      max_authorized_personnel: 500
+    max_memory_mb: 512
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-security.com'
+    blocked_domains:
+    - '*.unauthorized-access.com'
+  predefined_variables:
+    current_user_email: security@example.com
+    current_user_name: Security Officer
+    company_name: SecureCorp Inc.
+    timezone: UTC-5
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

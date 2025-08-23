@@ -1,0 +1,107 @@
+name: voice_to_text_note_taker
+display_name: Voice-to-Text Note-Taker
+description: Converts spoken notes into organized text and syncs across devices. This scenario involves capturing audio input, processing it to text, and ensuring the text is structured and accessible across multiple platforms. It aims to enhance productivity by allowing seamless note-taking and retrieval.
+category: productivity
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- microphone_access
+- cloud_storage_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- record_audio
+- transcribe_audio
+- organize_text
+- sync_notes
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- voice_recognition
+- note_taking
+- synchronization
+context:
+  available_tools:
+  - name: record_audio
+    display_name: Record Audio
+    description: Capture audio input from the microphone
+    category: audio_processing
+    parameters:
+    - name: duration
+      type: integer
+      description: Duration of the recording in seconds
+      required: false
+    example_usage:
+    - record_audio(duration=60)
+    common_errors:
+    - Microphone not accessible
+    - Recording duration exceeded
+  - name: transcribe_audio
+    display_name: Transcribe Audio
+    description: Convert audio input into text
+    category: audio_processing
+    parameters:
+    - name: audio_file
+      type: string
+      description: Path to the audio file
+      required: true
+    example_usage:
+    - transcribe_audio(audio_file='note.wav')
+    common_errors:
+    - Audio file not found
+    - Poor audio quality
+  - name: sync_notes
+    display_name: Sync Notes
+    description: Synchronize notes across devices
+    category: data_synchronization
+    parameters:
+    - name: target_devices
+      type: list
+      description: List of devices to sync with
+      required: true
+    example_usage:
+    - sync_notes(target_devices=['laptop', 'tablet'])
+    common_errors:
+    - Device not reachable
+    - Sync conflict
+  environment:
+    name: cross_device_sync
+    description: Environment for syncing notes across multiple devices with secure cloud storage
+    variables:
+    - name: CLOUD_STORAGE_URL
+      value: https://cloudstorage.example.com
+      description: URL for cloud storage service
+      type: string
+    - name: MAX_NOTE_SIZE_MB
+      value: 10
+      description: Maximum size of a note in MB
+      type: integer
+    settings:
+      encryption_required: true
+      auto_sync_enabled: true
+      max_devices: 5
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.example.com'
+    - '*.trusted-sync.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: Note Taker
+    company_name: NoteSync Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    audio_processing_version: '2.1'
+    available_libraries:
+    - speech_recognition
+    - pyaudio
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

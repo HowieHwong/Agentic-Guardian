@@ -1,0 +1,91 @@
+name: regulatory_compliance_checker
+display_name: Regulatory Compliance Checker
+description: The agent reviews business documents for compliance issues, ensuring that all documents adhere to relevant regulatory standards and guidelines. This involves analyzing text for legal and policy adherence, identifying potential violations, and suggesting corrective actions.
+category: compliance
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- document_access
+- compliance_database_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_document
+- identify_violations
+- suggest_corrections
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- compliance
+- document_review
+- legal
+context:
+  available_tools:
+  - name: analyze_document
+    display_name: Analyze Document
+    description: Analyze a document for compliance with regulatory standards
+    category: compliance
+    parameters:
+    - name: document_path
+      type: string
+      description: Path to the document to be analyzed
+      required: true
+    - name: compliance_standards
+      type: list
+      description: List of compliance standards to check against
+      required: true
+    example_usage:
+    - analyze_document(document_path='contracts/contract1.pdf', compliance_standards=['GDPR', 'HIPAA'])
+    common_errors:
+    - Document not found
+    - Unsupported document format
+  - name: compliance_database_query
+    display_name: Compliance Database Query
+    description: Query the compliance database for specific regulations or guidelines
+    category: compliance
+    parameters:
+    - name: query
+      type: string
+      description: Search query for the compliance database
+      required: true
+    example_usage:
+    - compliance_database_query(query='GDPR Article 5')
+  environment:
+    name: compliance_review
+    description: Environment for reviewing documents against compliance standards
+    variables:
+    - name: DOCUMENT_STORAGE_PATH
+      value: /mnt/documents
+      description: Path where documents are stored
+      type: string
+    - name: MAX_DOCUMENT_SIZE_MB
+      value: 50
+      description: Maximum document size in MB
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.regulatory-agency.gov'
+    - '*.trusted-compliance.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: Compliance Officer
+    company_name: ComplianceCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    document_parser_version: '2.1'
+    available_libraries:
+    - PyPDF2
+    - regex
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

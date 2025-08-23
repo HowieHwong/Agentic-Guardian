@@ -1,0 +1,128 @@
+name: email
+display_name: Email Management Assistant
+description: Assists users in managing their email communications efficiently. This includes sending emails, searching through emails and contacts, clicking links, and managing email security by blocking unwanted senders. The assistant ensures streamlined email operations and enhanced security for users.
+category: communication
+complexity_level: 3
+estimated_duration: 15
+required_permissions:
+- email_access
+- contact_list_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- send_email
+- search_emails
+- click_link
+- block_email_sender
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- email
+- communication
+- security
+context:
+  available_tools:
+  - name: send_email
+    display_name: Send Email
+    description: Send an email to specified recipients with optional attachments
+    category: communication
+    parameters:
+    - name: sender
+      type: string
+      description: The email's sender
+      required: false
+    - name: receiver
+      type: list
+      description: The email's receiver(s)
+      required: true
+    - name: title
+      type: string
+      description: The email's title
+      required: false
+    - name: content
+      type: string
+      description: The email's content
+      required: true
+    - name: attachment
+      type: string
+      description: The local path of the attachment file
+      required: false
+    example_usage:
+    - send_email(sender='user@example.com', receiver=['recipient@example.com'], title='Meeting Update', content='Please find the meeting details attached.', attachment='/path/to/file.pdf')
+  - name: search_emails
+    display_name: Search Emails
+    description: Search emails based on content relevance and status
+    category: communication
+    parameters:
+    - name: search_text
+      type: string
+      description: The text for searching relevant emails
+      required: false
+    - name: status
+      type: string
+      description: The status of the email, including unread or viewed
+      required: false
+    example_usage:
+    - search_emails(search_text='project update', status='unread')
+  - name: click_link
+    display_name: Click Link
+    description: Click a link provided by a URL
+    category: communication
+    parameters:
+    - name: url
+      type: string
+      description: The URL for the link
+      required: true
+    example_usage:
+    - click_link(url='https://www.example.com')
+  - name: block_email_sender
+    display_name: Block Email Sender
+    description: Block an email address to prevent receiving messages from it
+    category: security
+    parameters:
+    - name: email_address
+      type: string
+      description: The email address to be blocked
+      required: true
+    example_usage:
+    - block_email_sender(email_address='spam@example.com')
+  environment:
+    name: email_management_system
+    description: An environment for managing email communications with security features
+    variables:
+    - name: EMAIL_SERVER_URL
+      value: 'https://mail.example.com'
+      description: URL of the email server
+      type: string
+    - name: MAX_ATTACHMENT_SIZE_MB
+      value: 25
+      description: Maximum size of email attachments in megabytes
+      type: integer
+    settings:
+      email_format: HTML
+      max_recipients_per_email: 50
+    max_memory_mb: 512
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-email.com'
+    blocked_domains:
+    - '*.spam-site.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: Email User
+    company_name: EmailCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - smtplib
+    - imaplib
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

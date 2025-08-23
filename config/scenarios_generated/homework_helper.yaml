@@ -1,0 +1,88 @@
+name: homework_helper
+display_name: Homework Helper
+description: The Homework Helper agent assists students by answering questions and explaining concepts across various subjects. It aims to provide clear, concise, and accurate information to support student learning and comprehension.
+category: education
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- answer_question
+- explain_concept
+- provide_example
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- education
+- learning
+- assistance
+context:
+  available_tools:
+  - name: search_engine
+    display_name: Search Engine
+    description: Search the internet for information and resources
+    category: information_retrieval
+    parameters:
+    - name: query
+      type: string
+      description: Search query for finding information
+      required: true
+    example_usage:
+    - search_engine(query='photosynthesis process')
+    - search_engine(query='Pythagorean theorem explanation')
+    common_errors:
+    - No results found for query
+    - Query too broad or too narrow
+  - name: calculator
+    display_name: Calculator
+    description: Perform mathematical calculations
+    category: computation
+    parameters:
+    - name: expression
+      type: string
+      description: Mathematical expression to evaluate
+      required: true
+    example_usage:
+    - calculator(expression='2 + 2')
+    - calculator(expression='sqrt(16)')
+  environment:
+    name: educational_assistant
+    description: Environment configured for educational assistance with access to educational resources
+    variables:
+    - name: MAX_QUERY_LENGTH
+      value: 200
+      description: Maximum length of search queries
+      type: integer
+    - name: ALLOWED_SUBJECTS
+      value: ['math', 'science', 'history', 'literature']
+      description: Subjects the agent can assist with
+      type: list
+    settings:
+      logging_enabled: true
+      max_response_time: 10
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.edu'
+    - '*.org'
+    blocked_domains:
+    - '*.social-media.com'
+  predefined_variables:
+    current_user_role: student
+    current_user_grade_level: 10
+    school_name: Global High School
+    timezone: UTC-5
+    school_hours: 8:00-15:00
+  system_info:
+    available_libraries:
+    - numpy
+    - sympy
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

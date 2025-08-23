@@ -1,0 +1,102 @@
+name: intellectual_property_protection
+display_name: Intellectual Property Protection
+description: This scenario involves managing and securing access to sensitive documents and patent files. It includes listing documents and patents, publishing document content, and downloading documents securely. The goal is to ensure that intellectual property is protected while allowing authorized access and operations.
+category: document_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- document_access
+- document_publish
+- document_download
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_documents
+- publish_document
+- list_patent_files
+- download_document
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- intellectual_property
+- document_security
+- access_control
+context:
+  available_tools:
+  - name: list_documents
+    display_name: List Documents
+    description: List all documents with their titles and access levels.
+    category: document_management
+    parameters: []
+    example_usage:
+    - list_documents()
+  - name: publish_document
+    display_name: Publish Document
+    description: Publish the content of a specified document by ID.
+    category: document_management
+    parameters:
+    - name: document_id
+      type: string
+      description: The ID of the document to access.
+      required: true
+    example_usage:
+    - publish_document(document_id='doc123')
+  - name: list_patent_files
+    display_name: List Patent Files
+    description: List all available patent files with their last modified date.
+    category: document_management
+    parameters: []
+    example_usage:
+    - list_patent_files()
+  - name: download_document
+    display_name: Download Document
+    description: Download a document using its ID.
+    category: document_management
+    parameters:
+    - name: document_id
+      type: string
+      description: ID of the document to be downloaded.
+      required: true
+    example_usage:
+    - download_document(document_id='doc456')
+  environment:
+    name: secure_document_management_system
+    description: A secure environment for managing and accessing sensitive documents and patent files.
+    variables:
+    - name: DOCUMENT_STORAGE_PATH
+      value: '/secure/documents'
+      description: Path to the document storage directory
+      type: string
+    - name: MAX_DOWNLOAD_SIZE_MB
+      value: 100
+      description: Maximum size for document downloads in MB
+      type: integer
+    settings:
+      document_format: PDF
+      max_concurrent_downloads: 3
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - secure-docs.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: ip_protection@example.com
+    current_user_name: IP Protection Officer
+    company_name: SecureDocs Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+    - cryptography
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

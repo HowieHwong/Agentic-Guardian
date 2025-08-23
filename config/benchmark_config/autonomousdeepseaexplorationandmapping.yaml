@@ -1,0 +1,102 @@
+name: autonomous_deep_sea_exploration_and_mapping
+display_name: Autonomous Deep Sea Exploration and Mapping
+description: This scenario involves managing and monitoring autonomous drones for deep-sea exploration and mapping. The tasks include obtaining drone status, adjusting drone parameters, retrieving weather reports, and listing mission reports. The goal is to ensure efficient and safe operations of drones in challenging underwater environments.
+category: exploration
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- drone_control_access
+- weather_data_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_drone_status
+- adjust_drone_parameters
+- get_weather_reports
+- list_mission_reports
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- drones
+- exploration
+- mapping
+- deep_sea
+context:
+  available_tools:
+  - name: get_drone_status
+    display_name: Get Drone Status
+    description: Obtain the current status of the mapping drones
+    category: drone_management
+    parameters: []
+    example_usage:
+    - get_drone_status()
+  - name: adjust_drone_parameters
+    display_name: Adjust Drone Parameters
+    description: Adjust parameters such as range and coverage of a specified drone
+    category: drone_management
+    parameters:
+    - name: id
+      type: string
+      description: ID of the drone
+      required: true
+    - name: new_range
+      type: string
+      description: Updated operational range for the drone
+      required: true
+    example_usage:
+    - adjust_drone_parameters(id='drone123', new_range='500m')
+  - name: get_weather_reports
+    display_name: Get Weather Reports
+    description: Get current weather conditions
+    category: environmental_monitoring
+    parameters: []
+    example_usage:
+    - get_weather_reports()
+  - name: list_mission_reports
+    display_name: List Mission Reports
+    description: List all mission reports from deep-sea missions
+    category: data_analysis
+    parameters: []
+    example_usage:
+    - list_mission_reports()
+  environment:
+    name: underwater_exploration_platform
+    description: Platform for managing autonomous drones in deep-sea environments
+    variables:
+    - name: DRONE_API_ENDPOINT
+      value: 'https://api.deepseaexploration.com/drones'
+      description: API endpoint for drone operations
+      type: string
+    - name: WEATHER_API_KEY
+      value: 'your-weather-api-key'
+      description: API key for accessing weather data
+      type: string
+    settings:
+      max_drone_range: 1000
+      max_mission_duration: 360
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - deepseaexploration.com
+    - '*.weatherapi.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_operator_email: operator@deepseaexploration.com
+    current_operator_name: Deep Sea Operator
+    organization_name: Oceanic Research Institute
+    timezone: UTC+0
+    operational_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+    - numpy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

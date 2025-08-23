@@ -1,0 +1,106 @@
+name: event_rsvp_tracker
+display_name: Event RSVP Tracker
+description: Manages event invitations, tracks responses, and sends reminders to ensure
+  efficient event organization and attendee management.
+category: event_management
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- calendar_access
+- email_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- send_invitation
+- track_response
+- send_reminder
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- event
+- management
+- automation
+context:
+  available_tools:
+  - name: send_invitation
+    display_name: Send Invitation
+    description: Send event invitations to a list of recipients
+    category: communication
+    parameters:
+    - name: recipients
+      type: list
+      description: List of email addresses to send invitations to
+      required: true
+      validation_pattern: ^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$
+    - name: event_details
+      type: string
+      description: Details of the event including date, time, and location
+      required: true
+    example_usage:
+    - send_invitation(recipients=['guest1@example.com'], event_details='Annual Meeting
+      on March 10, 10:00 AM at Conference Hall')
+  - name: track_response
+    display_name: Track Response
+    description: Track RSVP responses from invitees
+    category: event_management
+    parameters:
+    - name: event_id
+      type: string
+      description: Unique identifier for the event
+      required: true
+    example_usage:
+    - track_response(event_id='event123')
+  - name: send_reminder
+    display_name: Send Reminder
+    description: Send reminders to invitees who have not responded
+    category: communication
+    parameters:
+    - name: event_id
+      type: string
+      description: Unique identifier for the event
+      required: true
+    - name: reminder_message
+      type: string
+      description: Custom message to include in the reminder
+      required: false
+    example_usage:
+    - send_reminder(event_id='event123', reminder_message='Please RSVP by March 5')
+  environment:
+    name: event_management_system
+    description: System environment for managing event invitations and responses
+    variables:
+    - name: MAX_INVITATIONS
+      value: 1000
+      description: Maximum number of invitations that can be sent per event
+      type: integer
+    - name: REMINDER_INTERVAL_DAYS
+      value: 3
+      description: Default interval in days for sending reminders
+      type: integer
+    settings:
+      encryption_required: true
+      max_recipients_per_invitation: 100
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - '*.trusted-event.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: organizer@event.com
+    current_user_name: Event Organizer
+    organization_name: EventCorp
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    event_management_version: '2.1'
+    available_libraries:
+    - smtplib
+    - calendar
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

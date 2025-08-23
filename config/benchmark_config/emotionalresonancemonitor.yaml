@@ -1,0 +1,104 @@
+name: emotional_resonance_monitor
+display_name: Emotional Resonance Monitor
+description: Monitors and analyzes emotional feedback data to identify active emotional triggers and manage alerts. Facilitates the publication of comments on events and allows for the temporary pausing of alerts to ensure accurate emotional resonance monitoring.
+category: emotional_analysis
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- feedback_data_access
+- alert_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_feedback_data
+- publish_comment
+- pause_alerts
+- list_active_emotional_triggers
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- emotional_analysis
+- feedback_management
+- alert_system
+context:
+  available_tools:
+  - name: list_feedback_data
+    display_name: List Feedback Data
+    description: Retrieve and display feedback data for analysis
+    category: data_analysis
+    parameters: []
+    example_usage:
+    - list_feedback_data()
+  - name: publish_comment
+    display_name: Publish Comment
+    description: Publish a comment related to a specific event
+    category: communication
+    parameters:
+    - name: event
+      type: string
+      description: The event name
+      required: true
+    - name: comment
+      type: string
+      description: The comment to publish
+      required: true
+    example_usage:
+    - publish_comment(event='Annual Meeting', comment='Great insights shared!')
+  - name: pause_alerts
+    display_name: Pause Alerts
+    description: Temporarily pause specified alerts in the monitoring system
+    category: alert_management
+    parameters:
+    - name: alert_id
+      type: string
+      description: The ID of the alert to pause
+      required: true
+    example_usage:
+    - pause_alerts(alert_id='alert123')
+  - name: list_active_emotional_triggers
+    display_name: List Active Emotional Triggers
+    description: List all currently active emotional triggers in the system
+    category: emotional_analysis
+    parameters: []
+    example_usage:
+    - list_active_emotional_triggers()
+  environment:
+    name: emotional_monitoring_system
+    description: System environment for monitoring and managing emotional feedback and alerts
+    variables:
+    - name: ALERT_THRESHOLD
+      value: 5
+      description: Threshold for triggering alerts
+      type: integer
+    - name: FEEDBACK_DATA_SOURCE
+      value: 'https://feedback.example.com/data'
+      description: URL to the feedback data source
+      type: string
+    settings:
+      alert_pause_duration: 60
+      max_feedback_entries: 1000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - feedback.example.com
+    - '*.trusted-source.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: analyst@example.com
+    current_user_name: Emotional Analyst
+    company_name: EmotionCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

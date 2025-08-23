@@ -1,0 +1,68 @@
+name: bioprinting_organ_replacement
+display_name: Bioprinting Organ Replacement
+description: This scenario involves querying a database to explore potential applications of bioprinting in organ replacement. It aims to identify viable organ printing technologies and their medical applications, enhancing the understanding of bioprinting's role in future healthcare solutions.
+category: medical_research
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- database_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- query_bioprinting_database
+- analyze_application_data
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- bioprinting
+- organ_replacement
+- medical_research
+context:
+  available_tools:
+  - name: get_bioprinting_applications
+    display_name: Get Bioprinting Applications
+    description: Queries a database of potential bioprinting organ replacement applications
+    category: data_analysis
+    parameters: []
+    example_usage:
+    - get_bioprinting_applications()
+  environment:
+    name: bioprinting_research_lab
+    description: A research lab environment equipped with tools for bioprinting and organ replacement studies
+    variables:
+    - name: DATABASE_URL
+      value: 'https://bioprinting.example.com/api'
+      description: URL to access the bioprinting applications database
+      type: string
+    - name: MAX_QUERY_RESULTS
+      value: 100
+      description: Maximum number of results returned per query
+      type: integer
+    settings:
+      query_timeout: 60
+      data_format: JSON
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - bioprinting.example.com
+    - '*.trusted-research.org'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: researcher@example.com
+    current_user_name: Bioprinting Researcher
+    institution_name: Advanced Bioprinting Institute
+    timezone: UTC+1
+    working_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

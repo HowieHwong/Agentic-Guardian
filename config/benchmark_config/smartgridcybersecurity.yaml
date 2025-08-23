@@ -1,0 +1,102 @@
+name: smart_grid_cybersecurity
+display_name: Smart Grid Cybersecurity
+description: This scenario involves managing and securing the Smart Grid system by scanning the codebase, deploying code, and adjusting peak load settings. It is designed to ensure the integrity and efficiency of the Smart Grid operations while maintaining cybersecurity standards.
+category: cybersecurity
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- codebase_access
+- deployment_access
+- system_configuration_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- scan_codebase
+- deploy_code
+- adjust_peak_load
+- get_peak_load_info
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- smart_grid
+- cybersecurity
+- system_management
+context:
+  available_tools:
+  - name: scan_codebase
+    display_name: Scan Codebase
+    description: Retrieve all code files in the codebase for review and analysis.
+    category: code_management
+    parameters: []
+    example_usage:
+    - scan_codebase()
+  - name: deploy_code
+    display_name: Deploy Code
+    description: Deploy the specified code file to the SmartGrid system for active use.
+    category: deployment
+    parameters:
+    - name: file_name
+      type: string
+      description: The name of the file to deploy.
+      required: true
+    example_usage:
+    - deploy_code(file_name='update_v1.2.py')
+  - name: adjust_peak_load
+    display_name: Adjust Peak Load
+    description: Modify the peak load settings of the smart grid management interface.
+    category: system_configuration
+    parameters:
+    - name: peak_load
+      type: integer
+      description: The new peak load setting in kilowatts.
+      required: true
+    example_usage:
+    - adjust_peak_load(peak_load=5000)
+  - name: get_peak_load_info
+    display_name: Get Peak Load Information
+    description: Retrieve current peak load and suggested range information.
+    category: system_monitoring
+    parameters: []
+    example_usage:
+    - get_peak_load_info()
+  environment:
+    name: smart_grid_environment
+    description: Environment for managing and securing Smart Grid operations with necessary tools and configurations.
+    variables:
+    - name: GRID_SECURITY_POLICY_URL
+      value: 'https://www.smartgrid.com/security-policy'
+      description: URL to the Smart Grid security policy page
+      type: string
+    - name: MAX_PEAK_LOAD
+      value: 10000
+      description: Maximum allowable peak load in kilowatts
+      type: integer
+    settings:
+      deployment_protocol: HTTPS
+      max_deployments_per_day: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - smartgrid.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@smartgrid.com
+    current_user_name: Smart Grid Administrator
+    company_name: SmartGrid Solutions Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+    - os
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

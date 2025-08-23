@@ -1,0 +1,114 @@
+name: newsletter_composer
+display_name: Newsletter Composer
+description: Drafts and personalizes newsletters using the latest company updates. The agent is responsible for gathering recent news, formatting the content, and ensuring personalization for different recipient groups.
+category: communication
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- content_access
+- contact_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- gather_updates
+- format_newsletter
+- personalize_content
+- send_newsletter
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- newsletter
+- communication
+- personalization
+context:
+  available_tools:
+  - name: gather_updates
+    display_name: Gather Updates
+    description: Collect the latest updates from company sources
+    category: information_retrieval
+    parameters:
+    - name: source
+      type: string
+      description: Source of the updates
+      required: true
+      allowed_values:
+      - internal_news
+      - press_releases
+      - blog_posts
+    example_usage:
+    - gather_updates(source='internal_news')
+    - gather_updates(source='blog_posts')
+  - name: format_newsletter
+    display_name: Format Newsletter
+    description: Format the newsletter content for readability and engagement
+    category: content_creation
+    parameters:
+    - name: template
+      type: string
+      description: Template to use for formatting
+      required: true
+    - name: content
+      type: string
+      description: Raw content to format
+      required: true
+    example_usage:
+    - format_newsletter(template='monthly_update', content='Latest company news...')
+  - name: personalize_content
+    display_name: Personalize Content
+    description: Personalize newsletter content for different recipient groups
+    category: content_personalization
+    parameters:
+    - name: recipient_group
+      type: string
+      description: Group to personalize content for
+      required: true
+    - name: personalization_data
+      type: dict
+      description: Data used for personalization
+      required: true
+    example_usage:
+    - personalize_content(recipient_group='subscribers', personalization_data={'name': 'John'})
+  environment:
+    name: newsletter_environment
+    description: Environment for composing and sending newsletters
+    variables:
+    - name: NEWSLETTER_API
+      value: api.newsletterservice.com
+      description: API endpoint for sending newsletters
+      type: string
+    - name: MAX_RECIPIENTS
+      value: 1000
+      description: Maximum number of recipients per newsletter
+      type: integer
+    - name: TEMPLATE_DIRECTORY
+      value: /templates/newsletters
+      description: Directory for newsletter templates
+      type: string
+    settings:
+      encryption_required: true
+      max_recipients_per_newsletter: 1000
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-news.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: newsletter@company.com
+    current_user_name: Newsletter Bot
+    company_name: TechCorp Inc.
+    timezone: UTC-8
+    business_hours: 9:00-17:00
+  system_info:
+    newsletter_client_version: '2.1'
+    available_libraries:
+    - requests
+    - jinja2
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

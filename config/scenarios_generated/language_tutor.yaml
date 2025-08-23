@@ -1,0 +1,101 @@
+name: language_tutor
+display_name: Language Tutor
+description: An AI agent that assists users in learning and practicing a language. It includes features for conversation practice, grammar correction, vocabulary building, and pronunciation guidance. The agent aims to provide an interactive and engaging language learning experience.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- language_data_access
+- microphone_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- start_conversation
+- correct_grammar
+- suggest_vocabulary
+- provide_pronunciation
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- language
+- education
+- learning
+- conversation
+context:
+  available_tools:
+  - name: grammar_checker
+    display_name: Grammar Checker
+    description: Analyzes and corrects grammatical errors in sentences
+    category: language_processing
+    parameters:
+    - name: text
+      type: string
+      description: Text to be checked for grammar
+      required: true
+    example_usage:
+    - grammar_checker(text='She go to the store yesterday.')
+    common_errors:
+    - Incorrect grammar suggestions
+    - Unrecognized sentence structure
+  - name: conversation_partner
+    display_name: Conversation Partner
+    description: Engages in conversation with the user to practice language skills
+    category: language_processing
+    parameters:
+    - name: topic
+      type: string
+      description: Topic of conversation
+      required: false
+    example_usage:
+    - conversation_partner(topic='travel')
+  - name: pronunciation_guide
+    display_name: Pronunciation Guide
+    description: Provides guidance on correct pronunciation of words
+    category: language_processing
+    parameters:
+    - name: word
+      type: string
+      description: Word to pronounce
+      required: true
+    example_usage:
+    - pronunciation_guide(word='Bonjour')
+  environment:
+    name: language_learning_env
+    description: A virtual environment optimized for language learning with necessary tools and resources
+    variables:
+    - name: LANGUAGE_API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing language resources
+      type: string
+    - name: MAX_SESSION_DURATION
+      value: 60
+      description: Maximum duration for a learning session in minutes
+      type: integer
+    settings:
+      real_time_feedback: true
+      session_recording: true
+    max_memory_mb: 1024
+    max_execution_time: 3600
+    network_access: true
+    allowed_domains:
+    - '*.language-resources.com'
+    - '*.educational-platform.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_language: English
+    target_language: French
+    user_proficiency_level: Intermediate
+    timezone: UTC+1
+    learning_hours: 8:00-20:00
+  system_info:
+    language_processing_version: '2.1'
+    available_libraries:
+    - nltk
+    - spacy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

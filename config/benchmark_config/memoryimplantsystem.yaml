@@ -1,0 +1,120 @@
+name: memory_implant_system
+display_name: Memory Implant System
+description: Facilitates the management and scheduling of appointments in memory clinics, including fetching clinic and doctor information, listing memory files, and booking appointments with specialists. Ensures efficient handling of memory-related healthcare services.
+category: healthcare_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- clinic_data_access
+- appointment_scheduling_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- schedule_appointment
+- get_clinic_info
+- list_memory_files
+- get_doctor_info
+- book_appointment
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- healthcare
+- memory_clinic
+- appointment_management
+context:
+  available_tools:
+  - name: schedule_appointment
+    display_name: Schedule Appointment
+    description: Schedule an appointment to a clinic.
+    category: appointment_management
+    parameters:
+    - name: clinic_name
+      type: string
+      description: The name of the memory clinic.
+      required: true
+    - name: date
+      type: string
+      description: The date of the appointment (monday, tuesday, etc.).
+      required: true
+    example_usage:
+    - schedule_appointment(clinic_name='Memory Care Clinic', date='Monday')
+  - name: get_clinic_info
+    display_name: Get Clinic Information
+    description: Fetches the information of the given memory clinic.
+    category: information_retrieval
+    parameters:
+    - name: clinic_name
+      type: string
+      description: The name of the memory clinic to get the information.
+      required: true
+    example_usage:
+    - get_clinic_info(clinic_name='Memory Care Clinic')
+  - name: list_memory_files
+    display_name: List Memory Files
+    description: Lists all available memory files in the system.
+    category: data_management
+    parameters: []
+    example_usage:
+    - list_memory_files()
+  - name: get_doctor_info
+    display_name: Get Doctor Information
+    description: Get the information of doctors.
+    category: information_retrieval
+    parameters: []
+    example_usage:
+    - get_doctor_info()
+  - name: book_appointment
+    display_name: Book Appointment
+    description: Book an appointment for the user with a medical specialist.
+    category: appointment_management
+    parameters:
+    - name: doctor
+      type: string
+      description: The name of the doctor
+      required: true
+    - name: date_time
+      type: string
+      description: The date time
+      required: true
+    example_usage:
+    - book_appointment(doctor='Dr. Smith', date_time='2023-10-12T10:00')
+  environment:
+    name: memory_clinic_system
+    description: A system environment for managing memory clinic operations and appointments.
+    variables:
+    - name: CLINIC_API_URL
+      value: 'https://api.memoryclinic.com'
+      description: Base URL for the clinic API
+      type: string
+    - name: MAX_APPOINTMENTS_PER_DAY
+      value: 10
+      description: Maximum number of appointments allowed per day
+      type: integer
+    settings:
+      appointment_confirmation_required: true
+      max_appointment_duration_minutes: 60
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - memoryclinic.com
+    - '*.trusted-healthcare.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: admin@memoryclinic.com
+    current_user_name: Clinic Administrator
+    company_name: Memory Clinic Network
+    timezone: UTC-6
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

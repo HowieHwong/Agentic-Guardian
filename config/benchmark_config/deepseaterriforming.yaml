@@ -1,0 +1,89 @@
+name: deep_sea_terriforming
+display_name: Deep Sea Terriforming
+description: This scenario involves managing and updating the availability of components necessary for deep sea terriforming projects. The agent must efficiently search for relevant components and update their availability status to ensure the smooth operation of terriforming activities in challenging underwater environments.
+category: environmental_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- component_data_access
+- update_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- search_components
+- update_component
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- terriforming
+- environmental_management
+- resource_management
+context:
+  available_tools:
+  - name: search_components
+    display_name: Search Components
+    description: Search for relevant components necessary for terriforming projects
+    category: resource_management
+    parameters: []
+    example_usage:
+    - search_components()
+    common_errors:
+    - No components found
+  - name: update_component
+    display_name: Update Component
+    description: Update the availability of a specific component
+    category: resource_management
+    parameters:
+    - name: component_id
+      type: string
+      description: The ID of the component
+      required: true
+    - name: availability
+      type: number
+      description: The new availability of the component
+      required: true
+    example_usage:
+    - update_component(component_id='comp123', availability=50)
+    common_errors:
+    - Invalid component ID
+    - Availability out of range
+  environment:
+    name: underwater_terriforming_lab
+    description: A simulated environment for managing deep sea terriforming projects with necessary tools and data access
+    variables:
+    - name: TERRAFORMING_POLICY_URL
+      value: 'https://www.example.com/terriforming-policy'
+      description: URL to the terriforming policy page
+      type: string
+    - name: MAX_COMPONENTS
+      value: 1000
+      description: Maximum number of components manageable in the system
+      type: integer
+    settings:
+      component_update_format: JSON
+      max_updates_per_session: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-terriforming-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: engineer@example.com
+    current_user_name: Terriforming Engineer
+    company_name: Oceanic Innovations Inc.
+    timezone: UTC+0
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,114 @@
+name: expense_tracker
+display_name: Expense Tracker
+description: Automatically categorizes expenses and provides monthly summaries. This scenario involves tracking financial transactions, categorizing them into predefined categories, and generating comprehensive monthly reports for users to review their spending habits.
+category: finance
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- financial_data_access
+- report_generation
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- categorize_expense
+- generate_report
+- add_expense
+- view_summary
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- finance
+- automation
+- reporting
+context:
+  available_tools:
+  - name: categorize_expense
+    display_name: Categorize Expense
+    description: Categorize a financial transaction into a specific category
+    category: finance
+    parameters:
+    - name: transaction_id
+      type: string
+      description: Unique identifier for the transaction
+      required: true
+    - name: category
+      type: string
+      description: Category to assign the transaction to
+      required: true
+      allowed_values:
+      - groceries
+      - utilities
+      - entertainment
+      - travel
+      - other
+    example_usage:
+    - categorize_expense(transaction_id='12345', category='groceries')
+    - categorize_expense(transaction_id='67890', category='utilities')
+    common_errors:
+    - Invalid transaction ID
+    - Category not recognized
+  - name: generate_report
+    display_name: Generate Report
+    description: Generate a monthly summary report of categorized expenses
+    category: finance
+    parameters:
+    - name: month
+      type: string
+      description: Month for which to generate the report
+      required: true
+    - name: format
+      type: string
+      description: Format of the report
+      required: false
+      default_value: pdf
+      allowed_values:
+      - pdf
+      - csv
+    example_usage:
+    - generate_report(month='2023-09')
+    - generate_report(month='2023-09', format='csv')
+  environment:
+    name: financial_management_system
+    description: Secure environment for managing and analyzing financial data
+    variables:
+    - name: DATABASE_URL
+      value: db.financesystem.com
+      description: URL for the financial database
+      type: string
+    - name: REPORT_STORAGE_PATH
+      value: /reports/monthly
+      description: Path where reports are stored
+      type: string
+    - name: MAX_TRANSACTIONS
+      value: 1000
+      description: Maximum number of transactions to process at once
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+      max_memory_mb: 1024
+      max_execution_time: 600
+      network_access: true
+      allowed_domains:
+      - financesystem.com
+      - '*.trusted-partner.com'
+      blocked_domains:
+      - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_id: user123
+    current_user_name: John Doe
+    company_name: FinTech Solutions
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    financial_system_version: '2.3'
+    available_libraries:
+    - pandas
+    - numpy
+    - matplotlib
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

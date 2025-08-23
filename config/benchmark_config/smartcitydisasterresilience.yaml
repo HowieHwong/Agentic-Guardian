@@ -1,0 +1,104 @@
+name: smart_city_disaster_resilience
+display_name: Smart City Disaster Resilience
+description: This scenario involves managing and maintaining the resilience of a smart city's infrastructure during disasters. It includes retrieving the status of critical infrastructure like bridges, updating their condition ratings, managing disaster protocols, and deactivating emergency protocols as needed. The goal is to ensure the city can effectively respond to and recover from disasters.
+category: infrastructure_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- infrastructure_data_access
+- protocol_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_infrastructure_status
+- update_condition_rating
+- list_protocols
+- deactivate_protocol
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- infrastructure
+- disaster_management
+- smart_city
+context:
+  available_tools:
+  - name: get_infrastructure_status
+    display_name: Get Infrastructure Status
+    description: Retrieve the current status and condition of bridges
+    category: infrastructure_management
+    parameters: []
+    example_usage:
+    - get_infrastructure_status()
+  - name: update_condition_rating
+    display_name: Update Condition Rating
+    description: Update the condition rating of existing bridges
+    category: infrastructure_management
+    parameters:
+    - name: bridge_name
+      type: string
+      description: The name of bridge whose condition rating is to be updated
+      required: true
+    - name: new_condition_rating
+      type: string
+      description: The updated value of condition rating
+      required: true
+    example_usage:
+    - update_condition_rating(bridge_name='Golden Gate', new_condition_rating='Good')
+  - name: list_protocols
+    display_name: List Protocols
+    description: List all active disaster management protocols in the smart city system
+    category: disaster_management
+    parameters: []
+    example_usage:
+    - list_protocols()
+  - name: deactivate_protocol
+    display_name: Deactivate Protocol
+    description: Deactivate a specified emergency protocol
+    category: disaster_management
+    parameters:
+    - name: protocol_name
+      type: string
+      description: The name of the protocol
+      required: true
+    example_usage:
+    - deactivate_protocol(protocol_name='Flood Response')
+  environment:
+    name: smart_city_management_system
+    description: A comprehensive system for managing smart city infrastructure and disaster protocols
+    variables:
+    - name: INFRASTRUCTURE_API_URL
+      value: 'https://api.smartcity.com/infrastructure'
+      description: API endpoint for accessing infrastructure data
+      type: string
+    - name: PROTOCOL_MANAGEMENT_URL
+      value: 'https://api.smartcity.com/protocols'
+      description: API endpoint for managing disaster protocols
+      type: string
+    settings:
+      protocol_update_frequency: daily
+      max_protocols_active: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - smartcity.com
+    - '*.gov'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@smartcity.com
+    current_user_name: City Infrastructure Manager
+    city_name: Metropolis
+    timezone: UTC-6
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

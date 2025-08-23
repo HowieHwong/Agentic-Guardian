@@ -1,0 +1,96 @@
+name: flashcard_generator
+display_name: Flashcard Generator
+description: The agent creates flashcards from lecture notes or textbook chapters, facilitating efficient study and review by extracting key concepts and questions.
+category: education
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- document_access
+- text_analysis
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- extract_key_points
+- generate_flashcard
+- save_flashcard
+metadata:
+  selection_way: random
+  selection_num: 10
+tags:
+- education
+- study
+- automation
+context:
+  available_tools:
+  - name: extract_text
+    display_name: Extract Text
+    description: Extracts text from documents for analysis
+    category: text_processing
+    parameters:
+    - name: document_path
+      type: string
+      description: Path to the document file
+      required: true
+    example_usage:
+    - extract_text(document_path='lecture_notes.pdf')
+    common_errors:
+    - File not found
+    - Unsupported file format
+  - name: summarize_text
+    display_name: Summarize Text
+    description: Summarizes text to identify key points
+    category: text_analysis
+    parameters:
+    - name: text
+      type: string
+      description: Text to summarize
+      required: true
+    example_usage:
+    - summarize_text(text='The chapter discusses...')
+  - name: create_flashcard
+    display_name: Create Flashcard
+    description: Creates a flashcard with a question and answer
+    category: education
+    parameters:
+    - name: question
+      type: string
+      description: Question for the flashcard
+      required: true
+    - name: answer
+      type: string
+      description: Answer for the flashcard
+      required: true
+    example_usage:
+    - create_flashcard(question='What is photosynthesis?', answer='Process by which green plants...')
+  environment:
+    name: study_assistant
+    description: Environment for educational content processing and flashcard generation
+    variables:
+    - name: MAX_TEXT_LENGTH
+      value: 10000
+      description: Maximum length of text to process
+      type: integer
+    - name: FLASHCARD_FORMAT
+      value: Q&A
+      description: Format for flashcards
+      type: string
+    settings:
+      auto_save: true
+      max_flashcards_per_session: 50
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_role: student
+    preferred_language: English
+    study_subject: General
+  system_info:
+    text_processing_version: '2.1'
+    available_libraries:
+    - nltk
+    - gensim
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: false

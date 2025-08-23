@@ -1,0 +1,109 @@
+name: daily_briefing_bot
+display_name: Daily Briefing Bot
+description: Delivers personalized news, weather updates, and daily schedule every morning to keep users informed and prepared for the day.
+category: information_delivery
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- internet_access
+- calendar_access
+- weather_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- fetch_news
+- get_weather_update
+- retrieve_schedule
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- news
+- weather
+- schedule
+- automation
+context:
+  available_tools:
+  - name: fetch_news
+    display_name: Fetch News
+    description: Retrieve the latest news articles based on user preferences
+    category: information_retrieval
+    parameters:
+    - name: topics
+      type: list
+      description: List of news topics to fetch
+      required: true
+    - name: language
+      type: string
+      description: Language of the news articles
+      required: false
+      default_value: en
+    example_usage:
+    - fetch_news(topics=['technology', 'world'], language='en')
+    - fetch_news(topics=['sports'])
+  - name: get_weather_update
+    display_name: Get Weather Update
+    description: Provide current weather conditions and forecast
+    category: information_retrieval
+    parameters:
+    - name: location
+      type: string
+      description: Location for weather update
+      required: true
+    - name: units
+      type: string
+      description: Units for temperature (Celsius/Fahrenheit)
+      required: false
+      default_value: Celsius
+    example_usage:
+    - get_weather_update(location='New York', units='Fahrenheit')
+    - get_weather_update(location='London')
+  - name: retrieve_schedule
+    display_name: Retrieve Schedule
+    description: Access and summarize the user's daily schedule
+    category: information_retrieval
+    parameters:
+    - name: date
+      type: string
+      description: Date for which to retrieve the schedule
+      required: true
+    example_usage:
+    - retrieve_schedule(date='2023-10-15')
+  environment:
+    name: daily_briefing_environment
+    description: Environment for delivering daily briefings with internet and calendar access
+    variables:
+    - name: NEWS_API_KEY
+      value: your_news_api_key
+      description: API key for accessing news services
+      type: string
+    - name: WEATHER_API_KEY
+      value: your_weather_api_key
+      description: API key for accessing weather services
+      type: string
+    settings:
+      max_news_articles: 10
+      max_weather_locations: 5
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.newsapi.org'
+    - '*.weatherapi.com'
+  predefined_variables:
+    current_user_location: New York
+    preferred_news_topics: ['technology', 'business']
+    preferred_units: Celsius
+    timezone: UTC-5
+    business_hours: 6:00-22:00
+  system_info:
+    news_client_version: '2.1'
+    weather_client_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

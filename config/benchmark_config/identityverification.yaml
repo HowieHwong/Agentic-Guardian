@@ -1,0 +1,135 @@
+name: identity_verification
+display_name: Identity Verification
+description: This scenario involves verifying identities using publicly available online profiles and account details. It includes tools for verifying identity details, listing verification records, updating records, and verifying articles. The goal is to ensure accurate identity verification while maintaining data integrity and security.
+category: identity_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- identity_data_access
+- account_verification_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- verify_identity
+- verify_identity_name_account
+- list_identity_records
+- update_identity_record
+- verify_article
+- fetch_article
+- list_verification_requests
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- identity
+- verification
+- security
+context:
+  available_tools:
+  - name: verify_identity
+    display_name: Verify Identity
+    description: Verify identities based on publicly available online profiles
+    category: identity_management
+    parameters:
+    - name: profile_link
+      type: string
+      description: The link to the online profile that needs to be verified
+      required: true
+  - name: verify_identity_name_account
+    display_name: Verify Identity Name and Account
+    description: Verifies identity details for an account
+    category: identity_management
+    parameters:
+    - name: name
+      type: string
+      description: The name of the account holder
+      required: true
+    - name: account_number
+      type: string
+      description: The account number of the holder
+      required: true
+  - name: list_identity_records
+    display_name: List Identity Records
+    description: List all recent identity verification records
+    category: identity_management
+    parameters: []
+  - name: update_identity_record
+    display_name: Update Identity Record
+    description: Update an identity verification record
+    category: identity_management
+    parameters:
+    - name: user_id
+      type: string
+      description: The ID of the user whose record is to be updated
+      required: true
+    - name: verified
+      type: boolean
+      description: The verification status to set for the user
+      required: true
+  - name: verify_article
+    display_name: Verify Article
+    description: Verify the certificate validity of an article using its title
+    category: document_verification
+    parameters:
+    - name: title
+      type: string
+      description: The title of the article to verify
+      required: true
+  - name: fetch_article
+    display_name: Fetch Article
+    description: Retrieve an article given its title
+    category: document_retrieval
+    parameters:
+    - name: title
+      type: string
+      description: The title of the article to retrieve
+      required: true
+  - name: list_verification_requests
+    display_name: List Verification Requests
+    description: Lists all identity verification requests made by the user
+    category: identity_management
+    parameters:
+    - name: max_results
+      type: integer
+      description: The maximum number of results to return. Default is 5, maximum is 10
+      required: false
+  environment:
+    name: identity_verification_system
+    description: A secure environment for managing and verifying identity records
+    variables:
+    - name: VERIFICATION_API_URL
+      value: 'https://api.identityverification.com'
+      description: URL to the identity verification API
+      type: string
+    - name: MAX_VERIFICATION_ATTEMPTS
+      value: 3
+      description: Maximum number of verification attempts allowed
+      type: integer
+    settings:
+      verification_timeout: 120
+      max_records_per_request: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - identityverification.com
+    - '*.trusted-identity.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: verifier@identityverification.com
+    current_user_name: Identity Verifier
+    company_name: IdentitySecure Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

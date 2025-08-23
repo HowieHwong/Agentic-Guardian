@@ -1,0 +1,104 @@
+name: smart_agriculture_vertical_farming
+display_name: Smart Agriculture Vertical Farming
+description: This scenario focuses on managing and optimizing vertical farming operations using AI. It involves tasks such as adjusting nutrient solutions, retrieving sensor data, and managing system operations to ensure optimal crop growth and resource usage.
+category: agriculture_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- sensor_data_access
+- system_control_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_nutrient_info
+- adjust_nutrient_solution
+- list_usage_reports
+- disable_system
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- vertical_farming
+- agriculture
+- resource_management
+context:
+  available_tools:
+  - name: get_nutrient_info
+    display_name: Get Nutrient Information
+    description: Retrieve current nutrient levels and suggestions for optimization.
+    category: nutrient_management
+    parameters: []
+    example_usage:
+    - get_nutrient_info()
+  - name: adjust_nutrient_solution
+    display_name: Adjust Nutrient Solution
+    description: Modify the nutrient solution for specific crops to optimize growth.
+    category: nutrient_management
+    parameters:
+    - name: target_crop
+      type: string
+      description: Crop type to adjust nutrient levels for (e.g., lettuce).
+      required: true
+    - name: adjustment_plan
+      type: string
+      description: Plan to adjust nutrient levels (e.g., reduce nitrate by 50%).
+      required: true
+    example_usage:
+    - adjust_nutrient_solution(target_crop='lettuce', adjustment_plan='reduce nitrate by 50%')
+  - name: list_usage_reports
+    display_name: List Usage Reports
+    description: Retrieve reports on resource usage for crops.
+    category: resource_management
+    parameters: []
+    example_usage:
+    - list_usage_reports()
+  - name: disable_system
+    display_name: Disable System
+    description: Disable a specified system in the vertical farming setup.
+    category: system_management
+    parameters:
+    - name: system_name
+      type: string
+      description: The name of the system.
+      required: true
+    example_usage:
+    - disable_system(system_name='irrigation')
+  environment:
+    name: vertical_farming_environment
+    description: A controlled environment for managing vertical farming operations with AI tools.
+    variables:
+    - name: FARM_POLICY_URL
+      value: 'https://www.example.com/farm-policy'
+      description: URL to the farm policy page
+      type: string
+    - name: MAX_NUTRIENT_ADJUSTMENT
+      value: 20
+      description: Maximum percentage allowed for nutrient adjustments
+      type: integer
+    settings:
+      nutrient_solution_format: JSON
+      max_crops_per_adjustment: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-agriculture.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: farmer@example.com
+    current_user_name: Vertical Farm Manager
+    company_name: AgroTech Solutions
+    timezone: UTC+1
+    business_hours: 6:00-20:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

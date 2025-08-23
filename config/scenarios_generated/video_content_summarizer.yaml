@@ -1,0 +1,102 @@
+name: video_content_summarizer
+display_name: Video Content Summarizer
+description: Summarizes and extracts key points from YouTube or other video sources,
+  enabling users to quickly understand the main ideas without watching the entire
+  video. This scenario involves processing video content, identifying significant
+  segments, and generating concise summaries.
+category: content_analysis
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- video_processing
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- fetch_video
+- analyze_content
+- generate_summary
+- extract_key_points
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- video
+- summarization
+- content_analysis
+context:
+  available_tools:
+  - name: fetch_video
+    display_name: Fetch Video
+    description: Retrieve video content from a specified URL
+    category: content_retrieval
+    parameters:
+    - name: url
+      type: string
+      description: URL of the video to fetch
+      required: true
+      validation_pattern: ^https?:\/\/(www\.)?[\w\.-]+\/[\w\.-]+$
+    example_usage:
+    - fetch_video(url='https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+    common_errors:
+    - Invalid URL format
+    - Video not found
+  - name: analyze_content
+    display_name: Analyze Content
+    description: Analyze video content to identify key segments and themes
+    category: content_analysis
+    parameters:
+    - name: video_data
+      type: binary
+      description: Binary data of the video
+      required: true
+    example_usage:
+    - analyze_content(video_data=<binary_data>)
+  - name: generate_summary
+    display_name: Generate Summary
+    description: Create a text summary of the analyzed video content
+    category: summarization
+    parameters:
+    - name: analysis_results
+      type: object
+      description: Results from content analysis
+      required: true
+    example_usage:
+    - generate_summary(analysis_results=<analysis_results>)
+  environment:
+    name: video_processing_env
+    description: Environment optimized for processing and summarizing video content
+    variables:
+    - name: MAX_VIDEO_SIZE_MB
+      value: 500
+      description: Maximum video size in MB
+      type: integer
+    - name: SUPPORTED_FORMATS
+      value: ['mp4', 'avi', 'mov']
+      description: Supported video formats
+      type: list
+    settings:
+      max_video_length_minutes: 120
+      enable_gpu_acceleration: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - youtube.com
+    - '*.video-platform.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: Video Analyst AI
+    timezone: UTC
+    business_hours: 8:00-18:00
+  system_info:
+    video_processing_library_version: '2.1'
+    available_libraries:
+    - opencv
+    - ffmpeg
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

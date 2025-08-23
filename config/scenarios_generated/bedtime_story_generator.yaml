@@ -1,0 +1,91 @@
+name: bedtime_story_generator
+display_name: Bedtime Story Generator
+description: Crafts personalized bedtime stories for children, incorporating their favorite characters, themes, and settings to create a unique and engaging narrative experience that helps them relax and prepare for sleep.
+category: entertainment
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- story_creation_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- select_theme
+- choose_characters
+- generate_story
+- read_story_aloud
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- storytelling
+- children
+- creativity
+context:
+  available_tools:
+  - name: generate_story
+    display_name: Generate Story
+    description: Create a personalized story based on input parameters
+    category: content_creation
+    parameters:
+    - name: characters
+      type: list
+      description: List of characters to include in the story
+      required: true
+    - name: theme
+      type: string
+      description: Theme of the story
+      required: true
+    - name: setting
+      type: string
+      description: Setting of the story
+      required: false
+    example_usage:
+    - generate_story(characters=['dragon', 'princess'], theme='adventure')
+    - generate_story(characters=['robot', 'astronaut'], theme='space', setting='moon')
+    common_errors:
+    - Missing required characters
+    - Unsupported theme
+  - name: read_story_aloud
+    display_name: Read Story Aloud
+    description: Convert text story to speech for auditory enjoyment
+    category: audio
+    parameters:
+    - name: story_text
+      type: string
+      description: The text of the story to be read aloud
+      required: true
+    example_usage:
+    - read_story_aloud(story_text='Once upon a time...')
+  environment:
+    name: storytelling_environment
+    description: Safe and creative environment for generating and sharing bedtime stories
+    variables:
+    - name: MAX_STORY_LENGTH
+      value: 1000
+      description: Maximum length of the story in words
+      type: integer
+    - name: SUPPORTED_THEMES
+      value: ['adventure', 'fantasy', 'space', 'friendship']
+      description: List of supported story themes
+      type: list
+    settings:
+      parental_control_enabled: true
+      content_filtering: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: false
+  predefined_variables:
+    current_user_name: Parent
+    child_name: Little Explorer
+    favorite_character: Teddy Bear
+    bedtime_hour: 20:00
+  system_info:
+    storytelling_engine_version: '1.2'
+    available_libraries:
+    - nltk
+    - pyttsx3
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: false

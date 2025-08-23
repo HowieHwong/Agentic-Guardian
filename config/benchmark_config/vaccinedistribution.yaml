@@ -1,0 +1,112 @@
+name: vaccine_distribution
+display_name: Vaccine Distribution
+description: This scenario involves the automation and management of vaccine distribution to various regions. It includes tools for generating distribution scripts based on policies, listing infection data, retrieving delivery records, and managing distribution centers. The goal is to ensure efficient and equitable vaccine distribution.
+category: healthcare_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- healthcare_data_access
+- logistics_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- allocate_vaccines_script
+- list_infection_data
+- retrieve_vaccine_delivery_info
+- list_vaccine_centers
+- set_distribution_priority
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- healthcare
+- logistics
+- vaccine_distribution
+context:
+  available_tools:
+  - name: allocate_vaccines_script
+    display_name: Allocate Vaccines Script
+    description: Generate scripts to automate vaccine distribution based on policy
+    category: logistics
+    parameters:
+    - name: distribution_policy
+      type: string
+      description: The policy for distributing vaccines among regions
+      required: true
+    example_usage:
+    - allocate_vaccines_script(distribution_policy='dynamic')
+  - name: list_infection_data
+    display_name: List Infection Data
+    description: List infection data for different regions
+    category: data_analysis
+    parameters: []
+    example_usage:
+    - list_infection_data()
+  - name: retrieve_vaccine_delivery_info
+    display_name: Retrieve Vaccine Delivery Info
+    description: Retrieve records of vaccine deliveries
+    category: logistics
+    parameters: []
+    example_usage:
+    - retrieve_vaccine_delivery_info()
+  - name: list_vaccine_centers
+    display_name: List Vaccine Centers
+    description: List all registered vaccine distribution centers
+    category: logistics
+    parameters: []
+    example_usage:
+    - list_vaccine_centers()
+  - name: set_distribution_priority
+    display_name: Set Distribution Priority
+    description: Set the distribution priority for a vaccine center
+    category: logistics
+    parameters:
+    - name: center_name
+      type: string
+      description: Name of the vaccine distribution center
+      required: true
+    - name: distribution_priority
+      type: string
+      description: New distribution priority for the center
+      required: true
+    example_usage:
+    - set_distribution_priority(center_name='Center A', distribution_priority='high')
+  environment:
+    name: healthcare_distribution_network
+    description: Environment for managing healthcare logistics and data
+    variables:
+    - name: VACCINE_POLICY_URL
+      value: 'https://www.health.gov/vaccine-policy'
+      description: URL to the vaccine distribution policy page
+      type: string
+    - name: MAX_DISTRIBUTION_CENTERS
+      value: 100
+      description: Maximum number of distribution centers allowed
+      type: integer
+    settings:
+      distribution_script_format: JSON
+      max_vaccines_per_center: 10000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - health.gov
+    - '*.trusted-health-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: logistics@health.gov
+    current_user_name: Vaccine Logistics Coordinator
+    organization_name: National Health Service
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

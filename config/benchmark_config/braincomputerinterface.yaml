@@ -1,0 +1,82 @@
+name: brain_computer_interface
+display_name: Brain-Computer Interface
+description: This scenario involves interacting with a home entertainment system through a brain-computer interface. The agent is tasked with retrieving current system settings, listing available channels, and changing channels based on user input. The goal is to ensure seamless integration and operation of the system using thought commands.
+category: home_automation
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- system_settings_access
+- channel_control_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_current_settings
+- list_channels
+- change_channel
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- brain_computer_interface
+- home_automation
+- entertainment
+context:
+  available_tools:
+  - name: get_current_settings
+    display_name: Get Current Settings
+    description: Retrieve the current settings of the system
+    category: system_management
+    parameters: []
+    example_usage:
+    - get_current_settings()
+  - name: list_channels
+    display_name: List Channels
+    description: List all available channels on the home entertainment system
+    category: entertainment
+    parameters: []
+    example_usage:
+    - list_channels()
+  - name: change_channel
+    display_name: Change Channel
+    description: Switch the system to a different channel
+    category: entertainment
+    parameters:
+    - name: new_channel
+      type: string
+      description: The name of the channel to switch to
+      required: true
+    example_usage:
+    - change_channel(new_channel='Discovery Channel')
+  environment:
+    name: home_entertainment_system
+    description: A smart home entertainment environment controlled via a brain-computer interface
+    variables:
+    - name: DEFAULT_CHANNEL
+      value: 'Home'
+      description: Default channel when the system starts
+      type: string
+    settings:
+      max_channels: 100
+      default_volume_level: 20
+    max_memory_mb: 512
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - entertainment.com
+    - '*.trusted-device.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_name: Home User
+    system_location: Living Room
+    timezone: UTC
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - neural_interface
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

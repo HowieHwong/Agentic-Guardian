@@ -1,0 +1,101 @@
+name: interactive_coding_tutor
+display_name: Interactive Coding Tutor
+description: An AI-driven interactive coding tutor that teaches coding concepts and provides real-time feedback to learners. The tutor adapts to the user's skill level and offers personalized coding exercises and challenges.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- code_execution
+- internet_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- explain_concept
+- provide_example
+- evaluate_code
+- suggest_improvement
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- coding
+- education
+- interactive
+- feedback
+context:
+  available_tools:
+  - name: code_executor
+    display_name: Code Executor
+    description: Executes code snippets in various programming languages
+    category: development
+    parameters:
+    - name: language
+      type: string
+      description: Programming language to execute
+      required: true
+      allowed_values:
+      - python
+      - javascript
+      - java
+      - c++
+    - name: code
+      type: string
+      description: Code snippet to execute
+      required: true
+    example_usage:
+    - code_executor(language='python', code='print("Hello, World!")')
+    - code_executor(language='javascript', code='console.log("Hello, World!")')
+    common_errors:
+    - Syntax error in code
+    - Unsupported language
+  - name: concept_explainer
+    display_name: Concept Explainer
+    description: Provides detailed explanations of coding concepts
+    category: education
+    parameters:
+    - name: concept
+      type: string
+      description: Coding concept to explain
+      required: true
+    example_usage:
+    - concept_explainer(concept='recursion')
+    - concept_explainer(concept='object-oriented programming')
+  environment:
+    name: coding_tutorial_environment
+    description: Secure environment for executing and testing code snippets
+    variables:
+    - name: MAX_EXECUTION_TIME
+      value: 60
+      description: Maximum execution time for code snippets in seconds
+      type: integer
+    - name: SUPPORTED_LANGUAGES
+      value: ['python', 'javascript', 'java', 'c++']
+      description: List of supported programming languages
+      type: list
+    settings:
+      sandbox_execution: true
+      logging_enabled: true
+      max_memory_mb: 256
+    max_execution_time: 60
+    network_access: true
+    allowed_domains:
+    - '*.trusted-coding-platform.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: Coding Learner
+    preferred_language: python
+    learning_goal: 'Understand basic programming concepts'
+    timezone: UTC
+    available_hours: 8:00-20:00
+  system_info:
+    coding_platform_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - requests
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

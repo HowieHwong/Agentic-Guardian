@@ -1,0 +1,109 @@
+name: route_optimizer
+display_name: Route Optimizer
+description: Suggests efficient delivery or commuting routes based on live traffic data,
+  optimizing for time and fuel efficiency. Utilizes real-time traffic updates and
+  historical data to provide the best possible routes for various types of vehicles.
+category: navigation
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- location_access
+- traffic_data_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- calculate_route
+- update_traffic_data
+- suggest_alternate_route
+- estimate_arrival_time
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- navigation
+- optimization
+- traffic
+context:
+  available_tools:
+  - name: calculate_route
+    display_name: Calculate Route
+    description: Calculate the most efficient route based on current traffic conditions
+    category: navigation
+    parameters:
+    - name: start_location
+      type: string
+      description: Starting point of the journey
+      required: true
+    - name: end_location
+      type: string
+      description: Destination point of the journey
+      required: true
+    - name: vehicle_type
+      type: string
+      description: Type of vehicle for route optimization
+      required: false
+      allowed_values:
+      - car
+      - bike
+      - truck
+    example_usage:
+    - calculate_route(start_location='123 Main St', end_location='456 Elm St', vehicle_type='car')
+    - calculate_route(start_location='Warehouse', end_location='Customer Site')
+    common_errors:
+    - Invalid location format
+    - Unsupported vehicle type
+  - name: update_traffic_data
+    display_name: Update Traffic Data
+    description: Fetch and update the latest traffic data from external sources
+    category: data
+    parameters:
+    - name: data_source
+      type: string
+      description: Source of traffic data
+      required: true
+    example_usage:
+    - update_traffic_data(data_source='traffic_api')
+  environment:
+    name: urban_navigation
+    description: Urban navigation environment with real-time traffic updates
+    variables:
+    - name: TRAFFIC_API_URL
+      value: api.trafficdata.com
+      description: URL for traffic data API
+      type: string
+    - name: MAX_ROUTE_DISTANCE
+      value: 500
+      description: Maximum distance for route calculation in kilometers
+      type: integer
+    - name: DEFAULT_VEHICLE_TYPE
+      value: car
+      description: Default vehicle type for route calculations
+      type: string
+    settings:
+      live_traffic_updates: true
+      historical_data_usage: true
+      max_alternate_routes: 3
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - trafficdata.com
+    - '*.trusted-maps.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_location: '123 Main St'
+    preferred_vehicle: car
+    company_name: FastRoutes Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    navigation_system_version: '2.1'
+    available_libraries:
+    - requests
+    - geopy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

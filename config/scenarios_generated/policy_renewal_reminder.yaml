@@ -1,0 +1,96 @@
+name: policy_renewal_reminder
+display_name: Policy Renewal Reminder
+description: Notifies users when their insurance policies are approaching the renewal date, ensuring they have ample time to review and renew their policies. This scenario involves sending timely reminders and providing options for policy review and renewal.
+category: notification
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- notification_access
+- calendar_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_policy_expiry
+- send_reminder
+- update_contact_info
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- insurance
+- notification
+- reminder
+context:
+  available_tools:
+  - name: send_notification
+    display_name: Send Notification
+    description: Send a notification to a user about policy renewal
+    category: notification
+    parameters:
+    - name: user_id
+      type: string
+      description: Unique identifier of the user
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    - name: send_time
+      type: datetime
+      description: Scheduled time to send the notification
+      required: false
+    example_usage:
+    - send_notification(user_id='12345', message='Your policy is due for renewal in 30 days.')
+    common_errors:
+    - Invalid user ID
+    - Message content empty
+  - name: check_policy_status
+    display_name: Check Policy Status
+    description: Check the status of a user's insurance policy
+    category: insurance
+    parameters:
+    - name: policy_id
+      type: string
+      description: Unique identifier of the policy
+      required: true
+    example_usage:
+    - check_policy_status(policy_id='POL123456')
+  environment:
+    name: insurance_notification_system
+    description: System environment for managing and sending insurance policy notifications
+    variables:
+    - name: NOTIFICATION_SERVER
+      value: notify.insurance.com
+      description: Notification server address
+      type: string
+    - name: MAX_NOTIFICATIONS_PER_DAY
+      value: 100
+      description: Maximum number of notifications sent per day
+      type: integer
+    settings:
+      encryption_required: true
+      max_recipients_per_notification: 1
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - insurance.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: agent@insurance.com
+    current_user_name: Policy Assistant
+    company_name: SecureInsure Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    notification_client_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

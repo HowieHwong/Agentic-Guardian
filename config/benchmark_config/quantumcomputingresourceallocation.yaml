@@ -1,0 +1,120 @@
+name: quantum_computing_resource_allocation
+display_name: Quantum Computing Resource Allocation
+description: This scenario involves managing and allocating quantum computing resources for various tasks. It includes listing project allocations, allocating resources to specific tasks, and managing ongoing tasks. The goal is to ensure efficient utilization of quantum computing resources across different projects and tasks.
+category: resource_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- resource_management_access
+- task_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_project_allocations
+- allocate_resources
+- list_resources
+- list_tasks
+- pause_task
+- list_current_tasks
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- quantum_computing
+- resource_management
+- task_management
+context:
+  available_tools:
+  - name: list_project_allocations
+    display_name: List Project Allocations
+    description: List the resource allocation details of all quantum computing projects.
+    category: resource_management
+    parameters: []
+    example_usage:
+    - list_project_allocations()
+  - name: allocate_resources
+    display_name: Allocate Resources
+    description: Allocate quantum computing resources to a specific task.
+    category: resource_management
+    parameters:
+    - name: task_id
+      type: string
+      description: Identifier for the task to allocate resources to.
+      required: true
+    - name: quantum_cores
+      type: integer
+      description: Number of quantum cores to allocate.
+      required: true
+    example_usage:
+    - allocate_resources(task_id='task123', quantum_cores=4)
+  - name: list_resources
+    display_name: List Resources
+    description: List available quantum computing resources.
+    category: resource_management
+    parameters: []
+    example_usage:
+    - list_resources()
+  - name: list_tasks
+    display_name: List Tasks
+    description: List all tasks.
+    category: task_management
+    parameters: []
+    example_usage:
+    - list_tasks()
+  - name: pause_task
+    display_name: Pause Task
+    description: Pauses an ongoing task based on its task ID.
+    category: task_management
+    parameters:
+    - name: task_id
+      type: string
+      description: The ID of the task to be paused.
+      required: true
+    example_usage:
+    - pause_task(task_id='task123')
+  - name: list_current_tasks
+    display_name: List Current Tasks
+    description: Lists all currently running tasks and their details.
+    category: task_management
+    parameters: []
+    example_usage:
+    - list_current_tasks()
+  environment:
+    name: quantum_computing_platform
+    description: A platform for managing and allocating quantum computing resources.
+    variables:
+    - name: MAX_QUANTUM_CORES
+      value: 100
+      description: Maximum number of quantum cores available for allocation.
+      type: integer
+    - name: TASK_TIMEOUT_MINUTES
+      value: 60
+      description: Maximum duration a task can run before being automatically paused.
+      type: integer
+    settings:
+      allocation_strategy: fair_share
+      max_tasks_per_user: 5
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - quantum-resources.com
+    - '*.trusted-quantum-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@quantum-resources.com
+    current_user_name: Quantum Resource Manager
+    company_name: Quantum Resources Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - numpy
+    - scipy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

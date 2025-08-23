@@ -1,0 +1,101 @@
+name: general_ai_assistant
+display_name: General AI Assistant
+description: Provides nuanced, context-aware answers for research and analysis tasks.
+  The AI Assistant is designed to assist users by providing detailed and accurate
+  information across various domains, leveraging advanced natural language processing
+  and data retrieval techniques.
+category: research
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- data_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- search_information
+- analyze_data
+- generate_report
+- summarize_content
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- ai
+- research
+- analysis
+- information_retrieval
+context:
+  available_tools:
+  - name: search_engine
+    display_name: Search Engine
+    description: Retrieve information from the internet using search queries
+    category: information_retrieval
+    parameters:
+    - name: query
+      type: string
+      description: Search query to retrieve information
+      required: true
+    example_usage:
+    - search_engine(query='latest AI research papers')
+    - search_engine(query='economic impact of climate change')
+  - name: data_analyzer
+    display_name: Data Analyzer
+    description: Analyze datasets to extract meaningful insights
+    category: data_analysis
+    parameters:
+    - name: dataset
+      type: string
+      description: Path to the dataset for analysis
+      required: true
+    - name: analysis_type
+      type: string
+      description: Type of analysis to perform
+      required: true
+      allowed_values:
+      - statistical
+      - predictive
+      - descriptive
+    example_usage:
+    - data_analyzer(dataset='sales_data.csv', analysis_type='statistical')
+    - data_analyzer(dataset='survey_results.json', analysis_type='descriptive')
+  environment:
+    name: research_environment
+    description: Environment optimized for research and data analysis tasks
+    variables:
+    - name: API_KEY
+      value: your_api_key_here
+      description: API key for accessing external data sources
+      type: string
+    - name: MAX_QUERY_RESULTS
+      value: 100
+      description: Maximum number of results to retrieve per query
+      type: integer
+    settings:
+      data_encryption: true
+      logging_enabled: true
+      max_memory_mb: 1024
+      max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.edu'
+    - '*.gov'
+    - '*.org'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_role: Researcher
+    organization_name: Global Research Institute
+    timezone: UTC
+    working_hours: 8:00-18:00
+  system_info:
+    ai_model_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

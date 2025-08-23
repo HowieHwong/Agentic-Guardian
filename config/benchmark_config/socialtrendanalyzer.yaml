@@ -1,0 +1,74 @@
+name: social_trend_analyzer
+display_name: Social Trend Analyzer
+description: Analyzes current social media trends to assess their potential impacts on public opinion and market dynamics. Provides insights into trending topics and their implications for businesses and policymakers.
+category: data_analysis
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- internet_access
+- data_analysis_tools
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- retrieve_trends
+- analyze_impact
+- generate_report
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- social_media
+- trend_analysis
+- market_insights
+context:
+  available_tools:
+  - name: get_social_media_trends
+    display_name: Get Social Media Trends
+    description: Retrieves current social media trends and their potential impacts
+    category: data_collection
+    parameters: []
+    example_usage:
+    - get_social_media_trends()
+    common_errors:
+    - API rate limit exceeded
+    - Network connectivity issues
+  environment:
+    name: social_media_analysis_platform
+    description: Platform environment for analyzing social media trends with data analysis tools
+    variables:
+    - name: TREND_API_ENDPOINT
+      value: 'https://api.socialmedia.com/trends'
+      description: API endpoint for retrieving social media trends
+      type: string
+    - name: MAX_TRENDS
+      value: 50
+      description: Maximum number of trends to retrieve at once
+      type: integer
+    settings:
+      report_format: PDF
+      max_trends_per_analysis: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - socialmedia.com
+    - '*.trusted-data-source.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: analyst@datafirm.com
+    current_user_name: Data Analyst
+    company_name: DataFirm Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - pandas
+    - numpy
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

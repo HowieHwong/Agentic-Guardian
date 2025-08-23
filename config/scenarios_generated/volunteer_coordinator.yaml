@@ -1,0 +1,96 @@
+name: volunteer_coordinator
+display_name: Volunteer Coordinator
+description: The Volunteer Coordinator agent matches volunteers to suitable events based on their skills and preferences, and tracks the hours they have served. This scenario involves managing volunteer data, scheduling, and reporting.
+category: management
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- data_access
+- calendar_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- match_volunteer_to_event
+- track_hours
+- generate_report
+- update_volunteer_info
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- volunteer
+- event_management
+- scheduling
+context:
+  available_tools:
+  - name: match_volunteer
+    display_name: Match Volunteer
+    description: Match volunteers to events based on skills and availability
+    category: management
+    parameters:
+    - name: volunteer_id
+      type: string
+      description: Unique identifier for the volunteer
+      required: true
+    - name: event_id
+      type: string
+      description: Unique identifier for the event
+      required: true
+    example_usage:
+    - match_volunteer(volunteer_id='v123', event_id='e456')
+    common_errors:
+    - Volunteer not found
+    - Event not found
+  - name: track_hours
+    display_name: Track Hours
+    description: Track the number of hours a volunteer has served
+    category: management
+    parameters:
+    - name: volunteer_id
+      type: string
+      description: Unique identifier for the volunteer
+      required: true
+    - name: hours
+      type: integer
+      description: Number of hours served
+      required: true
+    example_usage:
+    - track_hours(volunteer_id='v123', hours=5)
+  environment:
+    name: volunteer_management_system
+    description: Environment for managing volunteer data and events
+    variables:
+    - name: DATABASE_URL
+      value: db.volunteer.org
+      description: URL for the volunteer database
+      type: string
+    - name: MAX_VOLUNTEERS
+      value: 1000
+      description: Maximum number of volunteers that can be managed
+      type: integer
+    settings:
+      data_encryption: true
+      audit_logging: true
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - volunteer.org
+    - '*.trusted-partner.org'
+    blocked_domains:
+    - '*.untrusted-source.org'
+  predefined_variables:
+    current_user_role: Volunteer Coordinator
+    organization_name: Helping Hands
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    management_system_version: '2.1'
+    available_libraries:
+    - pandas
+    - sqlalchemy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

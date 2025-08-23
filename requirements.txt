@@ -1,0 +1,9 @@
+pydantic>=1.10
+PyYAML>=6.0
+loguru>=0.7
+rich>=13.0
+openai>=1.44
+requests>=2.31
+tqdm>=4.66
+aiohttp>=3.9
+streamlit>=1.36

@@ -1,0 +1,120 @@
+name: interview_scheduler
+display_name: Interview Scheduler
+description: Coordinates interview times with candidates and interviewers, ensuring
+  availability and sending confirmations. Manages scheduling conflicts and updates
+  participants with any changes.
+category: scheduling
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- calendar_access
+- email_access
+dependencies: []
+generation_weight: 1.7
+sample_actions:
+- propose_time_slots
+- confirm_interview
+- send_invitation
+- update_schedule
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- scheduling
+- interviews
+- automation
+context:
+  available_tools:
+  - name: schedule_interview
+    display_name: Schedule Interview
+    description: Schedule an interview by finding common available times
+    category: scheduling
+    parameters:
+    - name: candidate_email
+      type: string
+      description: Email address of the candidate
+      required: true
+      validation_pattern: ^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$
+    - name: interviewer_emails
+      type: list
+      description: List of email addresses of interviewers
+      required: true
+    - name: duration
+      type: integer
+      description: Duration of the interview in minutes
+      required: true
+    - name: preferred_dates
+      type: list
+      description: List of preferred dates for the interview
+      required: false
+    example_usage:
+    - schedule_interview(candidate_email='jane.doe@example.com', interviewer_emails=['hr@company.com',
+      'manager@company.com'], duration=60, preferred_dates=['2023-10-15', '2023-10-16'])
+    common_errors:
+    - No common available times
+    - Invalid email format
+    - Duration exceeds allowed limit
+  - name: send_confirmation
+    display_name: Send Confirmation
+    description: Send confirmation emails to all participants
+    category: communication
+    parameters:
+    - name: recipient_emails
+      type: list
+      description: List of recipient email addresses
+      required: true
+    - name: subject
+      type: string
+      description: Subject of the confirmation email
+      required: true
+    - name: message
+      type: string
+      description: Body of the confirmation email
+      required: true
+    example_usage:
+    - send_confirmation(recipient_emails=['jane.doe@example.com', 'hr@company.com'],
+      subject='Interview Confirmation', message='Your interview is confirmed for 10:00 AM on 2023-10-15.')
+  environment:
+    name: corporate_calendar
+    description: Corporate calendar environment with scheduling capabilities
+    variables:
+    - name: CALENDAR_API_URL
+      value: api.calendar.company.com
+      description: API endpoint for calendar operations
+      type: string
+    - name: MAX_INTERVIEW_DURATION
+      value: 120
+      description: Maximum duration for an interview in minutes
+      type: integer
+    - name: TIMEZONE
+      value: UTC
+      description: Default timezone for scheduling
+      type: string
+    settings:
+      conflict_resolution: automatic
+      notification_required: true
+      max_participants_per_interview: 5
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: scheduler@company.com
+    current_user_name: Interview Scheduler Bot
+    company_name: TechCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-18:00
+  system_info:
+    calendar_client_version: '2.1'
+    available_libraries:
+    - requests
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

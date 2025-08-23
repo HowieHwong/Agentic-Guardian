@@ -1,0 +1,103 @@
+name: ai_portrait_artist
+display_name: AI Portrait Artist
+description: The AI Portrait Artist scenario involves creating stylized or realistic portraits based on user descriptions. This scenario explores the capabilities of AI in interpreting textual descriptions to generate visual art, focusing on style, accuracy, and creativity. The agent must understand user inputs, process artistic styles, and produce high-quality portraits.
+category: art_generation
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- image_generation
+- style_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- interpret_description
+- select_style
+- generate_portrait
+- refine_details
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- art
+- creativity
+- AI
+- portrait
+context:
+  available_tools:
+  - name: generate_image
+    display_name: Generate Image
+    description: Create an image based on textual description and selected style
+    category: art_generation
+    parameters:
+    - name: description
+      type: string
+      description: Textual description of the desired portrait
+      required: true
+    - name: style
+      type: string
+      description: Artistic style for the portrait
+      required: true
+      allowed_values:
+      - realistic
+      - abstract
+      - cartoon
+      - impressionist
+    example_usage:
+    - generate_image(description='A young woman with a serene expression', style='realistic')
+    - generate_image(description='A futuristic cityscape', style='abstract')
+    common_errors:
+    - Unsupported style selected
+    - Description too vague
+  - name: refine_image
+    display_name: Refine Image
+    description: Enhance and adjust details of the generated portrait
+    category: art_generation
+    parameters:
+    - name: image_id
+      type: string
+      description: Identifier of the image to refine
+      required: true
+    - name: adjustments
+      type: list
+      description: List of adjustments to apply
+      required: false
+    example_usage:
+    - refine_image(image_id='12345', adjustments=['increase_brightness', 'sharpen'])
+  environment:
+    name: art_studio
+    description: Virtual art studio environment with tools for image generation and refinement
+    variables:
+    - name: IMAGE_RESOLUTION
+      value: 1080
+      description: Default image resolution in pixels
+      type: integer
+    - name: MAX_STYLE_OPTIONS
+      value: 10
+      description: Maximum number of style options available
+      type: integer
+    - name: DEFAULT_STYLE
+      value: realistic
+      description: Default artistic style
+      type: string
+    settings:
+      high_quality_output: true
+      style_customization_allowed: true
+      max_images_per_session: 5
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_artist_name: AI Portraitist
+    default_canvas_size: 'A4'
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    image_generation_version: '2.1'
+    available_libraries:
+    - PIL
+    - numpy
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: false

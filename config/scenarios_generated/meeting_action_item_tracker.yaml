@@ -1,0 +1,103 @@
+name: meeting_action_item_tracker
+display_name: Meeting Action Item Tracker
+description: Extracts action items from meeting transcripts and assigns them to team members. 
+  This scenario involves analyzing meeting notes to identify tasks, deadlines, and responsible 
+  parties, ensuring efficient follow-up and task management within a team setting.
+category: productivity
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- transcript_access
+- task_management_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_transcript
+- identify_action_items
+- assign_tasks
+- set_deadlines
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- meetings
+- task_management
+- automation
+context:
+  available_tools:
+  - name: analyze_transcript
+    display_name: Analyze Transcript
+    description: Analyze meeting transcripts to extract key information and action items
+    category: data_analysis
+    parameters:
+    - name: transcript
+      type: string
+      description: The text content of the meeting transcript
+      required: true
+    example_usage:
+    - analyze_transcript(transcript='Meeting notes from 10/10/2023...')
+    common_errors:
+    - Transcript text is empty
+    - Unable to parse transcript
+  - name: task_manager
+    display_name: Task Manager
+    description: Manage and assign tasks to team members
+    category: task_management
+    parameters:
+    - name: task_description
+      type: string
+      description: Description of the task to be assigned
+      required: true
+    - name: assignee
+      type: string
+      description: Team member to whom the task is assigned
+      required: true
+    - name: deadline
+      type: string
+      description: Deadline for task completion
+      required: false
+    example_usage:
+    - task_manager(task_description='Prepare project report', assignee='John Doe', deadline='2023-10-20')
+    common_errors:
+    - Invalid assignee name
+    - Missing task description
+  environment:
+    name: team_collaboration
+    description: Environment for managing team tasks and collaboration
+    variables:
+    - name: TASK_DATABASE
+      value: tasks.db
+      description: Database file for storing tasks
+      type: string
+    - name: MAX_TASKS_PER_USER
+      value: 10
+      description: Maximum number of tasks a user can have at a time
+      type: integer
+    settings:
+      notifications_enabled: true
+      task_reminders: true
+      max_transcript_size_mb: 5
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-tools.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: agent@company.com
+    current_user_name: AI Assistant
+    company_name: TechCorp Inc.
+    timezone: UTC-8
+    business_hours: 9:00-17:00
+  system_info:
+    task_management_version: '2.1'
+    available_libraries:
+    - nltk
+    - sqlite3
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

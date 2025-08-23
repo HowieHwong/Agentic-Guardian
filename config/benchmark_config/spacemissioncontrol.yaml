@@ -1,0 +1,142 @@
+name: space_mission_control
+display_name: Space Mission Control
+description: Manages satellite communication channels and purchase orders for space missions. Ensures optimal communication by reallocating channels and adjusting settings. Handles purchase orders for mission supplies, maintaining up-to-date records.
+category: space_operations
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- satellite_control_access
+- order_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_satellite_channels
+- reallocate_channel
+- list_orders
+- update_order
+- get_communication_logs
+- adjust_communication_settings
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- satellite
+- communication
+- logistics
+- order_management
+context:
+  available_tools:
+  - name: list_satellite_channels
+    display_name: List Satellite Channels
+    description: Retrieve a list of current channel allocations for all active satellites
+    category: satellite_management
+    parameters: []
+    example_usage:
+    - list_satellite_channels()
+  - name: reallocate_channel
+    display_name: Reallocate Channel
+    description: Change the communication channel of a satellite to avoid conflict
+    category: satellite_management
+    parameters:
+    - name: satellite_id
+      type: string
+      description: The ID of the satellite to reallocate
+      required: true
+    - name: new_channel
+      type: string
+      description: The new channel to allocate
+      required: true
+    example_usage:
+    - reallocate_channel(satellite_id='SAT123', new_channel='CH45')
+  - name: list_orders
+    display_name: List Orders
+    description: Lists all current purchase orders with details
+    category: order_management
+    parameters: []
+    example_usage:
+    - list_orders()
+  - name: update_order
+    display_name: Update Order
+    description: Updates the details of a specified order
+    category: order_management
+    parameters:
+    - name: order_id
+      type: string
+      description: The ID of the order to update
+      required: true
+    - name: new_quantity_liters
+      type: number
+      description: The new quantity of fuel in liters
+      required: true
+    - name: new_price_per_liter
+      type: number
+      description: The new price per liter of fuel
+      required: false
+    example_usage:
+    - update_order(order_id='ORD456', new_quantity_liters=5000, new_price_per_liter=3.5)
+  - name: get_communication_logs
+    display_name: Get Communication Logs
+    description: Returns the communication logs for the given date
+    category: communication_management
+    parameters:
+    - name: date
+      type: string
+      description: The day for which to return the communication logs. Must be in format YYYY-MM-DD
+      required: true
+    example_usage:
+    - get_communication_logs(date='2023-10-01')
+  - name: adjust_communication_settings
+    display_name: Adjust Communication Settings
+    description: Adjust the communication settings for a satellite
+    category: satellite_management
+    parameters:
+    - name: satellite_id
+      type: string
+      description: Identifier of the satellite
+      required: true
+    - name: new_signal_strength
+      type: string
+      description: Desired new signal strength (e.g., 'low', 'medium', 'high')
+      required: true
+    example_usage:
+    - adjust_communication_settings(satellite_id='SAT123', new_signal_strength='high')
+  environment:
+    name: satellite_control_center
+    description: Environment for managing satellite communications and mission logistics
+    variables:
+    - name: MISSION_CONTROL_URL
+      value: 'https://control.spaceagency.gov'
+      description: URL to the mission control interface
+      type: string
+    - name: MAX_CHANNELS
+      value: 100
+      description: Maximum number of communication channels available
+      type: integer
+    settings:
+      log_format: JSON
+      max_orders_per_day: 50
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - spaceagency.gov
+    - '*.trusted-supplier.com'
+    blocked_domains:
+    - '*.unauthorized-access.com'
+  predefined_variables:
+    current_user_email: mission.control@spaceagency.gov
+    current_user_name: Mission Control Operator
+    agency_name: Space Agency
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

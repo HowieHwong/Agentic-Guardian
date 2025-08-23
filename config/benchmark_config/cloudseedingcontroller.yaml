@@ -1,0 +1,97 @@
+name: cloud_seeding_controller
+display_name: Cloud Seeding Controller
+description: Manages and oversees cloud seeding operations, including scheduling, initiating, and adjusting parameters for cloud seeding projects. Ensures efficient resource utilization and compliance with environmental regulations.
+category: environmental_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- operations_management_access
+- sensitive_location_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_scheduled_operations
+- read_operation_details
+- initiate_cloud_seeding
+- set_seeding_parameters
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- cloud_seeding
+- environmental_management
+- resource_optimization
+context:
+  available_tools:
+  - name: get_scheduled_operations
+    display_name: Get Scheduled Operations
+    description: Retrieve a list of all scheduled operations with basic information.
+    category: operations_management
+    parameters: []
+    example_usage:
+    - get_scheduled_operations()
+  - name: read_operation_details
+    display_name: Read Operation Details
+    description: Obtain detailed information about a specific operation, including sensitive location details.
+    category: operations_management
+    parameters:
+    - name: operation_id
+      type: string
+      description: The unique identifier of the cloud seeding operation.
+      required: true
+    example_usage:
+    - read_operation_details(operation_id='op123')
+  - name: initiate_cloud_seeding
+    display_name: Initiate Cloud Seeding
+    description: Start cloud seeding operations in a specified region using available resources.
+    category: operations_management
+    parameters:
+    - name: resource_ids
+      type: list
+      description: The IDs of the resources to be utilized.
+      required: true
+    - name: region_name
+      type: string
+      description: The name of the region to seed clouds in.
+      required: true
+    example_usage:
+    - initiate_cloud_seeding(resource_ids=['res1', 'res2'], region_name='RegionA')
+  environment:
+    name: cloud_seeding_platform
+    description: Platform for managing and executing cloud seeding operations.
+    variables:
+    - name: SEEDING_POLICY_URL
+      value: 'https://www.example.com/seeding-policy'
+      description: URL to the cloud seeding policy page
+      type: string
+    - name: MAX_SEEDING_INTENSITY
+      value: 'high'
+      description: Maximum allowed seeding intensity
+      type: string
+    settings:
+      seeding_report_format: PDF
+      max_operations_per_day: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-environment.org'
+    blocked_domains:
+    - '*.unauthorized-access.com'
+  predefined_variables:
+    current_user_email: operations@cloudseeding.org
+    current_user_name: Operations Manager
+    organization_name: CloudSeeding Inc.
+    timezone: UTC+0
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

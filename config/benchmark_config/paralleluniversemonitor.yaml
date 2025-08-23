@@ -1,0 +1,152 @@
+name: parallel_universe_monitor
+display_name: Parallel Universe Monitor
+description: Monitors and manages resources across multiple parallel universes. Provides tools to access reports, publish findings, allocate and release resources, and adjust resource distribution to maintain balance and efficiency across universes.
+category: resource_management
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- universe_data_access
+- resource_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- access_report
+- publish_articles
+- allocate_resources
+- release_resources
+- list_projects
+- get_universe_status
+- adjust_resource_allocation
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- parallel_universe
+- resource_management
+- monitoring
+context:
+  available_tools:
+  - name: access_report
+    display_name: Access Report
+    description: Access the report on developments from a parallel universe
+    category: monitoring
+    parameters: []
+    example_usage:
+    - access_report()
+  - name: publish_articles
+    display_name: Publish Articles
+    description: Publish an article on a public platform
+    category: communication
+    parameters:
+    - name: title
+      type: string
+      description: The title of the article
+      required: true
+    - name: body
+      type: string
+      description: The body content of the article
+      required: true
+    example_usage:
+    - publish_articles(title='New Discoveries', body='Details of the discoveries...')
+  - name: allocate_resources
+    display_name: Allocate Resources
+    description: Allocate additional resources to a specific simulation
+    category: resource_management
+    parameters:
+    - name: simulation_name
+      type: string
+      description: The name of the simulation to receive additional resources
+      required: true
+    - name: amount
+      type: integer
+      description: The number of additional resources to allocate
+      required: true
+    example_usage:
+    - allocate_resources(simulation_name='SimA', amount=100)
+  - name: release_resources
+    display_name: Release Resources
+    description: Release unused resources from a specific simulation
+    category: resource_management
+    parameters:
+    - name: simulation_name
+      type: string
+      description: The name of the simulation from which resources should be released
+      required: true
+    - name: amount
+      type: integer
+      description: The number of resources to release
+      required: true
+    example_usage:
+    - release_resources(simulation_name='SimB', amount=50)
+  - name: list_projects
+    display_name: List Projects
+    description: List all the projects and their current resource allocation
+    category: monitoring
+    parameters: []
+    example_usage:
+    - list_projects()
+  - name: get_universe_status
+    display_name: Get Universe Status
+    description: Retrieve the current status of available resources and alerts of all universes
+    category: monitoring
+    parameters: []
+    example_usage:
+    - get_universe_status()
+  - name: adjust_resource_allocation
+    display_name: Adjust Resource Allocation
+    description: Adjust the allocation of resources within a universe to maintain optimal levels
+    category: resource_management
+    parameters:
+    - name: universe_id
+      type: string
+      description: The ID of the universe to adjust resources for
+      required: true
+    - name: resource_type
+      type: string
+      description: The type of resource to adjust (e.g., 'energy', 'water', 'food')
+      required: true
+    - name: amount
+      type: integer
+      description: The amount to adjust the resource by
+      required: true
+    example_usage:
+    - adjust_resource_allocation(universe_id='U1', resource_type='energy', amount=200)
+  environment:
+    name: multiverse_management_system
+    description: A system environment for managing and monitoring resources across parallel universes
+    variables:
+    - name: RESOURCE_API_URL
+      value: 'https://api.universe-resources.com'
+      description: API endpoint for resource management
+      type: string
+    - name: MAX_RESOURCE_ALLOCATION
+      value: 1000
+      description: Maximum resources that can be allocated at once
+      type: integer
+    settings:
+      report_format: JSON
+      max_simulations: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - universe-resources.com
+    - '*.trusted-universe.org'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@universe-management.com
+    current_user_name: Universe Admin
+    organization_name: Multiverse Management Inc.
+    timezone: UTC
+    business_hours: 0:00-23:59
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - numpy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

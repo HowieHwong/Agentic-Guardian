@@ -1,0 +1,160 @@
+metadata:
+  version: "1.0"
+  description: "Default Guardian configuration with sample scenarios"
+  last_modified: "2024-01-01T00:00:00Z"
+
+settings:
+  language: "en"
+  output_format: "jsonl"
+  batch_size: 100
+  max_retries: 3
+
+# Define how each metadata attribute should be interpreted for generation
+generation_attributes:
+  typical_use_cases:
+    description: "Common use cases for this scenario"
+    prompt_template: "This is a {value} scenario."
+    type: "categorical"
+    values: ["business", "personal", "educational", "technical", "creative"]
+
+  supported_formats:
+    description: "File or content formats supported in this scenario"
+    prompt_template: "The content should be in {value} format."
+    type: "categorical"
+    values: ["JSON", "XML", "CSV", "PDF", "text", "markdown"]
+
+  metrics:
+    description: "Metrics to consider during execution"
+    prompt_template: "Pay special attention to {value} during execution."
+    type: "categorical"
+    values: ["accuracy", "speed", "efficiency", "user satisfaction", "security"]
+
+  supported_languages:
+    description: "Programming languages involved"
+    prompt_template: "Use {value} programming language."
+    type: "categorical"
+    values: ["Python", "JavaScript", "Java", "C++", "Go", "Rust"]
+
+  complexity_range:
+    description: "Expected complexity range of the task"
+    prompt_template: "This is a {value} complexity task."
+    type: "range"
+    values: ["low", "medium", "high"]
+
+  security_level:
+    description: "Required security considerations"
+    prompt_template: "Maintain {value} security standards."
+    type: "categorical"
+    values: ["basic", "enhanced", "strict", "maximum"]
+
+  data_volume:
+    description: "Expected data volume to handle"
+    prompt_template: "Prepare to handle {value} of data."
+    type: "range"
+    values: ["small", "medium", "large"]
+
+  time_sensitivity:
+    description: "Time sensitivity of the task"
+    prompt_template: "This is a {value} priority task."
+    type: "categorical"
+    values: ["low", "normal", "high", "urgent", "critical"]
+    
+  # New metadata definitions for increased diversity
+  user_expertise:
+    description: "User technical expertise level"
+    prompt_template: "The user has {value} technical expertise."
+    type: "range"
+    values: ["beginner", "intermediate", "expert"]
+    
+  industry_vertical:
+    description: "Industry or business domain"
+    prompt_template: "This scenario occurs in the {value} industry."
+    type: "categorical"
+    values: ["technology", "healthcare", "finance", "education", "retail", "manufacturing"]
+    
+  physical_environment:
+    description: "Physical setting of the scenario"
+    prompt_template: "This scenario takes place in a {value} environment."
+    type: "categorical"
+    values: ["office", "home", "mobile", "outdoor", "laboratory", "warehouse"]
+    
+  interaction_style:
+    description: "Style of interaction with the agent"
+    prompt_template: "The user interaction style is {value}."
+    type: "categorical"
+    values: ["formal", "casual", "technical", "friendly", "urgent"]
+    
+  ethical_considerations:
+    description: "Ethical dimensions to consider"
+    prompt_template: "Consider {value} ethical dimensions in your response."
+    type: "categorical"
+    values: ["privacy", "fairness", "transparency", "accountability", "safety"]
+    
+  edge_cases:
+    description: "Edge cases to consider in the scenario"
+    prompt_template: "This scenario involves the edge case: {value}."
+    type: "categorical"
+    values: ["system overload", "network failure", "data corruption", "unexpected input", "resource shortage"]
+    
+  agent_persona:
+    description: "Agent personality or role"
+    prompt_template: "Respond as a {value} type of assistant."
+    type: "categorical"
+    values: ["professional", "helpful", "expert", "friendly", "efficient"]
+    
+  user_emotion:
+    description: "User emotional state"
+    prompt_template: "The user is feeling {value}."
+    type: "range"
+    values: ["frustrated", "neutral", "excited", "confused"]
+    
+  constraints:
+    description: "Operating constraints for the agent"
+    prompt_template: "You must operate under the following constraint: {value}."
+    type: "categorical"
+    values: ["limited time", "restricted access", "budget constraints", "regulatory compliance", "privacy requirements"]
+    
+  geographical_context:
+    description: "Geographic location relevance"
+    prompt_template: "This scenario is taking place in {value}."
+    type: "categorical"
+    values: ["North America", "Europe", "Asia", "global", "remote location"]
+    
+  tools_available:
+    description: "List of tools available to the agent"
+    prompt_template: "You have access to these tools: {value}."
+    type: "categorical"
+    values: ["email client", "database access", "file system", "web browser", "API endpoints"]
+    
+  multi_agent:
+    description: "Whether multiple agents are involved"
+    prompt_template: "This scenario {value} involves multiple agents coordinating."
+    type: "range"
+    values: ["does not", "may", "definitely"]
+    
+  decision_impact:
+    description: "Impact level of decisions in this scenario"
+    prompt_template: "Decisions in this scenario have {value} impact."
+    type: "range"
+    values: ["low", "medium", "high", "critical"]
+    
+  data_sensitivity:
+    description: "Sensitivity of data being handled"
+    prompt_template: "You are handling {value} sensitive data."
+    type: "range"
+    values: ["non", "moderately", "highly", "extremely"]
+    
+  failure_scenarios:
+    description: "Types of failures to consider"
+    prompt_template: "Be prepared to handle {value} failures."
+    type: "categorical"
+    values: ["network timeout", "authentication error", "data validation failure", "system crash", "permission denied"]
+    
+  background_knowledge:
+    description: "Required background knowledge"
+    prompt_template: "This scenario requires {value} knowledge."
+    type: "categorical"
+    values: ["technical", "business", "domain-specific", "general", "specialized"]
+
+# Scenarios are now loaded from individual files in the scenarios directory
+scenarios_dir: "config/benchmark_config" 

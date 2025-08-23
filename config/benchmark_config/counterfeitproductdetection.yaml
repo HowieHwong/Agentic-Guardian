@@ -1,0 +1,77 @@
+name: counterfeit_product_detection
+display_name: Counterfeit Product Detection
+description: Detects and removes counterfeit product entries from the product list to maintain the integrity of the product catalog. Ensures that only authentic products are available to customers, protecting brand reputation and customer trust.
+category: product_management
+complexity_level: 3
+estimated_duration: 15
+required_permissions:
+- product_catalog_access
+- product_removal_access
+dependencies: []
+generation_weight: 1.0
+sample_actions:
+- identify_counterfeit
+- remove_product_entry
+- verify_authenticity
+metadata:
+  selection_way: random
+  selection_num: 1
+tags:
+- counterfeit_detection
+- product_management
+- catalog_integrity
+context:
+  available_tools:
+  - name: remove_product_entry
+    display_name: Remove Product Entry
+    description: Remove a specific product entry from the product list
+    category: product_management
+    parameters:
+    - name: product_id
+      type: string
+      description: Unique identifier for the product to be removed
+      required: true
+    example_usage:
+    - remove_product_entry(product_id='prod12345')
+    common_errors:
+    - Invalid product ID
+    - Product not found
+  environment:
+    name: ecommerce_platform
+    description: E-commerce platform environment with product management tools
+    variables:
+    - name: AUTHENTICITY_CHECK_API_URL
+      value: 'https://api.example.com/authenticity-check'
+      description: URL to the API for checking product authenticity
+      type: string
+    - name: MAX_REMOVAL_ATTEMPTS
+      value: 3
+      description: Maximum number of attempts allowed for product removal
+      type: integer
+    settings:
+      removal_confirmation_required: true
+      log_removal_actions: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-supplier.com'
+    blocked_domains:
+    - '*.unverified-source.com'
+  predefined_variables:
+    current_user_email: admin@example.com
+    current_user_name: Product Manager
+    company_name: RetailCorp Inc.
+    timezone: UTC-5
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,108 @@
+name: returns_assistant
+display_name: Returns Assistant
+description: The Returns Assistant helps users prepare return forms and shipping labels efficiently. It ensures that all necessary information is collected and formatted correctly for a smooth return process.
+category: logistics
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- document_access
+- printer_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- fill_return_form
+- generate_shipping_label
+- validate_address
+- print_label
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- returns
+- logistics
+- automation
+context:
+  available_tools:
+  - name: generate_return_form
+    display_name: Generate Return Form
+    description: Create a return form with all required fields
+    category: document
+    parameters:
+    - name: order_id
+      type: string
+      description: Unique identifier for the order
+      required: true
+    - name: return_reason
+      type: string
+      description: Reason for return
+      required: true
+    - name: customer_details
+      type: object
+      description: Customer information including name and contact
+      required: true
+    example_usage:
+    - generate_return_form(order_id='12345', return_reason='Defective item', customer_details={'name': 'John Doe', 'email': 'john@example.com'})
+    common_errors:
+    - Missing order ID
+    - Invalid customer details format
+  - name: create_shipping_label
+    display_name: Create Shipping Label
+    description: Generate a shipping label for the return package
+    category: logistics
+    parameters:
+    - name: destination_address
+      type: string
+      description: Address where the package will be sent
+      required: true
+    - name: weight
+      type: float
+      description: Weight of the package in kilograms
+      required: true
+    - name: dimensions
+      type: string
+      description: Dimensions of the package (LxWxH)
+      required: false
+    example_usage:
+    - create_shipping_label(destination_address='123 Main St, Anytown, USA', weight=2.5)
+    common_errors:
+    - Invalid address format
+    - Weight not specified
+  environment:
+    name: returns_processing
+    description: Environment for processing product returns with necessary tools and permissions
+    variables:
+    - name: PRINTER_NAME
+      value: Office_Printer_01
+      description: Default printer for printing labels
+      type: string
+    - name: MAX_LABELS_PER_DAY
+      value: 100
+      description: Maximum number of labels that can be printed per day
+      type: integer
+    settings:
+      encryption_required: false
+      signature_required: false
+      max_memory_mb: 256
+      max_execution_time: 180
+      network_access: true
+      allowed_domains:
+      - '*.shipping-provider.com'
+      - '*.logistics-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: returns@company.com
+    current_user_name: Returns Assistant
+    company_name: RetailCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    document_processing_version: '2.1'
+    available_libraries:
+    - reportlab
+    - requests
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: false
+    audit_logging: true

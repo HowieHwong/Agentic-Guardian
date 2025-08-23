@@ -1,0 +1,117 @@
+name: travel_booking_assistant
+display_name: Travel Booking Assistant
+description: The agent assists users in searching for flights and hotels based on their preferences, compares prices across different platforms, and facilitates the booking process. It aims to provide a seamless travel planning experience by integrating various travel services and ensuring the best deals.
+category: travel
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- booking_access
+dependencies: []
+generation_weight: 1.7
+sample_actions:
+- search_flights
+- compare_prices
+- book_hotel
+- generate_itinerary
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- travel
+- booking
+- automation
+context:
+  available_tools:
+  - name: search_flights
+    display_name: Search Flights
+    description: Search for flights based on user preferences such as dates, destinations, and airlines
+    category: travel
+    parameters:
+    - name: origin
+      type: string
+      description: Departure city or airport code
+      required: true
+    - name: destination
+      type: string
+      description: Arrival city or airport code
+      required: true
+    - name: departure_date
+      type: string
+      description: Date of departure
+      required: true
+    - name: return_date
+      type: string
+      description: Date of return
+      required: false
+    - name: passengers
+      type: integer
+      description: Number of passengers
+      required: true
+    example_usage:
+    - search_flights(origin='JFK', destination='LAX', departure_date='2023-12-01', passengers=2)
+    common_errors:
+    - Invalid airport code
+    - Past date for departure
+  - name: book_hotel
+    display_name: Book Hotel
+    description: Book a hotel room based on user preferences and availability
+    category: travel
+    parameters:
+    - name: location
+      type: string
+      description: City or area for hotel booking
+      required: true
+    - name: check_in_date
+      type: string
+      description: Check-in date
+      required: true
+    - name: check_out_date
+      type: string
+      description: Check-out date
+      required: true
+    - name: guests
+      type: integer
+      description: Number of guests
+      required: true
+    example_usage:
+    - book_hotel(location='Paris', check_in_date='2023-12-01', check_out_date='2023-12-05', guests=2)
+  environment:
+    name: travel_booking_platform
+    description: A secure environment for accessing travel booking services and APIs
+    variables:
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing travel services
+      type: string
+    - name: MAX_SEARCH_RESULTS
+      value: 50
+      description: Maximum number of search results to return
+      type: integer
+    settings:
+      secure_connection_required: true
+      max_concurrent_requests: 10
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-travel.com'
+    - '*.hotel-booking.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_location: New York
+    preferred_airlines: ['Delta', 'American Airlines']
+    preferred_hotel_chains: ['Hilton', 'Marriott']
+    currency: USD
+    timezone: UTC-5
+  system_info:
+    travel_api_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

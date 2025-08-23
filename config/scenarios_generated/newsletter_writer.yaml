@@ -1,0 +1,97 @@
+name: newsletter_writer
+display_name: Newsletter Writer
+description: The agent assembles and formats newsletters from your notes or updates,
+  providing a streamlined way to create professional newsletters for distribution.
+  It ensures content is well-organized and visually appealing, tailored to the target
+  audience.
+category: content_creation
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- document_access
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- gather_notes
+- format_content
+- add_images
+- export_newsletter
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- newsletter
+- content
+- automation
+context:
+  available_tools:
+  - name: format_text
+    display_name: Format Text
+    description: Format text content for newsletters
+    category: content_creation
+    parameters:
+    - name: text
+      type: string
+      description: Text content to format
+      required: true
+    - name: style
+      type: string
+      description: Formatting style to apply
+      required: false
+      allowed_values:
+      - bold
+      - italic
+      - underline
+    example_usage:
+    - format_text(text='Welcome to our newsletter!', style='bold')
+  - name: add_images
+    display_name: Add Images
+    description: Add images to the newsletter content
+    category: content_creation
+    parameters:
+    - name: image_paths
+      type: list
+      description: List of image file paths to include
+      required: true
+    example_usage:
+    - add_images(image_paths=['header.jpg', 'team_photo.png'])
+  environment:
+    name: newsletter_editor
+    description: Environment for creating and editing newsletters with various formatting
+      and media options
+    variables:
+    - name: MAX_IMAGE_SIZE_MB
+      value: 5
+      description: Maximum image size in MB
+      type: integer
+    - name: DEFAULT_FONT
+      value: Arial
+      description: Default font for newsletter text
+      type: string
+    settings:
+      auto_save_interval: 10
+      max_pages: 20
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-content.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: editor@newsletter.com
+    current_user_name: Newsletter Editor
+    company_name: NewsCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    editor_version: '2.3'
+    available_libraries:
+    - PIL
+    - reportlab
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,93 @@
+name: recipe_improver
+display_name: Recipe Improver
+description: Enhances basic recipes by improving their nutritional value or flavor profile.
+  This involves analyzing existing recipes and suggesting modifications or additions
+  to ingredients, cooking methods, or presentation to achieve a more balanced and
+  appealing dish.
+category: culinary
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- recipe_database_access
+- nutritional_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_recipe
+- suggest_ingredient
+- modify_cooking_method
+- enhance_flavor
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- cooking
+- nutrition
+- flavor
+context:
+  available_tools:
+  - name: analyze_recipe
+    display_name: Analyze Recipe
+    description: Analyze a recipe to determine its nutritional content and flavor profile
+    category: culinary
+    parameters:
+    - name: recipe
+      type: string
+      description: The recipe to be analyzed
+      required: true
+    example_usage:
+    - analyze_recipe(recipe='Spaghetti Bolognese')
+    common_errors:
+    - Recipe format not recognized
+    - Missing ingredient details
+  - name: suggest_ingredient
+    display_name: Suggest Ingredient
+    description: Suggest additional or alternative ingredients to improve a recipe
+    category: culinary
+    parameters:
+    - name: current_ingredients
+      type: list
+      description: List of current ingredients in the recipe
+      required: true
+    - name: goal
+      type: string
+      description: The goal of the suggestion (e.g., increase protein, enhance flavor)
+      required: true
+    example_usage:
+    - suggest_ingredient(current_ingredients=['tomato', 'basil'], goal='enhance flavor')
+  environment:
+    name: culinary_lab
+    description: A virtual environment equipped with tools and data for recipe analysis
+      and enhancement
+    variables:
+    - name: RECIPE_DB_URL
+      value: http://recipes.example.com
+      description: URL for the recipe database
+      type: string
+    - name: NUTRITION_API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing nutritional data
+      type: string
+    settings:
+      max_ingredients_per_recipe: 20
+      max_suggestions_per_recipe: 5
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - recipes.example.com
+    - nutritiondata.example.com
+  predefined_variables:
+    current_user_name: Culinary AI
+    preferred_cuisine: Italian
+    dietary_restrictions: None
+  system_info:
+    culinary_toolkit_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

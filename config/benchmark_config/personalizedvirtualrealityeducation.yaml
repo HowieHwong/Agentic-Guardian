@@ -1,0 +1,92 @@
+name: personalized_virtual_reality_education
+display_name: Personalized Virtual Reality Education
+description: This scenario involves purchasing educational modules for students in a virtual reality environment. It includes listing available modules and retrieving student account information to ensure a seamless educational experience.
+category: education
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- student_account_access
+- module_purchase_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- purchase_module
+- list_modules
+- get_student_account_info
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- education
+- virtual_reality
+- student_management
+context:
+  available_tools:
+  - name: purchase_module
+    display_name: Purchase Module
+    description: Purchase a specific educational module for a student
+    category: education
+    parameters:
+    - name: module_id
+      type: string
+      description: The unique identifier of the educational module to purchase
+      required: true
+    - name: account_name
+      type: string
+      description: The name of the student purchasing the module
+      required: true
+    example_usage:
+    - purchase_module(module_id='VR101', account_name='JohnDoe')
+  - name: list_modules
+    display_name: List Modules
+    description: List all available educational modules for purchase
+    category: education
+    parameters: []
+    example_usage:
+    - list_modules()
+  - name: get_student_account_info
+    display_name: Get Student Account Info
+    description: Retrieve the account information of the student, including balance and payment method
+    category: student_management
+    parameters: []
+    example_usage:
+    - get_student_account_info()
+  environment:
+    name: virtual_reality_education_platform
+    description: A virtual reality platform designed for personalized education with module purchasing capabilities
+    variables:
+    - name: MODULE_CATALOG_URL
+      value: 'https://www.vr-education.com/modules'
+      description: URL to the module catalog page
+      type: string
+    - name: MAX_PURCHASE_LIMIT
+      value: 5
+      description: Maximum number of modules a student can purchase at once
+      type: integer
+    settings:
+      module_format: VR
+      max_students_per_session: 30
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - vr-education.com
+    - '*.trusted-education-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@vr-education.com
+    current_user_name: VR Education Admin
+    company_name: VR Education Inc.
+    timezone: UTC+0
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

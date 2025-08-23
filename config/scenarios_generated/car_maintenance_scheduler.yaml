@@ -1,0 +1,104 @@
+name: car_maintenance_scheduler
+display_name: Car Maintenance Scheduler
+description: Reminds users when vehicles need service and books appointments with service centers. The agent tracks vehicle maintenance schedules, sends reminders, and facilitates booking appointments with authorized service providers.
+category: automation
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- calendar_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_maintenance_schedule
+- send_reminder
+- book_service_appointment
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- car
+- maintenance
+- scheduling
+- automation
+context:
+  available_tools:
+  - name: check_maintenance_schedule
+    display_name: Check Maintenance Schedule
+    description: Retrieve the maintenance schedule for a vehicle
+    category: automation
+    parameters:
+    - name: vehicle_id
+      type: string
+      description: Unique identifier for the vehicle
+      required: true
+    example_usage:
+    - check_maintenance_schedule(vehicle_id='123ABC')
+  - name: send_reminder
+    display_name: Send Reminder
+    description: Send a maintenance reminder to the user
+    category: communication
+    parameters:
+    - name: user_contact
+      type: string
+      description: Contact information for the user
+      required: true
+    - name: message
+      type: string
+      description: Reminder message content
+      required: true
+    example_usage:
+    - send_reminder(user_contact='user@example.com', message='Your car is due for maintenance.')
+  - name: book_service_appointment
+    display_name: Book Service Appointment
+    description: Book an appointment with a service center
+    category: automation
+    parameters:
+    - name: service_center_id
+      type: string
+      description: Identifier for the service center
+      required: true
+    - name: appointment_date
+      type: string
+      description: Desired date for the appointment
+      required: true
+    example_usage:
+    - book_service_appointment(service_center_id='SC001', appointment_date='2023-11-15')
+  environment:
+    name: vehicle_maintenance_system
+    description: Environment for managing vehicle maintenance schedules and appointments
+    variables:
+    - name: API_ENDPOINT
+      value: api.maintenance.com
+      description: Endpoint for maintenance scheduling API
+      type: string
+    - name: MAX_REMINDERS_PER_DAY
+      value: 5
+      description: Maximum number of reminders sent per day
+      type: integer
+    settings:
+      notification_required: true
+      appointment_confirmation: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - maintenance.com
+    - '*.trusted-service.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_vehicle: '123ABC'
+    preferred_service_center: 'SC001'
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    maintenance_system_version: '2.3'
+    available_libraries:
+    - requests
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

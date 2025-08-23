@@ -1,0 +1,69 @@
+name: web_service_optimization
+display_name: Web Service Optimization
+description: This scenario involves retrieving code snippets related to specific topics, which can be used to optimize web services. The agent is expected to understand the topic and provide relevant code examples that can enhance the performance or functionality of web services.
+category: software_development
+complexity_level: 3
+estimated_duration: 15
+required_permissions: []
+dependencies: []
+generation_weight: 1.0
+sample_actions:
+- get_code_snippet
+metadata:
+  selection_way: random
+  selection_num: 1
+tags:
+- code_snippets
+- web_services
+- optimization
+context:
+  available_tools:
+  - name: get_code_snippet
+    display_name: Get Code Snippet
+    description: Retrieve a code snippet related to a specified topic
+    category: development
+    parameters:
+    - name: topic
+      type: string
+      description: The topic of the code snippet
+      required: true
+    example_usage:
+    - get_code_snippet(topic='REST API optimization')
+    common_errors:
+    - Topic not specified
+    - No code snippet found for the given topic
+  environment:
+    name: development_environment
+    description: A development environment with access to code repositories and documentation
+    variables:
+    - name: CODE_REPOSITORY_URL
+      value: 'https://www.example.com/code-repo'
+      description: URL to the code repository
+      type: string
+    settings:
+      snippet_format: Markdown
+      max_snippet_length: 500
+    max_memory_mb: 128
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-code.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: developer@example.com
+    current_user_name: Developer
+    company_name: TechSolutions Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - requests
+    - yaml
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: true
+    encryption_at_rest: false
+    audit_logging: true

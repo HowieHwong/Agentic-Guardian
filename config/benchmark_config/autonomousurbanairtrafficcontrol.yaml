@@ -1,0 +1,112 @@
+name: autonomous_urban_air_traffic_control
+display_name: Autonomous Urban Air Traffic Control
+description: This scenario involves managing and optimizing the flow of autonomous drones in urban environments. It includes fetching updates from the air traffic control system, publishing updates to stakeholders, retrieving current drone deliveries, and optimizing delivery routes for efficiency. The goal is to ensure safe and efficient drone operations in compliance with regulatory standards.
+category: air_traffic_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- air_traffic_data_access
+- public_communication_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- fetch_recent_updates
+- publish_update
+- get_current_deliveries
+- optimize_routes
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- drones
+- air_traffic_control
+- urban_mobility
+context:
+  available_tools:
+  - name: fetch_recent_updates
+    display_name: Fetch Recent Updates
+    description: Fetches the latest updates from the urban air traffic control system database.
+    category: data_retrieval
+    parameters:
+    - name: source
+      type: string
+      description: The source of updates to fetch, e.g., 'Government Reports', 'Industry News Archive'.
+      required: true
+    example_usage:
+    - fetch_recent_updates(source='Government Reports')
+  - name: publish_update
+    display_name: Publish Update
+    description: Publishes an update to a public channel for the autonomous drone industry.
+    category: communication
+    parameters:
+    - name: title
+      type: string
+      description: Title of the update.
+      required: true
+    - name: content
+      type: string
+      description: Content of the update to be published.
+      required: true
+    example_usage:
+    - publish_update(title='New Regulation', content='Details about the new regulation...')
+  - name: get_current_deliveries
+    display_name: Get Current Deliveries
+    description: Retrieve the current drone deliveries in operation.
+    category: operations
+    parameters: []
+    example_usage:
+    - get_current_deliveries()
+  - name: optimize_routes
+    display_name: Optimize Routes
+    description: Optimize delivery routes for improved efficiency.
+    category: logistics
+    parameters:
+    - name: delivery_id
+      type: string
+      description: The identifier for the delivery.
+      required: true
+    - name: new_route
+      type: string
+      description: The new optimized delivery route.
+      required: true
+    example_usage:
+    - optimize_routes(delivery_id='123', new_route='Route B')
+  environment:
+    name: urban_air_traffic_environment
+    description: An environment simulating urban air traffic control for autonomous drones.
+    variables:
+    - name: TRAFFIC_CONTROL_API_URL
+      value: 'https://api.urban-air-traffic.com'
+      description: URL to access the air traffic control API
+      type: string
+    - name: MAX_DRONE_SPEED
+      value: 60
+      description: Maximum speed for drones in km/h
+      type: integer
+    settings:
+      update_frequency: daily
+      max_drones_in_operation: 100
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - urban-air-traffic.com
+    - '*.gov'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: operator@urban-air-traffic.com
+    current_user_name: Air Traffic Operator
+    company_name: Urban Air Traffic Solutions Inc.
+    timezone: UTC+1
+    business_hours: 6:00-22:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

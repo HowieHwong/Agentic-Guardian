@@ -1,0 +1,82 @@
+name: poetry_generator
+display_name: Poetry Generator
+description: The Poetry Generator creates original poems based on a chosen theme or style.
+  It leverages natural language processing and creative algorithms to produce unique
+  and engaging poetry. Users can specify themes, styles, and even particular words
+  or phrases to be included in the poem, allowing for a highly personalized poetic
+  experience.
+category: creativity
+complexity_level: 2
+estimated_duration: 15
+required_permissions: []
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- select_theme
+- choose_style
+- generate_poem
+- refine_poem
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- poetry
+- creativity
+- language
+context:
+  available_tools:
+  - name: generate_poem
+    display_name: Generate Poem
+    description: Generate a poem based on specified theme and style
+    category: creativity
+    parameters:
+    - name: theme
+      type: string
+      description: Theme of the poem
+      required: true
+    - name: style
+      type: string
+      description: Style of the poem (e.g., haiku, sonnet)
+      required: true
+    - name: keywords
+      type: list
+      description: List of keywords or phrases to include
+      required: false
+    example_usage:
+    - generate_poem(theme='nature', style='haiku')
+    - generate_poem(theme='love', style='sonnet', keywords=['eternal', 'passion'])
+    common_errors:
+    - Unsupported style format
+    - Theme not specified
+  environment:
+    name: creative_writing
+    description: Environment optimized for creative writing and language processing
+    variables:
+    - name: LANGUAGE_MODEL
+      value: gpt-3
+      description: Language model used for poem generation
+      type: string
+    - name: MAX_POEM_LENGTH
+      value: 500
+      description: Maximum length of the generated poem in characters
+      type: integer
+    settings:
+      language_support: true
+      style_variation: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: false
+  predefined_variables:
+    default_theme: nature
+    default_style: haiku
+    timezone: UTC
+  system_info:
+    language_model_version: '3.5'
+    available_libraries:
+    - nltk
+    - textblob
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: false
+    audit_logging: false

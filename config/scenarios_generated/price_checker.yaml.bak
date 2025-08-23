@@ -1,0 +1,109 @@
+name: price_checker
+display_name: Price Checker
+description: Monitors competitor prices and suggests dynamic price adjustments to optimize
+  pricing strategy and maintain market competitiveness.
+category: market_analysis
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- data_analysis
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- fetch_competitor_prices
+- analyze_price_trends
+- suggest_price_adjustments
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- pricing
+- market_analysis
+- automation
+context:
+  available_tools:
+  - name: fetch_competitor_prices
+    display_name: Fetch Competitor Prices
+    description: Retrieve current pricing information from competitor websites
+    category: data_collection
+    parameters:
+    - name: competitor_urls
+      type: list
+      description: List of competitor website URLs
+      required: true
+      validation_pattern: ^https?://[\w\.-]+
+    example_usage:
+    - fetch_competitor_prices(competitor_urls=['https://competitor1.com', 'https://competitor2.com'])
+    common_errors:
+    - Invalid URL format
+    - Website not reachable
+  - name: analyze_price_trends
+    display_name: Analyze Price Trends
+    description: Analyze historical price data to identify trends and patterns
+    category: data_analysis
+    parameters:
+    - name: price_data
+      type: list
+      description: Historical price data
+      required: true
+    - name: analysis_period
+      type: integer
+      description: Number of days to analyze
+      required: false
+      default_value: 30
+    example_usage:
+    - analyze_price_trends(price_data=[{'date': '2023-01-01', 'price': 100}], analysis_period=60)
+  - name: suggest_price_adjustments
+    display_name: Suggest Price Adjustments
+    description: Provide dynamic pricing suggestions based on competitor analysis
+    category: decision_support
+    parameters:
+    - name: current_price
+      type: float
+      description: Current product price
+      required: true
+    - name: competitor_prices
+      type: list
+      description: List of competitor prices
+      required: true
+    example_usage:
+    - suggest_price_adjustments(current_price=99.99, competitor_prices=[95.00, 97.50])
+  environment:
+    name: competitive_market_analysis
+    description: Environment for analyzing and adjusting prices in a competitive market
+    variables:
+    - name: API_KEY
+      value: your_api_key_here
+      description: API key for accessing pricing data services
+      type: string
+    - name: MAX_CONCURRENT_REQUESTS
+      value: 5
+      description: Maximum number of concurrent requests to competitor sites
+      type: integer
+    settings:
+      data_refresh_interval: 60
+      max_data_storage_days: 90
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.competitor.com'
+    - '*.pricing-service.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_role: pricing_manager
+    company_name: RetailCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    analysis_tool_version: '2.1'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

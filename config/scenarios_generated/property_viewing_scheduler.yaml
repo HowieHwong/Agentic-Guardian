@@ -1,0 +1,100 @@
+name: property_viewing_scheduler
+display_name: Property Viewing Scheduler
+description: Arranges appointments for house or apartment viewings, coordinating with real estate agents and potential buyers to find suitable times and locations.
+category: scheduling
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- calendar_access
+- contact_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- find_available_slots
+- schedule_appointment
+- send_confirmation
+metadata:
+  selection_way: priority
+  selection_num: 3
+tags:
+- real_estate
+- scheduling
+- appointments
+context:
+  available_tools:
+  - name: schedule_appointment
+    display_name: Schedule Appointment
+    description: Schedule a viewing appointment with a real estate agent
+    category: scheduling
+    parameters:
+    - name: agent_contact
+      type: string
+      description: Contact information of the real estate agent
+      required: true
+    - name: property_address
+      type: string
+      description: Address of the property to view
+      required: true
+    - name: preferred_times
+      type: list
+      description: List of preferred viewing times
+      required: true
+    example_usage:
+    - schedule_appointment(agent_contact='agent@realty.com', property_address='123 Elm St', preferred_times=['10:00', '14:00'])
+    common_errors:
+    - Invalid contact information
+    - Overlapping appointment times
+  - name: send_confirmation
+    display_name: Send Confirmation
+    description: Send confirmation emails to all parties involved
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Email address of the recipient
+      required: true
+    - name: appointment_details
+      type: string
+      description: Details of the scheduled appointment
+      required: true
+    example_usage:
+    - send_confirmation(recipient='buyer@domain.com', appointment_details='Viewing at 123 Elm St on 2023-10-15 at 10:00')
+  environment:
+    name: real_estate_scheduling
+    description: Environment for scheduling property viewings with necessary tools and permissions
+    variables:
+    - name: CALENDAR_API
+      value: calendar.api.service
+      description: API endpoint for calendar services
+      type: string
+    - name: MAX_APPOINTMENTS_PER_DAY
+      value: 5
+      description: Maximum number of appointments that can be scheduled per day
+      type: integer
+    settings:
+      notification_required: true
+      double_booking_prevention: true
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - realty.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.spam-domain.com'
+  predefined_variables:
+    current_user_email: scheduler@realty.com
+    current_user_name: Property Scheduler
+    company_name: Realty Solutions Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    scheduling_client_version: '2.1'
+    available_libraries:
+    - requests
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

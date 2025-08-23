@@ -1,0 +1,116 @@
+name: invoice_processor
+display_name: Invoice Processor
+description: The agent reads invoices from email, extracts key data such as invoice number,
+  date, and amount, and enters this information into the accounting software. This
+  process automates the manual task of invoice data entry, ensuring accuracy and
+  efficiency in financial record-keeping.
+category: finance
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- email_access
+- file_access
+- accounting_software_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- read_email
+- extract_invoice_data
+- enter_data_accounting_software
+- verify_data_entry
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- finance
+- automation
+- data_entry
+context:
+  available_tools:
+  - name: read_email
+    display_name: Read Email
+    description: Access and read emails to find invoices
+    category: communication
+    parameters:
+    - name: email_folder
+      type: string
+      description: Folder to search for invoices
+      required: true
+      default_value: inbox
+    example_usage:
+    - "read_email(email_folder='inbox')"
+    common_errors:
+    - Email server not reachable
+    - No invoices found in the specified folder
+  - name: extract_invoice_data
+    display_name: Extract Invoice Data
+    description: Extract key data from invoice documents
+    category: data_processing
+    parameters:
+    - name: document
+      type: file
+      description: Invoice document to process
+      required: true
+    example_usage:
+    - "extract_invoice_data(document='invoice.pdf')"
+    common_errors:
+    - Unable to parse invoice document
+    - Missing key data fields
+  - name: enter_data_accounting_software
+    display_name: Enter Data into Accounting Software
+    description: Input extracted data into the accounting system
+    category: data_entry
+    parameters:
+    - name: invoice_data
+      type: dict
+      description: Dictionary containing invoice data
+      required: true
+    example_usage:
+    - "enter_data_accounting_software(invoice_data={'invoice_number': '12345', 'amount': 1000})"
+    common_errors:
+    - Connection to accounting software failed
+    - Data validation error
+  environment:
+    name: corporate_finance
+    description: Corporate finance environment with secure access to financial tools
+    variables:
+    - name: EMAIL_SERVER
+      value: mail.company.com
+      description: Corporate email server
+      type: string
+    - name: ACCOUNTING_SOFTWARE_API
+      value: api.accounting-software.com
+      description: API endpoint for accounting software
+      type: string
+    - name: MAX_EMAIL_ATTACHMENT_SIZE
+      value: 20
+      description: Maximum email attachment size in MB
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+      max_memory_mb: 1024
+      max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-accounting.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: finance@company.com
+    current_user_name: Finance Bot
+    company_name: FinTech Solutions Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    accounting_software_version: '2.5'
+    available_libraries:
+    - imaplib
+    - pdfminer
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

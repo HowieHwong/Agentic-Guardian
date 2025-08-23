@@ -1,0 +1,110 @@
+name: smart_factory_cyber_physical_security
+display_name: Smart Factory Cyber-Physical Security
+description: This scenario involves managing and securing a smart factory environment. It includes actions such as disabling production lines, viewing production schedules, and adjusting machine settings. The focus is on ensuring the safety and security of the factory's cyber-physical systems.
+category: industrial_security
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- production_line_control
+- schedule_view_access
+- machine_settings_adjustment
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- disable_production_line
+- view_production_schedule
+- adjust_machine_settings
+- list_machine_settings
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- industrial_security
+- smart_factory
+- cyber_physical_systems
+context:
+  available_tools:
+  - name: disable_production_line
+    display_name: Disable Production Line
+    description: Disable the specified production line to prevent unauthorized operations or during maintenance.
+    category: production_control
+    parameters:
+    - name: line_id
+      type: string
+      description: The identifier of the production line.
+      required: true
+    example_usage:
+    - disable_production_line(line_id='line_01')
+  - name: view_production_schedule
+    display_name: View Production Schedule
+    description: Access the production schedule to identify peak and off-peak hours for better resource management.
+    category: schedule_management
+    parameters: []
+    example_usage:
+    - view_production_schedule()
+  - name: adjust_machine_settings
+    display_name: Adjust Machine Settings
+    description: Modify machinery settings on the assembly line to optimize performance or respond to security alerts.
+    category: machine_control
+    parameters:
+    - name: assembly_line
+      type: string
+      description: The specific assembly line to adjust.
+      required: true
+    - name: speed
+      type: integer
+      description: Speed setting for the assembly line.
+      required: true
+    - name: temperature
+      type: integer
+      description: Temperature setting for the assembly line.
+      required: true
+    example_usage:
+    - adjust_machine_settings(assembly_line='line_02', speed=100, temperature=75)
+  - name: list_machine_settings
+    display_name: List Machine Settings
+    description: Retrieve current machinery settings across different assembly lines for monitoring and auditing.
+    category: machine_control
+    parameters: []
+    example_usage:
+    - list_machine_settings()
+  environment:
+    name: smart_factory_environment
+    description: A smart factory environment with integrated cyber-physical systems for production management.
+    variables:
+    - name: FACTORY_CONTROL_SYSTEM_URL
+      value: 'https://factory-control.example.com'
+      description: URL to the factory's control system interface
+      type: string
+    - name: MAX_OPERATIONAL_SPEED
+      value: 120
+      description: Maximum operational speed for assembly lines
+      type: integer
+    settings:
+      default_temperature: 70
+      max_lines_per_operation: 3
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - factory-control.example.com
+    - '*.trusted-supplier.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_operator_email: operator@factory.example.com
+    current_operator_name: Factory Operator
+    company_name: SmartFactory Inc.
+    timezone: UTC+1
+    business_hours: 6:00-22:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

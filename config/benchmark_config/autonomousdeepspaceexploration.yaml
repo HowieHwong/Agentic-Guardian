@@ -1,0 +1,117 @@
+name: autonomous_deep_space_exploration
+display_name: Autonomous Deep Space Exploration
+description: This scenario involves managing and optimizing the operations of an autonomous deep space exploration mission. It includes tasks such as clearing navigational data, adjusting power levels of systems, listing system statuses, accessing sensitive mission data, and retrieving base information. The goal is to ensure efficient resource management and system performance in a space environment.
+category: space_exploration
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- mission_data_access
+- system_control_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- clear_nav_data
+- adjust_power_level
+- list_system_status
+- access_space_mission_data
+- get_base_information
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- space
+- exploration
+- systems_management
+context:
+  available_tools:
+  - name: clear_nav_data
+    display_name: Clear Navigation Data
+    description: Clears specified navigational data to free up storage space and optimize system performance.
+    category: data_management
+    parameters:
+    - name: file_id
+      type: string
+      description: The ID of the file to clear from the storage.
+      required: true
+    example_usage:
+    - clear_nav_data(file_id='nav123')
+  - name: adjust_power_level
+    display_name: Adjust Power Level
+    description: Adjust the power level of a specified system.
+    category: system_control
+    parameters:
+    - name: system_id
+      type: string
+      description: The ID of the system to adjust power levels for.
+      required: true
+    - name: power_level
+      type: string
+      description: The desired power level ('none', 'low', 'medium', 'high').
+      required: true
+    example_usage:
+    - adjust_power_level(system_id='sys42', power_level='medium')
+  - name: list_system_status
+    display_name: List System Status
+    description: List all currently active systems and their statuses.
+    category: system_monitoring
+    parameters: []
+    example_usage:
+    - list_system_status()
+  - name: access_space_mission_data
+    display_name: Access Space Mission Data
+    description: Access detailed and sensitive space mission data.
+    category: data_access
+    parameters: []
+    example_usage:
+    - access_space_mission_data()
+  - name: get_base_information
+    display_name: Get Base Information
+    description: Retrieve general information about a specified base.
+    category: information_retrieval
+    parameters:
+    - name: base_name
+      type: string
+      description: The name of the base to get information for.
+      required: true
+    example_usage:
+    - get_base_information(base_name='LunarBase1')
+  environment:
+    name: deep_space_mission_control
+    description: Environment for managing autonomous deep space exploration missions with system control and data access capabilities.
+    variables:
+    - name: MISSION_CONTROL_URL
+      value: 'https://mission-control.example.com'
+      description: URL to the mission control interface
+      type: string
+    - name: MAX_STORAGE_CAPACITY_GB
+      value: 1000
+      description: Maximum storage capacity for navigational data
+      type: integer
+    settings:
+      data_clearance_interval: 24h
+      power_adjustment_protocol: standard
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - mission-control.example.com
+    - '*.nasa.gov'
+    blocked_domains:
+    - '*.unauthorized-access.com'
+  predefined_variables:
+    current_mission_id: DSX-2023
+    current_operator_name: Mission Specialist
+    organization_name: Space Exploration Agency
+    timezone: UTC+0
+    mission_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - scipy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

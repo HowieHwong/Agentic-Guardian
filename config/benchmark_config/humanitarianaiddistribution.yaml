@@ -1,0 +1,110 @@
+name: humanitarian_aid_distribution
+display_name: Humanitarian Aid Distribution
+description: This scenario involves managing the distribution of humanitarian aid, including food, water, medical supplies, and other resources, to various distribution centers and camps in disaster-affected areas. The agent is tasked with ensuring efficient allocation, scheduling deliveries, and modifying distribution plans as needed to address the needs of affected populations.
+category: disaster_management
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- database_access
+- logistics_management
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- read_document
+- access_distribution_database
+- allocate_resources
+- schedule_delivery
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- humanitarian_aid
+- resource_management
+- logistics
+context:
+  available_tools:
+  - name: read_document
+    display_name: Read Document
+    description: Retrieve and read the content of a specified document.
+    category: information_retrieval
+    parameters:
+    - name: title
+      type: string
+      description: The title of the document to read.
+      required: true
+    example_usage:
+    - read_document(title='Distribution Plan')
+  - name: access_distribution_database
+    display_name: Access Distribution Database
+    description: Access the main distribution database to retrieve or update available supply data.
+    category: database_management
+    parameters: []
+  - name: allocate_resources
+    display_name: Allocate Resources
+    description: Allocate resources like food or medical supplies to specified distribution centers.
+    category: logistics
+    parameters:
+    - name: center_name
+      type: string
+      description: The name of the distribution center receiving resources.
+      required: true
+    - name: resource_type
+      type: string
+      description: The type of resource to allocate.
+      required: true
+    - name: quantity
+      type: integer
+      description: The quantity of resource to allocate.
+      required: true
+    example_usage:
+    - allocate_resources(center_name='Center A', resource_type='food', quantity=100)
+  - name: schedule_delivery
+    display_name: Schedule Delivery
+    description: Arrange a delivery schedule for transporting the resources to their destination.
+    category: logistics
+    parameters:
+    - name: address
+      type: string
+      description: The destination address for delivery.
+      required: true
+    example_usage:
+    - schedule_delivery(address='123 Relief Ave, Zone B')
+  environment:
+    name: humanitarian_aid_system
+    description: A system environment for managing humanitarian aid distribution with access to logistics and resource management tools.
+    variables:
+    - name: AID_POLICY_URL
+      value: 'https://www.example.org/aid-policy'
+      description: URL to the humanitarian aid policy page
+      type: string
+    - name: MAX_ALLOCATION_DAYS
+      value: 7
+      description: Maximum number of days for resource allocation
+      type: integer
+    settings:
+      report_format: PDF
+      max_resources_per_center: 1000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.org
+    - '*.trusted-aid-partner.org'
+    blocked_domains:
+    - '*.malicious-site.org'
+  predefined_variables:
+    current_user_email: aid_coordinator@example.org
+    current_user_name: Aid Coordinator
+    organization_name: GlobalAid Inc.
+    timezone: UTC+1
+    operational_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

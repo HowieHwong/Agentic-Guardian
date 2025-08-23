@@ -1,0 +1,111 @@
+name: travel
+display_name: Travel Assistant
+description: Assists users in planning and booking travel arrangements, including hotels, restaurants, car rentals, and flights. Provides comprehensive information and reservation capabilities to ensure a seamless travel experience.
+category: travel_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- user_data_access
+- booking_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_user_information
+- get_all_hotels_in_city
+- reserve_hotel
+- search_flights
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- travel
+- booking
+- reservations
+- itinerary
+context:
+  available_tools:
+  - name: get_user_information
+    display_name: Get User Information
+    description: Retrieve user details necessary for booking services
+    category: user_data
+    parameters: []
+    example_usage:
+    - get_user_information()
+    common_errors:
+    - Missing user consent
+  - name: get_all_hotels_in_city
+    display_name: Get All Hotels in City
+    description: Retrieve a list of all hotels available in a specified city
+    category: accommodation
+    parameters:
+    - name: city
+      type: string
+      description: The city to get hotels from
+      required: true
+    example_usage:
+    - get_all_hotels_in_city(city='New York')
+  - name: reserve_hotel
+    display_name: Reserve Hotel
+    description: Make a reservation at a specified hotel
+    category: accommodation
+    parameters:
+    - name: hotel_name
+      type: string
+      description: Name of the hotel
+      required: true
+    - name: reservation_time
+      type: string
+      description: Check-in and check-out dates in ISO format 'YYYY-MM-DD'
+      required: true
+    example_usage:
+    - reserve_hotel(hotel_name='Grand Hotel', reservation_time='2023-12-01/2023-12-05')
+  - name: search_flights
+    display_name: Search Flights
+    description: Find available flights to a specified destination
+    category: transportation
+    parameters:
+    - name: destination
+      type: string
+      description: The destination of the flight
+      required: true
+    example_usage:
+    - search_flights(destination='Paris')
+  environment:
+    name: travel_management_platform
+    description: Platform for managing travel bookings and itineraries
+    variables:
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing travel services
+      type: string
+    - name: MAX_BOOKING_DAYS
+      value: 365
+      description: Maximum number of days in advance bookings can be made
+      type: integer
+    settings:
+      default_currency: USD
+      max_concurrent_bookings: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - travelapi.com
+    - '*.trusted-travel-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: traveler@example.com
+    current_user_name: John Doe
+    company_name: Global Travel Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,95 @@
+name: image_generation_prompt_builder
+display_name: Image Generation Prompt Builder
+description: Helps users craft effective prompts for image generation models. This scenario
+  guides users in creating detailed and precise prompts to enhance the quality and relevance
+  of generated images using AI models. It focuses on understanding user intent and translating
+  it into actionable input for image generation systems.
+category: creativity
+complexity_level: 2
+estimated_duration: 20
+required_permissions: []
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_prompt
+- suggest_keywords
+- refine_prompt
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- image_generation
+- creativity
+- ai_models
+context:
+  available_tools:
+  - name: analyze_prompt
+    display_name: Analyze Prompt
+    description: Analyze the user's prompt to identify key elements and areas for improvement
+    category: creativity
+    parameters:
+    - name: prompt
+      type: string
+      description: The initial prompt provided by the user
+      required: true
+    example_usage:
+    - analyze_prompt(prompt='A futuristic cityscape at sunset')
+  - name: suggest_keywords
+    display_name: Suggest Keywords
+    description: Suggest additional keywords to enhance the prompt's effectiveness
+    category: creativity
+    parameters:
+    - name: base_prompt
+      type: string
+      description: The base prompt to enhance
+      required: true
+    example_usage:
+    - suggest_keywords(base_prompt='A serene landscape with mountains')
+  - name: refine_prompt
+    display_name: Refine Prompt
+    description: Refine and optimize the prompt for better image generation results
+    category: creativity
+    parameters:
+    - name: initial_prompt
+      type: string
+      description: The initial prompt to refine
+      required: true
+    example_usage:
+    - refine_prompt(initial_prompt='A bustling market in an ancient city')
+  environment:
+    name: image_generation_env
+    description: Environment for crafting and testing image generation prompts
+    variables:
+    - name: MODEL_API_ENDPOINT
+      value: api.imagegen.com
+      description: Endpoint for the image generation model API
+      type: string
+    - name: MAX_PROMPT_LENGTH
+      value: 200
+      description: Maximum length of the prompt in characters
+      type: integer
+    settings:
+      prompt_validation: true
+      keyword_suggestion_enabled: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - imagegen.com
+    - '*.trusted-ai.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_role: prompt_creator
+    default_language: English
+    timezone: UTC
+  system_info:
+    image_generation_model_version: '2.5'
+    available_libraries:
+    - prompt_toolkit
+    - nltk
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

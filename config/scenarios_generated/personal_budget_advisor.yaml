@@ -1,0 +1,91 @@
+name: personal_budget_advisor
+display_name: Personal Budget Advisor
+description: The Personal Budget Advisor recommends budget allocations based on your spending patterns. It analyzes past transactions, identifies spending trends, and suggests optimal budget distribution to help manage finances effectively.
+category: finance
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- transaction_access
+- financial_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_transactions
+- generate_report
+- suggest_budget
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- finance
+- budgeting
+- personal_finance
+context:
+  available_tools:
+  - name: analyze_transactions
+    display_name: Analyze Transactions
+    description: Analyze past financial transactions to identify spending patterns
+    category: finance
+    parameters:
+    - name: transaction_history
+      type: list
+      description: List of past transactions
+      required: true
+    - name: analysis_period
+      type: string
+      description: Time period for analysis
+      required: true
+      validation_pattern: ^\d+[dmy]$
+    example_usage:
+    - analyze_transactions(transaction_history=[...], analysis_period='30d')
+    common_errors:
+    - Invalid transaction format
+    - Empty transaction history
+  - name: suggest_budget
+    display_name: Suggest Budget
+    description: Suggest budget allocations based on analyzed spending patterns
+    category: finance
+    parameters:
+    - name: spending_analysis
+      type: object
+      description: Result of spending analysis
+      required: true
+    - name: savings_goal
+      type: float
+      description: Desired savings goal as a percentage of income
+      required: false
+      default_value: 10.0
+    example_usage:
+    - suggest_budget(spending_analysis={...}, savings_goal=15.0)
+  environment:
+    name: personal_finance
+    description: Personal finance environment with access to financial data
+    variables:
+    - name: CURRENCY
+      value: USD
+      description: Default currency for budget calculations
+      type: string
+    - name: MAX_ANALYSIS_PERIOD
+      value: 365
+      description: Maximum period for transaction analysis in days
+      type: integer
+    settings:
+      encryption_required: true
+      data_retention_period_days: 365
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: false
+  predefined_variables:
+    current_user_name: John Doe
+    default_currency: USD
+    timezone: UTC-5
+    financial_year_start: '2023-01-01'
+  system_info:
+    finance_tool_version: '2.1'
+    available_libraries:
+    - pandas
+    - numpy
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

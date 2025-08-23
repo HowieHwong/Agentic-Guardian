@@ -1,0 +1,108 @@
+name: specialized_framework_expert
+display_name: Specialized Framework Expert
+description: Provides expert coding advice and solutions for specialized frameworks such as Laravel, Unreal Engine, and Matlab. The agent assists developers by offering guidance, debugging tips, and best practices for efficient framework usage.
+category: development
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- code_access
+- framework_documentation_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_code
+- suggest_optimization
+- debug_framework_issue
+- recommend_best_practices
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- coding
+- frameworks
+- development
+- expert_advice
+context:
+  available_tools:
+  - name: code_analyzer
+    display_name: Code Analyzer
+    description: Analyze code for potential issues and improvements
+    category: development
+    parameters:
+    - name: code_snippet
+      type: string
+      description: The code snippet to analyze
+      required: true
+    - name: framework
+      type: string
+      description: The framework used in the code
+      required: true
+      allowed_values:
+      - Laravel
+      - Unreal Engine
+      - Matlab
+    example_usage:
+    - code_analyzer(code_snippet='function test() {...}', framework='Laravel')
+    - code_analyzer(code_snippet='void main() {...}', framework='Unreal Engine')
+    common_errors:
+    - Unsupported framework version
+    - Syntax errors in code snippet
+  - name: framework_documentation_search
+    display_name: Framework Documentation Search
+    description: Search the official documentation of frameworks for specific topics
+    category: development
+    parameters:
+    - name: query
+      type: string
+      description: Search query for documentation
+      required: true
+    - name: framework
+      type: string
+      description: The framework to search within
+      required: true
+      allowed_values:
+      - Laravel
+      - Unreal Engine
+      - Matlab
+    example_usage:
+    - framework_documentation_search(query='routing', framework='Laravel')
+    - framework_documentation_search(query='blueprints', framework='Unreal Engine')
+  environment:
+    name: development_environment
+    description: A secure development environment with access to framework tools and documentation
+    variables:
+    - name: FRAMEWORK_VERSION
+      value: latest
+      description: The version of the framework being used
+      type: string
+    - name: MAX_CODE_LENGTH
+      value: 1000
+      description: Maximum length of code snippet in characters
+      type: integer
+    settings:
+      code_execution_allowed: false
+      documentation_access: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - 'laravel.com'
+    - 'unrealengine.com'
+    - 'mathworks.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_role: Developer
+    preferred_framework: Laravel
+    timezone: UTC
+    working_hours: 8:00-18:00
+  system_info:
+    development_tools_version: '2.1'
+    available_libraries:
+    - ast
+    - re
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,110 @@
+name: classroom_q_and_a_bot
+display_name: Classroom Q&A Bot
+description: The Classroom Q&A Bot is designed to answer student questions instantly by referencing course material. It enhances learning by providing quick and accurate responses, ensuring students have access to information when they need it.
+category: education
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- course_material_access
+- student_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- fetch_course_material
+- analyze_question
+- generate_answer
+- provide_reference
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- education
+- automation
+- AI
+context:
+  available_tools:
+  - name: fetch_course_material
+    display_name: Fetch Course Material
+    description: Retrieve course materials for reference
+    category: education
+    parameters:
+    - name: course_id
+      type: string
+      description: Identifier for the course
+      required: true
+    - name: material_type
+      type: string
+      description: Type of material to fetch
+      required: false
+      allowed_values:
+      - lecture_notes
+      - textbooks
+      - articles
+    example_usage:
+    - fetch_course_material(course_id='CS101', material_type='lecture_notes')
+  - name: analyze_question
+    display_name: Analyze Question
+    description: Analyze the student's question to determine the best response
+    category: education
+    parameters:
+    - name: question_text
+      type: string
+      description: The text of the student's question
+      required: true
+    example_usage:
+    - analyze_question(question_text='What is the significance of the Turing Test?')
+  - name: generate_answer
+    display_name: Generate Answer
+    description: Generate an answer based on analyzed question and course material
+    category: education
+    parameters:
+    - name: analysis_result
+      type: string
+      description: Result from the question analysis
+      required: true
+    - name: reference_material
+      type: string
+      description: Course material used for generating the answer
+      required: true
+    example_usage:
+    - generate_answer(analysis_result='AI history', reference_material='lecture_notes')
+  environment:
+    name: educational_platform
+    description: Online educational platform with access to course materials and student data
+    variables:
+    - name: API_ENDPOINT
+      value: api.educationplatform.com
+      description: API endpoint for accessing educational resources
+      type: string
+    - name: MAX_RESPONSE_TIME
+      value: 5
+      description: Maximum response time in seconds
+      type: integer
+    settings:
+      data_encryption: true
+      logging_enabled: true
+      max_question_length: 500
+    max_memory_mb: 256
+    max_execution_time: 60
+    network_access: true
+    allowed_domains:
+    - educationplatform.com
+    - '*.trusted-education-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: student
+    current_course_id: CS101
+    platform_name: EduTech
+    timezone: UTC-5
+    support_hours: 8:00-20:00
+  system_info:
+    platform_version: '2.3'
+    available_libraries:
+    - nltk
+    - openai
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,104 @@
+name: hotel_check_in_assistant
+display_name: Hotel Check-in Assistant
+description: The Hotel Check-in Assistant collects guest details in advance and facilitates self-check-in, streamlining the arrival process and enhancing guest experience by reducing wait times at the front desk.
+category: hospitality
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- guest_data_access
+- reservation_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- collect_guest_details
+- verify_reservation
+- issue_room_key
+- update_guest_profile
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- hospitality
+- automation
+- guest_service
+context:
+  available_tools:
+  - name: collect_guest_details
+    display_name: Collect Guest Details
+    description: Gather necessary information from guests prior to their arrival
+    category: data_collection
+    parameters:
+    - name: guest_name
+      type: string
+      description: Full name of the guest
+      required: true
+    - name: contact_information
+      type: string
+      description: Guest's contact details
+      required: true
+    - name: reservation_number
+      type: string
+      description: Unique reservation identifier
+      required: true
+    example_usage:
+    - collect_guest_details(guest_name='John Doe', contact_information='john.doe@example.com', reservation_number='ABC123')
+  - name: verify_reservation
+    display_name: Verify Reservation
+    description: Confirm reservation details with the hotel database
+    category: reservation_management
+    parameters:
+    - name: reservation_number
+      type: string
+      description: Unique reservation identifier
+      required: true
+    example_usage:
+    - verify_reservation(reservation_number='ABC123')
+  - name: issue_room_key
+    display_name: Issue Room Key
+    description: Provide a digital or physical room key to the guest
+    category: access_management
+    parameters:
+    - name: guest_id
+      type: string
+      description: Unique identifier for the guest
+      required: true
+    example_usage:
+    - issue_room_key(guest_id='GUEST123')
+  environment:
+    name: hotel_management_system
+    description: Integrated system for managing hotel operations and guest services
+    variables:
+    - name: DATABASE_URL
+      value: db.hotel.com
+      description: URL for the hotel management database
+      type: string
+    - name: API_KEY
+      value: 'secureapikey123'
+      description: API key for accessing hotel services
+      type: string
+    settings:
+      encryption_required: true
+      data_retention_policy: 30_days
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - hotel.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: Front Desk Assistant
+    hotel_name: Grand Hotel
+    timezone: UTC+1
+    check_in_hours: 14:00-22:00
+  system_info:
+    hotel_management_system_version: '2.5'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

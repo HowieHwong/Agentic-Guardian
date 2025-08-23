@@ -1,0 +1,111 @@
+name: code_snippet_generator
+display_name: Code Snippet Generator
+description: The agent creates code snippets or boilerplate code based on user requirements, 
+  facilitating quick development and prototyping by generating reusable code templates 
+  tailored to specific programming languages and frameworks.
+category: development
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- code_generation_access
+- template_library_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- generate_snippet
+- select_language
+- customize_template
+- save_snippet
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- code
+- development
+- automation
+context:
+  available_tools:
+  - name: generate_code_snippet
+    display_name: Generate Code Snippet
+    description: Generate a code snippet based on specified language and requirements
+    category: development
+    parameters:
+    - name: language
+      type: string
+      description: Programming language for the code snippet
+      required: true
+      allowed_values:
+      - python
+      - javascript
+      - java
+      - csharp
+      - ruby
+    - name: framework
+      type: string
+      description: Framework or library to use in the code snippet
+      required: false
+    - name: functionality
+      type: string
+      description: Description of the functionality to implement
+      required: true
+    example_usage:
+    - generate_code_snippet(language='python', functionality='HTTP request handler')
+    - generate_code_snippet(language='javascript', framework='React', functionality='component')
+    common_errors:
+    - Unsupported language specified
+    - Missing functionality description
+  - name: search_code_templates
+    display_name: Search Code Templates
+    description: Search for existing code templates in the library
+    category: development
+    parameters:
+    - name: query
+      type: string
+      description: Search query for templates
+      required: true
+    - name: language
+      type: string
+      description: Programming language filter
+      required: false
+    example_usage:
+    - search_code_templates(query='authentication')
+    - search_code_templates(query='database connection', language='java')
+  environment:
+    name: development_environment
+    description: Development environment with access to code libraries and templates
+    variables:
+    - name: TEMPLATE_LIBRARY_PATH
+      value: /usr/local/templates
+      description: Path to the code template library
+      type: string
+    - name: MAX_SNIPPET_SIZE
+      value: 100
+      description: Maximum size of generated code snippet in lines
+      type: integer
+    settings:
+      version_control_integration: true
+      code_review_required: true
+      max_templates_per_search: 10
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-code.com'
+    - '*.opensource.org'
+    blocked_domains:
+    - '*.malicious-code.com'
+  predefined_variables:
+    current_user_name: Dev Assistant
+    company_name: CodeGen Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    code_generation_version: '2.1'
+    available_libraries:
+    - jinja2
+    - pygments
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

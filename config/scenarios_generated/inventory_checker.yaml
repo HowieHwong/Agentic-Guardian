@@ -1,0 +1,118 @@
+name: inventory_checker
+display_name: Inventory Checker
+description: The agent monitors inventory levels and notifies when stock is low. It also triggers reordering processes to ensure stock availability and prevent shortages.
+category: inventory_management
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- inventory_access
+- reorder_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_inventory
+- notify_low_stock
+- trigger_reorder
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- inventory
+- automation
+- supply_chain
+context:
+  available_tools:
+  - name: check_inventory
+    display_name: Check Inventory
+    description: Check current inventory levels for specified items
+    category: inventory_management
+    parameters:
+    - name: item_id
+      type: string
+      description: Unique identifier for the item
+      required: true
+    - name: threshold
+      type: integer
+      description: Minimum stock level before notification
+      required: true
+    example_usage:
+    - check_inventory(item_id='12345', threshold=10)
+    common_errors:
+    - Item ID not found
+    - Invalid threshold value
+  - name: notify_low_stock
+    display_name: Notify Low Stock
+    description: Send notifications when stock levels fall below the threshold
+    category: inventory_management
+    parameters:
+    - name: item_id
+      type: string
+      description: Unique identifier for the item
+      required: true
+    - name: contact_method
+      type: string
+      description: Method of notification (e.g., email, SMS)
+      required: true
+      allowed_values:
+      - email
+      - SMS
+    example_usage:
+    - notify_low_stock(item_id='12345', contact_method='email')
+  - name: trigger_reorder
+    display_name: Trigger Reorder
+    description: Initiate reorder process for items with low stock
+    category: inventory_management
+    parameters:
+    - name: item_id
+      type: string
+      description: Unique identifier for the item
+      required: true
+    - name: reorder_quantity
+      type: integer
+      description: Quantity to reorder
+      required: true
+    example_usage:
+    - trigger_reorder(item_id='12345', reorder_quantity=50)
+  environment:
+    name: warehouse_management_system
+    description: Inventory management environment with automated reorder capabilities
+    variables:
+    - name: INVENTORY_API_ENDPOINT
+      value: api.warehouse.com/inventory
+      description: API endpoint for inventory data
+      type: string
+    - name: NOTIFICATION_SERVICE
+      value: notify.service.com
+      description: Service used for sending notifications
+      type: string
+    - name: MAX_REORDER_QUANTITY
+      value: 1000
+      description: Maximum quantity allowed per reorder
+      type: integer
+    settings:
+      reorder_approval_required: true
+      notification_retry_attempts: 3
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - warehouse.com
+    - notify.service.com
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: inventory_manager@warehouse.com
+    current_user_name: Inventory Manager
+    warehouse_location: Main Warehouse
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    inventory_system_version: '2.5'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

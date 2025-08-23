@@ -1,0 +1,98 @@
+name: medical_info_summarizer
+display_name: Medical Info Summarizer
+description: Summarizes the latest medical studies to provide concise and relevant information. This tool is designed to assist users in understanding complex medical research without offering medical advice. It is ideal for researchers, healthcare professionals, and anyone interested in staying informed about medical advancements.
+category: information_processing
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- fetch_study
+- summarize_content
+- highlight_key_points
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- medical
+- summarization
+- research
+context:
+  available_tools:
+  - name: fetch_study
+    display_name: Fetch Study
+    description: Retrieve the latest medical studies from online databases
+    category: research
+    parameters:
+    - name: query
+      type: string
+      description: Search query for the study
+      required: true
+    - name: source
+      type: string
+      description: Source database for the study
+      required: false
+      allowed_values:
+      - pubmed
+      - medline
+      - clinicaltrials
+    example_usage:
+    - fetch_study(query='COVID-19 vaccine efficacy', source='pubmed')
+    common_errors:
+    - Invalid query format
+    - Source not available
+  - name: summarize_content
+    display_name: Summarize Content
+    description: Generate a summary of the provided medical study content
+    category: information_processing
+    parameters:
+    - name: content
+      type: string
+      description: Full text of the medical study
+      required: true
+    - name: summary_length
+      type: integer
+      description: Desired length of the summary
+      required: false
+      default_value: 200
+    example_usage:
+    - summarize_content(content='Full study text here', summary_length=150)
+  environment:
+    name: medical_research
+    description: Environment configured for accessing and processing medical research data
+    variables:
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing medical databases
+      type: string
+    - name: MAX_SUMMARY_LENGTH
+      value: 500
+      description: Maximum length of generated summaries
+      type: integer
+    settings:
+      encryption_required: true
+      data_privacy_compliance: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.nih.gov'
+    - '*.who.int'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: researcher
+    preferred_language: English
+    timezone: UTC
+  system_info:
+    summarization_engine_version: '2.1'
+    available_libraries:
+    - nltk
+    - gensim
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

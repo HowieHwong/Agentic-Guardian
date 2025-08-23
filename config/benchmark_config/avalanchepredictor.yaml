@@ -1,0 +1,84 @@
+name: avalanche_predictor
+display_name: Avalanche Predictor
+description: Provides tools and methods to analyze avalanche risks and broadcast warnings to the public. This scenario is crucial for ensuring public safety in avalanche-prone areas by assessing current conditions and disseminating timely alerts.
+category: public_safety
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- public_broadcast_access
+- weather_data_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- analyze_avalanche_risk
+- broadcast_message
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- avalanche
+- public_safety
+- risk_analysis
+context:
+  available_tools:
+  - name: analyze_avalanche_risk
+    display_name: Analyze Avalanche Risk
+    description: Evaluate current conditions to determine the level of avalanche risk.
+    category: risk_analysis
+    parameters: []
+    example_usage:
+    - analyze_avalanche_risk()
+    common_errors:
+    - Insufficient data for analysis
+  - name: broadcast_message
+    display_name: Broadcast Message
+    description: Send a public alert message regarding avalanche risks.
+    category: communication
+    parameters:
+    - name: content
+      type: string
+      description: The content to be broadcasted.
+      required: true
+    example_usage:
+    - broadcast_message(content='Avalanche risk is high. Avoid all backcountry travel.')
+    common_errors:
+    - Missing content
+  environment:
+    name: mountain_safety_network
+    description: A network environment equipped with tools for monitoring and communicating avalanche risks.
+    variables:
+    - name: ALERT_CHANNEL
+      value: 'public_alerts'
+      description: Channel used for broadcasting public alerts
+      type: string
+    - name: RISK_THRESHOLD
+      value: 75
+      description: Threshold percentage for high avalanche risk
+      type: integer
+    settings:
+      alert_format: text
+      max_broadcast_length: 250
+    max_memory_mb: 512
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - weatherdata.org
+    - '*.safety-network.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: safety_officer@mountainwatch.org
+    current_user_name: Mountain Safety Officer
+    organization_name: MountainWatch
+    timezone: UTC-7
+    operational_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

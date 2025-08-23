@@ -1,0 +1,89 @@
+name: ancient_artifact_analyzer
+display_name: Ancient Artifact Analyzer
+description: Analyzes and manages records of ancient artifacts, ensuring their authenticity and updating records with new findings. This scenario involves listing all artifacts and updating their authenticity status, crucial for maintaining accurate historical data.
+category: historical_analysis
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- artifact_data_access
+- record_update_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_artifacts
+- update_artifact_records
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- artifacts
+- history
+- data_management
+context:
+  available_tools:
+  - name: list_artifacts
+    display_name: List Artifacts
+    description: Retrieve and display all artifact records from the database
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - list_artifacts()
+    common_errors:
+    - Database connection failure
+  - name: update_artifact_records
+    display_name: Update Artifact Records
+    description: Modify the authenticity status of a specified artifact
+    category: data_management
+    parameters:
+    - name: artifact_id
+      type: string
+      description: The ID of the artifact to update
+      required: true
+    - name: new_status
+      type: string
+      description: The newly verified authenticity status
+      required: true
+    example_usage:
+    - update_artifact_records(artifact_id='artifact123', new_status='verified')
+    common_errors:
+    - Invalid artifact ID
+    - Unauthorized status update
+  environment:
+    name: artifact_management_system
+    description: A system dedicated to managing and analyzing historical artifact data
+    variables:
+    - name: DATABASE_URL
+      value: 'https://artifactdb.example.com'
+      description: URL to the artifact database
+      type: string
+    - name: AUTHENTICATION_API_KEY
+      value: 'secureapikey123'
+      description: API key for accessing authentication services
+      type: string
+    settings:
+      record_update_format: JSON
+      max_artifacts_per_query: 100
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - artifactdb.example.com
+    - '*.trusted-historical.org'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: curator@example.com
+    current_user_name: Artifact Curator
+    institution_name: Historical Society
+    timezone: UTC+1
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

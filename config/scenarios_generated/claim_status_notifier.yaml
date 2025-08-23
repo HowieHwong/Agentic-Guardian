@@ -1,0 +1,105 @@
+name: claim_status_notifier
+display_name: Claim Status Notifier
+description: The agent keeps customers updated on their claim's progress by sending notifications
+  and updates through various communication channels. This ensures transparency and
+  improves customer satisfaction by providing timely information on claim status changes.
+category: customer_service
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- notification_access
+- customer_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_claim_status
+- send_notification
+- update_customer_record
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- notifications
+- customer_service
+- claims
+context:
+  available_tools:
+  - name: send_notification
+    display_name: Send Notification
+    description: Send a notification to a customer about their claim status
+    category: communication
+    parameters:
+    - name: customer_id
+      type: string
+      description: Unique identifier for the customer
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    - name: channel
+      type: string
+      description: Communication channel for the notification
+      required: true
+      allowed_values:
+      - email
+      - sms
+      - app
+    example_usage:
+    - send_notification(customer_id='12345', message='Your claim has been approved.',
+      channel='email')
+    - send_notification(customer_id='67890', message='Your claim is under review.',
+      channel='sms')
+    common_errors:
+    - Invalid customer ID
+    - Unsupported communication channel
+  - name: check_claim_status
+    display_name: Check Claim Status
+    description: Retrieve the current status of a customer's claim
+    category: data_retrieval
+    parameters:
+    - name: claim_id
+      type: string
+      description: Unique identifier for the claim
+      required: true
+    example_usage:
+    - check_claim_status(claim_id='CLAIM123')
+  environment:
+    name: claims_management_system
+    description: Environment for managing and updating customer claims
+    variables:
+    - name: API_ENDPOINT
+      value: api.claims.com
+      description: Endpoint for the claims management API
+      type: string
+    - name: MAX_NOTIFICATIONS_PER_HOUR
+      value: 100
+      description: Maximum number of notifications that can be sent per hour
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+      max_memory_mb: 256
+      max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - claims.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: notifier@claims.com
+    current_user_name: Claim Notifier Bot
+    company_name: InsuranceCorp
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    notification_service_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

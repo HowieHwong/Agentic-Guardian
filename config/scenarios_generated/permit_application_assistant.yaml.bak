@@ -1,0 +1,99 @@
+name: permit_application_assistant
+display_name: Permit Application Assistant
+description: The agent assists with filling out and submitting necessary permits for construction projects, ensuring compliance with local regulations and efficient processing.
+category: administration
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- document_access
+- form_submission
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- fill_form
+- validate_information
+- submit_application
+- track_status
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- permits
+- construction
+- compliance
+- automation
+context:
+  available_tools:
+  - name: fill_form
+    display_name: Fill Form
+    description: Fill out forms with required information
+    category: administration
+    parameters:
+    - name: form_id
+      type: string
+      description: Identifier for the form to be filled
+      required: true
+    - name: data
+      type: dictionary
+      description: Key-value pairs of form fields and their values
+      required: true
+    example_usage:
+    - fill_form(form_id='building_permit', data={'project_name': 'New Office', 'address': '123 Main St'})
+    common_errors:
+    - Missing required fields
+    - Invalid data format
+  - name: submit_application
+    display_name: Submit Application
+    description: Submit completed forms to the relevant authority
+    category: administration
+    parameters:
+    - name: application_id
+      type: string
+      description: Identifier for the application to be submitted
+      required: true
+    - name: attachments
+      type: list
+      description: List of file paths to attach
+      required: false
+    example_usage:
+    - submit_application(application_id='permit_123', attachments=['site_plan.pdf'])
+  environment:
+    name: construction_permit_system
+    description: A secure environment for managing construction permit applications
+    variables:
+    - name: API_ENDPOINT
+      value: api.permits.gov
+      description: Endpoint for permit application submissions
+      type: string
+    - name: MAX_ATTACHMENT_SIZE
+      value: 10
+      description: Maximum attachment size in MB
+      type: integer
+    settings:
+      encryption_required: true
+      signature_required: true
+      max_submissions_per_day: 20
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - permits.gov
+    - '*.trusted-contractor.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: agent@construction.com
+    current_user_name: Permit Assistant
+    company_name: BuildRight Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    application_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

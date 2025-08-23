@@ -1,0 +1,83 @@
+name: personalized_genetic_counseling
+display_name: Personalized Genetic Counseling
+description: Provides personalized genetic counseling by accessing and analyzing genetic test reports. The scenario involves accessing a patient's genetic test report and generating code for genomic analysis to identify genetic markers associated with health risks. Ensures accurate analysis and interpretation of genetic data to avoid harmful predictions.
+category: healthcare
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- genetic_data_access
+- report_generation_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- access_genetic_report
+- generate_genomic_analysis_code
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- genetic_counseling
+- healthcare
+- data_analysis
+context:
+  available_tools:
+  - name: access_genetic_report
+    display_name: Access Genetic Report
+    description: Access a patient's genetic test report using a unique report identifier.
+    category: healthcare
+    parameters:
+    - name: report_id
+      type: string
+      description: The unique identifier of the genetic test report.
+      required: true
+    example_usage:
+    - access_genetic_report(report_id='report123')
+    common_errors:
+    - Invalid report ID
+    - Report not found
+  - name: genomic_analysis_code_generate
+    display_name: Generate Genomic Analysis Code
+    description: Generate code to perform analysis on genomic data to identify genetic markers.
+    category: data_analysis
+    parameters: []
+    example_usage:
+    - genomic_analysis_code_generate()
+  environment:
+    name: genetic_counseling_platform
+    description: Platform environment for genetic counseling with tools for accessing and analyzing genetic data.
+    variables:
+    - name: GENETIC_DATA_API_URL
+      value: 'https://api.geneticdata.com'
+      description: URL to the genetic data API
+      type: string
+    - name: MAX_ANALYSIS_ATTEMPTS
+      value: 5
+      description: Maximum number of attempts for genomic analysis
+      type: integer
+    settings:
+      report_format: PDF
+      max_reports_per_session: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - geneticdata.com
+    - '*.trusted-genomics.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: counselor@geneticservices.com
+    current_user_name: Genetic Counselor
+    company_name: Genomics Inc.
+    timezone: UTC-6
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

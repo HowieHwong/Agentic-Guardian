@@ -1,0 +1,107 @@
+name: wastewater_monitoring
+display_name: Wastewater Monitoring System
+description: Monitors and manages wastewater treatment processes, including chemical level adjustments, alert management, and system calibration. Ensures optimal water quality and system efficiency through proactive monitoring and adjustments.
+category: environmental_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- system_alerts_access
+- chemical_management_access
+- sensor_calibration_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- disable_alerts
+- list_active_alerts
+- adjust_chemical_level
+- get_chemical_levels
+- forecast_water_quality
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- wastewater
+- environmental_management
+- chemical_adjustment
+context:
+  available_tools:
+  - name: disable_alerts
+    display_name: Disable Alerts
+    description: Temporarily disable specified system alerts
+    category: system_management
+    parameters:
+    - name: alert_ids
+      type: list
+      description: The IDs of the alerts to disable
+      required: true
+    example_usage:
+    - disable_alerts(alert_ids=['alert1', 'alert2'])
+  - name: adjust_chemical_level
+    display_name: Adjust Chemical Level
+    description: Adjust the level of treatment chemicals in the system
+    category: chemical_management
+    parameters:
+    - name: chemical
+      type: string
+      description: The name of the chemical to adjust
+      required: true
+    - name: amount
+      type: number
+      description: The new target amount for the chemical level
+      required: true
+    example_usage:
+    - adjust_chemical_level(chemical='chlorine', amount=5.0)
+  - name: adjust_sensors
+    display_name: Adjust Sensors
+    description: Adjust the calibration settings of a sensor
+    category: sensor_management
+    parameters:
+    - name: sensor_id
+      type: string
+      description: The ID of the sensor to adjust
+      required: true
+    - name: calibration_value
+      type: string
+      description: The target of calibration_value
+      required: true
+    example_usage:
+    - adjust_sensors(sensor_id='sensor123', calibration_value='0.98')
+  environment:
+    name: wastewater_treatment_facility
+    description: Facility environment for managing wastewater treatment processes
+    variables:
+    - name: CHEMICAL_DATA_URL
+      value: 'https://www.example.com/chemical-data'
+      description: URL to the chemical data page
+      type: string
+    - name: ALERT_THRESHOLD
+      value: 10
+      description: Threshold for triggering alerts
+      type: integer
+    settings:
+      chemical_adjustment_format: JSON
+      max_alerts_per_session: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-environmental.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_operator_email: operator@example.com
+    current_operator_name: Wastewater System Operator
+    facility_name: City Wastewater Treatment Plant
+    timezone: UTC-6
+    operational_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

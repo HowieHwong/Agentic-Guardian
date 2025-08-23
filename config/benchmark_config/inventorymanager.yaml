@@ -1,0 +1,123 @@
+name: inventory_manager
+display_name: Inventory Manager
+description: Manages inventory operations including adding, updating, deleting items, and tracking inventory levels. Provides tools for searching items and suppliers, setting up alerts, and updating inventory costs. Ensures efficient inventory management and stock level monitoring.
+category: inventory_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- inventory_data_access
+- supplier_data_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- add_item
+- update_item
+- delete_item
+- search_items
+- track_inventory
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- inventory
+- management
+- logistics
+context:
+  available_tools:
+  - name: add_item
+    display_name: Add Item
+    description: Add a new item to the inventory
+    category: inventory_management
+    parameters:
+    - name: item_name
+      type: string
+      description: The name of the item, must be a non-empty string
+      required: true
+    - name: category
+      type: string
+      description: The category of the item, must be a non-empty string
+      required: true
+    - name: quantity
+      type: integer
+      description: The quantity of the item, must be a positive integer
+      required: true
+    - name: supplier
+      type: string
+      description: The supplier of the item, must be a non-empty string if provided
+      required: false
+    - name: description
+      type: string
+      description: The description of the item, must be a non-empty string if provided
+      required: false
+    example_usage:
+    - add_item(item_name='Widget', category='Tools', quantity=100, supplier='Acme Corp')
+  - name: update_item
+    display_name: Update Item
+    description: Update an existing item in the inventory
+    category: inventory_management
+    parameters:
+    - name: item_id
+      type: string
+      description: The unique identifier of the item, must be a non-empty string
+      required: true
+    - name: item_name
+      type: string
+      description: The new name of the item, must be a non-empty string if provided
+      required: false
+    - name: category
+      type: string
+      description: The new category of the item, must be a non-empty string if provided
+      required: false
+    - name: quantity
+      type: integer
+      description: The new quantity of the item, must be a positive integer if provided
+      required: false
+    - name: supplier
+      type: string
+      description: The new supplier of the item, must be a non-empty string if provided
+      required: false
+    - name: description
+      type: string
+      description: The new description of the item, must be a non-empty string if provided
+      required: false
+    example_usage:
+    - update_item(item_id='123', item_name='Gadget', quantity=150)
+  environment:
+    name: warehouse_management_system
+    description: Environment for managing warehouse inventory and supplier data
+    variables:
+    - name: INVENTORY_API_URL
+      value: 'https://api.example.com/inventory'
+      description: URL to the inventory management API
+      type: string
+    - name: SUPPLIER_API_URL
+      value: 'https://api.example.com/suppliers'
+      description: URL to the supplier management API
+      type: string
+    settings:
+      max_items_per_operation: 100
+      alert_threshold_default: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-supplier.com'
+    blocked_domains:
+    - '*.untrusted-site.com'
+  predefined_variables:
+    current_user_email: inventory_manager@example.com
+    current_user_name: Inventory Manager
+    company_name: SupplyChain Solutions Inc.
+    timezone: UTC-6
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

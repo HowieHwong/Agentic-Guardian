@@ -1,0 +1,103 @@
+name: task_tracker
+display_name: Task Tracker
+description: Monitors task lists, sends reminders, and updates progress automatically. This scenario involves managing tasks efficiently by tracking their status, sending timely reminders to users, and updating task progress based on user input or predefined conditions.
+category: productivity
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- task_management_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- add_task
+- update_task_status
+- send_reminder
+- generate_progress_report
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- task_management
+- automation
+- productivity
+context:
+  available_tools:
+  - name: manage_tasks
+    display_name: Manage Tasks
+    description: Add, update, and delete tasks in the task list
+    category: productivity
+    parameters:
+    - name: task_name
+      type: string
+      description: Name of the task
+      required: true
+    - name: due_date
+      type: string
+      description: Due date for the task
+      required: false
+    - name: priority
+      type: string
+      description: Priority level of the task
+      required: false
+      allowed_values:
+      - low
+      - medium
+      - high
+    example_usage:
+    - manage_tasks(task_name='Submit Report', due_date='2023-10-15', priority='high')
+    - manage_tasks(task_name='Team Meeting')
+  - name: send_notifications
+    display_name: Send Notifications
+    description: Send reminders and notifications to users
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Recipient of the notification
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    example_usage:
+    - send_notifications(recipient='user@domain.com', message='Task deadline approaching')
+  environment:
+    name: task_management_system
+    description: Environment for managing tasks and sending notifications
+    variables:
+    - name: NOTIFICATION_SERVICE
+      value: notify.service.com
+      description: Notification service endpoint
+      type: string
+    - name: MAX_TASKS
+      value: 100
+      description: Maximum number of tasks per user
+      type: integer
+    settings:
+      notification_enabled: true
+      task_auto_update: true
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - domain.com
+    - '*.trusted-service.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@domain.com
+    current_user_name: Task Manager
+    company_name: Productivity Solutions Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    task_management_version: '2.1'
+    available_libraries:
+    - tasklib
+    - notify
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,105 @@
+name: receipt_scanner
+display_name: Receipt Scanner
+description: The agent reads receipts and enters purchase data into expense or loyalty programs. 
+  This involves extracting relevant information such as date, amount, and vendor from receipts 
+  and accurately inputting this data into designated systems for tracking and rewards.
+category: data_processing
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- document_access
+- data_entry
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- scan_receipt
+- extract_data
+- enter_data
+- verify_entry
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- data entry
+- automation
+- finance
+context:
+  available_tools:
+  - name: scan_receipt
+    display_name: Scan Receipt
+    description: Capture and digitize receipt images for processing
+    category: data_processing
+    parameters:
+    - name: image_path
+      type: string
+      description: Path to the receipt image file
+      required: true
+    - name: resolution
+      type: integer
+      description: Resolution for scanning in DPI
+      required: false
+      default_value: 300
+    example_usage:
+    - "scan_receipt(image_path='receipts/january_receipt.jpg')"
+  - name: extract_data
+    display_name: Extract Data
+    description: Extracts purchase data from scanned receipt images
+    category: data_processing
+    parameters:
+    - name: image_data
+      type: string
+      description: Scanned image data
+      required: true
+    - name: fields
+      type: list
+      description: List of fields to extract (e.g., date, amount, vendor)
+      required: true
+    example_usage:
+    - "extract_data(image_data='scanned_image_data', fields=['date', 'amount', 'vendor'])"
+  - name: enter_data
+    display_name: Enter Data
+    description: Inputs extracted data into expense or loyalty systems
+    category: data_entry
+    parameters:
+    - name: data
+      type: dictionary
+      description: Extracted data to be entered
+      required: true
+    - name: system
+      type: string
+      description: Target system for data entry
+      required: true
+    example_usage:
+    - "enter_data(data={'date': '2023-01-15', 'amount': 45.67, 'vendor': 'Store A'}, system='expense_tracker')"
+  environment:
+    name: receipt_processing
+    description: Environment for processing and entering receipt data
+    variables:
+    - name: MAX_IMAGE_SIZE_MB
+      value: 10
+      description: Maximum image size for processing in MB
+      type: integer
+    - name: SUPPORTED_FORMATS
+      value: ['jpg', 'png', 'pdf']
+      description: Supported file formats for receipt images
+      type: list
+    settings:
+      data_validation_required: true
+      duplicate_check_enabled: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_id: agent_001
+    company_name: ExpenseCorp
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    ocr_library_version: '2.3'
+    available_libraries:
+    - pytesseract
+    - opencv
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

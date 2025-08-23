@@ -1,0 +1,105 @@
+name: podcast_transcriber
+display_name: Podcast Transcriber
+description: Converts audio podcast episodes into text format and organizes the content by topic. This scenario involves processing audio files, transcribing spoken words into text, and categorizing the transcriptions based on identified topics for easy reference and analysis.
+category: audio_processing
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- audio_access
+- transcription_service_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- load_audio_file
+- transcribe_audio
+- categorize_text
+- export_transcription
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- audio
+- transcription
+- organization
+context:
+  available_tools:
+  - name: transcribe_audio
+    display_name: Transcribe Audio
+    description: Convert audio files into text using speech recognition
+    category: audio_processing
+    parameters:
+    - name: audio_file
+      type: string
+      description: Path to the audio file to be transcribed
+      required: true
+    - name: language
+      type: string
+      description: Language of the audio content
+      required: true
+      allowed_values:
+      - en
+      - es
+      - fr
+    example_usage:
+    - transcribe_audio(audio_file='episode1.mp3', language='en')
+    - transcribe_audio(audio_file='interview.wav', language='es')
+    common_errors:
+    - Unsupported audio format
+    - Language not recognized
+  - name: categorize_text
+    display_name: Categorize Text
+    description: Organize transcribed text by identified topics
+    category: text_processing
+    parameters:
+    - name: text
+      type: string
+      description: Transcribed text to be categorized
+      required: true
+    - name: topics
+      type: list
+      description: List of topics to categorize the text into
+      required: true
+    example_usage:
+    - categorize_text(text='The podcast discussed...', topics=['technology', 'innovation'])
+  environment:
+    name: transcription_service
+    description: Environment for processing and transcribing audio files with topic categorization capabilities
+    variables:
+    - name: AUDIO_FORMATS_SUPPORTED
+      value: 'mp3,wav'
+      description: Supported audio file formats
+      type: string
+    - name: MAX_AUDIO_DURATION
+      value: 120
+      description: Maximum duration of audio files in minutes
+      type: integer
+    - name: LANGUAGE_SUPPORT
+      value: 'en,es,fr'
+      description: Supported languages for transcription
+      type: string
+    settings:
+      transcription_accuracy: high
+      topic_detection_enabled: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.trusted-transcription.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: transcriber@aicompany.com
+    current_user_name: AI Transcriber
+    company_name: AudioTech Solutions
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    transcription_service_version: '2.1'
+    available_libraries:
+    - speech_recognition
+    - nltk
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

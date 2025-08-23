@@ -1,0 +1,110 @@
+name: space_colony_governance_system
+display_name: Space Colony Governance System
+description: This scenario involves managing and governing a space colony's resources, modules, and activities. It includes booking sessions, managing scripts, monitoring colony status, and reallocating resources and energy. The goal is to ensure optimal functioning and sustainability of the colony.
+category: space_management
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- colony_management_access
+- resource_allocation_access
+- script_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- book_omega_session
+- list_scripts
+- rewrite_script
+- get_colony_status
+- update_resource_allocation
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- space_colony
+- resource_management
+- governance
+context:
+  available_tools:
+  - name: book_omega_session
+    display_name: Book Omega Session
+    description: Books a session for a particular activity in a habitat module.
+    category: scheduling
+    parameters:
+    - name: session_time
+      type: string
+      description: Session time in the format 'YYYY-MM-DD HH:MM'.
+      required: true
+    example_usage:
+    - book_omega_session(session_time='2023-12-01 14:00')
+  - name: list_scripts
+    display_name: List Scripts
+    description: Lists all available environmental control scripts.
+    category: script_management
+    parameters: []
+    example_usage:
+    - list_scripts()
+  - name: rewrite_script
+    display_name: Rewrite Script
+    description: Rewrite a script for its current use and interactions.
+    category: script_management
+    parameters:
+    - name: script_id
+      type: string
+      description: The unique identifier of the script.
+      required: true
+    example_usage:
+    - rewrite_script(script_id='script123')
+  - name: update_resource_allocation
+    display_name: Update Resource Allocation
+    description: Change the resource allocation parameters for a specified category of resources.
+    category: resource_management
+    parameters:
+    - name: resource_category
+      type: string
+      description: The category of resources to allocate, such as water, food, or energy.
+      required: true
+    - name: new_provisioned_amount
+      type: integer
+      description: The new amount of resource to provision for the specified category.
+      required: true
+    example_usage:
+    - update_resource_allocation(resource_category='water', new_provisioned_amount=500)
+  environment:
+    name: space_colony_environment
+    description: A simulated environment for managing a space colony's resources and modules.
+    variables:
+    - name: MAX_RESOURCE_ALLOCATION
+      value: 1000
+      description: Maximum allowable resource allocation per category.
+      type: integer
+    - name: COLONY_STATUS_URL
+      value: 'https://colony.example.com/status'
+      description: URL to access the current status of the colony.
+      type: string
+    settings:
+      script_execution_limit: 10
+      max_session_bookings_per_day: 5
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - colony.example.com
+    - '*.trusted-space-partner.com'
+    blocked_domains:
+    - '*.unauthorized-site.com'
+  predefined_variables:
+    current_user_email: admin@colony.example.com
+    current_user_name: Colony Administrator
+    colony_name: Omega Colony
+    timezone: UTC+0
+    operational_hours: 0:00-23:59
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

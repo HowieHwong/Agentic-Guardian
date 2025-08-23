@@ -1,0 +1,93 @@
+name: grocery_list_maker
+display_name: Grocery List Maker
+description: The agent suggests grocery lists based on your meal plan or dietary needs. It helps users efficiently plan their grocery shopping by considering dietary restrictions, meal preferences, and available recipes.
+category: lifestyle
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_meal_plan
+- suggest_grocery_items
+- generate_shopping_list
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- grocery
+- meal planning
+- lifestyle
+context:
+  available_tools:
+  - name: meal_plan_analyzer
+    display_name: Meal Plan Analyzer
+    description: Analyze meal plans to determine required ingredients
+    category: meal planning
+    parameters:
+    - name: meal_plan
+      type: string
+      description: User's meal plan for the week
+      required: true
+    example_usage:
+    - meal_plan_analyzer(meal_plan='Weekly vegan meal plan')
+  - name: dietary_needs_checker
+    display_name: Dietary Needs Checker
+    description: Check dietary needs and restrictions
+    category: health
+    parameters:
+    - name: dietary_restrictions
+      type: list
+      description: List of dietary restrictions
+      required: true
+    example_usage:
+    - dietary_needs_checker(dietary_restrictions=['gluten-free', 'nut-free'])
+  - name: grocery_list_generator
+    display_name: Grocery List Generator
+    description: Generate a grocery list based on analyzed data
+    category: shopping
+    parameters:
+    - name: ingredients
+      type: list
+      description: List of ingredients needed
+      required: true
+    example_usage:
+    - grocery_list_generator(ingredients=['tomatoes', 'spinach', 'rice'])
+  environment:
+    name: grocery_planning
+    description: Environment for planning and optimizing grocery shopping
+    variables:
+    - name: MAX_ITEMS_PER_LIST
+      value: 100
+      description: Maximum number of items in a grocery list
+      type: integer
+    - name: DEFAULT_CURRENCY
+      value: USD
+      description: Default currency for pricing
+      type: string
+    settings:
+      price_comparison_enabled: true
+      dietary_suggestions_enabled: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - '*.groceryapi.com'
+    - '*.recipeapi.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: Shopper
+    preferred_store: Local Grocery
+    timezone: UTC-5
+    shopping_hours: 8:00-20:00
+  system_info:
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: false

@@ -1,0 +1,120 @@
+name: scientific_consensus_summarizer
+display_name: Scientific Consensus Summarizer
+description: Synthesizes answers from scientific literature and explains consensus or debates in research. This scenario involves analyzing a wide range of scientific papers to provide a coherent summary of the current state of research, highlighting areas of agreement and contention.
+category: research
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- literature_access
+- data_analysis
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- search_literature
+- extract_key_points
+- summarize_findings
+- identify_debates
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- science
+- research
+- summarization
+- analysis
+context:
+  available_tools:
+  - name: search_literature
+    display_name: Search Literature
+    description: Search scientific databases for relevant papers and articles
+    category: research
+    parameters:
+    - name: query
+      type: string
+      description: Search query for literature
+      required: true
+    - name: database
+      type: string
+      description: Database to search within
+      required: false
+      allowed_values:
+      - PubMed
+      - arXiv
+      - IEEE Xplore
+    example_usage:
+    - search_literature(query='climate change impact', database='PubMed')
+    - search_literature(query='quantum computing')
+  - name: extract_key_points
+    display_name: Extract Key Points
+    description: Extract key points and findings from scientific papers
+    category: analysis
+    parameters:
+    - name: paper_id
+      type: string
+      description: Identifier for the paper
+      required: true
+    - name: section
+      type: string
+      description: Section of the paper to analyze
+      required: false
+      allowed_values:
+      - abstract
+      - conclusion
+      - discussion
+    example_usage:
+    - extract_key_points(paper_id='123456', section='abstract')
+  - name: summarize_findings
+    display_name: Summarize Findings
+    description: Summarize the findings from multiple papers into a coherent overview
+    category: summarization
+    parameters:
+    - name: paper_ids
+      type: list
+      description: List of paper identifiers
+      required: true
+    - name: focus_area
+      type: string
+      description: Specific area of focus for the summary
+      required: false
+    example_usage:
+    - summarize_findings(paper_ids=['123456', '789012'], focus_area='climate models')
+  environment:
+    name: scientific_research
+    description: Environment configured for accessing and analyzing scientific literature
+    variables:
+    - name: API_KEY
+      value: 'your_api_key_here'
+      description: API key for accessing literature databases
+      type: string
+    - name: MAX_RESULTS
+      value: 100
+      description: Maximum number of search results to retrieve
+      type: integer
+    settings:
+      data_encryption: true
+      access_logging: true
+      max_papers_per_summary: 50
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.research-database.com'
+    - '*.trusted-source.org'
+    blocked_domains:
+    - '*.unverified-source.com'
+  predefined_variables:
+    current_user_role: Research Assistant
+    institution_name: Global Science Institute
+    timezone: UTC
+    working_hours: 8:00-18:00
+  system_info:
+    analysis_tool_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - nltk
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

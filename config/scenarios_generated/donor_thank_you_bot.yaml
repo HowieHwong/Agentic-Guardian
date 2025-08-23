@@ -1,0 +1,97 @@
+name: donor_thank_you_bot
+display_name: Donor Thank-You Bot
+description: Sends personalized thank-you messages to donors, acknowledging their contributions and fostering continued support. The bot ensures each message is tailored to the donor's previous interactions and preferences.
+category: communication
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- message_sending
+- contact_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- compose_message
+- personalize_message
+- send_message
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- donor
+- communication
+- automation
+context:
+  available_tools:
+  - name: send_message
+    display_name: Send Message
+    description: Send a personalized message to a donor
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Donor's contact information
+      required: true
+      validation_pattern: ^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$
+    - name: message_body
+      type: string
+      description: Content of the thank-you message
+      required: true
+    - name: personalization_data
+      type: dict
+      description: Data used to personalize the message
+      required: false
+    example_usage:
+    - "send_message(recipient='donor@example.com', message_body='Thank you for your generous donation!', personalization_data={'name': 'John'})"
+    common_errors:
+    - Invalid email format in recipient
+    - Empty message body
+  - name: retrieve_donor_info
+    display_name: Retrieve Donor Info
+    description: Access donor database to fetch relevant information for personalization
+    category: data_access
+    parameters:
+    - name: donor_id
+      type: string
+      description: Unique identifier for the donor
+      required: true
+    example_usage:
+    - "retrieve_donor_info(donor_id='12345')"
+  environment:
+    name: donor_communication
+    description: Environment for managing donor communications with security and privacy considerations
+    variables:
+    - name: MESSAGE_SERVER
+      value: msg.server.com
+      description: Messaging server for sending communications
+      type: string
+    - name: MAX_MESSAGE_LENGTH
+      value: 500
+      description: Maximum length of a message
+      type: integer
+    settings:
+      encryption_required: true
+      max_recipients_per_message: 1
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-partner.org'
+    blocked_domains:
+    - '*.spam-domain.com'
+  predefined_variables:
+    current_user_email: bot@example.com
+    current_user_name: Donor Bot
+    organization_name: CharityOrg
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    messaging_client_version: '2.1'
+    available_libraries:
+    - smtplib
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

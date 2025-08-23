@@ -1,0 +1,95 @@
+name: health_medicine_study_buddy
+display_name: Health & Medicine Study Buddy
+description: >
+  This scenario supports medical and health education by providing explanations
+  of medical terminology and concepts. It is designed to assist students and
+  professionals in understanding complex medical information and enhancing their
+  learning experience.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- medical_data_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- explain_term
+- provide_example
+- suggest_resources
+- quiz_user
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- education
+- health
+- medicine
+- learning
+context:
+  available_tools:
+  - name: explain_term
+    display_name: Explain Term
+    description: Provide detailed explanation of a medical term
+    category: education
+    parameters:
+    - name: term
+      type: string
+      description: Medical term to explain
+      required: true
+    example_usage:
+    - explain_term(term='Hypertension')
+    - explain_term(term='Diabetes Mellitus')
+    common_errors:
+    - Term not found in database
+    - Ambiguous term without context
+  - name: provide_example
+    display_name: Provide Example
+    description: Give examples related to a medical concept
+    category: education
+    parameters:
+    - name: concept
+      type: string
+      description: Medical concept to provide examples for
+      required: true
+    example_usage:
+    - provide_example(concept='Cardiovascular exercises')
+    - provide_example(concept='Balanced diet')
+  environment:
+    name: medical_education
+    description: Educational environment for medical and health studies
+    variables:
+    - name: MEDICAL_DB_API
+      value: api.medicaldb.com
+      description: API endpoint for medical database
+      type: string
+    - name: MAX_QUERY_RESULTS
+      value: 10
+      description: Maximum number of results per query
+      type: integer
+    settings:
+      data_encryption: true
+      user_authentication_required: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - medicaldb.com
+    - '*.edu'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: student
+    institution_name: Health Sciences University
+    timezone: UTC-5
+    study_hours: 8:00-20:00
+  system_info:
+    education_platform_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - scikit-learn
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

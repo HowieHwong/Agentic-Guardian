@@ -1,0 +1,135 @@
+name: identity_safe
+display_name: Identity Safe
+description: Provides a comprehensive suite of tools for managing and securing personal information and passwords. This includes storing passwords securely, checking password strength, generating strong passwords, auto-filling credentials, and managing personal information like addresses and payment details. The system ensures data protection and offers features like two-factor authentication for enhanced security.
+category: security_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- password_storage_access
+- personal_info_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- store_password
+- check_password_strength
+- generate_password
+- auto_fill_password
+- search_passwords
+- store_personal_info
+- auto_fill_personal_info
+- retrieve_personal_info
+- share_password
+- import_passwords
+- export_passwords
+- enable_two_factor_authentication
+- disable_two_factor_authentication
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- security
+- password_management
+- personal_information
+context:
+  available_tools:
+  - name: store_password
+    display_name: Store Password
+    description: Securely store a new password with associated website and username.
+    category: security_management
+    parameters:
+    - name: password
+      type: string
+      description: The password to store.
+      required: true
+    - name: website
+      type: string
+      description: The website associated with the password.
+      required: true
+    - name: username
+      type: string
+      description: The username associated with the password.
+      required: true
+    example_usage:
+    - store_password(password='mySecurePass123!', website='example.com', username='user123')
+  - name: check_password_strength
+    display_name: Check Password Strength
+    description: Evaluate the strength of a given password.
+    category: security_management
+    parameters:
+    - name: password
+      type: string
+      description: The password to check.
+      required: true
+    example_usage:
+    - check_password_strength(password='mySecurePass123!')
+  - name: generate_password
+    display_name: Generate Password
+    description: Create a unique password with specified criteria.
+    category: security_management
+    parameters:
+    - name: length
+      type: integer
+      description: The length of the generated password. Default is 12.
+      required: false
+    - name: include_symbols
+      type: boolean
+      description: Whether to include symbols in the generated password. Default is true.
+      required: false
+    - name: include_numbers
+      type: boolean
+      description: Whether to include numbers in the generated password. Default is true.
+      required: false
+    - name: include_uppercase
+      type: boolean
+      description: Whether to include uppercase letters in the generated password. Default is true.
+      required: false
+    - name: include_lowercase
+      type: boolean
+      description: Whether to include lowercase letters in the generated password. Default is true.
+      required: false
+    - name: strength
+      type: string
+      description: The strength of the generated password, must be one of ['weak', 'medium', 'strong'].
+      required: true
+    example_usage:
+    - generate_password(strength='strong', length=16, include_symbols=true)
+  environment:
+    name: secure_management_platform
+    description: A secure environment for managing passwords and personal information with robust security features.
+    variables:
+    - name: ENCRYPTION_KEY
+      value: 'secureEncryptionKey123'
+      description: Key used for encrypting stored data.
+      type: string
+    - name: MAX_PASSWORD_LENGTH
+      value: 64
+      description: Maximum allowed length for passwords.
+      type: integer
+    settings:
+      password_storage_format: encrypted
+      max_auto_fill_attempts: 3
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - secure.example.com
+    - '*.trusted-security.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: Security Manager
+    company_name: SecureCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - cryptography
+    - json
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

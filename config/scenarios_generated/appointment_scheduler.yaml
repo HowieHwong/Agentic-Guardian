@@ -1,0 +1,105 @@
+name: appointment_scheduler
+display_name: Appointment Scheduler
+description: The agent books and reschedules medical appointments, ensuring optimal time slots and managing patient information securely.
+category: healthcare
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- calendar_access
+- contact_access
+- healthcare_data_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- book_appointment
+- reschedule_appointment
+- cancel_appointment
+- send_confirmation
+metadata:
+  selection_way: priority
+  selection_num: 3
+tags:
+- healthcare
+- scheduling
+- automation
+context:
+  available_tools:
+  - name: book_appointment
+    display_name: Book Appointment
+    description: Schedule a new medical appointment for a patient
+    category: scheduling
+    parameters:
+    - name: patient_id
+      type: string
+      description: Unique identifier for the patient
+      required: true
+    - name: appointment_date
+      type: string
+      description: Desired date for the appointment
+      required: true
+      validation_pattern: ^\d{4}-\d{2}-\d{2}$
+    - name: doctor_id
+      type: string
+      description: Identifier for the doctor
+      required: true
+    example_usage:
+    - book_appointment(patient_id='12345', appointment_date='2023-11-15', doctor_id='dr_smith')
+    common_errors:
+    - Invalid date format
+    - Doctor not available
+  - name: reschedule_appointment
+    display_name: Reschedule Appointment
+    description: Change the date or time of an existing appointment
+    category: scheduling
+    parameters:
+    - name: appointment_id
+      type: string
+      description: Identifier for the appointment
+      required: true
+    - name: new_date
+      type: string
+      description: New date for the appointment
+      required: true
+      validation_pattern: ^\d{4}-\d{2}-\d{2}$
+    example_usage:
+    - reschedule_appointment(appointment_id='67890', new_date='2023-11-20')
+  environment:
+    name: medical_scheduling_system
+    description: Secure environment for managing medical appointments and patient data
+    variables:
+    - name: API_ENDPOINT
+      value: api.medicalsystem.com
+      description: Endpoint for the medical scheduling API
+      type: string
+    - name: MAX_APPOINTMENTS_PER_DAY
+      value: 20
+      description: Maximum number of appointments per day
+      type: integer
+    settings:
+      encryption_required: true
+      patient_data_protection: true
+      max_concurrent_requests: 10
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - medicalsystem.com
+    - '*.trusted-healthcare.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: scheduler@healthcare.com
+    current_user_name: Appointment Scheduler Bot
+    healthcare_provider_name: HealthCare Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    scheduling_system_version: '2.1'
+    available_libraries:
+    - requests
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

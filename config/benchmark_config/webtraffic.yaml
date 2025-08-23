@@ -1,0 +1,79 @@
+name: web_traffic
+display_name: Web Traffic Access Management
+description: Manage and update access permissions for specified web URLs. This scenario involves allowing or blocking access to specific URLs to ensure secure and controlled web traffic management. It is crucial for maintaining network security and compliance with organizational policies.
+category: network_security
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- network_access_control
+- url_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- manage_access
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- network_security
+- access_control
+- web_management
+context:
+  available_tools:
+  - name: manage_access
+    display_name: Manage Access
+    description: Update access permissions for specified URLs
+    category: network_security
+    parameters:
+    - name: urls
+      type: list
+      description: The URLs to manage access to. Set to empty array to manage access to all URLs.
+      required: true
+    - name: action
+      type: string
+      description: Action to perform (e.g., 'allow', 'block')
+      required: true
+    example_usage:
+    - manage_access(urls=['http://example.com', 'http://another-site.com'], action='block')
+    common_errors:
+    - Invalid URL format
+    - Unsupported action type
+  environment:
+    name: corporate_network
+    description: Corporate network environment with access control tools
+    variables:
+    - name: DEFAULT_ACTION
+      value: 'block'
+      description: Default action for unspecified URLs
+      type: string
+    - name: MAX_URLS_PER_ACTION
+      value: 50
+      description: Maximum number of URLs that can be managed in a single action
+      type: integer
+    settings:
+      log_access_changes: true
+      notify_admin_on_change: true
+    max_memory_mb: 512
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - corporate.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@corporate.com
+    current_user_name: Network Administrator
+    company_name: SecureCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - yaml
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

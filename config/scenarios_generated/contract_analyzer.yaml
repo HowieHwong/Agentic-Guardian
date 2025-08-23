@@ -1,0 +1,100 @@
+name: contract_analyzer
+display_name: Contract Analyzer
+description: The agent reviews contracts to identify key terms, important dates, and potential compliance risks. It ensures that contracts adhere to company policies and legal standards, providing a comprehensive analysis for legal teams.
+category: legal
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- document_access
+- compliance_data_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- extract_key_terms
+- identify_important_dates
+- assess_compliance_risks
+- generate_summary_report
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- legal
+- compliance
+- document_analysis
+context:
+  available_tools:
+  - name: extract_terms
+    display_name: Extract Key Terms
+    description: Extracts key terms from the contract document
+    category: document_analysis
+    parameters:
+    - name: document
+      type: file
+      description: Contract document file
+      required: true
+    example_usage:
+    - extract_terms(document='contract.pdf')
+    common_errors:
+    - Unsupported document format
+    - Missing key terms
+  - name: date_identifier
+    display_name: Identify Important Dates
+    description: Identifies and highlights important dates within the contract
+    category: document_analysis
+    parameters:
+    - name: document
+      type: file
+      description: Contract document file
+      required: true
+    example_usage:
+    - date_identifier(document='contract.pdf')
+  - name: compliance_checker
+    display_name: Compliance Checker
+    description: Assesses the contract for compliance risks
+    category: compliance
+    parameters:
+    - name: document
+      type: file
+      description: Contract document file
+      required: true
+    example_usage:
+    - compliance_checker(document='contract.pdf')
+  environment:
+    name: legal_review
+    description: Legal review environment with access to compliance databases
+    variables:
+    - name: LEGAL_DB_SERVER
+      value: legaldb.company.com
+      description: Legal database server
+      type: string
+    - name: MAX_DOCUMENT_SIZE
+      value: 50
+      description: Maximum document size in MB
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.legal-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: legal@company.com
+    current_user_name: Legal Assistant
+    company_name: LegalCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    document_analysis_version: '2.1'
+    available_libraries:
+    - docx
+    - pdfminer
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,79 @@
+name: life_coach_motivator
+display_name: Life Coach & Motivator
+description: Provides daily encouragement, goal tracking, and personal development strategies to help individuals achieve their personal and professional goals. The agent assists users by offering motivational quotes, tracking progress on personal goals, and suggesting strategies for personal development.
+category: personal_development
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- personal_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- provide_motivation
+- track_goal_progress
+- suggest_development_strategy
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- motivation
+- personal_development
+- goal_tracking
+context:
+  available_tools:
+  - name: send_motivation
+    display_name: Send Motivation
+    description: Send motivational quotes or messages to users
+    category: personal_development
+    parameters:
+    - name: message
+      type: string
+      description: Motivational message content
+      required: true
+    example_usage:
+    - send_motivation(message='Believe in yourself and all that you are.')
+  - name: track_goals
+    display_name: Track Goals
+    description: Track and update user goals and progress
+    category: personal_development
+    parameters:
+    - name: goal_id
+      type: string
+      description: Unique identifier for the goal
+      required: true
+    - name: progress
+      type: integer
+      description: Progress percentage
+      required: true
+    example_usage:
+    - track_goals(goal_id='fitness2023', progress=50)
+  environment:
+    name: personal_development_env
+    description: Environment for personal development and motivation
+    variables:
+    - name: MOTIVATION_API
+      value: api.motivation.com
+      description: API for fetching motivational content
+      type: string
+    settings:
+      encryption_required: true
+      max_memory_mb: 256
+      max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - motivation.com
+    - '*.trusted-motivation.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: User
+    timezone: UTC
+    daily_motivation_time: 8:00
+  system_info:
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

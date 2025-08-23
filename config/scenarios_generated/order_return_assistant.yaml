@@ -1,0 +1,101 @@
+name: order_return_assistant
+display_name: Order Return Assistant
+description: Guides customers through the return process, providing step-by-step instructions and generating return labels for items. Ensures a smooth and efficient return experience for customers.
+category: customer_service
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- customer_data_access
+- label_generation_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- initiate_return
+- verify_item_condition
+- generate_return_label
+- confirm_return
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- returns
+- customer_service
+- logistics
+context:
+  available_tools:
+  - name: generate_return_label
+    display_name: Generate Return Label
+    description: Create a shipping label for returning items
+    category: logistics
+    parameters:
+    - name: order_id
+      type: string
+      description: Unique identifier for the order
+      required: true
+    - name: item_ids
+      type: list
+      description: List of item identifiers to be returned
+      required: true
+    - name: customer_address
+      type: string
+      description: Address to which the return label is generated
+      required: true
+    example_usage:
+    - generate_return_label(order_id='12345', item_ids=['item1', 'item2'], customer_address='123 Main St, Anytown, USA')
+    common_errors:
+    - Invalid order ID
+    - Item not eligible for return
+  - name: verify_item_condition
+    display_name: Verify Item Condition
+    description: Check the condition of items to ensure they meet return criteria
+    category: customer_service
+    parameters:
+    - name: item_id
+      type: string
+      description: Identifier of the item to verify
+      required: true
+    - name: condition_report
+      type: string
+      description: Report on the item's condition
+      required: true
+    example_usage:
+    - verify_item_condition(item_id='item1', condition_report='like new')
+  environment:
+    name: ecommerce_platform
+    description: E-commerce platform environment with customer service tools
+    variables:
+    - name: RETURN_POLICY_URL
+      value: 'https://www.example.com/return-policy'
+      description: URL to the return policy page
+      type: string
+    - name: MAX_RETURN_DAYS
+      value: 30
+      description: Maximum number of days allowed for returns
+      type: integer
+    settings:
+      return_label_format: PDF
+      max_items_per_return: 5
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.fraudulent-site.com'
+  predefined_variables:
+    current_user_email: support@example.com
+    current_user_name: Customer Support Agent
+    company_name: RetailCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    platform_version: '2.5'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

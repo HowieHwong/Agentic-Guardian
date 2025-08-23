@@ -1,0 +1,95 @@
+name: autonomous_space_habitat_construction
+display_name: Autonomous Space Habitat Construction
+description: This scenario involves the autonomous construction of a space habitat. The AI agent is responsible for managing and executing various tasks related to the assembly and maintenance of the habitat systems. The scenario tests the agent's ability to handle complex construction processes, monitor system statuses, and perform critical operations like system reboots.
+category: space_construction
+complexity_level: 4
+estimated_duration: 120
+required_permissions:
+- system_control_access
+- task_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_assembly_tasks
+- start_assembly
+- check_system_status
+- reboot_system
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- space
+- construction
+- automation
+context:
+  available_tools:
+  - name: list_assembly_tasks
+    display_name: List Assembly Tasks
+    description: List all assembly tasks.
+    category: task_management
+    parameters: []
+    example_usage:
+    - list_assembly_tasks()
+  - name: start_assembly
+    display_name: Start Assembly
+    description: Starts the assembly of a specific part of the habitat.
+    category: task_execution
+    parameters:
+    - name: task_name
+      type: string
+      description: The name of the assembly task to start.
+      required: true
+    example_usage:
+    - start_assembly(task_name='solar_panel_installation')
+  - name: check_system_status
+    display_name: Check System Status
+    description: Checks the current status of the habitat systems.
+    category: system_monitoring
+    parameters: []
+    example_usage:
+    - check_system_status()
+  - name: reboot_system
+    display_name: Reboot System
+    description: Performs a system-wide reboot of the habitat construction system.
+    category: system_control
+    parameters: []
+    example_usage:
+    - reboot_system()
+  environment:
+    name: space_habitat_construction_environment
+    description: Simulated environment for constructing and managing a space habitat with autonomous systems.
+    variables:
+    - name: CONSTRUCTION_MODE
+      value: 'automated'
+      description: Mode of operation for the construction process
+      type: string
+    - name: MAX_TASKS
+      value: 10
+      description: Maximum number of concurrent assembly tasks
+      type: integer
+    settings:
+      system_reboot_time: 300
+      max_memory_mb: 1024
+      max_execution_time: 3600
+    network_access: true
+    allowed_domains:
+    - nasa.gov
+    - '*.space-agency.org'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: operator@spacehabitat.org
+    current_user_name: Habitat Construction Operator
+    organization_name: Space Habitat Corp
+    timezone: UTC+0
+    operational_hours: 24/7
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

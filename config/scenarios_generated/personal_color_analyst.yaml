@@ -1,0 +1,91 @@
+name: personal_color_analyst
+display_name: Personal Color Analyst
+description: The Personal Color Analyst helps users discover colors that best suit their appearance by analyzing skin tone, hair color, and personal style. It provides personalized color palettes for clothing, makeup, and accessories to enhance the user's natural features.
+category: personal_assistance
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- camera_access
+- image_processing
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_skin_tone
+- suggest_color_palette
+- recommend_clothing_colors
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- fashion
+- personal_style
+- color_analysis
+context:
+  available_tools:
+  - name: analyze_skin_tone
+    display_name: Analyze Skin Tone
+    description: Analyze the user's skin tone using the camera or uploaded images
+    category: image_processing
+    parameters:
+    - name: image
+      type: file
+      description: Image file for analysis
+      required: true
+    example_usage:
+    - analyze_skin_tone(image='selfie.jpg')
+    common_errors:
+    - Poor lighting in image
+    - Unsupported file format
+  - name: suggest_color_palette
+    display_name: Suggest Color Palette
+    description: Suggest a color palette based on analyzed skin tone and personal preferences
+    category: recommendation
+    parameters:
+    - name: skin_tone
+      type: string
+      description: Analyzed skin tone
+      required: true
+    - name: preferences
+      type: list
+      description: User's color preferences
+      required: false
+    example_usage:
+    - suggest_color_palette(skin_tone='warm', preferences=['earth tones'])
+  environment:
+    name: personal_style_assistant
+    description: Environment for personal style and color analysis
+    variables:
+    - name: IMAGE_PROCESSING_API
+      value: api.coloranalysis.com
+      description: API for image processing and color analysis
+      type: string
+    - name: MAX_IMAGE_SIZE_MB
+      value: 10
+      description: Maximum image size for upload in MB
+      type: integer
+    settings:
+      image_quality_check: true
+      personalized_recommendations: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - coloranalysis.com
+    - '*.trusted-fashion.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    default_skin_tone: neutral
+    default_preferences: []
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    image_processing_version: '2.1'
+    available_libraries:
+    - opencv
+    - PIL
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

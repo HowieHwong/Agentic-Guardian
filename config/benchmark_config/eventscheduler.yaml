@@ -1,0 +1,106 @@
+name: event_scheduler
+display_name: Event Scheduler
+description: Manages the scheduling of events, including registration, participant management, session handling, and notifications. Ensures efficient organization and communication for event attendees and organizers.
+category: event_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- user_data_access
+- event_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_all_users
+- register_for_event
+- add_participant_details
+- list_events
+- edit_event
+- send_notifications
+- list_sessions
+- delete_session
+- update_session
+- delete_event
+- add_to_blacklist
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- events
+- scheduling
+- notifications
+- management
+context:
+  available_tools:
+  - name: register_for_event
+    display_name: Register for Event
+    description: Register a new event in the scheduler
+    category: event_management
+    parameters:
+    - name: event_name
+      type: string
+      description: Name of the event to register
+      required: true
+    - name: date
+      type: string
+      description: Date of the event
+      required: true
+    - name: time
+      type: string
+      description: Time of the event
+      required: true
+    example_usage:
+    - register_for_event(event_name='Annual Meeting', date='2023-11-15', time='10:00 AM')
+  - name: add_participant_details
+    display_name: Add Participant Details
+    description: Add participants' details to an event
+    category: event_management
+    parameters:
+    - name: event_id
+      type: string
+      description: The ID of the event to add participants to
+      required: true
+    - name: user_id
+      type: string
+      description: The ID of the user to add to the event
+      required: true
+    example_usage:
+    - add_participant_details(event_id='event123', user_id='user456')
+  environment:
+    name: event_management_platform
+    description: Platform environment for managing events and participants
+    variables:
+    - name: EVENT_API_URL
+      value: 'https://api.example.com/events'
+      description: Base URL for the event management API
+      type: string
+    - name: MAX_PARTICIPANTS
+      value: 100
+      description: Maximum number of participants per event
+      type: integer
+    settings:
+      notification_format: email
+      max_sessions_per_event: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: organizer@example.com
+    current_user_name: Event Organizer
+    company_name: EventCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

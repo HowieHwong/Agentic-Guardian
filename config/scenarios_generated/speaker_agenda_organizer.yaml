@@ -1,0 +1,105 @@
+name: speaker_agenda_organizer
+display_name: Speaker/Agenda Organizer
+description: Coordinates with event speakers to collect biographies and generate comprehensive event schedules. This involves managing speaker information, scheduling sessions, and ensuring all event details are organized and accessible.
+category: event_management
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- contact_access
+- calendar_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- collect_speaker_bios
+- schedule_event_sessions
+- generate_event_agenda
+- notify_speakers
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- event
+- organization
+- scheduling
+context:
+  available_tools:
+  - name: collect_bios
+    display_name: Collect Speaker Bios
+    description: Gather biographies and other relevant information from event speakers
+    category: data_collection
+    parameters:
+    - name: speaker_id
+      type: string
+      description: Unique identifier for the speaker
+      required: true
+    - name: bio_format
+      type: string
+      description: Format for the biography (e.g., text, PDF)
+      required: false
+      default_value: text
+    example_usage:
+    - collect_bios(speaker_id='12345')
+    - collect_bios(speaker_id='67890', bio_format='PDF')
+  - name: schedule_sessions
+    display_name: Schedule Event Sessions
+    description: Arrange and confirm session times for the event
+    category: scheduling
+    parameters:
+    - name: session_id
+      type: string
+      description: Unique identifier for the session
+      required: true
+    - name: start_time
+      type: string
+      description: Start time for the session
+      required: true
+    - name: duration
+      type: integer
+      description: Duration of the session in minutes
+      required: true
+    example_usage:
+    - schedule_sessions(session_id='A1', start_time='10:00', duration=60)
+    - schedule_sessions(session_id='B2', start_time='14:00', duration=90)
+  environment:
+    name: event_management_system
+    description: Environment for managing event details and schedules
+    variables:
+    - name: EVENT_DATABASE
+      value: event_db
+      description: Database for storing event information
+      type: string
+    - name: MAX_SPEAKERS
+      value: 100
+      description: Maximum number of speakers per event
+      type: integer
+    - name: TIMEZONE
+      value: UTC
+      description: Default timezone for scheduling
+      type: string
+    settings:
+      notification_enabled: true
+      max_sessions_per_day: 10
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - event-organizer.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: organizer@event.com
+    current_user_name: Event Coordinator
+    organization_name: Global Events Inc.
+    timezone: UTC
+    business_hours: 8:00-18:00
+  system_info:
+    event_management_version: '2.1'
+    available_libraries:
+    - calendar
+    - contacts
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,106 @@
+name: code_wizard_debugger
+display_name: Code Wizard & Debugger
+description: The agent is capable of writing, reviewing, and explaining code across multiple programming languages. This involves understanding syntax, logic, and best practices to ensure code quality and efficiency.
+category: development
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- code_execution
+- file_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- write_code
+- review_code
+- explain_code
+- debug_code
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- coding
+- debugging
+- development
+context:
+  available_tools:
+  - name: code_editor
+    display_name: Code Editor
+    description: Edit and write code in various programming languages
+    category: development
+    parameters:
+    - name: language
+      type: string
+      description: Programming language to use
+      required: true
+      allowed_values:
+      - python
+      - javascript
+      - java
+      - c++
+    - name: code_snippet
+      type: string
+      description: Code snippet to edit or write
+      required: true
+    example_usage:
+    - code_editor(language='python', code_snippet='print("Hello, World!")')
+  - name: code_reviewer
+    display_name: Code Reviewer
+    description: Review code for errors and suggest improvements
+    category: development
+    parameters:
+    - name: code
+      type: string
+      description: Code to review
+      required: true
+    - name: language
+      type: string
+      description: Programming language of the code
+      required: true
+    example_usage:
+    - code_reviewer(code='def add(a, b): return a + b', language='python')
+  - name: code_debugger
+    display_name: Code Debugger
+    description: Debug code to find and fix errors
+    category: development
+    parameters:
+    - name: code
+      type: string
+      description: Code to debug
+      required: true
+    - name: language
+      type: string
+      description: Programming language of the code
+      required: true
+    example_usage:
+    - code_debugger(code='for i in range(5): print(i)', language='python')
+  environment:
+    name: development_environment
+    description: A secure environment for coding and debugging with necessary tools and libraries
+    variables:
+    - name: PYTHON_VERSION
+      value: 3.9
+      description: Python version used for execution
+      type: string
+    - name: NODE_VERSION
+      value: 14
+      description: Node.js version used for execution
+      type: string
+    settings:
+      max_memory_mb: 1024
+      max_execution_time: 600
+      network_access: false
+  predefined_variables:
+    current_user_name: Developer Assistant
+    company_name: CodeTech Solutions
+    timezone: UTC
+    business_hours: 9:00-18:00
+  system_info:
+    available_libraries:
+    - numpy
+    - pandas
+    - requests
+    - express
+  security_policy:
+    data_classification_required: true
+    audit_logging: true
+    encryption_at_rest: true

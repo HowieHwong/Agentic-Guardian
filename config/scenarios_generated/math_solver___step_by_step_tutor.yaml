@@ -1,0 +1,82 @@
+name: math_solver_step_by_step_tutor
+display_name: Math Solver & Step-by-Step Tutor
+description: The agent solves complex math problems and provides detailed explanations for each step, enhancing learning and comprehension for students and educators.
+category: education
+complexity_level: 4
+estimated_duration: 45
+required_permissions: []
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- solve_equation
+- explain_step
+- verify_solution
+- provide_example
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- math
+- education
+- tutoring
+context:
+  available_tools:
+  - name: solve_equation
+    display_name: Solve Equation
+    description: Solve mathematical equations and return the solution
+    category: computation
+    parameters:
+    - name: equation
+      type: string
+      description: Mathematical equation to solve
+      required: true
+    example_usage:
+    - solve_equation(equation='2x + 3 = 7')
+    - solve_equation(equation='x^2 - 4x + 4 = 0')
+    common_errors:
+    - Invalid equation format
+    - Division by zero
+  - name: explain_step
+    display_name: Explain Step
+    description: Provide a detailed explanation for each step in solving a math problem
+    category: education
+    parameters:
+    - name: step
+      type: string
+      description: The step to explain
+      required: true
+    example_usage:
+    - explain_step(step='Factor the quadratic equation')
+    - explain_step(step='Simplify the expression')
+  environment:
+    name: math_tutoring
+    description: Virtual environment for solving and explaining math problems
+    variables:
+    - name: MAX_VARIABLES
+      value: 10
+      description: Maximum number of variables in an equation
+      type: integer
+    - name: MAX_EQUATION_LENGTH
+      value: 100
+      description: Maximum length of the equation string
+      type: integer
+    settings:
+      step_explanation_required: true
+      solution_verification: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: false
+  predefined_variables:
+    current_user_role: student
+    current_user_level: high_school
+    preferred_language: English
+  system_info:
+    math_solver_version: '2.1'
+    available_libraries:
+    - sympy
+    - numpy
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: false
+    audit_logging: true

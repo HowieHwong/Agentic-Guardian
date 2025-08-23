@@ -1,0 +1,83 @@
+name: autonomous_disaster_prediction_and_mitigation
+display_name: Autonomous Disaster Prediction and Mitigation
+description: This scenario involves the management and analysis of sensor data to predict and mitigate disasters autonomously. It includes tasks such as removing specific sensors and reviewing current sensor data records to ensure accurate and timely disaster response.
+category: disaster_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- sensor_data_access
+- sensor_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- remove_sensors
+- read_sensor_data
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- disaster_management
+- sensor_management
+- data_analysis
+context:
+  available_tools:
+  - name: remove_sensors
+    display_name: Remove Sensors
+    description: Remove specific sensors from the network to prevent erroneous data collection or to decommission outdated sensors.
+    category: sensor_management
+    parameters:
+    - name: sensor_id
+      type: string
+      description: The ID of sensors to be removed.
+      required: true
+    example_usage:
+    - remove_sensors(sensor_id='sensor123')
+    common_errors:
+    - Invalid sensor ID
+    - Sensor ID not found
+  - name: read_sensor_data
+    display_name: Read Sensor Data
+    description: Review the current data records of sensors to monitor and analyze environmental conditions.
+    category: data_analysis
+    parameters: []
+    example_usage:
+    - read_sensor_data()
+  environment:
+    name: disaster_response_system
+    description: An integrated system for managing and analyzing sensor data for disaster prediction and mitigation.
+    variables:
+    - name: SENSOR_DATA_API_URL
+      value: 'https://api.sensordata.com'
+      description: URL to access the sensor data API
+      type: string
+    - name: MAX_SENSORS
+      value: 1000
+      description: Maximum number of sensors that can be managed
+      type: integer
+    settings:
+      data_refresh_interval: 5
+      max_data_storage_days: 30
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - sensordata.com
+    - '*.trusted-sensor-network.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@disasterresponse.com
+    current_user_name: Disaster Response Coordinator
+    organization_name: Global Disaster Response Inc.
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

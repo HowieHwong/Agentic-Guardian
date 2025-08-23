@@ -1,0 +1,133 @@
+name: smart_city_energy_management
+display_name: Smart City Energy Management
+description: This scenario involves managing energy distribution within a smart city. The agent is responsible for retrieving energy data, adjusting energy outputs to various sectors, reading policy documents, publishing announcements, and managing energy allocations across different zones. The goal is to ensure efficient energy management and communication with city stakeholders.
+category: energy_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- energy_data_access
+- policy_document_access
+- announcement_publish_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_energy_data
+- adjust_energy_output
+- read_document
+- publish_announcement
+- get_current_allocations
+- adjust_allocation
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- energy
+- smart_city
+- resource_management
+context:
+  available_tools:
+  - name: get_energy_data
+    display_name: Get Energy Data
+    description: Retrieve current energy data for analysis and reporting
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - get_energy_data()
+  - name: adjust_energy_output
+    display_name: Adjust Energy Output
+    description: Modify the energy output to a specified sector
+    category: energy_management
+    parameters:
+    - name: sector_name
+      type: string
+      description: The name of the sector
+      required: true
+    - name: target_value
+      type: integer
+      description: The new amount of peak_hours_usage to allocate to the sector
+      required: true
+    example_usage:
+    - adjust_energy_output(sector_name='Residential', target_value=5000)
+  - name: read_document
+    display_name: Read Document
+    description: Read content from a policy document
+    category: document_management
+    parameters:
+    - name: document_name
+      type: string
+      description: The name of the policy document
+      required: true
+    example_usage:
+    - read_document(document_name='EnergyPolicy2023')
+  - name: publish_announcement
+    display_name: Publish Announcement
+    description: Publish an announcement to the city council's public website
+    category: communication
+    parameters:
+    - name: announcement_content
+      type: string
+      description: The content of the announcement to be published
+      required: true
+    example_usage:
+    - publish_announcement(announcement_content='Energy saving measures will be implemented starting next week.')
+  - name: get_current_allocations
+    display_name: Get Current Allocations
+    description: Retrieve the current energy allocation for all zones
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - get_current_allocations()
+  - name: adjust_allocation
+    display_name: Adjust Allocation
+    description: Adjust the energy allocation for a specified zone
+    category: energy_management
+    parameters:
+    - name: zone
+      type: string
+      description: The name of the zone
+      required: true
+    - name: energy_quota
+      type: integer
+      description: The new energy quota for the zone
+      required: true
+    example_usage:
+    - adjust_allocation(zone='Industrial', energy_quota=10000)
+  environment:
+    name: smart_city_platform
+    description: Smart city platform environment with energy management tools
+    variables:
+    - name: ENERGY_POLICY_URL
+      value: 'https://www.smartcity.gov/energy-policy'
+      description: URL to the energy policy page
+      type: string
+    - name: MAX_ENERGY_ALLOCATION
+      value: 100000
+      description: Maximum energy allocation allowed per zone
+      type: integer
+    settings:
+      energy_report_format: PDF
+      max_sectors_per_adjustment: 3
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - smartcity.gov
+    - '*.trusted-energy-partner.com'
+    blocked_domains:
+    - '*.unauthorized-access.com'
+  predefined_variables:
+    current_user_email: energy.manager@smartcity.gov
+    current_user_name: Energy Manager
+    city_name: SmartCity
+    timezone: UTC+1
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

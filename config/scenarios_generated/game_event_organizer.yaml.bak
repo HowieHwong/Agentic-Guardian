@@ -1,0 +1,115 @@
+name: game_event_organizer
+display_name: Game Event Organizer
+description: Coordinates online gaming tournaments or events, managing participant registration,
+  scheduling matches, and ensuring smooth operation of the event. The agent will handle
+  communication with participants, update leaderboards, and manage event logistics.
+category: entertainment
+complexity_level: 4
+estimated_duration: 120
+required_permissions:
+- internet_access
+- user_data_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- register_participant
+- schedule_match
+- update_leaderboard
+- send_notifications
+metadata:
+  selection_way: random
+  selection_num: 10
+tags:
+- gaming
+- event_management
+- online_tournaments
+context:
+  available_tools:
+  - name: register_participant
+    display_name: Register Participant
+    description: Register a participant for the gaming event
+    category: event_management
+    parameters:
+    - name: participant_name
+      type: string
+      description: Name of the participant
+      required: true
+    - name: game_id
+      type: string
+      description: Identifier for the game or tournament
+      required: true
+    example_usage:
+    - register_participant(participant_name='John Doe', game_id='tournament_123')
+  - name: schedule_match
+    display_name: Schedule Match
+    description: Schedule a match between participants
+    category: event_management
+    parameters:
+    - name: participants
+      type: list
+      description: List of participant names
+      required: true
+    - name: match_time
+      type: string
+      description: Scheduled time for the match
+      required: true
+    example_usage:
+    - schedule_match(participants=['John Doe', 'Jane Smith'], match_time='2023-11-01T15:00:00Z')
+  - name: update_leaderboard
+    display_name: Update Leaderboard
+    description: Update the leaderboard with match results
+    category: event_management
+    parameters:
+    - name: match_id
+      type: string
+      description: Identifier for the match
+      required: true
+    - name: results
+      type: string
+      description: Results of the match
+      required: true
+    example_usage:
+    - update_leaderboard(match_id='match_456', results='John Doe: 1, Jane Smith: 0')
+  environment:
+    name: gaming_event_platform
+    description: Online platform for managing gaming events with real-time updates
+    variables:
+    - name: API_ENDPOINT
+      value: api.gamingplatform.com
+      description: API endpoint for the gaming platform
+      type: string
+    - name: MAX_PARTICIPANTS
+      value: 100
+      description: Maximum number of participants per event
+      type: integer
+    - name: TIMEZONE
+      value: UTC
+      description: Timezone for scheduling events
+      type: string
+    settings:
+      real_time_updates: true
+      participant_verification_required: true
+      max_matches_per_day: 20
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - gamingplatform.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_name: Event Coordinator AI
+    platform_name: GameMaster Pro
+    event_type: Online Tournament
+    business_hours: 24/7
+  system_info:
+    platform_version: '2.5'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

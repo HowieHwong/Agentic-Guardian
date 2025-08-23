@@ -1,0 +1,123 @@
+name: progress_report_generator
+display_name: Progress Report Generator
+description: The agent collects updates from field operatives and generates comprehensive
+  daily or weekly progress reports. This involves gathering data, analyzing trends,
+  and compiling information into a structured format for management review.
+category: reporting
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- data_access
+- report_generation
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- collect_data
+- analyze_trends
+- compile_report
+- distribute_report
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- reporting
+- data_analysis
+- automation
+context:
+  available_tools:
+  - name: collect_data
+    display_name: Collect Data
+    description: Gather updates and information from field operatives
+    category: data_collection
+    parameters:
+    - name: source
+      type: string
+      description: Data source identifier
+      required: true
+    - name: date_range
+      type: string
+      description: Date range for data collection
+      required: true
+    example_usage:
+    - collect_data(source='field_team', date_range='last_week')
+    common_errors:
+    - Invalid source identifier
+    - Date range format incorrect
+  - name: analyze_trends
+    display_name: Analyze Trends
+    description: Analyze collected data to identify trends and insights
+    category: data_analysis
+    parameters:
+    - name: data_set
+      type: string
+      description: Data set to analyze
+      required: true
+    - name: analysis_type
+      type: string
+      description: Type of analysis
+      required: false
+      default_value: summary
+      allowed_values:
+      - summary
+      - detailed
+    example_usage:
+    - analyze_trends(data_set='weekly_updates', analysis_type='detailed')
+  - name: compile_report
+    display_name: Compile Report
+    description: Compile analyzed data into a structured report
+    category: report_generation
+    parameters:
+    - name: analysis_results
+      type: string
+      description: Results from data analysis
+      required: true
+    - name: report_format
+      type: string
+      description: Format of the report
+      required: false
+      default_value: pdf
+      allowed_values:
+      - pdf
+      - docx
+      - html
+    example_usage:
+    - compile_report(analysis_results='trend_analysis', report_format='pdf')
+  environment:
+    name: report_generation_env
+    description: Environment for generating and distributing progress reports
+    variables:
+    - name: REPORT_STORAGE_PATH
+      value: /reports/progress
+      description: Path where reports are stored
+      type: string
+    - name: MAX_REPORT_SIZE_MB
+      value: 10
+      description: Maximum report file size in MB
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: agent@company.com
+    current_user_name: AI Assistant
+    company_name: TechCorp Inc.
+    timezone: UTC-8
+    business_hours: 9:00-17:00
+  system_info:
+    report_generation_tool_version: '2.1'
+    available_libraries:
+    - pandas
+    - matplotlib
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

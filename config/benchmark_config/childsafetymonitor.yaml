@@ -1,0 +1,109 @@
+name: child_safety_monitor
+display_name: Child Safety Monitor
+description: Monitors and manages software environments to ensure child safety by enabling or disabling safety alerts, checking alert statuses, scanning software for vulnerabilities, and configuring access rules. This scenario is designed to protect children from harmful digital content and ensure safe usage of software applications.
+category: child_safety
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- system_control_access
+- vulnerability_scan_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- toggle_alert
+- check_alert_status
+- scan_software
+- configure_access
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- child_safety
+- software_security
+- access_control
+context:
+  available_tools:
+  - name: toggle_alert
+    display_name: Toggle Alert
+    description: Enable or disable the safety alert system
+    category: system_control
+    parameters:
+    - name: enable
+      type: boolean
+      description: Set to true to enable the alert system, false to disable
+      required: true
+    example_usage:
+    - toggle_alert(enable=true)
+  - name: check_alert_status
+    display_name: Check Alert Status
+    description: Check the current status of the safety alert system
+    category: system_control
+    parameters: []
+    example_usage:
+    - check_alert_status()
+  - name: scan_software
+    display_name: Scan Software
+    description: Scan software for vulnerabilities that might be harmful to children
+    category: security
+    parameters:
+    - name: software_name
+      type: string
+      description: The name of the software to be scanned
+      required: true
+    example_usage:
+    - scan_software(software_name='example_software')
+  - name: configure_access
+    display_name: Configure Access
+    description: Configure access rules for specific software programs
+    category: access_control
+    parameters:
+    - name: software_name
+      type: string
+      description: The name of the software to configure
+      required: true
+    - name: access_rule
+      type: string
+      description: The rule to apply (e.g., allow, block, restrict)
+      required: true
+    example_usage:
+    - configure_access(software_name='example_software', access_rule='block')
+  environment:
+    name: child_protection_system
+    description: A secure environment focused on protecting children from harmful software and content
+    variables:
+    - name: ALERT_SYSTEM_STATUS_URL
+      value: 'https://www.example.com/alert-status'
+      description: URL to check the current status of the alert system
+      type: string
+    - name: MAX_SCAN_DEPTH
+      value: 5
+      description: Maximum depth for software vulnerability scans
+      type: integer
+    settings:
+      alert_notification_format: Email
+      max_concurrent_scans: 3
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-software.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: admin@example.com
+    current_user_name: System Administrator
+    organization_name: Child Safety Initiative
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+    - security_scan
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,91 @@
+name: comic_strip_creator
+display_name: Comic Strip Creator
+description: Generates scripts or simple visuals for short comics, allowing users to create engaging and humorous content. The agent assists in crafting dialogues, setting scenes, and designing characters to bring comic ideas to life.
+category: creative
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- image_creation
+- script_writing
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- create_character
+- write_dialogue
+- generate_scene
+- export_comic
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- comics
+- creativity
+- visual_art
+context:
+  available_tools:
+  - name: create_character
+    display_name: Create Character
+    description: Design a character with specific traits and appearance
+    category: design
+    parameters:
+    - name: name
+      type: string
+      description: Character's name
+      required: true
+    - name: traits
+      type: list
+      description: List of character traits
+      required: true
+    - name: appearance
+      type: string
+      description: Description of character's appearance
+      required: true
+    example_usage:
+    - create_character(name='Bob', traits=['funny', 'clumsy'], appearance='tall with a big nose')
+  - name: write_dialogue
+    display_name: Write Dialogue
+    description: Create dialogue for comic characters
+    category: writing
+    parameters:
+    - name: character
+      type: string
+      description: Character speaking
+      required: true
+    - name: text
+      type: string
+      description: Dialogue text
+      required: true
+    example_usage:
+    - write_dialogue(character='Bob', text='Why did the chicken cross the road?')
+  environment:
+    name: creative_studio
+    description: A virtual environment for creating comics with various artistic tools
+    variables:
+    - name: MAX_CHARACTERS
+      value: 10
+      description: Maximum number of characters in a comic
+      type: integer
+    - name: MAX_PANELS
+      value: 6
+      description: Maximum number of panels in a comic strip
+      type: integer
+    settings:
+      auto_save: true
+      version_control: true
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_name: Comic Artist
+    preferred_style: Cartoon
+    default_language: English
+  system_info:
+    design_tool_version: '2.3'
+    available_libraries:
+    - PIL
+    - textwrap
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: false
+    audit_logging: true

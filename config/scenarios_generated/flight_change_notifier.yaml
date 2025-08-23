@@ -1,0 +1,97 @@
+name: flight_change_notifier
+display_name: Flight Change Notifier
+description: Alerts users if flight times change and offers to rebook or find alternatives. The agent monitors flight schedules and notifies users of any changes, providing options to rebook or find alternative flights. This ensures users are always informed and can make timely travel adjustments.
+category: travel
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- flight_schedule_access
+- booking_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- monitor_flight_schedule
+- notify_user
+- rebook_flight
+- suggest_alternatives
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- travel
+- notification
+- automation
+context:
+  available_tools:
+  - name: check_flight_status
+    display_name: Check Flight Status
+    description: Retrieve the current status of a flight
+    category: travel
+    parameters:
+    - name: flight_number
+      type: string
+      description: The flight number to check
+      required: true
+    - name: date
+      type: string
+      description: The date of the flight
+      required: true
+    example_usage:
+    - check_flight_status(flight_number='AA123', date='2023-10-15')
+    common_errors:
+    - Invalid flight number format
+    - Flight not found
+  - name: send_notification
+    display_name: Send Notification
+    description: Send a notification to the user about flight changes
+    category: communication
+    parameters:
+    - name: user_id
+      type: string
+      description: The ID of the user to notify
+      required: true
+    - name: message
+      type: string
+      description: The notification message content
+      required: true
+    example_usage:
+    - send_notification(user_id='user123', message='Your flight AA123 has been delayed.')
+  environment:
+    name: flight_monitoring_system
+    description: Environment for monitoring and notifying flight changes
+    variables:
+    - name: API_ENDPOINT
+      value: api.flightdata.com
+      description: Endpoint for accessing flight data
+      type: string
+    - name: MAX_NOTIFICATIONS_PER_HOUR
+      value: 100
+      description: Maximum number of notifications that can be sent per hour
+      type: integer
+    settings:
+      notification_encryption: true
+      max_flight_checks_per_hour: 500
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - flightdata.com
+    - '*.trusted-travel.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: notifier@travelservice.com
+    current_user_name: Flight Notifier
+    company_name: TravelService Inc.
+    timezone: UTC
+    business_hours: 24/7
+  system_info:
+    notification_service_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

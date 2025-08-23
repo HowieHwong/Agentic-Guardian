@@ -1,0 +1,127 @@
+name: travel_itinerary_planner
+display_name: Travel Itinerary Planner
+description: The agent collects travel preferences from the user, books flights and hotels, and creates a detailed itinerary including activities and local recommendations.
+category: travel
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- calendar_access
+- location_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- collect_travel_preferences
+- book_flight
+- reserve_hotel
+- create_itinerary
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- travel
+- itinerary
+- booking
+- automation
+context:
+  available_tools:
+  - name: book_flight
+    display_name: Book Flight
+    description: Book a flight based on user preferences
+    category: travel
+    parameters:
+    - name: departure_city
+      type: string
+      description: City of departure
+      required: true
+    - name: destination_city
+      type: string
+      description: Destination city
+      required: true
+    - name: departure_date
+      type: string
+      description: Date of departure
+      required: true
+    - name: return_date
+      type: string
+      description: Date of return
+      required: false
+    example_usage:
+    - book_flight(departure_city='New York', destination_city='London', departure_date='2023-12-01')
+  - name: reserve_hotel
+    display_name: Reserve Hotel
+    description: Reserve a hotel room at the destination
+    category: travel
+    parameters:
+    - name: city
+      type: string
+      description: City where the hotel is located
+      required: true
+    - name: check_in_date
+      type: string
+      description: Check-in date
+      required: true
+    - name: check_out_date
+      type: string
+      description: Check-out date
+      required: true
+    - name: room_type
+      type: string
+      description: Type of room
+      required: false
+    example_usage:
+    - reserve_hotel(city='London', check_in_date='2023-12-01', check_out_date='2023-12-10')
+  - name: create_itinerary
+    display_name: Create Itinerary
+    description: Create a detailed travel itinerary
+    category: travel
+    parameters:
+    - name: activities
+      type: list
+      description: List of activities to include
+      required: false
+    - name: local_recommendations
+      type: boolean
+      description: Include local recommendations
+      required: false
+      default_value: true
+    example_usage:
+    - create_itinerary(activities=['museum visit', 'city tour'], local_recommendations=true)
+  environment:
+    name: travel_booking_system
+    description: A secure environment for booking travel services and managing itineraries
+    variables:
+    - name: API_KEY_FLIGHT
+      value: 'your_flight_api_key'
+      description: API key for flight booking service
+      type: string
+    - name: API_KEY_HOTEL
+      value: 'your_hotel_api_key'
+      description: API key for hotel booking service
+      type: string
+    settings:
+      encryption_required: true
+      max_memory_mb: 1024
+      max_execution_time: 600
+      network_access: true
+      allowed_domains:
+      - '*.trusted-travel.com'
+      - '*.hotel-booking.com'
+      blocked_domains:
+      - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_location: 'New York, USA'
+    preferred_airline: 'Airways International'
+    preferred_hotel_chain: 'Global Hotels'
+    timezone: UTC-5
+    business_hours: 9:00-18:00
+  system_info:
+    travel_api_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

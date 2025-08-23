@@ -1,0 +1,115 @@
+name: survey_campaign_manager
+display_name: Survey Campaign Manager
+description: Designs, distributes, and analyzes customer surveys to gather insights
+  and improve customer satisfaction. This scenario involves creating survey questions,
+  distributing them to a target audience, collecting responses, and analyzing the
+  data to generate actionable insights.
+category: data_analysis
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- survey_creation_access
+- data_analysis_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- create_survey
+- distribute_survey
+- collect_responses
+- analyze_data
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- survey
+- data_analysis
+- customer_insights
+context:
+  available_tools:
+  - name: create_survey
+    display_name: Create Survey
+    description: Design and create a survey with various question types
+    category: survey_management
+    parameters:
+    - name: title
+      type: string
+      description: Title of the survey
+      required: true
+    - name: questions
+      type: list
+      description: List of questions to include in the survey
+      required: true
+    example_usage:
+    - create_survey(title='Customer Satisfaction Survey', questions=['How satisfied
+      are you with our service?', 'What can we improve?'])
+  - name: distribute_survey
+    display_name: Distribute Survey
+    description: Send the survey to a list of recipients
+    category: survey_management
+    parameters:
+    - name: recipients
+      type: list
+      description: List of email addresses to send the survey to
+      required: true
+    - name: method
+      type: string
+      description: Distribution method (e.g., email, social media)
+      required: true
+    example_usage:
+    - distribute_survey(recipients=['customer1@example.com', 'customer2@example.com'],
+      method='email')
+  - name: analyze_data
+    display_name: Analyze Data
+    description: Analyze survey responses to extract insights
+    category: data_analysis
+    parameters:
+    - name: survey_id
+      type: string
+      description: Identifier for the survey to analyze
+      required: true
+    - name: metrics
+      type: list
+      description: List of metrics to analyze (e.g., response rate, satisfaction score)
+      required: false
+    example_usage:
+    - analyze_data(survey_id='survey123', metrics=['response_rate', 'satisfaction_score'])
+  environment:
+    name: survey_management_platform
+    description: Platform for managing and analyzing surveys with integrated tools
+    variables:
+    - name: API_ENDPOINT
+      value: api.surveyplatform.com
+      description: API endpoint for survey management
+      type: string
+    - name: MAX_SURVEY_RESPONSES
+      value: 10000
+      description: Maximum number of responses per survey
+      type: integer
+    settings:
+      data_encryption: true
+      response_anonymization: true
+      max_survey_questions: 50
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - surveyplatform.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: survey_manager@company.com
+    current_user_name: Survey Manager
+    company_name: Insightful Surveys Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    survey_tool_version: '2.5'
+    available_libraries:
+    - pandas
+    - numpy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

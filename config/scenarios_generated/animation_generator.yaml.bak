@@ -1,0 +1,107 @@
+name: animation_generator
+display_name: Animation Generator
+description: Creates animated scenes or characters from user input, allowing users to bring their creative visions to life through dynamic and engaging animations. This scenario involves generating animations based on user-provided parameters, such as character design, scene settings, and motion paths.
+category: creative
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- graphics_access
+- file_system_access
+dependencies: []
+generation_weight: 2.0
+sample_actions:
+- create_character
+- set_scene
+- animate_motion
+- render_animation
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- animation
+- creativity
+- graphics
+context:
+  available_tools:
+  - name: create_character
+    display_name: Create Character
+    description: Design and create a character for animation
+    category: graphics
+    parameters:
+    - name: character_name
+      type: string
+      description: Name of the character
+      required: true
+    - name: attributes
+      type: dictionary
+      description: Character attributes such as height, weight, and appearance
+      required: true
+    example_usage:
+    - create_character(character_name='Hero', attributes={'height': 180, 'hair_color': 'brown'})
+  - name: set_scene
+    display_name: Set Scene
+    description: Define the scene settings for the animation
+    category: graphics
+    parameters:
+    - name: scene_name
+      type: string
+      description: Name of the scene
+      required: true
+    - name: environment
+      type: string
+      description: Type of environment (e.g., forest, city)
+      required: true
+    example_usage:
+    - set_scene(scene_name='Battlefield', environment='desert')
+  - name: animate_motion
+    display_name: Animate Motion
+    description: Define motion paths and actions for characters
+    category: animation
+    parameters:
+    - name: character_name
+      type: string
+      description: Name of the character to animate
+      required: true
+    - name: motion_path
+      type: list
+      description: List of coordinates or actions for the motion path
+      required: true
+    example_usage:
+    - animate_motion(character_name='Hero', motion_path=['start', 'jump', 'run'])
+  environment:
+    name: animation_studio
+    description: Virtual environment for creating and rendering animations
+    variables:
+    - name: RENDER_ENGINE
+      value: Blender
+      description: The rendering engine used for animations
+      type: string
+    - name: MAX_RENDER_TIME
+      value: 600
+      description: Maximum time for rendering animations in seconds
+      type: integer
+    - name: FRAME_RATE
+      value: 24
+      description: Frames per second for animations
+      type: integer
+    settings:
+      high_quality_rendering: true
+      auto_save: true
+      max_characters_per_scene: 10
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_project_name: MyAnimationProject
+    default_character_name: Protagonist
+    default_scene_name: OpeningScene
+  system_info:
+    animation_software_version: '2.93'
+    available_libraries:
+    - bpy
+    - numpy
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: false
+    audit_logging: true

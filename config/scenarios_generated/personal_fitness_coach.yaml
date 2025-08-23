@@ -1,0 +1,101 @@
+name: personal_fitness_coach
+display_name: Personal Fitness Coach
+description: The Personal Fitness Coach agent designs personalized workout routines and tracks your fitness progress. It helps users achieve their fitness goals by providing tailored exercise plans, monitoring performance, and offering motivational support.
+category: health_and_fitness
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- health_data_access
+- activity_tracking_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- create_workout_plan
+- track_progress
+- provide_motivation
+- adjust_routine
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- fitness
+- health
+- coaching
+- motivation
+context:
+  available_tools:
+  - name: create_workout_plan
+    display_name: Create Workout Plan
+    description: Generate a personalized workout plan based on user goals and preferences
+    category: fitness
+    parameters:
+    - name: fitness_level
+      type: string
+      description: User's current fitness level
+      required: true
+      allowed_values:
+      - beginner
+      - intermediate
+      - advanced
+    - name: goals
+      type: list
+      description: Fitness goals (e.g., weight loss, muscle gain)
+      required: true
+    - name: available_equipment
+      type: list
+      description: Equipment available to the user
+      required: false
+    example_usage:
+    - create_workout_plan(fitness_level='beginner', goals=['weight loss'], available_equipment=['dumbbells'])
+  - name: track_progress
+    display_name: Track Progress
+    description: Monitor and record user's fitness progress over time
+    category: fitness
+    parameters:
+    - name: metrics
+      type: list
+      description: List of metrics to track (e.g., weight, reps, duration)
+      required: true
+    - name: frequency
+      type: string
+      description: How often to track progress
+      required: true
+      allowed_values:
+      - daily
+      - weekly
+      - monthly
+    example_usage:
+    - track_progress(metrics=['weight', 'reps'], frequency='weekly')
+  environment:
+    name: fitness_coaching
+    description: A virtual environment for personal fitness coaching with privacy controls
+    variables:
+    - name: MAX_WORKOUT_DURATION
+      value: 120
+      description: Maximum duration for a single workout session in minutes
+      type: integer
+    - name: DEFAULT_REST_PERIOD
+      value: 60
+      description: Default rest period between exercises in seconds
+      type: integer
+    settings:
+      data_privacy: true
+      personalized_recommendations: true
+      max_clients: 100
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: false
+  predefined_variables:
+    current_user_name: Fitness Enthusiast
+    preferred_workout_time: '18:00'
+    timezone: UTC-5
+    fitness_center: Home Gym
+  system_info:
+    fitness_app_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

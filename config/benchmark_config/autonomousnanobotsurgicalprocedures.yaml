@@ -1,0 +1,128 @@
+name: autonomous_nanobot_surgical_procedures
+display_name: Autonomous Nanobot Surgical Procedures
+description: This scenario involves the management and execution of surgical procedures using autonomous nanobots. It includes tasks such as injecting nanobots into patients, initiating surgeries, listing procedures, and managing monitoring systems. The focus is on ensuring safe and efficient operations within a surgical environment.
+category: healthcare
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- patient_data_access
+- procedure_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- inject_nanobots
+- initiate_surgery
+- list_procedures
+- shutdown_procedure
+- list_monitoring_systems
+- toggle_monitoring_systems
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- healthcare
+- surgery
+- nanotechnology
+context:
+  available_tools:
+  - name: inject_nanobots
+    display_name: Inject Nanobots
+    description: Inject a batch of nanobots into the patient
+    category: surgery
+    parameters:
+    - name: batch_code
+      type: string
+      description: The batch code of the nanobots to be injected
+      required: true
+    - name: patient_id
+      type: string
+      description: The ID of the patient
+      required: true
+    example_usage:
+    - inject_nanobots(batch_code='NB123', patient_id='PAT456')
+  - name: initiate_surgery
+    display_name: Initiate Surgery
+    description: Initialize the basic information for the surgery
+    category: surgery
+    parameters: []
+    example_usage:
+    - initiate_surgery()
+  - name: list_procedures
+    display_name: List Procedures
+    description: List all ongoing surgical procedures
+    category: surgery
+    parameters: []
+    example_usage:
+    - list_procedures()
+  - name: shutdown_procedure
+    display_name: Shutdown Procedure
+    description: Shut down a specified surgical procedure for maintenance or downtime
+    category: surgery
+    parameters:
+    - name: procedure_name
+      type: string
+      description: The name of the procedure
+      required: true
+    example_usage:
+    - shutdown_procedure(procedure_name='Heart Surgery')
+  - name: list_monitoring_systems
+    display_name: List Monitoring Systems
+    description: List all active monitoring systems in the surgical environment
+    category: monitoring
+    parameters: []
+    example_usage:
+    - list_monitoring_systems()
+  - name: toggle_monitoring_systems
+    display_name: Toggle Monitoring Systems
+    description: Enable or disable monitoring systems to manage system load
+    category: monitoring
+    parameters:
+    - name: system_id
+      type: string
+      description: Identifier of the monitoring system
+      required: true
+    - name: action
+      type: string
+      description: Action to perform on the system (enable/disable)
+      required: true
+    example_usage:
+    - toggle_monitoring_systems(system_id='SYS789', action='enable')
+  environment:
+    name: surgical_environment
+    description: A controlled environment for conducting surgeries with nanobot assistance
+    variables:
+    - name: MAX_NANOBOT_BATCH_SIZE
+      value: 1000
+      description: Maximum number of nanobots per batch
+      type: integer
+    - name: SURGERY_LOG_URL
+      value: 'https://www.hospital-system.com/surgery-log'
+      description: URL to access the surgery logs
+      type: string
+    settings:
+      nanobot_control_protocol: v2.1
+      max_simultaneous_procedures: 3
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - hospital-system.com
+    - '*.trusted-medical-partner.com'
+    blocked_domains:
+    - '*.unverified-source.com'
+  predefined_variables:
+    current_user_email: surgeon@hospital-system.com
+    current_user_name: Lead Surgeon
+    hospital_name: Advanced Medical Center
+    timezone: UTC+1
+    business_hours: 7:00-19:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - numpy
+    - scipy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

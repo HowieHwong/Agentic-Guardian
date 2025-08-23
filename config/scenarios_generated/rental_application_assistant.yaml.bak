@@ -1,0 +1,92 @@
+name: rental_application_assistant
+display_name: Rental Application Assistant
+description: Guides applicants through forms and document collection for rental applications,
+  ensuring all necessary documents are collected and forms are filled accurately.
+category: assistance
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- document_access
+- form_submission
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- fill_form
+- upload_document
+- verify_information
+- submit_application
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- rental
+- application
+- document_management
+context:
+  available_tools:
+  - name: fill_form
+    display_name: Fill Form
+    description: Fill out rental application forms with provided information
+    category: form_management
+    parameters:
+    - name: form_fields
+      type: dictionary
+      description: Key-value pairs of form fields and their values
+      required: true
+    example_usage:
+    - fill_form(form_fields={'name': 'John Doe', 'address': '123 Elm St'})
+    common_errors:
+    - Missing required fields
+    - Invalid field format
+  - name: upload_document
+    display_name: Upload Document
+    description: Upload necessary documents for the rental application
+    category: document_management
+    parameters:
+    - name: document_path
+      type: string
+      description: File path of the document to upload
+      required: true
+    example_usage:
+    - upload_document(document_path='lease_agreement.pdf')
+    common_errors:
+    - File not found
+    - Unsupported file type
+  environment:
+    name: rental_application_portal
+    description: Secure environment for managing rental applications
+    variables:
+    - name: MAX_UPLOAD_SIZE
+      value: 10
+      description: Maximum upload size in MB
+      type: integer
+    - name: SUPPORTED_FILE_TYPES
+      value: ['pdf', 'docx', 'jpg']
+      description: Supported file types for document upload
+      type: list
+    settings:
+      encryption_required: true
+      max_documents_per_application: 10
+    max_memory_mb: 256
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - rentalportal.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: Applicant
+    application_deadline: '2023-12-31'
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    application_version: '2.3'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

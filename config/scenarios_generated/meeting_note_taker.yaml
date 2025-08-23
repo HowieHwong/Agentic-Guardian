@@ -1,0 +1,129 @@
+name: meeting_note_taker
+display_name: Meeting Note-Taker
+description: The agent joins virtual meetings, records the discussions, and provides concise summaries. This scenario involves capturing key points, decisions, and action items from meetings to enhance productivity and ensure no critical information is missed.
+category: productivity
+complexity_level: 4
+estimated_duration: 60
+required_permissions:
+- microphone_access
+- speaker_access
+- transcription_service_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- join_meeting
+- record_audio
+- transcribe_audio
+- summarize_discussion
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- meetings
+- productivity
+- automation
+context:
+  available_tools:
+  - name: join_meeting
+    display_name: Join Meeting
+    description: Connect to a virtual meeting platform
+    category: communication
+    parameters:
+    - name: meeting_link
+      type: string
+      description: URL of the meeting to join
+      required: true
+    - name: participant_name
+      type: string
+      description: Name to display in the meeting
+      required: true
+    example_usage:
+    - join_meeting(meeting_link='https://meetings.com/123', participant_name='AI Assistant')
+    common_errors:
+    - Invalid meeting link
+    - Network connectivity issues
+  - name: record_audio
+    display_name: Record Audio
+    description: Capture audio from the meeting for transcription
+    category: media
+    parameters:
+    - name: duration
+      type: integer
+      description: Duration to record in minutes
+      required: true
+    example_usage:
+    - record_audio(duration=60)
+    common_errors:
+    - Microphone access denied
+    - Insufficient storage space
+  - name: transcribe_audio
+    display_name: Transcribe Audio
+    description: Convert recorded audio into text
+    category: productivity
+    parameters:
+    - name: audio_file
+      type: string
+      description: Path to the audio file to transcribe
+      required: true
+    example_usage:
+    - transcribe_audio(audio_file='meeting_audio.wav')
+    common_errors:
+    - Audio file not found
+    - Poor audio quality
+  - name: summarize_discussion
+    display_name: Summarize Discussion
+    description: Generate a summary from transcribed text
+    category: productivity
+    parameters:
+    - name: transcript
+      type: string
+      description: Text of the transcribed meeting
+      required: true
+    example_usage:
+    - summarize_discussion(transcript='Meeting transcript text...')
+    common_errors:
+    - Transcript too short
+    - Unable to identify key points
+  environment:
+    name: virtual_meeting_environment
+    description: Environment configured for virtual meeting participation and note-taking
+    variables:
+    - name: MEETING_PLATFORM
+      value: Zoom
+      description: Default meeting platform
+      type: string
+    - name: AUDIO_FORMAT
+      value: wav
+      description: Preferred audio recording format
+      type: string
+    - name: TRANSCRIPTION_SERVICE
+      value: GoogleSpeechToText
+      description: Service used for audio transcription
+      type: string
+    settings:
+      auto_join_enabled: true
+      recording_quality: high
+      max_transcription_length: 120
+    max_memory_mb: 1024
+    max_execution_time: 3600
+    network_access: true
+    allowed_domains:
+    - meetings.com
+    - '*.trusted-service.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_name: AI Assistant
+    company_name: TechCorp Inc.
+    timezone: UTC-8
+    business_hours: 9:00-17:00
+  system_info:
+    meeting_client_version: '2.1'
+    available_libraries:
+    - pyaudio
+    - speech_recognition
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

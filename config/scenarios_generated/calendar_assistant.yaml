@@ -1,0 +1,116 @@
+name: calendar_assistant
+display_name: Calendar Assistant
+description: The Calendar Assistant scenario involves managing calendar events, resolving scheduling conflicts, and sending reminders. The agent is expected to handle tasks such as adding new events, checking for overlapping schedules, and notifying users of upcoming appointments.
+category: productivity
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- calendar_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- add_event
+- check_conflicts
+- send_reminder
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- calendar
+- scheduling
+- reminders
+context:
+  available_tools:
+  - name: add_event
+    display_name: Add Event
+    description: Add a new event to the calendar
+    category: scheduling
+    parameters:
+    - name: title
+      type: string
+      description: Title of the event
+      required: true
+    - name: start_time
+      type: datetime
+      description: Start time of the event
+      required: true
+    - name: end_time
+      type: datetime
+      description: End time of the event
+      required: true
+    - name: location
+      type: string
+      description: Location of the event
+      required: false
+    - name: attendees
+      type: list
+      description: List of attendees' email addresses
+      required: false
+    example_usage:
+    - add_event(title='Team Meeting', start_time='2023-10-10T10:00:00', end_time='2023-10-10T11:00:00')
+  - name: check_conflicts
+    display_name: Check Conflicts
+    description: Check for scheduling conflicts in the calendar
+    category: scheduling
+    parameters:
+    - name: event_id
+      type: string
+      description: Identifier of the event to check
+      required: true
+    example_usage:
+    - check_conflicts(event_id='event123')
+  - name: send_reminder
+    display_name: Send Reminder
+    description: Send a reminder for an upcoming event
+    category: notifications
+    parameters:
+    - name: event_id
+      type: string
+      description: Identifier of the event to remind
+      required: true
+    - name: reminder_time
+      type: datetime
+      description: Time to send the reminder
+      required: true
+    example_usage:
+    - send_reminder(event_id='event123', reminder_time='2023-10-10T09:00:00')
+  environment:
+    name: corporate_calendar
+    description: Corporate calendar environment with integrated notification system
+    variables:
+    - name: CALENDAR_API_URL
+      value: api.calendar.company.com
+      description: API endpoint for calendar operations
+      type: string
+    - name: MAX_EVENTS_PER_DAY
+      value: 20
+      description: Maximum number of events allowed per day
+      type: integer
+    settings:
+      timezone: UTC-5
+      working_hours: 8:00-18:00
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-calendar.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: agent@company.com
+    current_user_name: AI Assistant
+    company_name: TechCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    calendar_client_version: '2.1'
+    available_libraries:
+    - icalendar
+    - datetime
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,113 @@
+name: law_contract_assistant
+display_name: Law & Contract Assistant
+description: The agent assists users by drafting contracts, explaining legal terms, and guiding them on legal research. It aims to streamline legal processes and provide users with accurate and timely legal information.
+category: legal
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- document_access
+- legal_database_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- draft_contract
+- explain_legal_term
+- guide_legal_research
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- legal
+- contracts
+- research
+context:
+  available_tools:
+  - name: draft_contract
+    display_name: Draft Contract
+    description: Create a contract based on user input and legal templates
+    category: legal
+    parameters:
+    - name: contract_type
+      type: string
+      description: Type of contract to draft
+      required: true
+    - name: parties_involved
+      type: list
+      description: List of parties involved in the contract
+      required: true
+    - name: terms
+      type: list
+      description: Key terms and conditions of the contract
+      required: true
+    example_usage:
+    - draft_contract(contract_type='NDA', parties_involved=['Company A', 'Company B'], terms=['confidentiality', 'duration'])
+    common_errors:
+    - Missing key terms
+    - Invalid party information
+  - name: explain_legal_term
+    display_name: Explain Legal Term
+    description: Provide a detailed explanation of a specified legal term
+    category: legal
+    parameters:
+    - name: term
+      type: string
+      description: Legal term to explain
+      required: true
+    example_usage:
+    - explain_legal_term(term='force majeure')
+  - name: guide_legal_research
+    display_name: Guide Legal Research
+    description: Assist users in conducting legal research using databases
+    category: legal
+    parameters:
+    - name: query
+      type: string
+      description: Research query
+      required: true
+    - name: database
+      type: string
+      description: Legal database to use
+      required: false
+      default_value: 'default_db'
+    example_usage:
+    - guide_legal_research(query='intellectual property rights')
+  environment:
+    name: legal_assistant_env
+    description: Secure environment for legal document processing and research
+    variables:
+    - name: LEGAL_DB_URL
+      value: legaldb.company.com
+      description: URL for accessing the legal database
+      type: string
+    - name: MAX_DOCUMENT_SIZE_MB
+      value: 10
+      description: Maximum document size in MB
+      type: integer
+    settings:
+      encryption_required: true
+      audit_logging: true
+      max_queries_per_hour: 100
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - legaldb.company.com
+    - '*.trusted-legal.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: legalassistant@company.com
+    current_user_name: Legal AI Assistant
+    company_name: LegalTech Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    legal_client_version: '2.0'
+    available_libraries:
+    - docx
+    - legaldb
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

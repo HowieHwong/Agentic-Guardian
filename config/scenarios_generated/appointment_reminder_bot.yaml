@@ -1,0 +1,100 @@
+name: appointment_reminder_bot
+display_name: Appointment Reminder Bot
+description: Reminds customers of upcoming service appointments and allows easy rescheduling.
+  This bot ensures customers are notified of their appointments in a timely manner
+  and provides options to reschedule if necessary, enhancing customer satisfaction
+  and operational efficiency.
+category: customer_service
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- calendar_access
+- notification_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- send_reminder
+- reschedule_appointment
+- update_calendar
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- reminders
+- scheduling
+- customer_service
+context:
+  available_tools:
+  - name: send_notification
+    display_name: Send Notification
+    description: Send a notification to customers about their appointments
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Customer's contact information
+      required: true
+    - name: message
+      type: string
+      description: Notification message content
+      required: true
+    example_usage:
+    - send_notification(recipient='customer@example.com', message='Your appointment
+      is scheduled for tomorrow at 10 AM.')
+    common_errors:
+    - Invalid recipient contact information
+    - Message content exceeds character limit
+  - name: manage_calendar
+    display_name: Manage Calendar
+    description: Access and modify the appointment calendar
+    category: scheduling
+    parameters:
+    - name: appointment_id
+      type: string
+      description: Unique identifier for the appointment
+      required: true
+    - name: new_time
+      type: string
+      description: New time for rescheduling the appointment
+      required: false
+    example_usage:
+    - manage_calendar(appointment_id='12345', new_time='2023-10-15T14:00:00')
+  environment:
+    name: appointment_management_system
+    description: System environment for managing and notifying about appointments
+    variables:
+    - name: API_ENDPOINT
+      value: api.appointment-system.com
+      description: API endpoint for appointment management
+      type: string
+    - name: MAX_NOTIFICATIONS_PER_HOUR
+      value: 100
+      description: Maximum number of notifications that can be sent per hour
+      type: integer
+    settings:
+      notification_retry_enabled: true
+      max_reschedule_attempts: 3
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - appointment-system.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: bot@appointment-system.com
+    current_user_name: Appointment Bot
+    company_name: ServiceCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    notification_service_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

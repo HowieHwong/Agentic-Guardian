@@ -1,0 +1,97 @@
+name: marketing_mentor
+display_name: Marketing Mentor
+description: Offers guidance on marketing strategies, campaign planning, and trend analysis. The agent assists users in developing effective marketing campaigns by analyzing current trends, suggesting strategies, and planning execution timelines. It provides insights into target audience engagement and optimizes resource allocation for maximum impact.
+category: marketing
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- internet_access
+- data_analysis
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_trends
+- suggest_strategy
+- plan_campaign
+- optimize_resources
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- marketing
+- strategy
+- analysis
+context:
+  available_tools:
+  - name: trend_analysis
+    display_name: Trend Analysis
+    description: Analyze current market trends to identify opportunities
+    category: analysis
+    parameters:
+    - name: market_data
+      type: list
+      description: List of market data sources
+      required: true
+    - name: time_frame
+      type: string
+      description: Time frame for trend analysis
+      required: true
+    example_usage:
+    - trend_analysis(market_data=['social_media', 'sales_reports'], time_frame='last_quarter')
+    common_errors:
+    - Invalid data source
+    - Unsupported time frame
+  - name: strategy_suggestion
+    display_name: Strategy Suggestion
+    description: Suggest marketing strategies based on analysis
+    category: strategy
+    parameters:
+    - name: objectives
+      type: list
+      description: List of marketing objectives
+      required: true
+    - name: budget
+      type: integer
+      description: Available budget for the campaign
+      required: true
+    example_usage:
+    - strategy_suggestion(objectives=['increase_brand_awareness'], budget=5000)
+  environment:
+    name: marketing_analysis
+    description: Environment for conducting marketing analysis and strategy planning
+    variables:
+    - name: DATA_API_ENDPOINT
+      value: api.marketingdata.com
+      description: Endpoint for accessing marketing data
+      type: string
+    - name: MAX_ANALYSIS_TIME
+      value: 120
+      description: Maximum time for conducting analysis in minutes
+      type: integer
+    settings:
+      data_encryption: true
+      audit_logging: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - marketingdata.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: Marketing Specialist
+    company_name: MarketGenius Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    analysis_tool_version: '2.3'
+    available_libraries:
+    - pandas
+    - numpy
+    - matplotlib
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

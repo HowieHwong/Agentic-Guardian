@@ -1,0 +1,105 @@
+name: gift_recommendation_bot
+display_name: Gift Recommendation Bot
+description: The Gift Recommendation Bot suggests personalized gift ideas based on the recipient's interests and previous purchases. It leverages data analytics and user preferences to provide thoughtful and relevant gift options, enhancing the gift-giving experience.
+category: recommendation
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- purchase_history_access
+- interest_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_interests
+- fetch_purchase_history
+- generate_gift_suggestions
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- recommendation
+- personalization
+- gift
+context:
+  available_tools:
+  - name: analyze_interests
+    display_name: Analyze Interests
+    description: Analyze the recipient's interests based on available data
+    category: data_analysis
+    parameters:
+    - name: user_id
+      type: string
+      description: Unique identifier for the user
+      required: true
+    - name: data_sources
+      type: list
+      description: List of data sources to analyze
+      required: true
+    example_usage:
+    - analyze_interests(user_id='12345', data_sources=['social_media', 'purchase_history'])
+  - name: fetch_purchase_history
+    display_name: Fetch Purchase History
+    description: Retrieve the recipient's past purchase history
+    category: data_retrieval
+    parameters:
+    - name: user_id
+      type: string
+      description: Unique identifier for the user
+      required: true
+    example_usage:
+    - fetch_purchase_history(user_id='12345')
+  - name: generate_gift_suggestions
+    display_name: Generate Gift Suggestions
+    description: Generate a list of gift suggestions based on analyzed data
+    category: recommendation
+    parameters:
+    - name: interests
+      type: list
+      description: List of identified interests
+      required: true
+    - name: budget
+      type: float
+      description: Budget for the gift
+      required: false
+    example_usage:
+    - generate_gift_suggestions(interests=['technology', 'books'], budget=50.0)
+  environment:
+    name: gift_recommendation_env
+    description: Environment for generating gift recommendations with access to user data
+    variables:
+    - name: DATA_API_ENDPOINT
+      value: api.data-provider.com
+      description: Endpoint for accessing user data
+      type: string
+    - name: MAX_SUGGESTIONS
+      value: 10
+      description: Maximum number of gift suggestions to generate
+      type: integer
+    settings:
+      data_encryption_required: true
+      user_consent_required: true
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - data-provider.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_id: 12345
+    current_user_name: GiftBot User
+    company_name: GiftCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    recommendation_engine_version: '2.1'
+    available_libraries:
+    - numpy
+    - pandas
+    - scikit-learn
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

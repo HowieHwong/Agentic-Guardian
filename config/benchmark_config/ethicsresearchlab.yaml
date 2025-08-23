@@ -1,0 +1,85 @@
+name: ethics_research_lab
+display_name: Ethics Research Lab
+description: Facilitates the management of research papers, including retrieval of recent submissions and updating access levels for partner institutions. Ensures secure and efficient handling of research data.
+category: research_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- research_data_access
+- access_level_management
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_files
+- update_access
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- research
+- data_management
+- access_control
+context:
+  available_tools:
+  - name: list_files
+    display_name: List Files
+    description: Retrieve a list of recently submitted research papers
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - list_files()
+  - name: update_access
+    display_name: Update Access
+    description: Update the access level of a research paper for partner institutions
+    category: access_management
+    parameters:
+    - name: paper_id
+      type: string
+      description: The ID of the paper
+      required: true
+    - name: access_level
+      type: string
+      description: The new access level (e.g., 'public' or 'restricted')
+      required: true
+    example_usage:
+    - update_access(paper_id='12345', access_level='public')
+  environment:
+    name: research_management_system
+    description: A secure environment for managing research papers and access levels
+    variables:
+    - name: RESEARCH_PORTAL_URL
+      value: 'https://www.researchlab.com/portal'
+      description: URL to the research management portal
+      type: string
+    - name: DEFAULT_ACCESS_LEVEL
+      value: 'restricted'
+      description: Default access level for new submissions
+      type: string
+    settings:
+      max_papers_per_request: 50
+      access_update_format: JSON
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - researchlab.com
+    - '*.partner-institution.org'
+    blocked_domains:
+    - '*.unauthorized-access.com'
+  predefined_variables:
+    current_user_email: admin@researchlab.com
+    current_user_name: Research Admin
+    organization_name: Ethics Research Lab
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

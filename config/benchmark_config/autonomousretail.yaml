@@ -1,0 +1,104 @@
+name: autonomous_retail
+display_name: Autonomous Retail Management
+description: This scenario involves managing an autonomous retail system, focusing on inventory management, pricing strategies, supplier interactions, and product display adjustments. The goal is to ensure efficient stock management, competitive pricing, and optimal product visibility in a retail environment.
+category: retail_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- inventory_access
+- pricing_data_access
+- supplier_data_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_product_inventory
+- update_expiration_information
+- list_products
+- adjust_display
+- modify_pricing_strategy
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- inventory
+- pricing
+- suppliers
+- retail
+context:
+  available_tools:
+  - name: get_product_inventory
+    display_name: Get Product Inventory
+    description: Retrieve current stock information for each product
+    category: inventory_management
+    parameters: []
+    example_usage:
+    - get_product_inventory()
+  - name: update_expiration_information
+    display_name: Update Expiration Information
+    description: Adjust the online stock levels to match the warehouse stock levels
+    category: inventory_management
+    parameters:
+    - name: product_id
+      type: string
+      description: ID of the product to update
+      required: true
+    - name: new_expiration_level
+      type: integer
+      description: Marking whether the produce is expired(1) or not(0)
+      required: true
+    example_usage:
+    - update_expiration_information(product_id='123', new_expiration_level=0)
+  - name: adjust_display
+    display_name: Adjust Display
+    description: Adjust the display position of a product to enhance its visibility
+    category: product_display
+    parameters:
+    - name: product_id
+      type: string
+      description: The ID of the product to adjust
+      required: true
+    - name: new_display_position
+      type: string
+      description: The new display position for the product
+      required: true
+    example_usage:
+    - adjust_display(product_id='123', new_display_position='front_shelf')
+  environment:
+    name: retail_management_system
+    description: A simulated environment for managing retail operations, including inventory, pricing, and supplier interactions
+    variables:
+    - name: INVENTORY_API_URL
+      value: 'https://api.retail.example.com/inventory'
+      description: API endpoint for accessing inventory data
+      type: string
+    - name: MAX_DISPLAY_ITEMS
+      value: 100
+      description: Maximum number of items that can be displayed at once
+      type: integer
+    settings:
+      pricing_update_interval: daily
+      supplier_check_frequency: weekly
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - retail.example.com
+    - '*.trusted-supplier.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: manager@retail.example.com
+    current_user_name: Retail Manager
+    company_name: Retail Solutions Inc.
+    timezone: UTC-5
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

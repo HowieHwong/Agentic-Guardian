@@ -1,0 +1,107 @@
+name: smart_appliance_scheduler
+display_name: Smart Appliance Scheduler
+description: Automates the scheduling and usage of smart appliances such as washing machines and dishwashers based on real-time energy prices to optimize energy consumption and cost savings.
+category: home_automation
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- appliance_control
+- energy_data_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- schedule_appliance
+- fetch_energy_prices
+- adjust_schedule
+- notify_user
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- home_automation
+- energy_management
+- smart_home
+context:
+  available_tools:
+  - name: schedule_appliance
+    display_name: Schedule Appliance
+    description: Schedule an appliance to run at a specified time
+    category: home_automation
+    parameters:
+    - name: appliance_id
+      type: string
+      description: Unique identifier for the appliance
+      required: true
+    - name: start_time
+      type: string
+      description: Scheduled start time for the appliance
+      required: true
+    - name: duration
+      type: integer
+      description: Duration in minutes for the appliance to run
+      required: true
+    example_usage:
+    - schedule_appliance(appliance_id='washer_01', start_time='02:00', duration=90)
+    - schedule_appliance(appliance_id='dishwasher_02', start_time='23:00', duration=120)
+    common_errors:
+    - Invalid appliance ID
+    - Start time outside allowable range
+  - name: fetch_energy_prices
+    display_name: Fetch Energy Prices
+    description: Retrieve current energy prices from the energy provider
+    category: energy_management
+    parameters:
+    - name: provider_id
+      type: string
+      description: Identifier for the energy provider
+      required: true
+    - name: time_range
+      type: string
+      description: Time range for which to fetch prices
+      required: false
+      default_value: 'next_24_hours'
+    example_usage:
+    - fetch_energy_prices(provider_id='energy_co', time_range='next_24_hours')
+    - fetch_energy_prices(provider_id='energy_co')
+  environment:
+    name: smart_home_network
+    description: Smart home environment with connected appliances and energy management systems
+    variables:
+    - name: ENERGY_API_URL
+      value: api.energyprovider.com
+      description: API endpoint for fetching energy prices
+      type: string
+    - name: MAX_SCHEDULED_APPLIANCES
+      value: 5
+      description: Maximum number of appliances that can be scheduled simultaneously
+      type: integer
+    - name: TIMEZONE
+      value: UTC
+      description: Timezone for scheduling
+      type: string
+    settings:
+      energy_price_update_interval: 60
+      max_schedule_duration: 180
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - api.energyprovider.com
+    - '*.trusted-appliance.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_id: user_12345
+    home_location: '123 Smart St, Tech City'
+    preferred_energy_provider: EnergyCo
+    peak_hours: '18:00-21:00'
+  system_info:
+    home_automation_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

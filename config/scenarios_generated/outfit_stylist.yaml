@@ -1,0 +1,97 @@
+name: outfit_stylist
+display_name: Outfit Stylist
+description: The agent suggests outfits based on the user's wardrobe or current fashion trends. It analyzes available clothing items and combines them to create stylish ensembles suitable for various occasions.
+category: fashion
+complexity_level: 2
+estimated_duration: 15
+required_permissions:
+- wardrobe_access
+- trend_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- analyze_wardrobe
+- fetch_trend_data
+- suggest_outfit
+- customize_outfit
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- fashion
+- style
+- wardrobe
+context:
+  available_tools:
+  - name: analyze_wardrobe
+    display_name: Analyze Wardrobe
+    description: Analyze the user's wardrobe to identify available clothing items
+    category: fashion
+    parameters:
+    - name: clothing_items
+      type: list
+      description: List of clothing items in the wardrobe
+      required: true
+    example_usage:
+    - analyze_wardrobe(clothing_items=['jeans', 't-shirt', 'blazer'])
+    common_errors:
+    - Empty wardrobe list
+  - name: fetch_trend_data
+    display_name: Fetch Trend Data
+    description: Retrieve current fashion trends from online sources
+    category: fashion
+    parameters:
+    - name: trend_source
+      type: string
+      description: Source of trend data
+      required: true
+    example_usage:
+    - fetch_trend_data(trend_source='fashion_blog')
+  - name: suggest_outfit
+    display_name: Suggest Outfit
+    description: Suggest an outfit based on wardrobe and trends
+    category: fashion
+    parameters:
+    - name: occasion
+      type: string
+      description: Occasion for which the outfit is suggested
+      required: true
+    example_usage:
+    - suggest_outfit(occasion='casual')
+  environment:
+    name: fashion_advisor
+    description: Environment for fashion advice and trend analysis
+    variables:
+    - name: TREND_API_URL
+      value: api.fashiontrends.com
+      description: API URL for fetching fashion trends
+      type: string
+    - name: MAX_OUTFIT_SUGGESTIONS
+      value: 5
+      description: Maximum number of outfit suggestions
+      type: integer
+    settings:
+      trend_data_refresh_interval: 24
+      max_wardrobe_items: 100
+    max_memory_mb: 256
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - fashiontrends.com
+    - '*.trusted-fashion-source.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_style: casual
+    preferred_colors: ['blue', 'black', 'white']
+    fashion_season: spring
+  system_info:
+    fashion_advisor_version: '1.0'
+    available_libraries:
+    - fashionpy
+    - trendfetcher
+  security_policy:
+    data_classification_required: false
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

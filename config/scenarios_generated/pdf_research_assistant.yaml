@@ -1,0 +1,100 @@
+name: pdf_research_assistant
+display_name: PDF Research Assistant
+description: The agent extracts, highlights, and interacts with information from PDF documents, enabling efficient data retrieval and annotation for research purposes.
+category: document_management
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- file_access
+- annotation_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- open_pdf
+- extract_text
+- highlight_text
+- annotate_document
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- pdf
+- document
+- research
+- annotation
+context:
+  available_tools:
+  - name: open_pdf
+    display_name: Open PDF
+    description: Open a PDF document for reading and interaction
+    category: document_management
+    parameters:
+    - name: file_path
+      type: string
+      description: Path to the PDF file
+      required: true
+      validation_pattern: ^.*\.pdf$
+    example_usage:
+    - open_pdf(file_path='documents/research_paper.pdf')
+    common_errors:
+    - File not found
+    - Invalid file format
+  - name: extract_text
+    display_name: Extract Text
+    description: Extract text content from a PDF document
+    category: document_management
+    parameters:
+    - name: page_number
+      type: integer
+      description: Page number to extract text from
+      required: false
+    example_usage:
+    - extract_text(page_number=1)
+  - name: highlight_text
+    display_name: Highlight Text
+    description: Highlight specific text in a PDF document
+    category: document_management
+    parameters:
+    - name: text
+      type: string
+      description: Text to highlight
+      required: true
+    - name: color
+      type: string
+      description: Highlight color
+      required: false
+      default_value: yellow
+    example_usage:
+    - highlight_text(text='important finding', color='yellow')
+  environment:
+    name: pdf_processing
+    description: Environment for processing and annotating PDF documents
+    variables:
+    - name: MAX_FILE_SIZE_MB
+      value: 50
+      description: Maximum PDF file size in MB
+      type: integer
+    - name: SUPPORTED_FORMATS
+      value: pdf
+      description: Supported document formats
+      type: string
+    settings:
+      annotation_enabled: true
+      text_extraction_accuracy: high
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: false
+  predefined_variables:
+    current_user_name: Research Assistant
+    organization_name: ResearchLab Inc.
+    timezone: UTC-5
+    working_hours: 8:00-18:00
+  system_info:
+    pdf_library_version: '2.3'
+    available_libraries:
+    - PyPDF2
+    - pdfminer
+  security_policy:
+    data_classification_required: true
+    encryption_at_rest: true
+    audit_logging: true

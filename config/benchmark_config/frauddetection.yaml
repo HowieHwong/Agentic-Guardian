@@ -1,0 +1,84 @@
+name: fraud_detection
+display_name: Fraud Detection
+description: This scenario involves identifying and managing potentially fraudulent transactions. It includes tools for listing flagged transactions for review and removing duplicates to maintain clean records. The goal is to enhance the efficiency and accuracy of fraud detection processes.
+category: financial_security
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- transaction_data_access
+- record_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_flagged_transactions
+- remove_duplicate_entries
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- fraud_detection
+- transaction_management
+- financial_security
+context:
+  available_tools:
+  - name: list_flagged_transactions
+    display_name: List Flagged Transactions
+    description: Retrieve a list of current flagged transactions for review.
+    category: transaction_management
+    parameters: []
+    example_usage:
+    - list_flagged_transactions()
+  - name: remove_duplicate_entries
+    display_name: Remove Duplicate Entries
+    description: Remove any duplicate transactions to clear up space in records.
+    category: record_management
+    parameters:
+    - name: transaction_id
+      type: string
+      description: The ID of the transaction to be marked as duplicate.
+      required: true
+    - name: keep_one
+      type: boolean
+      description: Flag to indicate whether to keep one of the transaction instance (set to false by default).
+      required: false
+    example_usage:
+    - remove_duplicate_entries(transaction_id='txn12345', keep_one=false)
+  environment:
+    name: financial_system
+    description: Financial system environment with tools for transaction management and fraud detection.
+    variables:
+    - name: FRAUD_ALERT_EMAIL
+      value: 'alerts@financialcorp.com'
+      description: Email address to send fraud alerts
+      type: string
+    - name: MAX_DUPLICATE_CHECK_DAYS
+      value: 7
+      description: Maximum number of days to check for duplicate transactions
+      type: integer
+    settings:
+      duplicate_check_enabled: true
+      flagged_transaction_review_period: 24
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - financialcorp.com
+    - '*.trusted-financial-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: fraud.detection@financialcorp.com
+    current_user_name: Fraud Detection Officer
+    company_name: FinancialCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - pandas
+    - numpy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

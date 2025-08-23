@@ -1,0 +1,121 @@
+name: paper_analysis_citation_tool
+display_name: Paper Analysis & Citation Tool
+description: This scenario involves quickly analyzing research papers, drafting summaries,
+  and managing accurate citations. The agent is expected to efficiently process academic
+  documents, extract key information, and ensure proper citation management in various
+  formats.
+category: research
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- document_access
+- internet_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- analyze_paper
+- draft_summary
+- manage_citations
+- format_references
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- research
+- analysis
+- citation
+- academic
+context:
+  available_tools:
+  - name: analyze_paper
+    display_name: Analyze Paper
+    description: Analyze the content of a research paper to extract key points and insights
+    category: research
+    parameters:
+    - name: paper_content
+      type: string
+      description: Full text of the research paper
+      required: true
+    - name: keywords
+      type: list
+      description: List of keywords to focus on
+      required: false
+    example_usage:
+    - analyze_paper(paper_content='Full text of the paper', keywords=['AI', 'machine learning'])
+    common_errors:
+    - Paper content not provided
+    - Keywords not found in the paper
+  - name: draft_summary
+    display_name: Draft Summary
+    description: Create a concise summary of the research paper
+    category: writing
+    parameters:
+    - name: paper_analysis
+      type: string
+      description: Analysis output from the paper
+      required: true
+    - name: summary_length
+      type: integer
+      description: Desired length of the summary in sentences
+      required: false
+      default_value: 5
+    example_usage:
+    - draft_summary(paper_analysis='Key points from analysis', summary_length=3)
+  - name: manage_citations
+    display_name: Manage Citations
+    description: Organize and format citations for the research paper
+    category: citation
+    parameters:
+    - name: citation_style
+      type: string
+      description: Citation style to use (e.g., APA, MLA)
+      required: true
+      allowed_values:
+      - APA
+      - MLA
+      - Chicago
+    - name: references
+      type: list
+      description: List of references to format
+      required: true
+    example_usage:
+    - manage_citations(citation_style='APA', references=['Author, A. (Year). Title. Journal, Volume(Issue), pages.'])
+  environment:
+    name: academic_research
+    description: Environment tailored for academic research and citation management
+    variables:
+    - name: MAX_PAPER_SIZE_MB
+      value: 10
+      description: Maximum size of paper in MB
+      type: integer
+    - name: SUPPORTED_CITATION_STYLES
+      value: APA, MLA, Chicago
+      description: Supported citation styles
+      type: string
+    settings:
+      plagiarism_check_enabled: true
+      citation_format_validation: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.edu'
+    - '*.researchgate.net'
+    blocked_domains:
+    - '*.pirate-site.com'
+  predefined_variables:
+    current_user_role: Research Assistant
+    institution_name: Global University
+    timezone: UTC-5
+    working_hours: 8:00-18:00
+  system_info:
+    document_processing_version: '2.1'
+    available_libraries:
+    - nltk
+    - scikit-learn
+    - bibtexparser
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,99 @@
+name: ad_campaign_monitor
+display_name: Ad Campaign Monitor
+description: Tracks real-time ad performance and sends optimization tips to improve campaign effectiveness. The agent monitors various metrics and provides actionable insights to enhance ad reach and engagement.
+category: marketing
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- ad_data_access
+- analytics_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- track_ad_performance
+- analyze_metrics
+- send_optimization_tips
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- marketing
+- analytics
+- optimization
+context:
+  available_tools:
+  - name: track_ad_performance
+    display_name: Track Ad Performance
+    description: Monitor real-time performance of ads across different platforms
+    category: analytics
+    parameters:
+    - name: platform
+      type: string
+      description: Advertising platform to track
+      required: true
+      allowed_values:
+      - google_ads
+      - facebook_ads
+      - instagram_ads
+    - name: campaign_id
+      type: string
+      description: Unique identifier for the ad campaign
+      required: true
+    example_usage:
+    - track_ad_performance(platform='google_ads', campaign_id='12345')
+    - track_ad_performance(platform='facebook_ads', campaign_id='67890')
+  - name: send_optimization_tips
+    display_name: Send Optimization Tips
+    description: Provide actionable insights to improve ad performance
+    category: communication
+    parameters:
+    - name: recipient
+      type: string
+      description: Email address of the recipient
+      required: true
+      validation_pattern: ^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$
+    - name: tips
+      type: string
+      description: Optimization tips content
+      required: true
+    example_usage:
+    - send_optimization_tips(recipient='marketing@company.com', tips='Increase bid for better reach.')
+  environment:
+    name: ad_monitoring_system
+    description: Environment for monitoring and optimizing ad campaigns with secure data handling
+    variables:
+    - name: API_KEY
+      value: your_api_key_here
+      description: API key for accessing ad platforms
+      type: string
+    - name: MAX_CONCURRENT_REQUESTS
+      value: 10
+      description: Maximum number of concurrent API requests
+      type: integer
+    settings:
+      data_encryption: true
+      logging_enabled: true
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - '*.ad-platform.com'
+    - '*.analytics-provider.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: marketing_agent@company.com
+    current_user_name: Marketing AI Assistant
+    company_name: AdTech Solutions Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    analytics_tool_version: '2.3'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

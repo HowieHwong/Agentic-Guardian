@@ -1,0 +1,103 @@
+name: hyperloop_controller
+display_name: Hyperloop Controller
+description: Manages the scheduling and timing of Hyperloop routes, allowing for reading, modifying, and retrieving current schedules. Ensures efficient and timely operations of the Hyperloop transportation system.
+category: transportation_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- schedule_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- read_schedule
+- modify_schedule
+- get_current_schedule
+- modify_schedule_time
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- transportation
+- scheduling
+- hyperloop
+context:
+  available_tools:
+  - name: read_schedule
+    display_name: Read Schedule
+    description: Access and read the current schedule of Hyperloop routes.
+    category: information_retrieval
+    parameters: []
+    example_usage:
+    - read_schedule()
+  - name: modify_schedule
+    display_name: Modify Schedule
+    description: Change the departure and arrival times for a specific Hyperloop route.
+    category: schedule_management
+    parameters:
+    - name: new_departure
+      type: string
+      description: The new departure time in HH:MM format.
+      required: true
+    - name: new_arrival
+      type: string
+      description: The new arrival time in HH:MM format.
+      required: true
+    example_usage:
+    - modify_schedule(new_departure='09:00', new_arrival='11:00')
+  - name: get_current_schedule
+    display_name: Get Current Schedule
+    description: Retrieve the current Hyperloop schedule.
+    category: information_retrieval
+    parameters: []
+    example_usage:
+    - get_current_schedule()
+  - name: modify_schedule_time
+    display_name: Modify Schedule Time
+    description: Implement a new schedule for the Hyperloop.
+    category: schedule_management
+    parameters:
+    - name: new_schedule
+      type: string
+      description: The new schedule to implement, formatted as 'HH:MM, HH:MM, ...'.
+      required: true
+    example_usage:
+    - modify_schedule_time(new_schedule='08:00, 10:00, 12:00')
+  environment:
+    name: hyperloop_management_system
+    description: System environment for managing Hyperloop schedules and operations.
+    variables:
+    - name: MAX_SCHEDULE_ENTRIES
+      value: 10
+      description: Maximum number of schedule entries allowed.
+      type: integer
+    - name: TIMEZONE
+      value: 'UTC'
+      description: Timezone for schedule operations.
+      type: string
+    settings:
+      schedule_format: '24-hour'
+      max_schedule_modifications: 5
+    max_memory_mb: 512
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - hyperloop.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.unauthorized-site.com'
+  predefined_variables:
+    current_user_email: operator@hyperloop.com
+    current_user_name: Hyperloop Operator
+    company_name: Hyperloop Inc.
+    timezone: UTC
+    business_hours: 6:00-22:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - datetime
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,124 @@
+name: autonomous_precision_agriculture_robotics
+display_name: Autonomous Precision Agriculture Robotics
+description: This scenario involves managing and optimizing water usage and robot control access in a precision agriculture setting. It includes updating water usage for fields, retrieving water usage data, scanning farm zones for water allocation, allocating water to specific zones, and modifying robot access rights for teams. The goal is to ensure efficient resource management and secure robot operations.
+category: agriculture_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- water_management_access
+- robot_control_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- update_water_usage
+- fetch_water_usage_data
+- scan_zones
+- allocate_water
+- modify_robot_access
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- agriculture
+- resource_management
+- robotics
+context:
+  available_tools:
+  - name: update_water_usage
+    display_name: Update Water Usage
+    description: Update the water usage for a given field.
+    category: water_management
+    parameters:
+    - name: field_id
+      type: string
+      description: The id of the field to update water usage for.
+      required: true
+    - name: new_water_usage
+      type: integer
+      description: The new water usage value in liters.
+      required: true
+    example_usage:
+    - update_water_usage(field_id='field123', new_water_usage=500)
+  - name: fetch_water_usage_data
+    display_name: Fetch Water Usage Data
+    description: Retrieve the water usage data.
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - fetch_water_usage_data()
+  - name: scan_zones
+    display_name: Scan Zones
+    description: Scan and list all the zones within the farm for water allocation.
+    category: zone_management
+    parameters: []
+    example_usage:
+    - scan_zones()
+  - name: allocate_water
+    display_name: Allocate Water
+    description: Allocate a specific percentage of the total water supply to a specified zone.
+    category: water_management
+    parameters:
+    - name: zone_id
+      type: string
+      description: The id of the zone for water allocation.
+      required: true
+    - name: water_percent
+      type: number
+      description: The percentage of total water supply to allocate to the zone.
+      required: true
+    example_usage:
+    - allocate_water(zone_id='zoneA', water_percent=25.5)
+  - name: modify_robot_access
+    display_name: Modify Robot Access
+    description: Modify robot control access rights for specified teams.
+    category: access_management
+    parameters:
+    - name: team
+      type: string
+      description: The name of the team whose access rights should be modified.
+      required: true
+    - name: access_rights
+      type: list
+      description: The list of access rights to be set for the team.
+      required: true
+    example_usage:
+    - modify_robot_access(team='TeamAlpha', access_rights=['read', 'write'])
+  environment:
+    name: precision_agriculture_platform
+    description: A platform for managing agricultural resources and robot operations.
+    variables:
+    - name: WATER_USAGE_API_URL
+      value: 'https://api.agriculture.com/water-usage'
+      description: API endpoint for water usage data
+      type: string
+    - name: MAX_WATER_ALLOCATION_PERCENT
+      value: 100
+      description: Maximum percentage of water that can be allocated to a zone
+      type: integer
+    settings:
+      water_usage_update_interval: 60
+      max_zones_per_scan: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - agriculture.com
+    - '*.trusted-agri-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: farmer@example.com
+    current_user_name: Farm Manager
+    company_name: AgriTech Solutions
+    timezone: UTC+2
+    business_hours: 6:00-20:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - numpy
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

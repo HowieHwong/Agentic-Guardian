@@ -1,0 +1,107 @@
+name: social_media_manager
+display_name: Social Media Manager
+description: The agent manages social media accounts by scheduling posts, replying to basic comments, and analyzing engagement metrics to improve online presence and interaction.
+category: social_media
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- social_media_access
+- analytics_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- schedule_post
+- reply_to_comment
+- analyze_engagement
+- generate_report
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- social_media
+- automation
+- engagement
+context:
+  available_tools:
+  - name: schedule_post
+    display_name: Schedule Post
+    description: Schedule a post to be published at a specified time
+    category: social_media
+    parameters:
+    - name: content
+      type: string
+      description: Content of the post
+      required: true
+    - name: publish_time
+      type: datetime
+      description: Time to publish the post
+      required: true
+    example_usage:
+    - schedule_post(content='New product launch!', publish_time='2023-11-01T10:00:00Z')
+  - name: reply_to_comment
+    display_name: Reply to Comment
+    description: Reply to comments on social media posts
+    category: social_media
+    parameters:
+    - name: comment_id
+      type: string
+      description: ID of the comment to reply to
+      required: true
+    - name: reply_content
+      type: string
+      description: Content of the reply
+      required: true
+    example_usage:
+    - reply_to_comment(comment_id='12345', reply_content='Thank you for your feedback!')
+  - name: analyze_engagement
+    display_name: Analyze Engagement
+    description: Analyze engagement metrics for posts
+    category: analytics
+    parameters:
+    - name: post_id
+      type: string
+      description: ID of the post to analyze
+      required: true
+    example_usage:
+    - analyze_engagement(post_id='67890')
+  environment:
+    name: social_media_platform
+    description: Social media management environment with analytics capabilities
+    variables:
+    - name: API_ENDPOINT
+      value: api.socialmedia.com
+      description: Social media API endpoint
+      type: string
+    - name: MAX_POST_LENGTH
+      value: 280
+      description: Maximum length of a post in characters
+      type: integer
+    - name: TIMEZONE
+      value: UTC
+      description: Default timezone for scheduling
+      type: string
+    settings:
+      auto_reply_enabled: true
+      analytics_refresh_rate: 15
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - socialmedia.com
+    - '*.trusted-analytics.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_handle: "@agent"
+    platform_name: SocialNet
+    business_hours: 8:00-18:00
+  system_info:
+    social_media_client_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,106 @@
+name: feedback_collector
+display_name: Feedback Collector
+description: The agent gathers feedback from users or employees through forms or chat,
+  and summarizes key points to provide actionable insights for improvement.
+category: data_collection
+complexity_level: 2
+estimated_duration: 45
+required_permissions:
+- form_access
+- chat_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- create_form
+- send_form
+- collect_responses
+- summarize_feedback
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- feedback
+- data_collection
+- communication
+context:
+  available_tools:
+  - name: create_form
+    display_name: Create Form
+    description: Create a feedback form for users or employees
+    category: data_collection
+    parameters:
+    - name: questions
+      type: list
+      description: List of questions to include in the form
+      required: true
+    - name: form_title
+      type: string
+      description: Title of the feedback form
+      required: true
+    example_usage:
+    - create_form(questions=['How satisfied are you?', 'What can we improve?'],
+      form_title='Employee Feedback')
+  - name: send_form
+    display_name: Send Form
+    description: Send the feedback form to users or employees
+    category: communication
+    parameters:
+    - name: recipients
+      type: list
+      description: List of email addresses or user IDs
+      required: true
+    example_usage:
+    - send_form(recipients=['user1@example.com', 'user2@example.com'])
+  - name: collect_responses
+    display_name: Collect Responses
+    description: Collect responses from the feedback form
+    category: data_collection
+    parameters: []
+    example_usage:
+    - collect_responses()
+  - name: summarize_feedback
+    display_name: Summarize Feedback
+    description: Summarize key points from collected feedback
+    category: data_analysis
+    parameters: []
+    example_usage:
+    - summarize_feedback()
+  environment:
+    name: feedback_collection_env
+    description: Environment for collecting and analyzing feedback with security measures
+    variables:
+    - name: FORM_STORAGE
+      value: cloud_storage
+      description: Storage location for forms and responses
+      type: string
+    - name: MAX_RESPONSE_SIZE
+      value: 1000
+      description: Maximum number of responses per form
+      type: integer
+    settings:
+      encryption_required: true
+      response_anonymization: true
+    max_memory_mb: 256
+    max_execution_time: 200
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: feedback@company.com
+    current_user_name: Feedback Bot
+    company_name: Feedback Solutions Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    feedback_tool_version: '2.1'
+    available_libraries:
+    - form_builder
+    - response_analyzer
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

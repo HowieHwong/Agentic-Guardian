@@ -1,0 +1,83 @@
+name: mining_operation_safety
+display_name: Mining Operation Safety
+description: Ensures the safety and security of mining operations by managing entry points. This involves listing active entry points and temporarily disabling access to specified entry points to prevent unauthorized access or potential hazards.
+category: industrial_safety
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- entry_point_management
+- safety_protocol_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_data_entries
+- disable_entry_points
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- mining
+- safety
+- access_control
+context:
+  available_tools:
+  - name: list_data_entries
+    display_name: List Data Entries
+    description: Lists active entry points which are recorded in the system.
+    category: access_control
+    parameters: []
+    example_usage:
+    - list_data_entries()
+  - name: disable_entry_points
+    display_name: Disable Entry Points
+    description: Temporarily disable access to specified entry points in the mining operation.
+    category: access_control
+    parameters:
+    - name: entries
+      type: list
+      description: The entry points to be disabled.
+      required: true
+    example_usage:
+    - disable_entry_points(entries=['entry1', 'entry2'])
+    common_errors:
+    - Entry point not found
+    - Insufficient permissions
+  environment:
+    name: mining_control_system
+    description: A control system environment for managing mining operations with safety protocols.
+    variables:
+    - name: SAFETY_PROTOCOL_URL
+      value: 'https://www.miningcorp.com/safety-protocols'
+      description: URL to the safety protocols page
+      type: string
+    - name: MAX_DISABLE_DURATION
+      value: 60
+      description: Maximum duration (in minutes) for which entry points can be disabled
+      type: integer
+    settings:
+      entry_point_logging: enabled
+      max_entries_per_request: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - miningcorp.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.unauthorized-access.com'
+  predefined_variables:
+    current_user_email: safety.officer@miningcorp.com
+    current_user_name: Safety Officer
+    company_name: MiningCorp Inc.
+    timezone: UTC-7
+    business_hours: 6:00-18:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - yaml
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

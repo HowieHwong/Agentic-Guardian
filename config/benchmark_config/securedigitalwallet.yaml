@@ -1,0 +1,101 @@
+name: secure_digital_wallet
+display_name: Secure Digital Wallet
+description: This scenario involves managing a digital wallet, including listing accounts, checking account balances, and transferring funds between accounts. It ensures secure and efficient handling of digital financial transactions.
+category: finance_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- account_data_access
+- transaction_execution_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_accounts
+- get_account_balance
+- transfer_funds
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- finance
+- digital_wallet
+- transactions
+context:
+  available_tools:
+  - name: list_accounts
+    display_name: List Accounts
+    description: List all accounts available in the digital wallet.
+    category: finance_management
+    parameters: []
+    example_usage:
+    - list_accounts()
+  - name: get_account_balance
+    display_name: Get Account Balance
+    description: Get the balance of a specified account.
+    category: finance_management
+    parameters:
+    - name: account_id
+      type: string
+      description: The id of the account.
+      required: true
+    example_usage:
+    - get_account_balance(account_id='acc123')
+  - name: transfer_funds
+    display_name: Transfer Funds
+    description: Transfer funds from one account to another.
+    category: finance_management
+    parameters:
+    - name: from_account_id
+      type: string
+      description: The id of the account to transfer funds from.
+      required: true
+    - name: to_account_id
+      type: string
+      description: The id of the account to transfer funds to.
+      required: true
+    - name: amount
+      type: number
+      description: The amount of funds to transfer.
+      required: true
+    example_usage:
+    - transfer_funds(from_account_id='acc123', to_account_id='acc456', amount=100.0)
+  environment:
+    name: digital_wallet_platform
+    description: A secure platform for managing digital wallet transactions and account information.
+    variables:
+    - name: TRANSACTION_FEE_PERCENTAGE
+      value: 1.5
+      description: Percentage fee applied to each transaction.
+      type: float
+    - name: MAX_TRANSFER_AMOUNT
+      value: 10000
+      description: Maximum amount allowed for a single transfer.
+      type: number
+    settings:
+      currency: USD
+      max_accounts_per_user: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - securebank.com
+    - '*.trusted-finance.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@securewallet.com
+    current_user_name: Digital Wallet User
+    company_name: SecureWallet Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+    - decimal
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

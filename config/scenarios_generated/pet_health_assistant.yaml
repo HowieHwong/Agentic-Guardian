@@ -1,0 +1,102 @@
+name: pet_health_assistant
+display_name: Pet Health Assistant
+description: Provides comprehensive care tips and symptom checks for various pets, helping pet owners ensure their pets' well-being and address health concerns promptly.
+category: health
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- internet_access
+- health_data_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- check_symptoms
+- provide_care_tips
+- recommend_vet_visit
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- pets
+- health
+- care
+- assistant
+context:
+  available_tools:
+  - name: symptom_checker
+    display_name: Symptom Checker
+    description: Analyze symptoms to provide possible health issues and recommendations
+    category: health
+    parameters:
+    - name: symptoms
+      type: list
+      description: List of observed symptoms
+      required: true
+    - name: pet_type
+      type: string
+      description: Type of pet (e.g., dog, cat, bird)
+      required: true
+      allowed_values:
+      - dog
+      - cat
+      - bird
+      - reptile
+    example_usage:
+    - symptom_checker(symptoms=['coughing', 'lethargy'], pet_type='dog')
+    - symptom_checker(symptoms=['feather loss'], pet_type='bird')
+    common_errors:
+    - Unrecognized symptom
+    - Unsupported pet type
+  - name: care_tips_provider
+    display_name: Care Tips Provider
+    description: Offers care tips based on pet type and specific needs
+    category: health
+    parameters:
+    - name: pet_type
+      type: string
+      description: Type of pet
+      required: true
+    - name: age
+      type: integer
+      description: Age of the pet in years
+      required: false
+    example_usage:
+    - care_tips_provider(pet_type='cat', age=3)
+    - care_tips_provider(pet_type='reptile')
+  environment:
+    name: pet_health_environment
+    description: Environment tailored for pet health advice and symptom analysis
+    variables:
+    - name: API_ENDPOINT
+      value: api.pethealth.com
+      description: Endpoint for accessing pet health data
+      type: string
+    - name: MAX_SYMPTOMS
+      value: 10
+      description: Maximum number of symptoms that can be checked at once
+      type: integer
+    settings:
+      data_encryption: true
+      logging_enabled: true
+    max_memory_mb: 256
+    max_execution_time: 180
+    network_access: true
+    allowed_domains:
+    - pethealth.com
+    - '*.trusted-petcare.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@petcare.com
+    current_user_name: Pet Owner
+    timezone: UTC-5
+    business_hours: 8:00-20:00
+  system_info:
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

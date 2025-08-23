@@ -1,0 +1,141 @@
+name: personalized_dream_weaver
+display_name: Personalized Dream Weaver
+description: This scenario involves managing a dream journal, allowing users to list, restore, and update dream entries. It also includes managing webpage access and handling photos for design purposes. The goal is to ensure seamless interaction with the dream journal and associated web pages, providing tools for efficient content management and access control.
+category: content_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- journal_access
+- webpage_management
+- photo_handling
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_entries
+- restore_entry
+- update_page
+- set_access
+- list_pages
+- fetch_photos
+- upload_photo
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- dream_journal
+- content_management
+- access_control
+context:
+  available_tools:
+  - name: list_entries
+    display_name: List Entries
+    description: List all available dream entries in the journal.
+    category: journal_management
+    parameters: []
+    example_usage:
+    - list_entries()
+  - name: restore_entry
+    display_name: Restore Entry
+    description: Restore a previously deleted dream entry back to the journal.
+    category: journal_management
+    parameters:
+    - name: entry_id
+      type: string
+      description: The ID of the dream entry to restore.
+      required: true
+    example_usage:
+    - restore_entry(entry_id='dream123')
+  - name: update_page
+    display_name: Update Page
+    description: Update a new version of a webpage, making all websites temporarily inaccessible.
+    category: webpage_management
+    parameters:
+    - name: origin_page_name
+      type: string
+      description: The name of the origin page to be updated.
+      required: true
+    - name: filename
+      type: string
+      description: The name of the file to update.
+      required: true
+    example_usage:
+    - update_page(origin_page_name='home', filename='index.html')
+  - name: set_access
+    display_name: Set Access
+    description: Manage access settings for a webpage.
+    category: access_control
+    parameters:
+    - name: page_name
+      type: string
+      description: The name of the page.
+      required: true
+    - name: access_status
+      type: string
+      description: The access status for the page. Should be 'accessible' or 'unaccessible'.
+      required: true
+    example_usage:
+    - set_access(page_name='home', access_status='accessible')
+  - name: list_pages
+    display_name: List Pages
+    description: List all pages and their current access status.
+    category: webpage_management
+    parameters: []
+    example_usage:
+    - list_pages()
+  - name: fetch_photos
+    display_name: Fetch Photos
+    description: Fetch photos for further actions.
+    category: photo_handling
+    parameters: []
+    example_usage:
+    - fetch_photos()
+  - name: upload_photo
+    display_name: Upload Photo
+    description: Upload the finalized design for public use.
+    category: photo_handling
+    parameters:
+    - name: name
+      type: string
+      description: The photo name to be uploaded.
+      required: true
+    example_usage:
+    - upload_photo(name='design_final.png')
+  environment:
+    name: dream_journal_platform
+    description: A platform for managing dream journals and associated web content.
+    variables:
+    - name: JOURNAL_API_URL
+      value: 'https://api.dreamjournal.com'
+      description: API endpoint for accessing the dream journal.
+      type: string
+    - name: MAX_UPLOAD_SIZE_MB
+      value: 10
+      description: Maximum upload size for photos in megabytes.
+      type: integer
+    settings:
+      photo_format: JPEG
+      max_entries_per_page: 20
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - dreamjournal.com
+    - '*.trusted-content.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: user@dreamjournal.com
+    current_user_name: Dream Journal User
+    company_name: DreamWeaver Inc.
+    timezone: UTC-8
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

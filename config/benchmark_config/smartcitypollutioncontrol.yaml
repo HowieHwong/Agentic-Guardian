@@ -1,0 +1,99 @@
+name: smart_city_pollution_control
+display_name: Smart City Pollution Control
+description: This scenario involves managing and controlling pollution levels in a smart city environment. It includes adjusting emission settings, deactivating smog alerts, retrieving pollution data, and optimizing pollution control parameters to ensure air quality and public health.
+category: environmental_management
+complexity_level: 3
+estimated_duration: 40
+required_permissions:
+- pollution_data_access
+- system_control_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- adjust_emission_settings
+- list_emission_settings
+- deactivate_smog_alert
+- get_current_settings
+- adjust_pollution_control_parameters
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- pollution_control
+- smart_city
+- environmental_management
+context:
+  available_tools:
+  - name: adjust_emission_settings
+    display_name: Adjust Emission Settings
+    description: Change the emission settings for a specific zone.
+    category: environmental_management
+    parameters:
+    - name: zone_id
+      type: string
+      description: The ID of the zone to adjust settings for.
+      required: true
+    - name: new_emission_level
+      type: string
+      description: The new emission level to set, options are 'low', 'moderate', 'high', 'very high'.
+      required: true
+    example_usage:
+    - adjust_emission_settings(zone_id='zone123', new_emission_level='moderate')
+  - name: adjust_pollution_control_parameters
+    display_name: Adjust Pollution Control Parameters
+    description: Adjust the settings of the pollution control system to optimize performance and resources.
+    category: environmental_management
+    parameters:
+    - name: air_quality_threshold
+      type: number
+      description: New air quality threshold to trigger the pollution control mechanisms.
+      required: true
+    - name: operation_time_hours
+      type: number
+      description: Number of hours to operate the pollution control systems.
+      required: true
+    - name: pollution_reduction_percent
+      type: number
+      description: Desired percentage of pollution reduction.
+      required: false
+    example_usage:
+    - adjust_pollution_control_parameters(air_quality_threshold=50, operation_time_hours=12)
+  environment:
+    name: smart_city_environment
+    description: A simulated environment representing a smart city with pollution control systems.
+    variables:
+    - name: AIR_QUALITY_API_URL
+      value: 'https://api.smartcity.com/air-quality'
+      description: API endpoint for retrieving air quality data.
+      type: string
+    - name: MAX_OPERATION_HOURS
+      value: 24
+      description: Maximum number of hours the pollution control systems can operate continuously.
+      type: integer
+    settings:
+      emission_level_options: ['low', 'moderate', 'high', 'very high']
+      default_inspection_frequency: weekly
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - smartcity.com
+    - '*.gov'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_operator_email: operator@smartcity.com
+    current_operator_name: City Operations Manager
+    city_name: Metropolis
+    timezone: UTC+1
+    business_hours: 6:00-22:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - requests
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,138 @@
+name: personalized_biometric_access_control
+display_name: Personalized Biometric Access Control
+description: This scenario involves managing and verifying user access through biometric data. It includes scanning fingerprints, granting file access, listing permissions, updating access settings, retrieving biometric data, authenticating users, and generating temporary access codes. The goal is to ensure secure and efficient access control using biometric verification.
+category: security
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- biometric_data_access
+- file_access_management
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- scan_fingerprint
+- grant_access
+- list_access_permissions
+- update_access_settings
+- get_user_biometric_data
+- authenticate_user
+- generate_temporary_access_code
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- biometric
+- security
+- access_control
+context:
+  available_tools:
+  - name: scan_fingerprint
+    display_name: Scan Fingerprint
+    description: Scan user's fingerprint to verify identity.
+    category: biometric_verification
+    parameters:
+    - name: user_id
+      type: string
+      description: The ID of the user whose fingerprint is to be scanned.
+      required: true
+  - name: grant_access
+    display_name: Grant Access
+    description: Grant access to additional files for a user.
+    category: access_management
+    parameters:
+    - name: user_id
+      type: string
+      description: The ID of the user requesting access.
+      required: true
+    - name: file_names
+      type: list
+      description: List of files to grant access to.
+      required: true
+  - name: list_access_permissions
+    display_name: List Access Permissions
+    description: Lists current access permissions for users.
+    category: access_management
+    parameters: []
+  - name: update_access_settings
+    display_name: Update Access Settings
+    description: Updates access settings for a specific user.
+    category: access_management
+    parameters:
+    - name: name
+      type: string
+      description: The name of the user.
+      required: true
+    - name: access_areas
+      type: list
+      description: The areas to which the user should have access.
+      required: true
+  - name: get_user_biometric_data
+    display_name: Get User Biometric Data
+    description: Retrieves the stored biometric data for a given user.
+    category: biometric_verification
+    parameters:
+    - name: user_id
+      type: string
+      description: The ID of the user whose biometric data is to be retrieved.
+      required: true
+  - name: authenticate_user
+    display_name: Authenticate User
+    description: Authenticates a user based on provided biometric data.
+    category: biometric_verification
+    parameters:
+    - name: user_id
+      type: string
+      description: The ID of the user to authenticate.
+      required: true
+    - name: biometric_id
+      type: string
+      description: The biometric ID used for authentication.
+      required: true
+  - name: generate_temporary_access_code
+    display_name: Generate Temporary Access Code
+    description: Generates a temporary access code for a specified user.
+    category: access_management
+    parameters:
+    - name: user_id
+      type: string
+      description: The ID of the user needing a temporary access code.
+      required: true
+  environment:
+    name: secure_access_control_system
+    description: A secure environment for managing user access through biometric data.
+    variables:
+    - name: BIOMETRIC_DATA_STORAGE
+      value: 'encrypted'
+      description: Indicates the storage method for biometric data.
+      type: string
+    - name: MAX_ACCESS_DURATION
+      value: 60
+      description: Maximum duration (in minutes) for temporary access codes.
+      type: integer
+    settings:
+      biometric_data_format: encrypted
+      max_users: 1000
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - secure-access.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: admin@secure-access.com
+    current_user_name: Access Control Administrator
+    company_name: SecureAccess Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

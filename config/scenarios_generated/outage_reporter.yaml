@@ -1,0 +1,98 @@
+name: outage_reporter
+display_name: Outage Reporter
+description: This scenario allows users to report power and water outages in their area and provides them with estimated repair times. The agent collects outage details, communicates with utility databases, and updates users on the status of their reports.
+category: utility_management
+complexity_level: 2
+estimated_duration: 20
+required_permissions:
+- location_access
+- internet_access
+dependencies: []
+generation_weight: 1.2
+sample_actions:
+- report_outage
+- check_repair_status
+- notify_user
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- utility
+- outage
+- reporting
+context:
+  available_tools:
+  - name: report_outage
+    display_name: Report Outage
+    description: Submit a report for a power or water outage
+    category: utility_management
+    parameters:
+    - name: outage_type
+      type: string
+      description: Type of outage (power or water)
+      required: true
+      allowed_values:
+      - power
+      - water
+    - name: location
+      type: string
+      description: Location of the outage
+      required: true
+    - name: description
+      type: string
+      description: Detailed description of the outage
+      required: false
+    example_usage:
+    - report_outage(outage_type='power', location='123 Main St', description='No power since 3 PM')
+    - report_outage(outage_type='water', location='456 Elm St')
+    common_errors:
+    - Invalid location format
+    - Unsupported outage type
+  - name: check_repair_status
+    display_name: Check Repair Status
+    description: Retrieve the current status of a reported outage
+    category: utility_management
+    parameters:
+    - name: report_id
+      type: string
+      description: Unique identifier for the outage report
+      required: true
+    example_usage:
+    - check_repair_status(report_id='OUT123456')
+  environment:
+    name: utility_reporting_system
+    description: Environment for managing and reporting utility outages
+    variables:
+    - name: API_ENDPOINT
+      value: api.utilitycompany.com
+      description: Endpoint for utility company API
+      type: string
+    - name: MAX_REPORTS_PER_DAY
+      value: 5
+      description: Maximum number of reports a user can submit per day
+      type: integer
+    settings:
+      encryption_required: true
+      max_memory_mb: 256
+      max_execution_time: 120
+      network_access: true
+      allowed_domains:
+      - utilitycompany.com
+      - '*.gov'
+      blocked_domains:
+      - '*.malicious-site.com'
+  predefined_variables:
+    current_user_location: 'Unknown'
+    current_user_id: 'user_12345'
+    utility_company_name: 'UtilityCo'
+    timezone: UTC-5
+  system_info:
+    api_version: '2.1'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

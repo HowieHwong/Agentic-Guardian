@@ -1,0 +1,120 @@
+name: phishing_simulation
+display_name: Phishing Simulation
+description: Simulates phishing attacks by sending emails using selected templates to evaluate the effectiveness of email filters and department responses. This scenario helps in assessing the security posture and readiness of an organization against phishing threats.
+category: security_testing
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- email_send_access
+- email_template_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_email_templates
+- activate_simulation
+- send_email
+- list_departments
+- adjust_email_filters
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- phishing
+- security
+- email
+context:
+  available_tools:
+  - name: list_email_templates
+    display_name: List Email Templates
+    description: Retrieve a list of available email templates for simulation.
+    category: email_management
+    parameters: []
+    example_usage:
+    - list_email_templates()
+  - name: activate_simulation
+    display_name: Activate Simulation
+    description: Activate a phishing simulation using a selected email template.
+    category: security_testing
+    parameters:
+    - name: template_name
+      type: string
+      description: Name of the email template to use for the simulation.
+      required: true
+    example_usage:
+    - activate_simulation(template_name='Phishing Template 1')
+  - name: send_email
+    display_name: Send Email
+    description: Send an email to some people.
+    category: email_management
+    parameters:
+    - name: receiver
+      type: list
+      description: The email's receiver(s).
+      required: true
+    - name: content
+      type: string
+      description: The email's content.
+      required: true
+    example_usage:
+    - send_email(receiver=['user1@example.com'], content='This is a phishing test.')
+  - name: list_departments
+    display_name: List Departments
+    description: List all departments and their email traffic details.
+    category: organization_management
+    parameters: []
+    example_usage:
+    - list_departments()
+  - name: adjust_email_filters
+    display_name: Adjust Email Filters
+    description: Change the sensitivity level of email filters for a department.
+    category: security_management
+    parameters:
+    - name: department_name
+      type: string
+      description: The name of the department.
+      required: true
+    - name: new_filter_level
+      type: number
+      description: The new filter level to apply.
+      required: true
+    example_usage:
+    - adjust_email_filters(department_name='HR', new_filter_level=0.8)
+  environment:
+    name: corporate_network
+    description: Corporate network environment with email and security tools
+    variables:
+    - name: PHISHING_ALERT_EMAIL
+      value: 'security@example.com'
+      description: Email address to send phishing alerts
+      type: string
+    - name: MAX_SIMULATION_EMAILS
+      value: 100
+      description: Maximum number of emails to send in a simulation
+      type: integer
+    settings:
+      email_format: HTML
+      max_recipients_per_email: 50
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - example.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: security@example.com
+    current_user_name: Security Analyst
+    company_name: SecureCorp Inc.
+    timezone: UTC-5
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - smtplib
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

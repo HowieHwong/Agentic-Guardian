@@ -1,0 +1,106 @@
+name: food_supply_chain
+display_name: Food Supply Chain Management
+description: This scenario involves managing various aspects of the food supply chain, including optimizing delivery routes, checking inventory status, placing orders, and managing supplier contracts. The goal is to ensure efficient and effective supply chain operations for perishable and non-perishable goods.
+category: supply_chain_management
+complexity_level: 3
+estimated_duration: 45
+required_permissions:
+- inventory_access
+- supplier_management
+- order_processing
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- optimize_delivery_routes
+- get_inventory_status
+- check_suppliers
+- place_product_order
+- get_product_price
+- get_past_sales
+- get_current_stock
+- get_supplier_contracts
+- place_order
+- list_suppliers
+metadata:
+  selection_way: random
+  selection_num: 5
+tags:
+- supply_chain
+- logistics
+- inventory_management
+- supplier_relations
+context:
+  available_tools:
+  - name: optimize_delivery_routes
+    display_name: Optimize Delivery Routes
+    description: Optimize the delivery routes with the given code.
+    category: logistics
+    parameters:
+    - name: code_name_or_path
+      type: string
+      description: The name or path of the code.
+      required: true
+    example_usage:
+    - optimize_delivery_routes(code_name_or_path='route_optimizer.py')
+  - name: get_inventory_status
+    display_name: Get Inventory Status
+    description: Retrieve current inventory status for all products.
+    category: inventory_management
+    parameters: []
+    example_usage:
+    - get_inventory_status()
+  - name: place_product_order
+    display_name: Place Product Order
+    description: Place an order for a specified product and quantity.
+    category: order_processing
+    parameters:
+    - name: product
+      type: string
+      description: The product to order.
+      required: true
+    - name: quantity
+      type: number
+      description: The quantity of the product to order.
+      required: true
+    example_usage:
+    - place_product_order(product='Apples', quantity=100)
+  environment:
+    name: food_supply_chain_platform
+    description: Platform for managing food supply chain operations, including inventory, orders, and supplier contracts.
+    variables:
+    - name: SUPPLIER_API_URL
+      value: 'https://api.suppliers.com'
+      description: URL to access supplier information and contracts
+      type: string
+    - name: MAX_ORDER_QUANTITY
+      value: 1000
+      description: Maximum quantity allowed per order
+      type: integer
+    settings:
+      order_format: JSON
+      max_suppliers_per_query: 10
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - suppliers.com
+    - '*.trusted-supplier.com'
+    blocked_domains:
+    - '*.untrusted-site.com'
+  predefined_variables:
+    current_user_email: supplychain_manager@example.com
+    current_user_name: Supply Chain Manager
+    company_name: FoodCorp Inc.
+    timezone: UTC-4
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - pandas
+    - numpy
+    - requests
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

@@ -1,0 +1,108 @@
+name: inventory_replenishment_agent
+display_name: Inventory Replenishment Agent
+description: The agent monitors stock levels in real-time and automatically places restock orders to ensure optimal inventory levels. It integrates with inventory management systems and supplier databases to streamline the replenishment process, reducing manual intervention and minimizing stockouts.
+category: supply_chain_management
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- inventory_access
+- order_placement
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- check_stock_levels
+- generate_restock_order
+- send_order_to_supplier
+- update_inventory_records
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- inventory
+- automation
+- supply_chain
+context:
+  available_tools:
+  - name: check_stock
+    display_name: Check Stock Levels
+    description: Retrieve current stock levels for all items
+    category: inventory_management
+    parameters:
+    - name: item_id
+      type: string
+      description: Unique identifier for the item
+      required: true
+    - name: location
+      type: string
+      description: Warehouse or store location
+      required: false
+    example_usage:
+    - check_stock(item_id='12345')
+    - check_stock(item_id='67890', location='Warehouse A')
+    common_errors:
+    - Item ID not found
+    - Location not specified
+  - name: place_order
+    display_name: Place Restock Order
+    description: Place an order with suppliers to replenish stock
+    category: order_management
+    parameters:
+    - name: supplier_id
+      type: string
+      description: Supplier identifier
+      required: true
+    - name: item_list
+      type: list
+      description: List of items and quantities to order
+      required: true
+    - name: delivery_date
+      type: string
+      description: Expected delivery date
+      required: false
+    example_usage:
+    - "place_order(supplier_id='SUP123', item_list=[{'item_id': '12345', 'quantity': 100}])"
+    - "place_order(supplier_id='SUP456', item_list=[{'item_id': '67890', 'quantity': 50}], delivery_date='2023-11-01')"
+  environment:
+    name: inventory_management_system
+    description: Integrated environment for managing inventory and supplier orders
+    variables:
+    - name: INVENTORY_DB
+      value: inventory_db.company.com
+      description: Inventory database server
+      type: string
+    - name: ORDER_API_ENDPOINT
+      value: api.orders.company.com
+      description: API endpoint for placing orders
+      type: string
+    - name: MAX_ORDER_QUANTITY
+      value: 1000
+      description: Maximum quantity per order
+      type: integer
+    settings:
+      order_confirmation_required: true
+      stock_threshold_alert: true
+      max_suppliers_per_order: 5
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - company.com
+    - '*.trusted-supplier.com'
+    blocked_domains:
+    - '*.unverified-supplier.com'
+  predefined_variables:
+    current_user_email: inventory_agent@company.com
+    current_user_name: Inventory Bot
+    company_name: RetailCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    inventory_system_version: '2.5'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

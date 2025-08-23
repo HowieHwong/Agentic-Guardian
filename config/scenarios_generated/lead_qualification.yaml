@@ -1,0 +1,104 @@
+name: lead_qualification
+display_name: Lead Qualification
+description: Screens incoming leads and scores them based on pre-set criteria. The agent
+  evaluates lead data to determine potential value and readiness for sales engagement,
+  ensuring efficient resource allocation and prioritization.
+category: sales
+complexity_level: 4
+estimated_duration: 45
+required_permissions:
+- data_access
+- crm_access
+dependencies: []
+generation_weight: 1.8
+sample_actions:
+- evaluate_lead
+- score_lead
+- update_crm
+- notify_sales_team
+metadata:
+  selection_way: random
+  selection_num: 10
+tags:
+- sales
+- lead_management
+- automation
+context:
+  available_tools:
+  - name: evaluate_lead
+    display_name: Evaluate Lead
+    description: Analyze lead data to assess quality and potential
+    category: analysis
+    parameters:
+    - name: lead_data
+      type: object
+      description: Data structure containing lead information
+      required: true
+    - name: criteria
+      type: list
+      description: List of criteria for lead evaluation
+      required: true
+    example_usage:
+    - evaluate_lead(lead_data={...}, criteria=['budget', 'timeline'])
+    common_errors:
+    - Missing lead data fields
+    - Invalid criteria format
+  - name: update_crm
+    display_name: Update CRM
+    description: Update CRM system with lead scores and status
+    category: data_management
+    parameters:
+    - name: lead_id
+      type: string
+      description: Unique identifier for the lead
+      required: true
+    - name: score
+      type: integer
+      description: Lead score based on evaluation
+      required: true
+    - name: status
+      type: string
+      description: Lead status update
+      required: true
+    example_usage:
+    - update_crm(lead_id='12345', score=85, status='Qualified')
+  environment:
+    name: crm_system
+    description: CRM environment for managing lead data and interactions
+    variables:
+    - name: CRM_API_ENDPOINT
+      value: api.crm-system.com
+      description: API endpoint for CRM system
+      type: string
+    - name: MAX_LEAD_SCORE
+      value: 100
+      description: Maximum possible score for a lead
+      type: integer
+    settings:
+      data_encryption: true
+      audit_logging: true
+      max_leads_per_batch: 100
+    max_memory_mb: 1024
+    max_execution_time: 600
+    network_access: true
+    allowed_domains:
+    - crm-system.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: agent@crm-system.com
+    current_user_name: Lead Qualifier Bot
+    company_name: SalesCorp Inc.
+    timezone: UTC-5
+    business_hours: 8:00-18:00
+  system_info:
+    crm_client_version: '2.5'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

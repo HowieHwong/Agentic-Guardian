@@ -1,0 +1,79 @@
+name: holodeck_simulator
+display_name: Holodeck Simulator
+description: This scenario involves managing and updating simulations within a holodeck environment. It includes retrieving details of scheduled simulations and updating crew members for specific simulations. The goal is to ensure simulations are accurately configured and updated with the necessary personnel for optimal performance.
+category: simulation_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- simulation_data_access
+- crew_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- get_simulation_details
+- update_crew_members
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- simulation
+- crew_management
+- performance_metrics
+context:
+  available_tools:
+  - name: get_simulation_details
+    display_name: Get Simulation Details
+    description: Retrieve details of scheduled simulations, including performance metrics and current settings.
+    category: simulation_management
+    parameters: []
+    example_usage:
+    - get_simulation_details()
+  - name: update_crew_members
+    display_name: Update Crew Members
+    description: Update crew members for a simulation.
+    category: crew_management
+    parameters:
+    - name: simulation_id
+      type: string
+      description: The unique identifier of the simulation.
+      required: true
+    - name: new_crew_members
+      type: integer
+      description: The new number of crew members.
+      required: true
+    example_usage:
+    - update_crew_members(simulation_id='sim123', new_crew_members=5)
+  environment:
+    name: holodeck_environment
+    description: A virtual environment for running and managing simulations with dynamic crew configurations.
+    variables:
+    - name: MAX_CREW_MEMBERS
+      value: 10
+      description: Maximum number of crew members allowed per simulation.
+      type: integer
+    settings:
+      simulation_update_interval: 15
+      max_simulation_duration: 120
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - holodeck-simulations.com
+    - '*.trusted-simulation-partner.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_role: Simulation Manager
+    organization_name: Simulations Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

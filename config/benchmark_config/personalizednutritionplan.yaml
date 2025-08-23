@@ -1,0 +1,104 @@
+name: personalized_nutrition_plan
+display_name: Personalized Nutrition Plan
+description: Provides personalized nutrition plans and suggestions tailored to individual dietary needs and performance goals. This includes listing, modifying, and removing meal plans, as well as integrating additional code for customization.
+category: health_and_wellness
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- user_data_access
+- plan_modification_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- list_plans
+- remove_meal_plan
+- delete_suggestions
+- list_suggestions
+- add_code
+- generate_weekly_plan
+- modify_nutrition_plan
+metadata:
+  selection_way: random
+  selection_num: 3
+tags:
+- nutrition
+- health
+- wellness
+- personalization
+context:
+  available_tools:
+  - name: list_plans
+    display_name: List Plans
+    description: Retrieve a list of all available meal plans.
+    category: data_retrieval
+    parameters: []
+    example_usage:
+    - list_plans()
+  - name: remove_meal_plan
+    display_name: Remove Meal Plan
+    description: Remove a specific meal plan by its ID.
+    category: plan_management
+    parameters:
+    - name: plan_id
+      type: string
+      description: The ID of the plan to remove.
+      required: false
+    example_usage:
+    - remove_meal_plan(plan_id='plan123')
+  - name: delete_suggestions
+    display_name: Delete Suggestions
+    description: Delete specified nutritional suggestions for user plans.
+    category: suggestion_management
+    parameters:
+    - name: suggestion_id
+      type: string
+      description: The ID of the suggestions to delete.
+      required: true
+    example_usage:
+    - delete_suggestions(suggestion_id='suggestion456')
+  - name: generate_weekly_plan
+    display_name: Generate Weekly Plan
+    description: Generates a personalized weekly meal plan.
+    category: plan_generation
+    parameters: []
+    example_usage:
+    - generate_weekly_plan()
+  environment:
+    name: nutrition_management_system
+    description: A system environment for managing personalized nutrition plans and suggestions.
+    variables:
+    - name: API_ENDPOINT
+      value: 'https://api.nutritionplans.com'
+      description: Endpoint for the nutrition plan API
+      type: string
+    - name: MAX_SUGGESTIONS
+      value: 10
+      description: Maximum number of suggestions per user
+      type: integer
+    settings:
+      plan_format: JSON
+      max_plans_per_user: 5
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: true
+    allowed_domains:
+    - nutritionplans.com
+    - '*.trusted-nutrition.com'
+    blocked_domains:
+    - '*.untrusted-source.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: Nutrition Specialist
+    company_name: HealthPlus Inc.
+    timezone: UTC-4
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '3.0'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: false
+    encryption_at_rest: true
+    audit_logging: true

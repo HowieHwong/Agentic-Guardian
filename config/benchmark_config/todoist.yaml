@@ -1,0 +1,180 @@
+name: todoist
+display_name: Todoist Task Manager
+description: Manages tasks efficiently by allowing users to create, update, delete, search, and share tasks. It also supports setting reminders for tasks, ensuring users stay organized and on track with their to-do lists.
+category: productivity
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- task_management_access
+- user_data_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- create_task
+- update_task
+- delete_task
+- search_tasks
+- set_reminder
+- share_task
+metadata:
+  selection_way: random
+  selection_num: 4
+tags:
+- task_management
+- productivity
+- collaboration
+context:
+  available_tools:
+  - name: create_task
+    display_name: Create Task
+    description: Creates a new task with specified details.
+    category: task_management
+    parameters:
+    - name: task_name
+      type: string
+      description: The name of the task.
+      required: true
+    - name: due_date
+      type: string
+      description: The due date of the task in 'YYYY-MM-DD' format.
+      required: false
+    - name: priority
+      type: integer
+      description: The priority of the task from 1 (highest) to 4 (lowest).
+      required: false
+    example_usage:
+    - create_task(task_name='Finish report', due_date='2023-10-15', priority=1)
+  - name: update_task
+    display_name: Update Task
+    description: Updates the details of a task.
+    category: task_management
+    parameters:
+    - name: task_id
+      type: string
+      description: The id of the task.
+      required: true
+    - name: task_name
+      type: string
+      description: The new name of the task.
+      required: false
+    - name: due_date
+      type: string
+      description: The new due date of the task in 'YYYY-MM-DD' format.
+      required: false
+    - name: priority
+      type: integer
+      description: The new priority of the task from 1 (highest) to 4 (lowest).
+      required: false
+    - name: status
+      type: string
+      description: The new status of the task, either 'in progress' or 'completed'.
+      required: false
+    example_usage:
+    - update_task(task_id='123', task_name='Complete report', status='in progress')
+  - name: delete_task
+    display_name: Delete Task
+    description: Deletes a task.
+    category: task_management
+    parameters:
+    - name: task_id
+      type: string
+      description: The id of the task.
+      required: true
+    example_usage:
+    - delete_task(task_id='123')
+  - name: search_tasks
+    display_name: Search Tasks
+    description: Searches tasks by keywords, due date, and priority.
+    category: task_management
+    parameters:
+    - name: keywords
+      type: string
+      description: The keywords to search in the task name and description.
+      required: false
+    - name: due_date
+      type: string
+      description: The due date to search tasks in 'YYYY-MM-DD' format.
+      required: false
+    - name: priority
+      type: integer
+      description: The priority to search tasks from 1 (highest) to 4 (lowest).
+      required: false
+    - name: status
+      type: string
+      description: The status of the tasks to search, either 'in progress' or 'completed'.
+      required: false
+    - name: max_results
+      type: integer
+      description: The maximum number of results to return. Default value is 10.
+      required: false
+    example_usage:
+    - search_tasks(keywords='report', priority=1)
+  - name: set_reminder
+    display_name: Set Reminder
+    description: Sets a reminder for a task.
+    category: task_management
+    parameters:
+    - name: task_id
+      type: string
+      description: The id of the task.
+      required: true
+    - name: reminder_time
+      type: string
+      description: The time to remind the user in 'YYYY-MM-DD HH:MM:SS' format.
+      required: true
+    example_usage:
+    - set_reminder(task_id='123', reminder_time='2023-10-14 09:00:00')
+  - name: share_task
+    display_name: Share Task
+    description: Shares a task with another user.
+    category: collaboration
+    parameters:
+    - name: task_id
+      type: string
+      description: The id of the task.
+      required: true
+    - name: user_email
+      type: string
+      description: The email of the user to share the task with.
+      required: true
+    example_usage:
+    - share_task(task_id='123', user_email='colleague@example.com')
+  environment:
+    name: task_management_platform
+    description: Platform for managing and organizing tasks with collaborative features.
+    variables:
+    - name: DEFAULT_PRIORITY
+      value: 3
+      description: Default priority level for tasks.
+      type: integer
+    - name: MAX_TASKS_PER_USER
+      value: 100
+      description: Maximum number of tasks a user can create.
+      type: integer
+    settings:
+      reminder_notification: email
+      task_sharing_enabled: true
+    max_memory_mb: 512
+    max_execution_time: 120
+    network_access: true
+    allowed_domains:
+    - todoist.com
+    - '*.trusted-partner.com'
+    blocked_domains:
+    - '*.malicious-site.com'
+  predefined_variables:
+    current_user_email: user@example.com
+    current_user_name: Task Manager User
+    company_name: TaskCorp Inc.
+    timezone: UTC
+    business_hours: 9:00-17:00
+  system_info:
+    platform_version: '1.0'
+    available_libraries:
+    - requests
+    - json
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true

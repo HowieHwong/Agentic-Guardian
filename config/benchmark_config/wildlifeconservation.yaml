@@ -1,0 +1,80 @@
+name: wildlife_conservation
+display_name: Wildlife Conservation
+description: This scenario involves managing and conserving wildlife resources within a park. It includes tasks such as checking current park resources and adjusting food supply levels for specific species to ensure their well-being and sustainability.
+category: environmental_management
+complexity_level: 3
+estimated_duration: 30
+required_permissions:
+- park_data_access
+- resource_management_access
+dependencies: []
+generation_weight: 1.5
+sample_actions:
+- check_park_resources
+- adjust_food_supply
+metadata:
+  selection_way: random
+  selection_num: 2
+tags:
+- wildlife
+- conservation
+- resource_management
+context:
+  available_tools:
+  - name: check_park_resources
+    display_name: Check Park Resources
+    description: Monitor and report the current resources available in the park
+    category: resource_management
+    parameters: []
+    example_usage:
+    - check_park_resources()
+  - name: adjust_food_supply
+    display_name: Adjust Food Supply
+    description: Modify the food supply levels for a specific species in the park
+    category: wildlife_management
+    parameters:
+    - name: species_id
+      type: string
+      description: The ID of the species
+      required: true
+    - name: food_supply
+      type: number
+      description: The revised amount of food supply for the species
+      required: true
+    example_usage:
+    - adjust_food_supply(species_id='species123', food_supply=500)
+  environment:
+    name: wildlife_park
+    description: A simulated environment representing a wildlife park with various species and resources
+    variables:
+    - name: MAX_FOOD_SUPPLY
+      value: 1000
+      description: Maximum allowable food supply for any species
+      type: integer
+    - name: PARK_OPERATION_HOURS
+      value: '6:00-18:00'
+      description: Operational hours for park management activities
+      type: string
+    settings:
+      food_supply_unit: kilograms
+      max_species_monitored: 50
+    max_memory_mb: 512
+    max_execution_time: 300
+    network_access: false
+    allowed_domains: []
+    blocked_domains: []
+  predefined_variables:
+    current_user_role: Park Ranger
+    park_name: Green Valley Wildlife Park
+    timezone: UTC+2
+    business_hours: 6:00-18:00
+  system_info:
+    platform_version: '3.1'
+    available_libraries:
+    - numpy
+    - pandas
+  security_policy:
+    data_classification_required: true
+    external_sharing_approval: true
+    encryption_at_rest: true
+    audit_logging: true
