@@ -86,7 +86,7 @@ Alternatively, set in your shell for a single session:
   - `openai` / `externalAPI`: same API key resolution rules as above
   - `risks`: risk templates and prompts used for injection
 
-- `config/model_pool.yaml`
+<!-- - `config/model_pool.yaml`
   - Example pool entries using `api_key_type`:
     ```yaml
     external_models:
@@ -95,7 +95,7 @@ Alternatively, set in your shell for a single session:
         model: "Qwen/Qwen2.5-72B-Instruct"
         temperature: 1.0
         max_tokens: 4096
-    ```
+    ``` -->
 
 **API Switching Examples:**
 

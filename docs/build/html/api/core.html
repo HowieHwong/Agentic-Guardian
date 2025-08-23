@@ -1,0 +1,379 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core Module &mdash; AuraGen 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=035a8b3d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            AuraGen
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scenarios.html">Scenarios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../risk_injection.html">Risk Injection</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AuraGen</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Core Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="core-module">
+<h1>Core Module<a class="headerlink" href="#core-module" title="Link to this heading"></a></h1>
+<p>The core module provides the fundamental classes and functions for AuraGen’s operation.</p>
+<p id="module-AuraGen.core">Core module containing global configuration and constants for the Guardian engine.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="AuraGen.core.OutputFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AuraGen.core.</span></span><span class="sig-name descname"><span class="pre">OutputFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/AuraGen/core.html#OutputFormat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AuraGen.core.OutputFormat" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Supported output formats for generated data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.OutputFormat.JSON">
+<span class="sig-name descname"><span class="pre">JSON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'json'</span></em><a class="headerlink" href="#AuraGen.core.OutputFormat.JSON" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.OutputFormat.JSONL">
+<span class="sig-name descname"><span class="pre">JSONL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'jsonl'</span></em><a class="headerlink" href="#AuraGen.core.OutputFormat.JSONL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.OutputFormat.CSV">
+<span class="sig-name descname"><span class="pre">CSV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'csv'</span></em><a class="headerlink" href="#AuraGen.core.OutputFormat.CSV" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.OutputFormat.PARQUET">
+<span class="sig-name descname"><span class="pre">PARQUET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'parquet'</span></em><a class="headerlink" href="#AuraGen.core.OutputFormat.PARQUET" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AuraGen.core.OutputFormat.__format__">
+<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AuraGen.core.OutputFormat.__format__" title="Link to this definition"></a></dt>
+<dd><p>Returns format using actual value type unless __str__ has been overridden.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="AuraGen.core.Language">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AuraGen.core.</span></span><span class="sig-name descname"><span class="pre">Language</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/AuraGen/core.html#Language"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AuraGen.core.Language" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Supported languages for data generation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.Language.ENGLISH">
+<span class="sig-name descname"><span class="pre">ENGLISH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'en'</span></em><a class="headerlink" href="#AuraGen.core.Language.ENGLISH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.Language.CHINESE">
+<span class="sig-name descname"><span class="pre">CHINESE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'zh'</span></em><a class="headerlink" href="#AuraGen.core.Language.CHINESE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.Language.SPANISH">
+<span class="sig-name descname"><span class="pre">SPANISH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'es'</span></em><a class="headerlink" href="#AuraGen.core.Language.SPANISH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.Language.FRENCH">
+<span class="sig-name descname"><span class="pre">FRENCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fr'</span></em><a class="headerlink" href="#AuraGen.core.Language.FRENCH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.Language.GERMAN">
+<span class="sig-name descname"><span class="pre">GERMAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'de'</span></em><a class="headerlink" href="#AuraGen.core.Language.GERMAN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.Language.JAPANESE">
+<span class="sig-name descname"><span class="pre">JAPANESE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ja'</span></em><a class="headerlink" href="#AuraGen.core.Language.JAPANESE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AuraGen.core.Language.__format__">
+<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AuraGen.core.Language.__format__" title="Link to this definition"></a></dt>
+<dd><p>Returns format using actual value type unless __str__ has been overridden.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="AuraGen.core.RiskSeverity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AuraGen.core.</span></span><span class="sig-name descname"><span class="pre">RiskSeverity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/AuraGen/core.html#RiskSeverity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AuraGen.core.RiskSeverity" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Risk severity levels.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.RiskSeverity.LOW">
+<span class="sig-name descname"><span class="pre">LOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'low'</span></em><a class="headerlink" href="#AuraGen.core.RiskSeverity.LOW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.RiskSeverity.MEDIUM">
+<span class="sig-name descname"><span class="pre">MEDIUM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'medium'</span></em><a class="headerlink" href="#AuraGen.core.RiskSeverity.MEDIUM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.RiskSeverity.HIGH">
+<span class="sig-name descname"><span class="pre">HIGH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'high'</span></em><a class="headerlink" href="#AuraGen.core.RiskSeverity.HIGH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.RiskSeverity.CRITICAL">
+<span class="sig-name descname"><span class="pre">CRITICAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'critical'</span></em><a class="headerlink" href="#AuraGen.core.RiskSeverity.CRITICAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AuraGen.core.RiskSeverity.__format__">
+<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AuraGen.core.RiskSeverity.__format__" title="Link to this definition"></a></dt>
+<dd><p>Returns format using actual value type unless __str__ has been overridden.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AuraGen.core.</span></span><span class="sig-name descname"><span class="pre">GlobalConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ENGINE_VERSION:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'0.1.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ENGINE_NAME:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Guardian'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DEFAULT_LANGUAGE:</span> <span class="pre">~AuraGen.core.Language</span> <span class="pre">=</span> <span class="pre">Language.ENGLISH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DEFAULT_OUTPUT_FORMAT:</span> <span class="pre">~AuraGen.core.OutputFormat</span> <span class="pre">=</span> <span class="pre">OutputFormat.JSONL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DEFAULT_BATCH_SIZE:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DEFAULT_MAX_RETRIES:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SUPPORTED_OUTPUT_FORMATS:</span> <span class="pre">~typing.List[~AuraGen.core.OutputFormat]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SUPPORTED_LANGUAGES:</span> <span class="pre">~typing.List[~AuraGen.core.Language]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SUPPORTED_RISK_SEVERITIES:</span> <span class="pre">~typing.List[~AuraGen.core.RiskSeverity]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MIN_QUALITY_SCORE:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MAX_HALLUCINATION_PROBABILITY:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MAX_SCENARIO_DEPTH:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MAX_RISK_COMBINATIONS:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/AuraGen/core.html#GlobalConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AuraGen.core.GlobalConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Global configuration constants for the Guardian engine.
+These are hardcoded in the source code and not read from configuration files.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.ENGINE_VERSION">
+<span class="sig-name descname"><span class="pre">ENGINE_VERSION</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.1.0'</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.ENGINE_VERSION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.ENGINE_NAME">
+<span class="sig-name descname"><span class="pre">ENGINE_NAME</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Guardian'</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.ENGINE_NAME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.DEFAULT_LANGUAGE">
+<span class="sig-name descname"><span class="pre">DEFAULT_LANGUAGE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#AuraGen.core.Language" title="AuraGen.core.Language"><span class="pre">Language</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'en'</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.DEFAULT_LANGUAGE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.DEFAULT_OUTPUT_FORMAT">
+<span class="sig-name descname"><span class="pre">DEFAULT_OUTPUT_FORMAT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#AuraGen.core.OutputFormat" title="AuraGen.core.OutputFormat"><span class="pre">OutputFormat</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'jsonl'</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.DEFAULT_OUTPUT_FORMAT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.DEFAULT_BATCH_SIZE">
+<span class="sig-name descname"><span class="pre">DEFAULT_BATCH_SIZE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.DEFAULT_BATCH_SIZE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.DEFAULT_MAX_RETRIES">
+<span class="sig-name descname"><span class="pre">DEFAULT_MAX_RETRIES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.DEFAULT_MAX_RETRIES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.SUPPORTED_OUTPUT_FORMATS">
+<span class="sig-name descname"><span class="pre">SUPPORTED_OUTPUT_FORMATS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#AuraGen.core.OutputFormat" title="AuraGen.core.OutputFormat"><span class="pre">OutputFormat</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.SUPPORTED_OUTPUT_FORMATS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.SUPPORTED_LANGUAGES">
+<span class="sig-name descname"><span class="pre">SUPPORTED_LANGUAGES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#AuraGen.core.Language" title="AuraGen.core.Language"><span class="pre">Language</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.SUPPORTED_LANGUAGES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.SUPPORTED_RISK_SEVERITIES">
+<span class="sig-name descname"><span class="pre">SUPPORTED_RISK_SEVERITIES</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#AuraGen.core.RiskSeverity" title="AuraGen.core.RiskSeverity"><span class="pre">RiskSeverity</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.SUPPORTED_RISK_SEVERITIES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.MIN_QUALITY_SCORE">
+<span class="sig-name descname"><span class="pre">MIN_QUALITY_SCORE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.7</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.MIN_QUALITY_SCORE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.MAX_HALLUCINATION_PROBABILITY">
+<span class="sig-name descname"><span class="pre">MAX_HALLUCINATION_PROBABILITY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.3</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.MAX_HALLUCINATION_PROBABILITY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.MAX_SCENARIO_DEPTH">
+<span class="sig-name descname"><span class="pre">MAX_SCENARIO_DEPTH</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.MAX_SCENARIO_DEPTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.MAX_RISK_COMBINATIONS">
+<span class="sig-name descname"><span class="pre">MAX_RISK_COMBINATIONS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#AuraGen.core.GlobalConfig.MAX_RISK_COMBINATIONS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.get_supported_formats">
+<span class="sig-name descname"><span class="pre">get_supported_formats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/AuraGen/core.html#GlobalConfig.get_supported_formats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AuraGen.core.GlobalConfig.get_supported_formats" title="Link to this definition"></a></dt>
+<dd><p>Get list of supported output formats as strings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.get_supported_languages">
+<span class="sig-name descname"><span class="pre">get_supported_languages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/AuraGen/core.html#GlobalConfig.get_supported_languages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AuraGen.core.GlobalConfig.get_supported_languages" title="Link to this definition"></a></dt>
+<dd><p>Get list of supported languages as strings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.validate_output_format">
+<span class="sig-name descname"><span class="pre">validate_output_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/AuraGen/core.html#GlobalConfig.validate_output_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AuraGen.core.GlobalConfig.validate_output_format" title="Link to this definition"></a></dt>
+<dd><p>Validate if the given format is supported.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.validate_language">
+<span class="sig-name descname"><span class="pre">validate_language</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lang_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/AuraGen/core.html#GlobalConfig.validate_language"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AuraGen.core.GlobalConfig.validate_language" title="Link to this definition"></a></dt>
+<dd><p>Validate if the given language is supported.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AuraGen.core.GlobalConfig.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ENGINE_VERSION:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'0.1.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ENGINE_NAME:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'Guardian'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DEFAULT_LANGUAGE:</span> <span class="pre">~AuraGen.core.Language</span> <span class="pre">=</span> <span class="pre">Language.ENGLISH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DEFAULT_OUTPUT_FORMAT:</span> <span class="pre">~AuraGen.core.OutputFormat</span> <span class="pre">=</span> <span class="pre">OutputFormat.JSONL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DEFAULT_BATCH_SIZE:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DEFAULT_MAX_RETRIES:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SUPPORTED_OUTPUT_FORMATS:</span> <span class="pre">~typing.List[~AuraGen.core.OutputFormat]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SUPPORTED_LANGUAGES:</span> <span class="pre">~typing.List[~AuraGen.core.Language]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SUPPORTED_RISK_SEVERITIES:</span> <span class="pre">~typing.List[~AuraGen.core.RiskSeverity]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MIN_QUALITY_SCORE:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MAX_HALLUCINATION_PROBABILITY:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MAX_SCENARIO_DEPTH:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MAX_RISK_COMBINATIONS:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#AuraGen.core.GlobalConfig.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<section id="core-classes">
+<h2>Core Classes<a class="headerlink" href="#core-classes" title="Link to this heading"></a></h2>
+</section>
+<section id="main-functions">
+<h2>Main Functions<a class="headerlink" href="#main-functions" title="Link to this heading"></a></h2>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading"></a></h2>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<section id="basic-usage">
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuraGenCore</span>
+
+<span class="c1"># Initialize the core engine</span>
+<span class="n">core</span> <span class="o">=</span> <span class="n">AuraGenCore</span><span class="p">(</span><span class="n">config_path</span><span class="o">=</span><span class="s2">&quot;config/generation.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generate trajectories for a specific scenario</span>
+<span class="n">trajectories</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">generate_trajectories</span><span class="p">(</span>
+    <span class="n">scenario_name</span><span class="o">=</span><span class="s2">&quot;email_assistant&quot;</span><span class="p">,</span>
+    <span class="n">num_records</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trajectories</span><span class="p">)</span><span class="si">}</span><span class="s2"> trajectories&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-configuration">
+<h3>Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuraGenCore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenerationSettings</span>
+
+<span class="c1"># Custom settings</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="n">GenerationSettings</span><span class="p">(</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1500</span>
+<span class="p">)</span>
+
+<span class="n">core</span> <span class="o">=</span> <span class="n">AuraGenCore</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+
+<span class="c1"># Generate with custom constraints</span>
+<span class="n">constraints</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;industry&quot;</span><span class="p">:</span> <span class="s2">&quot;healthcare&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;urgency_level&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
+<span class="p">}</span>
+
+<span class="n">trajectories</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">generate_trajectories</span><span class="p">(</span>
+    <span class="n">scenario_name</span><span class="o">=</span><span class="s2">&quot;medical_assistant&quot;</span><span class="p">,</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
+    <span class="n">num_records</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, AuraGen Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

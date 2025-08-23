@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scenarios &mdash; AuraGen 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=035a8b3d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Risk Injection" href="risk_injection.html" />
+    <link rel="prev" title="Configuration" href="configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AuraGen
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Scenarios</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scenario-structure">Scenario Structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-components">Basic Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#constraint-types">Constraint Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-scenarios">Built-in Scenarios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#email-assistant">Email Assistant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#financial-advisor">Financial Advisor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#healthcare-assistant">Healthcare Assistant</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-custom-scenarios">Creating Custom Scenarios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-by-step-guide">Step-by-Step Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-scenario-features">Advanced Scenario Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conditional-constraints">Conditional Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dynamic-defaults">Dynamic Defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scenario-validation">Scenario Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scenario-templates">Scenario Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-patterns">Common Patterns</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scenario-best-practices">Scenario Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#design-principles">Design Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#constraint-guidelines">Constraint Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-scenarios">Testing Scenarios</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-considerations">Performance Considerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#optimization-tips">Optimization Tips</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#monitoring">Monitoring</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-issues">Common Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="risk_injection.html">Risk Injection</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AuraGen</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Scenarios</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scenarios.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="scenarios">
+<h1>Scenarios<a class="headerlink" href="#scenarios" title="Link to this heading"></a></h1>
+<p>Scenarios are the foundation of AuraGen’s trajectory generation. Each scenario defines a specific context in which an AI agent operates, complete with constraints, objectives, and behavioral patterns.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>AuraGen comes with a comprehensive library of pre-built scenarios covering various domains:</p>
+<ul class="simple">
+<li><p><strong>Communication</strong>: Email assistants, chat applications, messaging platforms</p></li>
+<li><p><strong>Finance</strong>: Financial advisors, banking systems, investment platforms</p></li>
+<li><p><strong>Healthcare</strong>: Medical assistants, patient management, health monitoring</p></li>
+<li><p><strong>E-commerce</strong>: Shopping assistants, recommendation systems, customer service</p></li>
+<li><p><strong>Education</strong>: Tutoring systems, curriculum management, assessment tools</p></li>
+<li><p><strong>Enterprise</strong>: Project management, resource allocation, workflow automation</p></li>
+</ul>
+</section>
+<section id="scenario-structure">
+<h2>Scenario Structure<a class="headerlink" href="#scenario-structure" title="Link to this heading"></a></h2>
+<section id="basic-components">
+<h3>Basic Components<a class="headerlink" href="#basic-components" title="Link to this heading"></a></h3>
+<p>Every scenario consists of:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scenario_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;unique_identifier&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Human-readable</span><span class="nv"> </span><span class="s">description</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">scenario&quot;</span>
+
+<span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Constraint definitions</span>
+
+<span class="nt">generation_params</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Optional: scenario-specific generation parameters</span>
+
+<span class="nt">risk_preferences</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Optional: risk injection preferences</span>
+</pre></div>
+</div>
+</section>
+<section id="constraint-types">
+<h3>Constraint Types<a class="headerlink" href="#constraint-types" title="Link to this heading"></a></h3>
+<p><strong>Categorical Constraints</strong></p>
+<p>Define discrete choices for scenario parameters:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">industry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;healthcare&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;finance&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;education&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;technology&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;technology&quot;</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Industry</span><span class="nv"> </span><span class="s">context</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">scenario&quot;</span>
+</pre></div>
+</div>
+<p><strong>Numerical Constraints</strong></p>
+<p>Define ranges for numeric parameters:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">budget</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;numerical&quot;</span>
+<span class="w">    </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">    </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50000</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Available</span><span class="nv"> </span><span class="s">budget</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">USD&quot;</span>
+</pre></div>
+</div>
+<p><strong>Boolean Constraints</strong></p>
+<p>Simple true/false parameters:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">requires_approval</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;boolean&quot;</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Whether</span><span class="nv"> </span><span class="s">actions</span><span class="nv"> </span><span class="s">require</span><span class="nv"> </span><span class="s">approval&quot;</span>
+</pre></div>
+</div>
+<p><strong>Text Constraints</strong></p>
+<p>Free-form text with optional length limits:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">department</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text&quot;</span>
+<span class="w">    </span><span class="nt">max_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;General&quot;</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Department</span><span class="nv"> </span><span class="s">name&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="built-in-scenarios">
+<h2>Built-in Scenarios<a class="headerlink" href="#built-in-scenarios" title="Link to this heading"></a></h2>
+<section id="email-assistant">
+<h3>Email Assistant<a class="headerlink" href="#email-assistant" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scenario_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;email_assistant&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;AI</span><span class="nv"> </span><span class="s">assistant</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">helps</span><span class="nv"> </span><span class="s">users</span><span class="nv"> </span><span class="s">compose</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">manage</span><span class="nv"> </span><span class="s">emails&quot;</span>
+
+<span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;formal&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;casual&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;friendly&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;urgent&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;formal&quot;</span>
+
+<span class="w">  </span><span class="nt">recipient_type</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;colleague&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;client&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;supervisor&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;external&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;colleague&quot;</span>
+
+<span class="w">  </span><span class="nt">urgency_level</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;low&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;medium&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;high&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;medium&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="financial-advisor">
+<h3>Financial Advisor<a class="headerlink" href="#financial-advisor" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scenario_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;financial_advisor&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;AI</span><span class="nv"> </span><span class="s">system</span><span class="nv"> </span><span class="s">providing</span><span class="nv"> </span><span class="s">financial</span><span class="nv"> </span><span class="s">advice</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">portfolio</span><span class="nv"> </span><span class="s">management&quot;</span>
+
+<span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">client_age</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;numerical&quot;</span>
+<span class="w">    </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">18</span>
+<span class="w">    </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">35</span>
+
+<span class="w">  </span><span class="nt">risk_tolerance</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;conservative&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;moderate&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;aggressive&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;moderate&quot;</span>
+
+<span class="w">  </span><span class="nt">investment_amount</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;numerical&quot;</span>
+<span class="w">    </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">    </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000000</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50000</span>
+</pre></div>
+</div>
+</section>
+<section id="healthcare-assistant">
+<h3>Healthcare Assistant<a class="headerlink" href="#healthcare-assistant" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scenario_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;healthcare_assistant&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;AI</span><span class="nv"> </span><span class="s">assistant</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">patient</span><span class="nv"> </span><span class="s">interaction</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">health</span><span class="nv"> </span><span class="s">monitoring&quot;</span>
+
+<span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">patient_age_group</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;child&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;adult&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;elderly&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;adult&quot;</span>
+
+<span class="w">  </span><span class="nt">urgency</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;routine&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;urgent&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;emergency&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;routine&quot;</span>
+
+<span class="w">  </span><span class="nt">specialty</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;general&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;cardiology&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;neurology&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;pediatrics&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;general&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="creating-custom-scenarios">
+<h2>Creating Custom Scenarios<a class="headerlink" href="#creating-custom-scenarios" title="Link to this heading"></a></h2>
+<section id="step-by-step-guide">
+<h3>Step-by-Step Guide<a class="headerlink" href="#step-by-step-guide" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Create a new YAML file</strong> in <code class="docutils literal notranslate"><span class="pre">config/AgentSafetyBench/</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>config/AgentSafetyBench/my_scenario.yaml
+</pre></div>
+</div>
+</li>
+<li><p><strong>Define the basic structure</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scenario_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_custom_scenario&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Description</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">what</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">scenario</span><span class="nv"> </span><span class="s">does&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Add constraints</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">my_constraint</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;option1&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;option2&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;option3&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;option1&quot;</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;What</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">constraint</span><span class="nv"> </span><span class="s">controls&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Test the scenario</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuraGenCore</span>
+
+<span class="n">core</span> <span class="o">=</span> <span class="n">AuraGenCore</span><span class="p">()</span>
+<span class="n">trajectories</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">generate_trajectories</span><span class="p">(</span>
+    <span class="n">scenario_name</span><span class="o">=</span><span class="s2">&quot;my_custom_scenario&quot;</span><span class="p">,</span>
+    <span class="n">num_records</span><span class="o">=</span><span class="mi">5</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="advanced-scenario-features">
+<h2>Advanced Scenario Features<a class="headerlink" href="#advanced-scenario-features" title="Link to this heading"></a></h2>
+<section id="conditional-constraints">
+<h3>Conditional Constraints<a class="headerlink" href="#conditional-constraints" title="Link to this heading"></a></h3>
+<p>Create constraints that depend on other constraint values:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">account_type</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;basic&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;premium&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;enterprise&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;basic&quot;</span>
+
+<span class="w">  </span><span class="nt">feature_access</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;conditional&quot;</span>
+<span class="w">    </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account_type&quot;</span>
+<span class="w">    </span><span class="nt">mappings</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">basic</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;core_features&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">premium</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;core_features&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;advanced_features&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">enterprise</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;core_features&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;advanced_features&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;enterprise_features&quot;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</section>
+<section id="dynamic-defaults">
+<h3>Dynamic Defaults<a class="headerlink" href="#dynamic-defaults" title="Link to this heading"></a></h3>
+<p>Set defaults based on other constraint values:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">user_type</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;student&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;professional&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;enterprise&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;professional&quot;</span>
+
+<span class="w">  </span><span class="nt">max_requests</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;numerical&quot;</span>
+<span class="w">    </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>
+<span class="w">    </span><span class="nt">dynamic_default</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">student</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">      </span><span class="nt">professional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">      </span><span class="nt">enterprise</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>
+</pre></div>
+</div>
+</section>
+<section id="scenario-validation">
+<h3>Scenario Validation<a class="headerlink" href="#scenario-validation" title="Link to this heading"></a></h3>
+<p>Add validation rules to ensure constraint combinations make sense:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">validation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">constraint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;investment_amount&quot;</span>
+<span class="w">      </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;risk_tolerance</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">&#39;conservative&#39;&quot;</span>
+<span class="w">      </span><span class="nt">max_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100000</span>
+<span class="w">      </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Conservative</span><span class="nv"> </span><span class="s">investors</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">limit</span><span class="nv"> </span><span class="s">exposure&quot;</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">constraint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;urgency_level&quot;</span>
+<span class="w">      </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;account_type</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">&#39;basic&#39;&quot;</span>
+<span class="w">      </span><span class="nt">excluded_values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;high&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;High</span><span class="nv"> </span><span class="s">urgency</span><span class="nv"> </span><span class="s">requires</span><span class="nv"> </span><span class="s">premium</span><span class="nv"> </span><span class="s">account&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="scenario-templates">
+<h2>Scenario Templates<a class="headerlink" href="#scenario-templates" title="Link to this heading"></a></h2>
+<section id="common-patterns">
+<h3>Common Patterns<a class="headerlink" href="#common-patterns" title="Link to this heading"></a></h3>
+<p><strong>Customer Service Template</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scenario_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;customer_service_template&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Template</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">customer</span><span class="nv"> </span><span class="s">service</span><span class="nv"> </span><span class="s">scenarios&quot;</span>
+
+<span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">issue_type</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;billing&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;technical&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;general&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;complaint&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;general&quot;</span>
+
+<span class="w">  </span><span class="nt">customer_tier</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;basic&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;premium&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;vip&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;basic&quot;</span>
+
+<span class="w">  </span><span class="nt">resolution_time</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;immediate&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;within_hour&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;within_day&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;within_hour&quot;</span>
+</pre></div>
+</div>
+<p><strong>E-commerce Template</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scenario_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ecommerce_template&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Template</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">e-commerce</span><span class="nv"> </span><span class="s">scenarios&quot;</span>
+
+<span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">product_category</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;electronics&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;clothing&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;books&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;home&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;electronics&quot;</span>
+
+<span class="w">  </span><span class="nt">price_range</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;budget&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;mid_range&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;premium&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mid_range&quot;</span>
+
+<span class="w">  </span><span class="nt">customer_history</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;new&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;returning&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;loyal&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;returning&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="scenario-best-practices">
+<h2>Scenario Best Practices<a class="headerlink" href="#scenario-best-practices" title="Link to this heading"></a></h2>
+<section id="design-principles">
+<h3>Design Principles<a class="headerlink" href="#design-principles" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Clarity</strong>: Make constraint names and descriptions self-explanatory</p></li>
+<li><p><strong>Realism</strong>: Base constraints on real-world parameters</p></li>
+<li><p><strong>Coverage</strong>: Include diverse constraint combinations</p></li>
+<li><p><strong>Scalability</strong>: Design for easy extension and modification</p></li>
+</ol>
+</section>
+<section id="constraint-guidelines">
+<h3>Constraint Guidelines<a class="headerlink" href="#constraint-guidelines" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Use descriptive names: <code class="docutils literal notranslate"><span class="pre">communication_style</span></code> vs <code class="docutils literal notranslate"><span class="pre">style</span></code></p></li>
+<li><p>Provide meaningful defaults that represent common cases</p></li>
+<li><p>Include comprehensive value sets for categorical constraints</p></li>
+<li><p>Set realistic ranges for numerical constraints</p></li>
+<li><p>Add helpful descriptions for all constraints</p></li>
+</ul>
+</section>
+<section id="testing-scenarios">
+<h3>Testing Scenarios<a class="headerlink" href="#testing-scenarios" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuraGenCore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_scenario</span>
+
+<span class="c1"># Validate scenario configuration</span>
+<span class="n">is_valid</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">validate_scenario</span><span class="p">(</span><span class="s2">&quot;my_scenario.yaml&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation errors: </span><span class="si">{</span><span class="n">errors</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Test generation</span>
+<span class="n">core</span> <span class="o">=</span> <span class="n">AuraGenCore</span><span class="p">()</span>
+
+<span class="c1"># Test with different constraint combinations</span>
+<span class="n">test_cases</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;industry&quot;</span><span class="p">:</span> <span class="s2">&quot;healthcare&quot;</span><span class="p">,</span> <span class="s2">&quot;urgency&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;industry&quot;</span><span class="p">:</span> <span class="s2">&quot;finance&quot;</span><span class="p">,</span> <span class="s2">&quot;urgency&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;industry&quot;</span><span class="p">:</span> <span class="s2">&quot;education&quot;</span><span class="p">,</span> <span class="s2">&quot;urgency&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">constraints</span> <span class="ow">in</span> <span class="n">test_cases</span><span class="p">:</span>
+    <span class="n">trajectories</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">generate_trajectories</span><span class="p">(</span>
+        <span class="n">scenario_name</span><span class="o">=</span><span class="s2">&quot;my_scenario&quot;</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
+        <span class="n">num_records</span><span class="o">=</span><span class="mi">3</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trajectories</span><span class="p">)</span><span class="si">}</span><span class="s2"> trajectories for </span><span class="si">{</span><span class="n">constraints</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="performance-considerations">
+<h2>Performance Considerations<a class="headerlink" href="#performance-considerations" title="Link to this heading"></a></h2>
+<section id="optimization-tips">
+<h3>Optimization Tips<a class="headerlink" href="#optimization-tips" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Limit constraint combinations</strong>: Too many constraints can slow generation</p></li>
+<li><p><strong>Use sensible defaults</strong>: Reduces the search space for generation</p></li>
+<li><p><strong>Cache scenario configs</strong>: Load scenarios once and reuse</p></li>
+<li><p><strong>Batch similar constraints</strong>: Group related constraints together</p></li>
+</ul>
+</section>
+<section id="monitoring">
+<h3>Monitoring<a class="headerlink" href="#monitoring" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuraGenCore</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">benchmark_scenario</span><span class="p">(</span><span class="n">scenario_name</span><span class="p">,</span> <span class="n">num_records</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">core</span> <span class="o">=</span> <span class="n">AuraGenCore</span><span class="p">()</span>
+
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">trajectories</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">generate_trajectories</span><span class="p">(</span>
+        <span class="n">scenario_name</span><span class="o">=</span><span class="n">scenario_name</span><span class="p">,</span>
+        <span class="n">num_records</span><span class="o">=</span><span class="n">num_records</span>
+    <span class="p">)</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scenario: </span><span class="si">{</span><span class="n">scenario_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Records: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trajectories</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time: </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rate: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trajectories</span><span class="p">)</span><span class="o">/</span><span class="n">duration</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> records/s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<section id="common-issues">
+<h3>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading"></a></h3>
+<p><strong>Scenario not found</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Error: Scenario &#39;my_scenario&#39; not found
+
+Solution: Check filename and scenario_name match
+</pre></div>
+</div>
+<p><strong>Invalid constraint values</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Error: Value &#39;invalid&#39; not in categorical values
+
+Solution: Use only values defined in the constraint
+</pre></div>
+</div>
+<p><strong>Generation failures</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Error: Failed to generate trajectory
+
+Solution: Check constraint combinations are realistic
+</pre></div>
+</div>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Learn about <a class="reference internal" href="risk_injection.html"><span class="doc">Risk Injection</span></a> to add risks to scenarios</p></li>
+<li><p>Explore <span class="xref std std-doc">advanced/custom_scenarios</span> for advanced techniques</p></li>
+<li><p>Check <a class="reference internal" href="api/core.html"><span class="doc">Core Module</span></a> for programmatic scenario management</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuration.html" class="btn btn-neutral float-left" title="Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="risk_injection.html" class="btn btn-neutral float-right" title="Risk Injection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, AuraGen Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

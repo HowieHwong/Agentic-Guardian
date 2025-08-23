@@ -1,0 +1,83 @@
+AuraGen Documentation
+=====================
+
+Welcome to AuraGen, a sophisticated data generation engine designed to produce diverse, high-quality risky trajectories for Agentic Systems.
+
+.. image:: https://img.shields.io/badge/Python-3.8%2B-blue
+   :alt: Python Version
+   :target: https://python.org
+
+.. image:: https://img.shields.io/badge/License-MIT-green.svg
+   :alt: License
+   :target: https://opensource.org/licenses/MIT
+
+Overview
+--------
+
+AuraGen operates in two distinct stages:
+
+1. **Generate Harmless Trajectories**: Create clean, task-oriented agent action/response traces across many scenarios
+2. **Inject Risk**: Programmatically mutate the harmless trajectories to introduce realistic risks while maintaining coherence and plausibility
+
+Key Features
+------------
+
+- Flexible API Integration (OpenAI, external APIs, custom providers)
+- Dynamic Configuration via YAML (including custom API key types)
+- Comprehensive Risk Injection Framework
+- Scenario-based Design with Constraints
+
+Quick Start
+-----------
+
+.. code-block:: bash
+
+   # Clone the repository
+   git clone <repository-url>
+   cd Agentic-Guardian
+
+   # Install dependencies
+   pip install -r requirements.txt
+
+   # Configure API keys
+   python config/configure_api_keys.py
+
+   # Generate and inject risks
+   python generate_and_inject.py
+
+Table of Contents
+-----------------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: User Guide
+
+   installation
+   quickstart
+   configuration
+   scenarios
+   risk_injection
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Advanced Topics
+
+   advanced/custom_scenarios
+   advanced/api_integration
+   advanced/extending
+   advanced/troubleshooting
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Development
+
+   contributing
+   changelog
+   license
+
+Indices and Tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

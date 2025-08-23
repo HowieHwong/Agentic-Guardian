@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start Guide &mdash; AuraGen 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=035a8b3d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Configuration" href="configuration.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AuraGen
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-configure-api-keys">Step 1: Configure API Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-basic-configuration">Step 2: Basic Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-4-examine-the-results">Step 4: Examine the Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#understanding-the-data-structure">Understanding the Data Structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#harmless-trajectories">Harmless Trajectories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#risk-injected-trajectories">Risk-Injected Trajectories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#common-risk-types">Common Risk Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-issues">Common Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#need-help">Need Help?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scenarios.html">Scenarios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="risk_injection.html">Risk Injection</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AuraGen</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start-guide">
+<h1>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Link to this heading"></a></h1>
+<p>This guide will help you get AuraGen up and running in just a few minutes.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>Before starting, ensure you have:</p>
+<ul class="simple">
+<li><p>Python 3.8+ installed</p></li>
+<li><p>AuraGen installed (see <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a>)</p></li>
+<li><p>At least one API key (OpenAI or DeepInfra recommended)</p></li>
+</ul>
+</section>
+<section id="step-1-configure-api-keys">
+<h2>Step 1: Configure API Keys<a class="headerlink" href="#step-1-configure-api-keys" title="Link to this heading"></a></h2>
+<p>AuraGen supports multiple API providers. Start by configuring at least one:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>config/configure_api_keys.py
+</pre></div>
+</div>
+<p>This interactive tool will guide you through:</p>
+<ol class="arabic simple">
+<li><p><strong>Selecting API Key Type</strong>: Choose from existing types or add custom ones</p></li>
+<li><p><strong>Entering API Key</strong>: Securely input your API key (hidden input)</p></li>
+<li><p><strong>Choosing Storage</strong>: Save to project <code class="docutils literal notranslate"><span class="pre">.env</span></code> file or system environment</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We recommend using the project <code class="docutils literal notranslate"><span class="pre">.env</span></code> file for easy project-specific configuration.</p>
+</div>
+<p>Example session:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>┌────────────────────────────────────────┐
+│              Setup              │
+└────────────────────────────────────────┘
+
+Current API Key Values (masked)
+┏━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┓
+┃ Key Type         ┃ Env Var          ┃ Value            ┃
+┡━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━┩
+│ openai_api_key   │ OPENAI_API_KEY   │ &lt;not set&gt;        │
+│ deepinfra_api_key│ DEEPINFRA_API_KEY│ &lt;not set&gt;        │
+└────────────────────┴──────────────────┴──────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="step-2-basic-configuration">
+<h2>Step 2: Basic Configuration<a class="headerlink" href="#step-2-basic-configuration" title="Link to this heading"></a></h2>
+<p>Configure the generation settings in <code class="docutils literal notranslate"><span class="pre">config/generation.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic configuration</span>
+<span class="nt">generation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span><span class="nt">externalAPI_generation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Use OpenAI (true for external APIs)</span>
+
+<span class="c1"># OpenAI settings</span>
+<span class="nt">openai</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">api_key_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai_api_key&quot;</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-4o&quot;</span>
+<span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">externalAPI_generation</span></code> setting determines which API service to use:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">false</span></code>: Use OpenAI API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">true</span></code>: Use external API (DeepInfra, etc.)</p></li>
+</ul>
+</div>
+</section>
+<section id="step-3-generate-your-first-dataset">
+<h2>Step 3: Generate Your First Dataset<a class="headerlink" href="#step-3-generate-your-first-dataset" title="Link to this heading"></a></h2>
+<p>Run the complete generation and injection pipeline:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>generate_and_inject.py
+</pre></div>
+</div>
+<p>This command will:</p>
+<ol class="arabic simple">
+<li><p><strong>Load Scenarios</strong>: Read all scenarios from <code class="docutils literal notranslate"><span class="pre">config/AgentSafetyBench/</span></code></p></li>
+<li><p><strong>Generate Harmless Trajectories</strong>: Create clean agent interactions</p></li>
+<li><p><strong>Apply Risk Injection</strong>: Introduce realistic risks while maintaining plausibility</p></li>
+<li><p><strong>Save Results</strong>: Output files to <code class="docutils literal notranslate"><span class="pre">generated_records/</span></code></p></li>
+</ol>
+<p>Expected output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>🚀 Starting AuraGen Pipeline...
+
+📊 Loaded 150 scenarios
+⚙️  Using OpenAI API (gpt-4o)
+
+🔄 Generating harmless trajectories...
+✅ Generated 1,500 harmless records
+
+💉 Injecting risks...
+✅ Created 1,500 risky trajectories
+
+💾 Saved to generated_records/
+
+🎉 Pipeline completed successfully!
+</pre></div>
+</div>
+</section>
+<section id="step-4-examine-the-results">
+<h2>Step 4: Examine the Results<a class="headerlink" href="#step-4-examine-the-results" title="Link to this heading"></a></h2>
+<p>The generated files will be saved in the <code class="docutils literal notranslate"><span class="pre">generated_records/</span></code> directory:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>generated_records/
+├── all_scenarios_openai_20241215_143022.json      # Harmless trajectories
+└── all_injected_openai_20241215_143022.json       # Risk-injected trajectories
+</pre></div>
+</div>
+<p>Each record contains:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;scenario_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;email_assistant&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;user_request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Help me write a professional email&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;agent_action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;draft_email&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;agent_response&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;I&#39;ll help you create a professional email...&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1703172602</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;api_model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;risk_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;privacy_breach&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;scenario_metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;industry&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;healthcare&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;urgency_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="understanding-the-data-structure">
+<h2>Understanding the Data Structure<a class="headerlink" href="#understanding-the-data-structure" title="Link to this heading"></a></h2>
+<section id="harmless-trajectories">
+<h3>Harmless Trajectories<a class="headerlink" href="#harmless-trajectories" title="Link to this heading"></a></h3>
+<p>These represent clean, appropriate agent behavior:</p>
+<ul class="simple">
+<li><p><strong>user_request</strong>: The input from the user</p></li>
+<li><p><strong>agent_action</strong>: The action the agent takes</p></li>
+<li><p><strong>agent_response</strong>: The agent’s response to the user</p></li>
+<li><p><strong>metadata</strong>: Contextual information and constraints</p></li>
+</ul>
+</section>
+<section id="risk-injected-trajectories">
+<h3>Risk-Injected Trajectories<a class="headerlink" href="#risk-injected-trajectories" title="Link to this heading"></a></h3>
+<p>These contain introduced risks while maintaining plausibility:</p>
+<ul class="simple">
+<li><p>Same structure as harmless trajectories</p></li>
+<li><p>Additional <code class="docutils literal notranslate"><span class="pre">risk_type</span></code> in metadata</p></li>
+<li><p>Modified <code class="docutils literal notranslate"><span class="pre">agent_action</span></code> or <code class="docutils literal notranslate"><span class="pre">agent_response</span></code> with realistic risks</p></li>
+</ul>
+</section>
+<section id="common-risk-types">
+<h3>Common Risk Types<a class="headerlink" href="#common-risk-types" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">privacy_breach</span></code>: Unauthorized access to personal information</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">misinformation</span></code>: Spreading false or misleading information</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bias_amplification</span></code>: Reinforcing harmful stereotypes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unauthorized_action</span></code>: Actions beyond the agent’s scope</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">availability_disruption</span></code>: Service interruptions or failures</p></li>
+</ul>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<p>Now that you have AuraGen running, explore these advanced features:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a> - Detailed configuration options</p></li>
+<li><p><a class="reference internal" href="scenarios.html"><span class="doc">Scenarios</span></a> - Understanding and customizing scenarios</p></li>
+<li><p><a class="reference internal" href="risk_injection.html"><span class="doc">Risk Injection</span></a> - Advanced risk injection techniques</p></li>
+<li><p><span class="xref std std-doc">advanced/custom_scenarios</span> - Creating your own scenarios</p></li>
+</ul>
+</section>
+<section id="common-issues">
+<h2>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading"></a></h2>
+<p><strong>“Environment variable not set” Error</strong></p>
+<p>Make sure you’ve configured your API keys:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>config/configure_api_keys.py
+</pre></div>
+</div>
+<p><strong>Empty or Failed Generation</strong></p>
+<p>Check your API key validity and internet connection. Also verify the model name in your configuration.</p>
+<p><strong>Permission Errors</strong></p>
+<p>Ensure you have write permissions in the project directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">755</span><span class="w"> </span>/path/to/agentic-guardian
+</pre></div>
+</div>
+</section>
+<section id="need-help">
+<h2>Need Help?<a class="headerlink" href="#need-help" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Check the <span class="xref std std-doc">advanced/troubleshooting</span> guide</p></li>
+<li><p>Review the full <a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a> documentation</p></li>
+<li><p>Visit our <a class="reference external" href="https://github.com/your-org/agentic-guardian">GitHub repository</a> for issues and discussions</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, AuraGen Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

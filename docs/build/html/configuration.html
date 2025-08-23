@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration &mdash; AuraGen 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=035a8b3d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Scenarios" href="scenarios.html" />
+    <link rel="prev" title="Quick Start Guide" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AuraGen
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-files-overview">Configuration Files Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-key-configuration">API Key Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api-key-types-config-api-key-types-yaml">API Key Types (<code class="docutils literal notranslate"><span class="pre">config/api_key_types.yaml</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-custom-api-key-types">Adding Custom API Key Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#generation-configuration">Generation Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#core-settings">Core Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-settings">Output Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-provider-settings">API Provider Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#risk-injection-configuration">Risk Injection Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#injection-settings">Injection Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#risk-categories">Risk Categories</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scenario-configuration">Scenario Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-scenario-structure">Basic Scenario Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced-scenario-options">Advanced Scenario Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment Variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#priority-order">Priority Order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#common-environment-variables">Common Environment Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-env-file">Creating a .env File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-validation">Configuration Validation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api-key-issues">API Key Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#invalid-model-configuration">Invalid Model Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#missing-scenario-files">Missing Scenario Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#security">Security</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performance">Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#organization">Organization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-examples">Configuration Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#development-setup">Development Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#production-setup">Production Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-provider-setup">Multi-Provider Setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting-configuration">Troubleshooting Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scenarios.html">Scenarios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="risk_injection.html">Risk Injection</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AuraGen</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
+<p>AuraGen uses YAML configuration files to manage settings for generation, API keys, risk injection, and scenarios. This section provides comprehensive documentation for all configuration options.</p>
+<section id="configuration-files-overview">
+<h2>Configuration Files Overview<a class="headerlink" href="#configuration-files-overview" title="Link to this heading"></a></h2>
+<p>AuraGen’s configuration is organized into several files:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>config/
+├── api_key_types.yaml          # API key type definitions
+├── generation.yaml             # Generation settings
+├── risk_injection.yaml         # Risk injection configuration
+├── model_pool.yaml             # Model pool definitions
+└── AgentSafetyBench/           # Scenario definitions
+    ├── email_assistant.yaml
+    ├── financial_advisor.yaml
+    └── ...
+</pre></div>
+</div>
+</section>
+<section id="api-key-configuration">
+<h2>API Key Configuration<a class="headerlink" href="#api-key-configuration" title="Link to this heading"></a></h2>
+<section id="api-key-types-config-api-key-types-yaml">
+<h3>API Key Types (<code class="docutils literal notranslate"><span class="pre">config/api_key_types.yaml</span></code>)<a class="headerlink" href="#api-key-types-config-api-key-types-yaml" title="Link to this heading"></a></h3>
+<p>This file defines the mapping between logical API key types and environment variables:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">api_key_types</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">openai_api_key</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">env_var</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OPENAI_API_KEY</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenAI API Key for GPT models</span>
+
+<span class="w">  </span><span class="nt">deepinfra_api_key</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">env_var</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEEPINFRA_API_KEY</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DeepInfra API Key for various open-source models</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-custom-api-key-types">
+<h3>Adding Custom API Key Types<a class="headerlink" href="#adding-custom-api-key-types" title="Link to this heading"></a></h3>
+<p>You can add custom API providers by either:</p>
+<p><strong>Method 1: Using the CLI Tool</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>config/configure_api_keys.py
+<span class="c1"># Select [3] Add custom API key type</span>
+</pre></div>
+</div>
+<p><strong>Method 2: Editing the YAML File</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">api_key_types</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">anthropic_api_key</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">env_var</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ANTHROPIC_API_KEY</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Anthropic Claude API Key</span>
+
+<span class="w">  </span><span class="nt">cohere_api_key</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">env_var</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COHERE_API_KEY</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cohere API Key</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="generation-configuration">
+<h2>Generation Configuration<a class="headerlink" href="#generation-configuration" title="Link to this heading"></a></h2>
+<p>The main generation settings are in <code class="docutils literal notranslate"><span class="pre">config/generation.yaml</span></code>:</p>
+<section id="core-settings">
+<h3>Core Settings<a class="headerlink" href="#core-settings" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">generation</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Number of records to generate per batch</span>
+<span class="w">  </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+
+<span class="w">  </span><span class="c1"># CRITICAL: Determines which API service to use</span>
+<span class="w">  </span><span class="c1"># true: Use externalAPI (DeepInfra, etc.)</span>
+<span class="w">  </span><span class="c1"># false: Use OpenAI API</span>
+<span class="w">  </span><span class="nt">externalAPI_generation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</section>
+<section id="output-settings">
+<h3>Output Settings<a class="headerlink" href="#output-settings" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">output</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Base directory for saved files</span>
+<span class="w">  </span><span class="nt">save_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;save&quot;</span>
+
+<span class="w">  </span><span class="c1"># File naming template (supports variables)</span>
+<span class="w">  </span><span class="nt">record_file_template</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{scenario_name}_{timestamp}_{mode}.{ext}&quot;</span>
+
+<span class="w">  </span><span class="c1"># Output format: &quot;json&quot; or &quot;jsonl&quot;</span>
+<span class="w">  </span><span class="nt">file_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;json&quot;</span>
+</pre></div>
+</div>
+<p>Available template variables:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{scenario_name}</span></code>: Name of the scenario</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{timestamp}</span></code>: Unix timestamp when generated</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{mode}</span></code>: Generation mode (e.g., “openai”, “external”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{ext}</span></code>: File extension based on format</p></li>
+</ul>
+</section>
+<section id="api-provider-settings">
+<h3>API Provider Settings<a class="headerlink" href="#api-provider-settings" title="Link to this heading"></a></h3>
+<p><strong>OpenAI Configuration</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">openai</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># API key resolution method</span>
+<span class="w">  </span><span class="nt">api_key_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai_api_key&quot;</span>
+
+<span class="w">  </span><span class="c1"># Optional: Custom endpoint (leave blank for default)</span>
+<span class="w">  </span><span class="nt">api_base</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://api.openai.com/v1&quot;</span>
+
+<span class="w">  </span><span class="c1"># Model to use</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-4o&quot;</span>
+
+<span class="w">  </span><span class="c1"># Generation parameters</span>
+<span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
+</pre></div>
+</div>
+<p><strong>External API Configuration</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">externalAPI</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># API endpoint</span>
+<span class="w">  </span><span class="nt">api_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://api.deepinfra.com/v1/openai&quot;</span>
+
+<span class="w">  </span><span class="c1"># API key resolution</span>
+<span class="w">  </span><span class="nt">api_key_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;deepinfra_api_key&quot;</span>
+
+<span class="w">  </span><span class="c1"># Model identifier</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Qwen/Qwen2.5-72B-Instruct&quot;</span>
+
+<span class="w">  </span><span class="c1"># Generation parameters</span>
+<span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+</pre></div>
+</div>
+<p><strong>Local Model Configuration</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">local</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># HuggingFace model identifier or local path</span>
+<span class="w">  </span><span class="nt">model_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;llama3.1-8b-instruct&quot;</span>
+
+<span class="w">  </span><span class="c1"># Computation device</span>
+<span class="w">  </span><span class="nt">device</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cuda&quot;</span><span class="w">  </span><span class="c1"># or &quot;cpu&quot;</span>
+
+<span class="w">  </span><span class="c1"># Generation parameters</span>
+<span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.7</span>
+<span class="w">  </span><span class="nt">max_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="risk-injection-configuration">
+<h2>Risk Injection Configuration<a class="headerlink" href="#risk-injection-configuration" title="Link to this heading"></a></h2>
+<p>Risk injection settings are in <code class="docutils literal notranslate"><span class="pre">config/risk_injection.yaml</span></code>:</p>
+<section id="injection-settings">
+<h3>Injection Settings<a class="headerlink" href="#injection-settings" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">injection</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Currently only &quot;openai&quot; mode is supported</span>
+<span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai&quot;</span>
+
+<span class="w">  </span><span class="c1"># Batch size for injection processing</span>
+<span class="w">  </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+</pre></div>
+</div>
+</section>
+<section id="risk-categories">
+<h3>Risk Categories<a class="headerlink" href="#risk-categories" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">risks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">privacy_breach</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span>
+<span class="w">    </span><span class="nt">templates</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Leak</span><span class="nv"> </span><span class="s">personal</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">user</span><span class="nv"> </span><span class="s">data&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access</span><span class="nv"> </span><span class="s">unauthorized</span><span class="nv"> </span><span class="s">user</span><span class="nv"> </span><span class="s">profiles&quot;</span>
+
+<span class="w">  </span><span class="nt">misinformation</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span>
+<span class="w">    </span><span class="nt">templates</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Provide</span><span class="nv"> </span><span class="s">factually</span><span class="nv"> </span><span class="s">incorrect</span><span class="nv"> </span><span class="s">information&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Spread</span><span class="nv"> </span><span class="s">conspiracy</span><span class="nv"> </span><span class="s">theories&quot;</span>
+
+<span class="w">  </span><span class="nt">bias_amplification</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span>
+<span class="w">    </span><span class="nt">templates</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Reinforce</span><span class="nv"> </span><span class="s">harmful</span><span class="nv"> </span><span class="s">stereotypes&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Show</span><span class="nv"> </span><span class="s">prejudice</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">decision</span><span class="nv"> </span><span class="s">making&quot;</span>
+</pre></div>
+</div>
+<p>Risk weights determine the probability of each risk type being selected during injection.</p>
+</section>
+</section>
+<section id="scenario-configuration">
+<h2>Scenario Configuration<a class="headerlink" href="#scenario-configuration" title="Link to this heading"></a></h2>
+<p>Individual scenarios are configured in <code class="docutils literal notranslate"><span class="pre">config/AgentSafetyBench/</span></code> as separate YAML files.</p>
+<section id="basic-scenario-structure">
+<h3>Basic Scenario Structure<a class="headerlink" href="#basic-scenario-structure" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scenario_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;email_assistant&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An</span><span class="nv"> </span><span class="s">AI</span><span class="nv"> </span><span class="s">assistant</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">helps</span><span class="nv"> </span><span class="s">users</span><span class="nv"> </span><span class="s">write</span><span class="nv"> </span><span class="s">emails&quot;</span>
+
+<span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">industry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;healthcare&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;finance&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;education&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;technology&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;technology&quot;</span>
+
+<span class="w">  </span><span class="nt">urgency_level</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;low&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;medium&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;high&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;medium&quot;</span>
+
+<span class="w">  </span><span class="nt">tone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;categorical&quot;</span>
+<span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;formal&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;casual&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;friendly&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;formal&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-scenario-options">
+<h3>Advanced Scenario Options<a class="headerlink" href="#advanced-scenario-options" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scenario_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;advanced_scenario&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A</span><span class="nv"> </span><span class="s">complex</span><span class="nv"> </span><span class="s">scenario</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">multiple</span><span class="nv"> </span><span class="s">constraints&quot;</span>
+
+<span class="nt">constraints</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Numerical constraint</span>
+<span class="w">  </span><span class="nt">budget</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;numerical&quot;</span>
+<span class="w">    </span><span class="nt">min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">    </span><span class="nt">max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50000</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>
+
+<span class="w">  </span><span class="c1"># Boolean constraint</span>
+<span class="w">  </span><span class="nt">requires_approval</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;boolean&quot;</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="w">  </span><span class="c1"># Text constraint</span>
+<span class="w">  </span><span class="nt">department</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text&quot;</span>
+<span class="w">    </span><span class="nt">max_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;General&quot;</span>
+
+<span class="c1"># Generation-specific settings</span>
+<span class="nt">generation_params</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span>
+<span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1500</span>
+
+<span class="c1"># Risk injection preferences</span>
+<span class="nt">risk_preferences</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">exclude_risks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;availability_disruption&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">prefer_risks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;privacy_breach&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;bias_amplification&quot;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="environment-variables">
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading"></a></h2>
+<p>AuraGen reads configuration from environment variables and <code class="docutils literal notranslate"><span class="pre">.env</span></code> files:</p>
+<section id="priority-order">
+<h3>Priority Order<a class="headerlink" href="#priority-order" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Environment variables</strong> (highest priority)</p></li>
+<li><p><strong>Project .env file</strong> (<code class="docutils literal notranslate"><span class="pre">/path/to/agentic-guardian/.env</span></code>)</p></li>
+<li><p><strong>Default values</strong> in configuration files</p></li>
+</ol>
+</section>
+<section id="common-environment-variables">
+<h3>Common Environment Variables<a class="headerlink" href="#common-environment-variables" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># API Keys</span>
+<span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-...
+<span class="nv">DEEPINFRA_API_KEY</span><span class="o">=</span>...
+<span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>...
+
+<span class="c1"># Optional: Override default configurations</span>
+<span class="nv">AURASEN_CONFIG_DIR</span><span class="o">=</span>/custom/config/path
+<span class="nv">AURASEN_OUTPUT_DIR</span><span class="o">=</span>/custom/output/path
+</pre></div>
+</div>
+</section>
+<section id="creating-a-env-file">
+<h3>Creating a .env File<a class="headerlink" href="#creating-a-env-file" title="Link to this heading"></a></h3>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">.env</span></code> file in the project root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># AuraGen Environment Configuration</span>
+<span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-your-openai-key-here
+<span class="nv">DEEPINFRA_API_KEY</span><span class="o">=</span>your-deepinfra-key-here
+
+<span class="c1"># Optional: Custom paths</span>
+<span class="c1"># AURASEN_CONFIG_DIR=/path/to/custom/config</span>
+<span class="c1"># AURASEN_OUTPUT_DIR=/path/to/custom/output</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="configuration-validation">
+<h2>Configuration Validation<a class="headerlink" href="#configuration-validation" title="Link to this heading"></a></h2>
+<p>AuraGen automatically validates configuration files on startup. Common validation errors:</p>
+<section id="api-key-issues">
+<h3>API Key Issues<a class="headerlink" href="#api-key-issues" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>❌ Environment variable &#39;OPENAI_API_KEY&#39; not set for api_key_type &#39;openai_api_key&#39;
+
+Solution: Run python config/configure_api_keys.py
+</pre></div>
+</div>
+</section>
+<section id="invalid-model-configuration">
+<h3>Invalid Model Configuration<a class="headerlink" href="#invalid-model-configuration" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>❌ Unknown model &#39;gpt-5&#39; for OpenAI provider
+
+Solution: Check available models in the provider documentation
+</pre></div>
+</div>
+</section>
+<section id="missing-scenario-files">
+<h3>Missing Scenario Files<a class="headerlink" href="#missing-scenario-files" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>❌ Scenario file not found: config/AgentSafetyBench/missing_scenario.yaml
+
+Solution: Ensure all referenced scenarios exist
+</pre></div>
+</div>
+</section>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
+<section id="security">
+<h3>Security<a class="headerlink" href="#security" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Store API keys in environment variables or <code class="docutils literal notranslate"><span class="pre">.env</span></code> files, never in YAML</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">api_key_type</span></code> pattern for secure key resolution</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">.env</span></code> to your <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file</p></li>
+</ul>
+</section>
+<section id="performance">
+<h3>Performance<a class="headerlink" href="#performance" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Adjust <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> based on your API rate limits</p></li>
+<li><p>Use appropriate <code class="docutils literal notranslate"><span class="pre">temperature</span></code> values (higher for creativity, lower for consistency)</p></li>
+<li><p>Consider local models for high-volume generation</p></li>
+</ul>
+</section>
+<section id="organization">
+<h3>Organization<a class="headerlink" href="#organization" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Keep scenario files organized by domain or use case</p></li>
+<li><p>Use descriptive names for custom API key types</p></li>
+<li><p>Document custom configurations with comments</p></li>
+</ul>
+</section>
+</section>
+<section id="configuration-examples">
+<h2>Configuration Examples<a class="headerlink" href="#configuration-examples" title="Link to this heading"></a></h2>
+<section id="development-setup">
+<h3>Development Setup<a class="headerlink" href="#development-setup" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># config/generation.yaml - Development</span>
+<span class="nt">generation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">  </span><span class="c1"># Smaller batches for testing</span>
+<span class="w">  </span><span class="nt">externalAPI_generation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="nt">openai</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">api_key_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai_api_key&quot;</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-3.5-turbo&quot;</span><span class="w">  </span><span class="c1"># Cheaper model for development</span>
+<span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.7</span>
+<span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1024</span>
+</pre></div>
+</div>
+</section>
+<section id="production-setup">
+<h3>Production Setup<a class="headerlink" href="#production-setup" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># config/generation.yaml - Production</span>
+<span class="nt">generation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span><span class="w">  </span><span class="c1"># Larger batches for efficiency</span>
+<span class="w">  </span><span class="nt">externalAPI_generation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="nt">openai</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">api_key_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai_api_key&quot;</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-4o&quot;</span><span class="w">  </span><span class="c1"># Best model for production</span>
+<span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
+</pre></div>
+</div>
+</section>
+<section id="multi-provider-setup">
+<h3>Multi-Provider Setup<a class="headerlink" href="#multi-provider-setup" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use different providers for different purposes</span>
+<span class="nt">generation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">  </span><span class="nt">externalAPI_generation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Use external for cost efficiency</span>
+
+<span class="nt">externalAPI</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">api_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://api.deepinfra.com/v1/openai&quot;</span>
+<span class="w">  </span><span class="nt">api_key_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;deepinfra_api_key&quot;</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Qwen/Qwen2.5-72B-Instruct&quot;</span>
+<span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting-configuration">
+<h2>Troubleshooting Configuration<a class="headerlink" href="#troubleshooting-configuration" title="Link to this heading"></a></h2>
+<p>For configuration issues, see the <span class="xref std std-doc">advanced/troubleshooting</span> guide or check the logs for detailed error messages.</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Learn about <a class="reference internal" href="scenarios.html"><span class="doc">Scenarios</span></a> and how to customize them</p></li>
+<li><p>Explore <a class="reference internal" href="risk_injection.html"><span class="doc">Risk Injection</span></a> techniques</p></li>
+<li><p>Read about <span class="xref std std-doc">advanced/api_integration</span> for custom providers</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick Start Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scenarios.html" class="btn btn-neutral float-right" title="Scenarios" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, AuraGen Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

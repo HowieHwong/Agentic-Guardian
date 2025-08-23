@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuraGen.core &mdash; AuraGen 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=035a8b3d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            AuraGen
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scenarios.html">Scenarios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../risk_injection.html">Risk Injection</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AuraGen</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">AuraGen.core</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for AuraGen.core</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Core module containing global configuration and constants for the Guardian engine.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+
+
+<div class="viewcode-block" id="OutputFormat">
+<a class="viewcode-back" href="../../api/core.html#AuraGen.core.OutputFormat">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OutputFormat</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Supported output formats for generated data.&quot;&quot;&quot;</span>
+    <span class="n">JSON</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span>
+    <span class="n">JSONL</span> <span class="o">=</span> <span class="s2">&quot;jsonl&quot;</span>
+    <span class="n">CSV</span> <span class="o">=</span> <span class="s2">&quot;csv&quot;</span>
+    <span class="n">PARQUET</span> <span class="o">=</span> <span class="s2">&quot;parquet&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Language">
+<a class="viewcode-back" href="../../api/core.html#AuraGen.core.Language">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Language</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Supported languages for data generation.&quot;&quot;&quot;</span>
+    <span class="n">ENGLISH</span> <span class="o">=</span> <span class="s2">&quot;en&quot;</span>
+    <span class="n">CHINESE</span> <span class="o">=</span> <span class="s2">&quot;zh&quot;</span>
+    <span class="n">SPANISH</span> <span class="o">=</span> <span class="s2">&quot;es&quot;</span>
+    <span class="n">FRENCH</span> <span class="o">=</span> <span class="s2">&quot;fr&quot;</span>
+    <span class="n">GERMAN</span> <span class="o">=</span> <span class="s2">&quot;de&quot;</span>
+    <span class="n">JAPANESE</span> <span class="o">=</span> <span class="s2">&quot;ja&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="RiskSeverity">
+<a class="viewcode-back" href="../../api/core.html#AuraGen.core.RiskSeverity">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RiskSeverity</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Risk severity levels.&quot;&quot;&quot;</span>
+    <span class="n">LOW</span> <span class="o">=</span> <span class="s2">&quot;low&quot;</span>
+    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="s2">&quot;medium&quot;</span>
+    <span class="n">HIGH</span> <span class="o">=</span> <span class="s2">&quot;high&quot;</span>
+    <span class="n">CRITICAL</span> <span class="o">=</span> <span class="s2">&quot;critical&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="GlobalConfig">
+<a class="viewcode-back" href="../../api/core.html#AuraGen.core.GlobalConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GlobalConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Global configuration constants for the Guardian engine.</span>
+<span class="sd">    These are hardcoded in the source code and not read from configuration files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Engine metadata</span>
+    <span class="n">ENGINE_VERSION</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;0.1.0&quot;</span>
+    <span class="n">ENGINE_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Guardian&quot;</span>
+    
+    <span class="c1"># Default settings</span>
+    <span class="n">DEFAULT_LANGUAGE</span><span class="p">:</span> <span class="n">Language</span> <span class="o">=</span> <span class="n">Language</span><span class="o">.</span><span class="n">ENGLISH</span>
+    <span class="n">DEFAULT_OUTPUT_FORMAT</span><span class="p">:</span> <span class="n">OutputFormat</span> <span class="o">=</span> <span class="n">OutputFormat</span><span class="o">.</span><span class="n">JSONL</span>
+    <span class="n">DEFAULT_BATCH_SIZE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">DEFAULT_MAX_RETRIES</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+    
+    <span class="c1"># Supported configurations</span>
+    <span class="n">SUPPORTED_OUTPUT_FORMATS</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">OutputFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">OutputFormat</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span>
+        <span class="n">OutputFormat</span><span class="o">.</span><span class="n">JSONL</span><span class="p">,</span>
+        <span class="n">OutputFormat</span><span class="o">.</span><span class="n">CSV</span><span class="p">,</span>
+        <span class="n">OutputFormat</span><span class="o">.</span><span class="n">PARQUET</span>
+    <span class="p">])</span>
+    
+    <span class="n">SUPPORTED_LANGUAGES</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Language</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Language</span><span class="o">.</span><span class="n">ENGLISH</span><span class="p">,</span>
+        <span class="n">Language</span><span class="o">.</span><span class="n">CHINESE</span><span class="p">,</span>
+        <span class="n">Language</span><span class="o">.</span><span class="n">SPANISH</span><span class="p">,</span>
+        <span class="n">Language</span><span class="o">.</span><span class="n">FRENCH</span><span class="p">,</span>
+        <span class="n">Language</span><span class="o">.</span><span class="n">GERMAN</span><span class="p">,</span>
+        <span class="n">Language</span><span class="o">.</span><span class="n">JAPANESE</span>
+    <span class="p">])</span>
+    
+    <span class="n">SUPPORTED_RISK_SEVERITIES</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RiskSeverity</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">RiskSeverity</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
+        <span class="n">RiskSeverity</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">,</span>
+        <span class="n">RiskSeverity</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span>
+        <span class="n">RiskSeverity</span><span class="o">.</span><span class="n">CRITICAL</span>
+    <span class="p">])</span>
+    
+    <span class="c1"># Quality thresholds</span>
+    <span class="n">MIN_QUALITY_SCORE</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.7</span>
+    <span class="n">MAX_HALLUCINATION_PROBABILITY</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span>
+    
+    <span class="c1"># Generation limits</span>
+    <span class="n">MAX_SCENARIO_DEPTH</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">MAX_RISK_COMBINATIONS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+    
+<div class="viewcode-block" id="GlobalConfig.get_supported_formats">
+<a class="viewcode-back" href="../../api/core.html#AuraGen.core.GlobalConfig.get_supported_formats">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_supported_formats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of supported output formats as strings.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">fmt</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">SUPPORTED_OUTPUT_FORMATS</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="GlobalConfig.get_supported_languages">
+<a class="viewcode-back" href="../../api/core.html#AuraGen.core.GlobalConfig.get_supported_languages">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of supported languages as strings.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">lang</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">SUPPORTED_LANGUAGES</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="GlobalConfig.validate_output_format">
+<a class="viewcode-back" href="../../api/core.html#AuraGen.core.GlobalConfig.validate_output_format">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_output_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate if the given format is supported.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">format_str</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_supported_formats</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="GlobalConfig.validate_language">
+<a class="viewcode-back" href="../../api/core.html#AuraGen.core.GlobalConfig.validate_language">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_language</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate if the given language is supported.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">lang_str</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_supported_languages</span><span class="p">()</span></div>
+</div>
+
+
+
+<span class="c1"># Global instance</span>
+<span class="n">GLOBAL_CONFIG</span> <span class="o">=</span> <span class="n">GlobalConfig</span><span class="p">()</span> 
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, AuraGen Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

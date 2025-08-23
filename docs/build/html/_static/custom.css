@@ -1,0 +1,181 @@
+/* AuraGen Documentation Custom Styles */
+
+/* Improve code block readability */
+.highlight {
+    border-radius: 8px;
+    margin: 1em 0;
+}
+
+.highlight pre {
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Style for admonitions */
+.admonition {
+    border-radius: 8px;
+    margin: 1em 0;
+    padding: 12px;
+}
+
+.admonition.note {
+    border-left: 4px solid #3498db;
+    background-color: #f8f9fa;
+}
+
+.admonition.warning {
+    border-left: 4px solid #f39c12;
+    background-color: #fef9e7;
+}
+
+.admonition.important {
+    border-left: 4px solid #e74c3c;
+    background-color: #fdf2f2;
+}
+
+/* Improve table styling */
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+    white-space: normal;
+    padding: 12px 8px;
+}
+
+/* Custom styling for API documentation */
+.py.class > dt {
+    background-color: #f8f9fa;
+    border-left: 4px solid #2980b9;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.py.method > dt {
+    background-color: #f5f5f5;
+    border-left: 3px solid #27ae60;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+.py.function > dt {
+    background-color: #f0f8ff;
+    border-left: 3px solid #8e44ad;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+/* Improve navigation */
+.wy-nav-side {
+    width: 320px;
+}
+
+.wy-nav-content-wrap {
+    margin-left: 320px;
+}
+
+/* Custom colors for AuraGen branding */
+.wy-nav-top {
+    background: linear-gradient(45deg, #2980b9, #3498db);
+}
+
+/* Improve code inline styling */
+code.literal {
+    background-color: #f8f9fa;
+    color: #e83e8c;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 85%;
+    border: 1px solid #e9ecef;
+}
+
+/* Style for configuration examples */
+.highlight-yaml .highlight {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.highlight-bash .highlight {
+    background-color: #2d3748;
+    border: 1px solid #4a5568;
+}
+
+.highlight-bash .highlight pre {
+    color: #f7fafc;
+}
+
+/* Improve section headers */
+h1 {
+    color: #2c3e50;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 10px;
+}
+
+h2 {
+    color: #34495e;
+    border-bottom: 2px solid #95a5a6;
+    padding-bottom: 8px;
+}
+
+h3 {
+    color: #34495e;
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 5px;
+}
+
+/* Style for version badges and labels */
+.version-badge {
+    background-color: #28a745;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.deprecated-badge {
+    background-color: #dc3545;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Improve TOC tree styling */
+.wy-menu-vertical a {
+    padding: 8px 16px;
+    line-height: 1.4;
+}
+
+.wy-menu-vertical .current > a {
+    background-color: #e8f4fd;
+    border-right: 3px solid #2980b9;
+}
+
+/* Custom footer styling */
+.rst-footer-buttons {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e1e4e5;
+}
+
+/* Responsive improvements */
+@media screen and (max-width: 768px) {
+    .wy-nav-side {
+        width: 300px;
+    }
+    
+    .wy-nav-content-wrap {
+        margin-left: 300px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .wy-nav-side, .wy-nav-top, .rst-footer-buttons {
+        display: none;
+    }
+    
+    .wy-nav-content-wrap {
+        margin-left: 0;
+    }
+}

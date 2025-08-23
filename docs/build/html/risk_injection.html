@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Risk Injection &mdash; AuraGen 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=035a8b3d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Scenarios" href="scenarios.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AuraGen
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scenarios.html">Scenarios</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Risk Injection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-source">Configuration Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#risk-categories-from-config-risk-injection-yaml">Risk Categories (from config/risk_injection.yaml)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sensitive-data-privacy-violations">Sensitive Data Privacy Violations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#property-financial-loss">Property / Financial Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#misinformation-unsafe-content">Misinformation / Unsafe Content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compromised-availability">Compromised Availability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unintended-unauthorized-actions">Unintended / Unauthorized Actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#external-adversarial-attack">External Adversarial Attack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bias-discrimination">Bias / Discrimination</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lack-of-accountability-traceability">Lack of Accountability / Traceability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#injection-modes">Injection Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manual-vs-automatic-target-selection">Manual vs. Automatic Target Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#outputs">Outputs</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AuraGen</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Risk Injection</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/risk_injection.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="risk-injection">
+<h1>Risk Injection<a class="headerlink" href="#risk-injection" title="Link to this heading"></a></h1>
+<p>Risk injection transforms harmless AI trajectories into risky ones while preserving plausibility and coherence. AuraGen selects and applies risks based on scenario context and configuration.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The risk injection system:</p>
+<ol class="arabic simple">
+<li><p>Analyzes harmless trajectories and scenario constraints</p></li>
+<li><p>Selects a configured risk type and injection mode</p></li>
+<li><p>Produces realistic risky variants while maintaining metadata</p></li>
+</ol>
+</section>
+<section id="configuration-source">
+<h2>Configuration Source<a class="headerlink" href="#configuration-source" title="Link to this heading"></a></h2>
+<p>All risk categories and prompts are defined in <cite>config/risk_injection.yaml</cite>. Update that file to change behavior.</p>
+</section>
+<section id="risk-categories-from-config-risk-injection-yaml">
+<h2>Risk Categories (from config/risk_injection.yaml)<a class="headerlink" href="#risk-categories-from-config-risk-injection-yaml" title="Link to this heading"></a></h2>
+<section id="sensitive-data-privacy-violations">
+<h3>Sensitive Data Privacy Violations<a class="headerlink" href="#sensitive-data-privacy-violations" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">sensitive_data_privacy_violations</span></code></p></li>
+<li><p>Target: <code class="docutils literal notranslate"><span class="pre">agent_action</span></code></p></li>
+<li><p>Description: Unauthorized collection, use, disclosure, or leakage of sensitive, confidential, or personal information.</p></li>
+<li><p>Injection modes: <code class="docutils literal notranslate"><span class="pre">single_action</span></code>, <code class="docutils literal notranslate"><span class="pre">multiple_actions</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_with_response</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_only</span></code></p></li>
+</ul>
+</section>
+<section id="property-financial-loss">
+<h3>Property / Financial Loss<a class="headerlink" href="#property-financial-loss" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">property_financial_loss</span></code></p></li>
+<li><p>Target: <code class="docutils literal notranslate"><span class="pre">agent_action</span></code></p></li>
+<li><p>Description: Actions that directly or indirectly cause financial loss or damage to assets.</p></li>
+<li><p>Injection modes: <code class="docutils literal notranslate"><span class="pre">single_action</span></code>, <code class="docutils literal notranslate"><span class="pre">multiple_actions</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_with_response</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_only</span></code></p></li>
+</ul>
+</section>
+<section id="misinformation-unsafe-content">
+<h3>Misinformation / Unsafe Content<a class="headerlink" href="#misinformation-unsafe-content" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">misinformation_unsafe_content</span></code></p></li>
+<li><p>Target: <code class="docutils literal notranslate"><span class="pre">agent_action</span></code></p></li>
+<li><p>Description: Generation or dissemination of false, misleading, harmful, or unsafe information.</p></li>
+<li><p>Injection modes: <code class="docutils literal notranslate"><span class="pre">single_action</span></code>, <code class="docutils literal notranslate"><span class="pre">multiple_actions</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_with_response</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_only</span></code></p></li>
+</ul>
+</section>
+<section id="compromised-availability">
+<h3>Compromised Availability<a class="headerlink" href="#compromised-availability" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">compromised_availability</span></code></p></li>
+<li><p>Target: <code class="docutils literal notranslate"><span class="pre">agent_action</span></code></p></li>
+<li><p>Description: Disruption or degradation of service availability, including resource exhaustion or denial of service.</p></li>
+<li><p>Injection modes: <code class="docutils literal notranslate"><span class="pre">single_action</span></code>, <code class="docutils literal notranslate"><span class="pre">multiple_actions</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_with_response</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_only</span></code></p></li>
+</ul>
+</section>
+<section id="unintended-unauthorized-actions">
+<h3>Unintended / Unauthorized Actions<a class="headerlink" href="#unintended-unauthorized-actions" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">unintended_unauthorized_actions</span></code></p></li>
+<li><p>Target: <code class="docutils literal notranslate"><span class="pre">agent_action</span></code></p></li>
+<li><p>Description: Actions beyond user intent or permissions (e.g., privilege escalation, unauthorized automation).</p></li>
+<li><p>Injection modes: <code class="docutils literal notranslate"><span class="pre">single_action</span></code>, <code class="docutils literal notranslate"><span class="pre">multiple_actions</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_with_response</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_only</span></code></p></li>
+</ul>
+</section>
+<section id="external-adversarial-attack">
+<h3>External Adversarial Attack<a class="headerlink" href="#external-adversarial-attack" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">external_adversarial_attack</span></code></p></li>
+<li><p>Target: <code class="docutils literal notranslate"><span class="pre">agent_action</span></code></p></li>
+<li><p>Description: Susceptibility to prompt injection, jailbreaks, adversarial inputs, and other malicious manipulation.</p></li>
+<li><p>Injection modes: <code class="docutils literal notranslate"><span class="pre">single_action</span></code>, <code class="docutils literal notranslate"><span class="pre">multiple_actions</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_with_response</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_only</span></code></p></li>
+</ul>
+</section>
+<section id="bias-discrimination">
+<h3>Bias / Discrimination<a class="headerlink" href="#bias-discrimination" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">bias_discrimination</span></code></p></li>
+<li><p>Target: <code class="docutils literal notranslate"><span class="pre">agent_action</span></code></p></li>
+<li><p>Description: Outputs or decisions reflecting unfair bias, discrimination, or lack of fairness.</p></li>
+<li><p>Injection modes: <code class="docutils literal notranslate"><span class="pre">single_action</span></code>, <code class="docutils literal notranslate"><span class="pre">multiple_actions</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_with_response</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_only</span></code></p></li>
+</ul>
+</section>
+<section id="lack-of-accountability-traceability">
+<h3>Lack of Accountability / Traceability<a class="headerlink" href="#lack-of-accountability-traceability" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">lack_accountability_traceability</span></code></p></li>
+<li><p>Target: <code class="docutils literal notranslate"><span class="pre">agent_action</span></code></p></li>
+<li><p>Description: Insufficient logging or explainability that impairs auditing or responsibility assignment.</p></li>
+<li><p>Injection modes: <code class="docutils literal notranslate"><span class="pre">single_action</span></code>, <code class="docutils literal notranslate"><span class="pre">multiple_actions</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_with_response</span></code>, <code class="docutils literal notranslate"><span class="pre">action_chain_only</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="injection-modes">
+<h2>Injection Modes<a class="headerlink" href="#injection-modes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">single_action</span></code>: Modify a single step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">multiple_actions</span></code>: Modify multiple selected steps</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">action_chain_with_response</span></code>: Modify a chain of actions and the response</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">action_chain_only</span></code>: Modify the chain without changing the response</p></li>
+</ul>
+</section>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.injection</span><span class="w"> </span><span class="kn">import</span> <span class="n">RiskInjector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trajectory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">AuraGen.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_yaml</span>
+
+<span class="c1"># Load configuration from YAML</span>
+<span class="n">injector</span> <span class="o">=</span> <span class="n">RiskInjector</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s2">&quot;config/risk_injection.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example harmless trajectory</span>
+<span class="n">harmless</span> <span class="o">=</span> <span class="n">Trajectory</span><span class="p">(</span>
+    <span class="n">scenario_name</span><span class="o">=</span><span class="s2">&quot;email_assistant&quot;</span><span class="p">,</span>
+    <span class="n">user_request</span><span class="o">=</span><span class="s2">&quot;Draft an email to confirm tomorrow&#39;s meeting.&quot;</span><span class="p">,</span>
+    <span class="n">agent_action</span><span class="o">=</span><span class="s2">&quot;compose_email&quot;</span><span class="p">,</span>
+    <span class="n">agent_response</span><span class="o">=</span><span class="s2">&quot;Sure, I&#39;ll draft a professional confirmation email.&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Inject risk</span>
+<span class="n">risky</span> <span class="o">=</span> <span class="n">injector</span><span class="o">.</span><span class="n">inject_risk</span><span class="p">(</span><span class="n">harmless</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">risky</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;risk_type&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="manual-vs-automatic-target-selection">
+<h2>Manual vs. Automatic Target Selection<a class="headerlink" href="#manual-vs-automatic-target-selection" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Automatic: Set <code class="docutils literal notranslate"><span class="pre">injection.auto_select_targets:</span> <span class="pre">true</span></code> (default)</p></li>
+<li><p>Manual: Use entries in <code class="docutils literal notranslate"><span class="pre">injection_configs</span></code> with indices like <code class="docutils literal notranslate"><span class="pre">target_indices</span></code> or <code class="docutils literal notranslate"><span class="pre">chain_start_index</span></code></p></li>
+</ul>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Preserves original structure (request, action, response)</p></li>
+<li><p>Adds risk metadata (e.g., <code class="docutils literal notranslate"><span class="pre">risk_type</span></code>, <code class="docutils literal notranslate"><span class="pre">injection_mode</span></code>)</p></li>
+<li><p>Saved format controlled by <code class="docutils literal notranslate"><span class="pre">output.file_format</span></code> in <code class="docutils literal notranslate"><span class="pre">config/risk_injection.yaml</span></code></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scenarios.html" class="btn btn-neutral float-left" title="Scenarios" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, AuraGen Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
