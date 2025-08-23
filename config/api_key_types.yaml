@@ -1,0 +1,26 @@
+# API Key Types Configuration
+# This file defines the mapping between logical API key types and environment variable names
+# 
+# Format:
+#   api_key_type: 
+#     env_var: ENVIRONMENT_VARIABLE_NAME
+#     description: Human-readable description
+
+api_key_types:
+  openai_api_key:
+    env_var: OPENAI_API_KEY
+    description: OpenAI API Key for GPT models
+    
+  deepinfra_api_key:
+    env_var: DEEPINFRA_API_KEY  
+    description: DeepInfra API Key for various open-source models
+
+# Add your custom API key types here:
+# 
+# custom_provider_api_key:
+#   env_var: CUSTOM_PROVIDER_API_KEY
+#   description: Custom provider API key description
+#
+# another_api_key:
+#   env_var: ANOTHER_API_KEY
+#   description: Another API service key

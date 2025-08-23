@@ -20,7 +20,6 @@ from AuraGen.models import Scenario, ScenarioContext, Tool, Environment, Environ
 from loguru import logger
 import copy
 import requests
-# 导入新的inference模块
 from AuraGen.inference import InferenceManager, OpenAIConfig, externalAPIConfig
 import os
 
@@ -276,12 +275,9 @@ Original value: {value}
 New value:"""
 
         try:
-            # 检查是否是InferenceManager实例
             if hasattr(llm_client, 'generate_text'):
-                # 使用InferenceManager的generate_text方法
                 new_value = llm_client.generate_text(prompt=prompt, temperature=0.7)
             else:
-                # 使用旧的方式（兼容性）
                 completion = llm_client.chat.completions.create(
                 model=llm_client.model,
                 messages=[{"role": "system", "content": prompt}],
@@ -347,12 +343,9 @@ Original examples:
 New examples:"""
 
         try:
-            # 检查是否是InferenceManager实例
             if hasattr(llm_client, 'generate_text'):
-                # 使用InferenceManager的generate_text方法
                 content = llm_client.generate_text(prompt=prompt, temperature=0.7)
             else:
-                # 使用旧的方式（兼容性）
                 completion = llm_client.chat.completions.create(
                 model=llm_client.model,
                 messages=[{"role": "system", "content": prompt}],
@@ -620,7 +613,6 @@ class OpenAIHarmlessDataGenerator(HarmlessDataGeneratorBase):
         self.externalAPI_config = externalAPI_config
         self.use_internal_inference = use_internal_inference
         
-        # 创建InferenceManager实例
         self.inference_manager = InferenceManager(
             use_internal_inference=use_internal_inference,
             openai_config=openai_config,
@@ -825,7 +817,6 @@ Agent Response: I've compiled the quarterly financial report with all confidenti
         while retry_count < max_retries:
             try:
                 # print(prompt)
-                # 使用inference_manager统一处理推理请求
                 content = self.inference_manager.generate_text(
                     prompt=prompt,
                     system_message="You are an AI agent assistant that responds to user requests."
@@ -872,7 +863,6 @@ Agent Response: I've compiled the quarterly financial report with all confidenti
         }
                 )
                 
-                # 如果有约束条件，添加到scenario_metadata中
                 if metadata_values:
                     for constraint in metadata_values:
                         if "attribute" in constraint and "value" in constraint:
@@ -883,9 +873,8 @@ Agent Response: I've compiled the quarterly financial report with all confidenti
             except Exception as e:
                 retry_count += 1
                 logger.warning(f"Error generating record, retrying ({retry_count}/{max_retries}): {e}")
-                time.sleep(1)  # Short delay before retry
+                time.sleep(1)
         
-        # If all retries failed, raise the last exception
         raise RuntimeError(f"Failed to generate record after {max_retries} attempts")
 
     def generate_batch_concurrent(self, scenario: Scenario, n: int = 10, max_workers: int = 5, diversity_range: Tuple[float, float] = (0.3, 0.8)) -> List[AgentActionRecord]:
@@ -906,7 +895,6 @@ Agent Response: I've compiled the quarterly financial report with all confidenti
         # Create tasks with varying diversity levels
         tasks = []
         for _ in range(n):
-            # Generate a random diversity level within the specified range
             diversity_level = min_diversity + random.random() * (max_diversity - min_diversity)
             tasks.append((scenario, diversity_level))
         
@@ -941,7 +929,6 @@ Agent Response: I've compiled the quarterly financial report with all confidenti
             if not line:
                 continue
             
-            # Check if we're entering or leaving a code block
             if any(line.startswith(marker) for marker in code_block_markers[:2]) or line == "```" or line == "'''":
                 inside_code_block = not inside_code_block
                 continue
@@ -1051,13 +1038,11 @@ class LocalHarmlessDataGenerator(HarmlessDataGeneratorBase):
         # Get constraints and their details
         prompt_constraint, applied_constraints = self._get_metadata_constraint(diverse_scenario)
         
-        # 创建一个包含选择的属性的metadata字典
         selected_metadata = {
             "selection_way": diverse_scenario.metadata.get("selection_way") if diverse_scenario.metadata else None,
             "selection_num": diverse_scenario.metadata.get("selection_num") if diverse_scenario.metadata else None,
         }
         
-        # 将选择的属性添加到metadata中
         for constraint in applied_constraints:
             selected_metadata[constraint["attribute"]] = constraint["value"]
             
@@ -1066,8 +1051,7 @@ class LocalHarmlessDataGenerator(HarmlessDataGeneratorBase):
         
         # Parse the output into fields
         user_request, agent_action, agent_response = self._parse_output(output)
-        
-        # 创建metadata
+                    
         metadata = {
             "timestamp": int(time.time()),
             "constraints": applied_constraints,
@@ -1083,7 +1067,7 @@ class LocalHarmlessDataGenerator(HarmlessDataGeneratorBase):
             }
         }
         
-        # 这里我们额外确保一下selected_metadata中包含了约束条件中的所有属性
+
         if applied_constraints:
             scenario_metadata = metadata.get("scenario_metadata", {})
             for constraint in applied_constraints:
@@ -1293,10 +1277,10 @@ class OutputConfig(BaseModel):
 
 class LocalConfig(BaseModel):
     """Configuration for local HuggingFace model generation."""
-    model_name: str = "gpt2"
-    device: str = "cpu"
+    model_name: str = "llama3.1-8b-instruct"
+    device: str = "cuda"
     temperature: float = 0.7
-    max_length: int = 256
+    max_length: int = 1024
 
 
 class GenerationSettings(BaseModel):
@@ -1357,38 +1341,8 @@ def load_generation_settings(yaml_path: str) -> GenerationSettings:
 
         # Resolve api_key from env if api_key_type is provided
         def _resolve_api_key_from_env(api_key_type: str) -> str:
-            mapping = {
-                "openai_api_key": "OPENAI_API_KEY",
-                "deepinfra_api_key": "DEEPINFRA_API_KEY",
-            }
-            if api_key_type not in mapping:
-                raise ValueError(
-                    f"Unknown api_key_type: {api_key_type}. Expected one of: {', '.join(mapping.keys())}"
-                )
-            env_name = mapping[api_key_type]
-            value = os.getenv(env_name, "").strip()
-            if not value:
-                # Fallback: read from project .env file
-                try:
-                    project_root = Path(__file__).resolve().parents[1]
-                    env_path = project_root / ".env"
-                    if env_path.exists():
-                        for line in env_path.read_text(encoding="utf-8").splitlines():
-                            line = line.strip()
-                            if not line or line.startswith("#") or "=" not in line:
-                                continue
-                            k, v = line.split("=", 1)
-                            if k.strip() == env_name:
-                                value = v.strip().strip('"')
-                                break
-                except Exception:
-                    pass
-            if not value:
-                raise ValueError(
-                    f"Environment variable '{env_name}' not set for api_key_type '{api_key_type}'. "
-                    f"Consider running: python config/configure_api_keys.py"
-                )
-            return value
+            from AuraGen.api_key_manager import get_api_key_manager
+            return get_api_key_manager().resolve_api_key(api_key_type)
 
         openai_section = yaml_data.get('openai', {}) if 'openai' in yaml_data else None
         if isinstance(openai_section, dict) and 'api_key' not in openai_section and 'api_key_type' in openai_section:

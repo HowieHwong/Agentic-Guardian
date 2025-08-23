@@ -3,15 +3,15 @@
 Interactive CLI to configure API keys used by Agentic-Guardian.
 
 Features:
-- Choose which API key to configure (OpenAI, DeepInfra)
+- Choose which API key to configure (supports all types defined in config/api_key_types.yaml)
+- Add/remove custom API key types
 - Enter/update/remove values (input hidden)
 - View current (masked)
 - Choose how to persist: project .env file or system environment (user scope)
 - Exit without saving or save & exit
 
 Note:
-- The codebase reads environment variables at runtime:
-  OPENAI_API_KEY, DEEPINFRA_API_KEY
+- The codebase reads environment variables at runtime based on api_key_types.yaml
 - Saving to .env is recommended for project-scoped usage.
 """
 
@@ -22,7 +22,7 @@ import sys
 import platform
 import subprocess
 from pathlib import Path
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional, Tuple, List
 from getpass import getpass
 
 from rich.console import Console
@@ -36,11 +36,9 @@ ENV_FILE = PROJECT_ROOT / ".env"
 
 console = Console()
 
-
-KEY_MAP: Dict[str, str] = {
-    "openai": "OPENAI_API_KEY",
-    "deepinfra": "DEEPINFRA_API_KEY",
-}
+# Import API key manager
+sys.path.insert(0, str(PROJECT_ROOT))
+from AuraGen.api_key_manager import get_api_key_manager
 
 
 def mask_value(value: Optional[str]) -> str:
@@ -108,21 +106,33 @@ def set_system_env(var: str, value: Optional[str]) -> Tuple[bool, str]:
 
 def show_current_values() -> None:
     table = Table(title="Current API Key Values (masked)")
-    table.add_column("Key", style="cyan")
+    table.add_column("Key Type", style="cyan")
     table.add_column("Env Var", style="magenta")
+    table.add_column("Description", style="yellow")
     table.add_column("Value", style="green")
 
     env_file_vals = read_env_file(ENV_FILE)
-    for key_label, env_var in KEY_MAP.items():
+    manager = get_api_key_manager()
+    
+    for api_key_type in manager.get_supported_types():
+        env_var = manager.get_env_var(api_key_type)
+        description = manager.get_description(api_key_type)
         val = os.getenv(env_var) or env_file_vals.get(env_var)
-        table.add_row(key_label, env_var, mask_value(val))
+        table.add_row(api_key_type, env_var, description, mask_value(val))
 
     console.print(table)
 
 
 def pick_key() -> Optional[str]:
     console.print(Panel.fit("Select which API key to configure:", title="API Key Type"))
-    options = ["openai", "deepinfra", "back"]
+    manager = get_api_key_manager()
+    supported_types = manager.get_supported_types()
+    
+    if not supported_types:
+        console.print("[yellow]No API key types configured. Please add some first.[/yellow]")
+        return None
+    
+    options = supported_types + ["back"]
     choice = Prompt.ask("Choose", choices=options, default="back")
     if choice == "back":
         return None
@@ -148,6 +158,78 @@ def choose_persistence() -> Optional[str]:
     return sel
 
 
+def add_custom_api_key_type() -> None:
+    """Add a new custom API key type"""
+    console.print(Panel.fit("Add a new API key type", title="Custom API Key Type"))
+    
+    # Get API key type name
+    api_key_type = Prompt.ask("Enter API key type name (e.g., 'anthropic_api_key')")
+    if not api_key_type:
+        console.print("No name entered. Cancelled.")
+        return
+    
+    # Check if it already exists
+    manager = get_api_key_manager()
+    if api_key_type in manager.get_supported_types():
+        console.print(f"[red]API key type '{api_key_type}' already exists![/red]")
+        return
+    
+    # Get environment variable name
+    env_var = Prompt.ask("Enter environment variable name (e.g., 'ANTHROPIC_API_KEY')")
+    if not env_var:
+        console.print("No environment variable name entered. Cancelled.")
+        return
+    
+    # Get description
+    description = Prompt.ask("Enter description (e.g., 'Anthropic Claude API Key')")
+    if not description:
+        description = f"API key for {api_key_type}"
+    
+    try:
+        manager.add_api_key_type(api_key_type, env_var, description)
+        console.print(f"[green]Successfully added API key type '{api_key_type}'![/green]")
+    except Exception as e:
+        console.print(f"[red]Failed to add API key type: {e}[/red]")
+
+
+def remove_custom_api_key_type() -> None:
+    """Remove a custom API key type"""
+    console.print(Panel.fit("Remove an API key type", title="Remove API Key Type"))
+    
+    manager = get_api_key_manager()
+    supported_types = manager.get_supported_types()
+    
+    if not supported_types:
+        console.print("[yellow]No API key types to remove.[/yellow]")
+        return
+    
+    # Show current types
+    console.print("Current API key types:")
+    for i, api_key_type in enumerate(supported_types, 1):
+        description = manager.get_description(api_key_type)
+        console.print(f"[{i}] {api_key_type} - {description}")
+    
+    # Select type to remove
+    choice = Prompt.ask("Enter number to remove (or 'cancel')", choices=[str(i) for i in range(1, len(supported_types) + 1)] + ["cancel"])
+    
+    if choice == "cancel":
+        console.print("Cancelled.")
+        return
+    
+    api_key_type = supported_types[int(choice) - 1]
+    
+    # Confirm removal
+    if not Confirm.ask(f"Are you sure you want to remove '{api_key_type}'?", default=False):
+        console.print("Cancelled.")
+        return
+    
+    try:
+        manager.remove_api_key_type(api_key_type)
+        console.print(f"[green]Successfully removed API key type '{api_key_type}'![/green]")
+    except Exception as e:
+        console.print(f"[red]Failed to remove API key type: {e}[/red]")
+
+
 def main() -> None:
     console.print(Panel.fit("Agentic-Guardian API Key Configuration", title="Setup", subtitle="Use arrow keys not required; type options."))
 
@@ -158,17 +240,30 @@ def main() -> None:
         console.print("Main Menu:")
         console.print("[1] Configure API key")
         console.print("[2] Remove API key")
-        console.print("[3] Exit")
-        action = Prompt.ask("Select", choices=["1", "2", "3"], default="3")
+        console.print("[3] Add custom API key type")
+        console.print("[4] Remove API key type")
+        console.print("[5] Exit")
+        action = Prompt.ask("Select", choices=["1", "2", "3", "4", "5"], default="5")
 
-        if action == "3":
+        if action == "5":
             console.print("Exiting.")
             return
+        
+        if action == "3":
+            add_custom_api_key_type()
+            continue
+        
+        if action == "4":
+            remove_custom_api_key_type()
+            continue
 
+        # For actions 1 and 2, we need to pick a key
         key_choice = pick_key()
         if not key_choice:
             continue
-        env_var = KEY_MAP[key_choice]
+        
+        manager = get_api_key_manager()
+        env_var = manager.get_env_var(key_choice)
 
         if action == "1":
             new_value = input_key_value(env_var)

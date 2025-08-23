@@ -494,9 +494,8 @@ def resolve_api_key_from_env(api_key_type: str) -> str:
     """
     Resolve API key from environment variables based on a key type.
 
-    Supported types:
-      - "openai_api_key" -> env "OPENAI_API_KEY"
-      - "deepinfra_api_key" -> env "DEEPINFRA_API_KEY"
+    Supports all API key types defined in config/api_key_types.yaml.
+    This function now uses the centralized API key manager for flexibility.
 
     Args:
         api_key_type: Logical API key type identifier from YAML
@@ -507,23 +506,12 @@ def resolve_api_key_from_env(api_key_type: str) -> str:
     Raises:
         ValueError: If the api_key_type is unknown or the env var is missing/empty
     """
-    mapping: Dict[str, str] = {
-        "openai_api_key": "OPENAI_API_KEY",
-        "deepinfra_api_key": "DEEPINFRA_API_KEY",
-    }
-
-    if api_key_type not in mapping:
-        raise ValueError(f"Unknown api_key_type: {api_key_type}. Expected one of: {', '.join(mapping.keys())}")
-
-    env_var_name = mapping[api_key_type]
-    api_key_value = os.getenv(env_var_name, "").strip()
-    if not api_key_value:
-        raise ValueError(
-            f"Environment variable '{env_var_name}' not set for api_key_type '{api_key_type}'. "
-            f"Please export {env_var_name} before running."
-        )
-
-    return api_key_value
+    from AuraGen.api_key_manager import get_api_key_manager
+    
+    try:
+        return get_api_key_manager().resolve_api_key(api_key_type)
+    except Exception as e:
+        raise ValueError(str(e))
 
 
 def load_model_pool_config(model_pool_path: str = "config/model_pool.yaml") -> Dict[str, Any]:
