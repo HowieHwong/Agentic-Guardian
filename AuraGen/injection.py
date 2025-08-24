@@ -74,7 +74,6 @@ class RiskInjectionConfig(BaseModel):
         openai_cfg = None
         externalAPI_cfg = None
         
-        # 使用新的配置类
         if "openai" in data:
             openai_section = data.get("openai", {})
             if isinstance(openai_section, dict) and "api_key" not in openai_section and "api_key_type" in openai_section:
@@ -410,24 +409,18 @@ class RiskInjectorBase:
             "timestamp": int(time.time())
         }
         
-        # 保存修改的函数（包括新函数和参数变化的函数）
         if modified_functions:
-            # 将修改的函数保存到modified_functions字段
             injection_info["modified_functions"] = modified_functions
             
-            # 同时保持与旧代码的兼容性，新函数也保存到new_functions字段
             new_funcs = [f for f in modified_functions if f.get("is_new", False)]
             if new_funcs:
                 injection_info["new_functions"] = new_funcs
-        # 保持向后兼容 - 如果使用旧的new_functions字段
         elif legacy_new_functions:
             injection_info["new_functions"] = legacy_new_functions
         
-        # 如果响应被修改，添加修改后的响应内容
         if modified_response is not None:
             injection_info["modified_agent_response"] = modified_response
             
-        # 如果原始响应已保存，添加到元数据中
         if "original_agent_response" in record:
             injection_info["original_agent_response"] = record["original_agent_response"]
         
@@ -530,7 +523,6 @@ class OpenAIRiskInjector(RiskInjectorBase):
     def __init__(self, config: RiskInjectionConfig, constraint_map: Optional[Dict[tuple, Dict[str, Any]]] = None):
         super().__init__(config, constraint_map)
         
-        # 创建InferenceManager实例
         self.inference_manager = InferenceManager(
             use_internal_inference=config.externalAPI_generation,
             openai_config=config.openai,
@@ -687,9 +679,7 @@ Return ONLY the summary without any additional explanation, introduction, or for
         
         # STEP 3: Identify and analyze function changes
         if not is_response:  # Only analyze action steps for function changes
-            # 提取函数调用及其参数
             def extract_function_calls_with_params(text):
-                # 匹配函数调用和其参数
                 pattern = r'([a-zA-Z_][a-zA-Z0-9_]*)\s*\((.*?)\)'
                 matches = re.findall(pattern, text)
                 result = {}
@@ -697,13 +687,11 @@ Return ONLY the summary without any additional explanation, introduction, or for
                     result[func_name] = params.strip()
                 return result
             
-            # 解析参数字符串为字典 {参数名: 参数值}
             def parse_params(param_str):
                 params = {}
                 if not param_str:
                     return params
                     
-                # 处理位置参数和关键字参数
                 try:
                     in_string = False
                     in_bracket = 0
@@ -711,41 +699,33 @@ Return ONLY the summary without any additional explanation, introduction, or for
                     current_value = ""
                     i = 0
                     
-                    # 首先尝试解析为关键字参数
                     while i < len(param_str):
                         c = param_str[i]
                         
-                        # 处理字符串内容
                         if c in ['"', "'"]:
                             in_string = not in_string
                             current_value += c
-                        # 处理括号
                         elif c == '(' and not in_string:
                             in_bracket += 1
                             current_value += c
                         elif c == ')' and not in_string:
                             in_bracket -= 1
                             current_value += c
-                        # 处理参数分隔符
                         elif c == ',' and not in_string and in_bracket == 0:
                             if current_key:
                                 params[current_key.strip()] = current_value.strip()
                             current_key = None
                             current_value = ""
-                        # 处理参数名与值的分隔符
                         elif c == '=' and not in_string and not current_key and in_bracket == 0:
                             current_key = current_value
                             current_value = ""
-                        # 普通字符
                         else:
                             current_value += c
                         i += 1
                     
-                    # 处理最后一个参数
                     if current_key:
                         params[current_key.strip()] = current_value.strip()
                     
-                    # 如果没有解析到关键字参数，则可能是位置参数
                     if not params:
                         pos_params = param_str.split(',')
                         for i, p in enumerate(pos_params):
@@ -753,7 +733,6 @@ Return ONLY the summary without any additional explanation, introduction, or for
                             
                 except Exception as e:
                     logger.error(f"Error parsing params: {e}")
-                    # 回退到简单的分隔处理
                     try:
                         pos_params = param_str.split(',')
                         for i, p in enumerate(pos_params):
@@ -763,7 +742,6 @@ Return ONLY the summary without any additional explanation, introduction, or for
                 
                 return params
             
-            # 从原始步骤和修改后的步骤中提取函数调用和参数
             original_funcs = extract_function_calls_with_params(step)
             modified_funcs = extract_function_calls_with_params(modified_content)
             
@@ -771,11 +749,9 @@ Return ONLY the summary without any additional explanation, introduction, or for
             builtins = {'print', 'str', 'int', 'float', 'list', 'dict', 'set', 'tuple', 'len', 'max', 'min', 'sum', 'open', 'range', 
                        'type', 'id', 'hash', 'sorted', 'enumerate', 'zip', 'filter', 'map', 'any', 'all', 'round', 'abs'}
             
-            # 储存新函数和修改的函数
             new_functions = []
             modified_functions = []
             
-            # 1. 处理新增的函数
             new_func_names = [name for name in modified_funcs.keys() 
                              if name not in original_funcs and 
                              name not in builtins and
@@ -783,7 +759,6 @@ Return ONLY the summary without any additional explanation, introduction, or for
             
             for func_name in new_func_names:
                 logger.info(f"Detected new function: {func_name}")
-                # 为新函数生成完整定义
                 step3_prompt = f"""
 You need to define a new function '{func_name}' that was introduced in this modified action step: 
 {modified_content}
@@ -833,14 +808,12 @@ DO NOT include anything outside of this YAML format in your response.
                     system_message="You are a tool that creates YAML function definitions. Return ONLY the requested YAML content with no other text."
                 ).strip()
                 
-                # 清理格式
                 function_def = re.sub(r'^```yaml\n', '', function_def)
                 function_def = re.sub(r'^```\n', '', function_def)
                 function_def = re.sub(r'\n```$', '', function_def)
                 function_def = re.sub(r'^`+', '', function_def)
                 function_def = re.sub(r'`+$', '', function_def)
                 
-                # 清理额外文本
                 if 'example_usage:' in function_def:
                     parts = function_def.split('example_usage:')
                     if len(parts) > 1:
@@ -863,14 +836,11 @@ DO NOT include anything outside of this YAML format in your response.
                         "format": "yaml"
                     })
             
-            # 2. 处理参数修改的函数
             for func_name in original_funcs:
                 if func_name in modified_funcs and func_name not in builtins and not func_name.startswith('__'):
-                    # 解析原始参数和修改后的参数
                     original_params = parse_params(original_funcs[func_name])
                     modified_params = parse_params(modified_funcs[func_name])
                     
-                    # 找出新增的参数
                     new_params = {}
                     for param_name, param_value in modified_params.items():
                         if param_name not in original_params:
@@ -878,7 +848,6 @@ DO NOT include anything outside of this YAML format in your response.
                     
                     if new_params:
                         logger.info(f"Detected modified function with new parameters: {func_name}")
-                        # 为每个新参数获取信息
                         for param_name, param_value in new_params.items():
                             step3_prompt = f"""
 You need to analyze a new parameter '{param_name}' added to function '{func_name}' in this modified step:
@@ -900,7 +869,6 @@ Example: {{"type": "string", "description": "The file path to write the output t
                                 response_format={"type": "json_object"}
                             ).strip()
                             
-                            # 解析参数信息
                             try:
                                 param_data = json.loads(param_info)
                                 modified_functions.append({
@@ -910,7 +878,6 @@ Example: {{"type": "string", "description": "The file path to write the output t
                                     "type": param_data.get("type", "unknown")
                                 })
                             except json.JSONDecodeError:
-                                # 回退到简单信息
                                 logger.warning(f"Failed to parse parameter info for {func_name}.{param_name}")
                                 modified_functions.append({
                                     "function_name": func_name,
@@ -919,7 +886,6 @@ Example: {{"type": "string", "description": "The file path to write the output t
                                     "type": "unknown"
                                 })
             
-            # 保存到context_info
             if new_functions:
                 context_info["new_functions"] = new_functions
                 logger.info(f"Generated {len(new_functions)} new function definitions")
@@ -1062,7 +1028,6 @@ Return ONLY the summary without any additional explanation, introduction, or for
         # STEP 3: Identify and analyze function changes
         # 提取函数调用及其参数
         def extract_function_calls_with_params(action_list):
-            # 匹配函数调用和其参数
             result = {}
             for action in action_list:
                 if not isinstance(action, str):
@@ -1073,13 +1038,11 @@ Return ONLY the summary without any additional explanation, introduction, or for
                     result[func_name] = params.strip()
             return result
         
-        # 解析参数字符串为字典 {参数名: 参数值}
         def parse_params(param_str):
             params = {}
             if not param_str:
                 return params
                 
-            # 处理位置参数和关键字参数
             try:
                 in_string = False
                 in_bracket = 0
@@ -1087,41 +1050,33 @@ Return ONLY the summary without any additional explanation, introduction, or for
                 current_value = ""
                 i = 0
                 
-                # 首先尝试解析为关键字参数
                 while i < len(param_str):
                     c = param_str[i]
                     
-                    # 处理字符串内容
                     if c in ['"', "'"]:
                         in_string = not in_string
                         current_value += c
-                    # 处理括号
                     elif c == '(' and not in_string:
                         in_bracket += 1
                         current_value += c
                     elif c == ')' and not in_string:
                         in_bracket -= 1
                         current_value += c
-                    # 处理参数分隔符
                     elif c == ',' and not in_string and in_bracket == 0:
                         if current_key:
                             params[current_key.strip()] = current_value.strip()
                         current_key = None
                         current_value = ""
-                    # 处理参数名与值的分隔符
                     elif c == '=' and not in_string and not current_key and in_bracket == 0:
                         current_key = current_value
                         current_value = ""
-                    # 普通字符
                     else:
                         current_value += c
                     i += 1
                 
-                # 处理最后一个参数
                 if current_key:
                     params[current_key.strip()] = current_value.strip()
                 
-                # 如果没有解析到关键字参数，则可能是位置参数
                 if not params:
                     pos_params = param_str.split(',')
                     for i, p in enumerate(pos_params):
@@ -1129,7 +1084,6 @@ Return ONLY the summary without any additional explanation, introduction, or for
                         
             except Exception as e:
                 logger.error(f"Error parsing params: {e}")
-                # 回退到简单的分隔处理
                 try:
                     pos_params = param_str.split(',')
                     for i, p in enumerate(pos_params):
@@ -1139,7 +1093,6 @@ Return ONLY the summary without any additional explanation, introduction, or for
             
             return params
         
-        # 从原始动作链和修改后的动作链中提取函数调用和参数
         original_funcs = extract_function_calls_with_params(original_actions)
         modified_funcs = extract_function_calls_with_params(modified_actions)
         
@@ -1147,11 +1100,9 @@ Return ONLY the summary without any additional explanation, introduction, or for
         builtins = {'print', 'str', 'int', 'float', 'list', 'dict', 'set', 'tuple', 'len', 'max', 'min', 'sum', 'open', 'range', 
                    'type', 'id', 'hash', 'sorted', 'enumerate', 'zip', 'filter', 'map', 'any', 'all', 'round', 'abs'}
         
-        # 储存新函数和修改的函数
         new_functions = []
         modified_functions = []
         
-        # 1. 处理新增的函数
         new_func_names = [name for name in modified_funcs.keys() 
                          if name not in original_funcs and 
                          name not in builtins and
@@ -1159,7 +1110,6 @@ Return ONLY the summary without any additional explanation, introduction, or for
         
         for func_name in new_func_names:
             logger.info(f"Detected new function in chain: {func_name}")
-            # 为新函数生成完整定义
             step3_prompt = f"""
 You need to define a new function '{func_name}' that was introduced in this modified action chain: 
 {json.dumps(modified_actions, indent=2)}
@@ -1209,14 +1159,12 @@ DO NOT include anything outside of this YAML format in your response.
                 system_message="You are a tool that creates YAML function definitions. Return ONLY the requested YAML content with no other text."
             ).strip()
             
-            # 清理格式
             function_def = re.sub(r'^```yaml\n', '', function_def)
             function_def = re.sub(r'^```\n', '', function_def)
             function_def = re.sub(r'\n```$', '', function_def)
             function_def = re.sub(r'^`+', '', function_def)
             function_def = re.sub(r'`+$', '', function_def)
             
-            # 清理额外文本
             if 'example_usage:' in function_def:
                 parts = function_def.split('example_usage:')
                 if len(parts) > 1:
@@ -1239,14 +1187,11 @@ DO NOT include anything outside of this YAML format in your response.
                     "format": "yaml"
                 })
         
-        # 2. 处理参数修改的函数
         for func_name in original_funcs:
             if func_name in modified_funcs and func_name not in builtins and not func_name.startswith('__'):
-                # 解析原始参数和修改后的参数
                 original_params = parse_params(original_funcs[func_name])
                 modified_params = parse_params(modified_funcs[func_name])
                 
-                # 找出新增的参数
                 new_params = {}
                 for param_name, param_value in modified_params.items():
                     if param_name not in original_params:
@@ -1254,7 +1199,6 @@ DO NOT include anything outside of this YAML format in your response.
                 
                 if new_params:
                     logger.info(f"Detected modified function with new parameters in chain: {func_name}")
-                    # 为每个新参数获取信息
                     for param_name, param_value in new_params.items():
                         step3_prompt = f"""
 You need to analyze a new parameter '{param_name}' added to function '{func_name}' in this modified action chain:
@@ -1276,7 +1220,6 @@ Example: {{"type": "string", "description": "The file path to write the output t
                             response_format={"type": "json_object"}
                         ).strip()
                         
-                        # 解析参数信息
                         try:
                             param_data = json.loads(param_info)
                             modified_functions.append({
@@ -1286,7 +1229,6 @@ Example: {{"type": "string", "description": "The file path to write the output t
                                 "type": param_data.get("type", "unknown")
                             })
                         except json.JSONDecodeError:
-                            # 回退到简单信息
                             logger.warning(f"Failed to parse parameter info for {func_name}.{param_name}")
                             modified_functions.append({
                                 "function_name": func_name,
@@ -1295,7 +1237,6 @@ Example: {{"type": "string", "description": "The file path to write the output t
                                 "type": "unknown"
                             })
         
-        # 保存到chain_context
         if new_functions:
             chain_context["new_functions"] = new_functions
             logger.info(f"Generated {len(new_functions)} new function definitions")
@@ -1358,7 +1299,6 @@ Output only the index (0-based) of the selected step as a single number:
 """
             # Call LLM
             if self.config.externalAPI_generation:
-                # 使用externalAPI API进行目标选择
                 try:
                     response_content = self.inference_manager.generate_text(
                         prompt=prompt,
@@ -1370,7 +1310,6 @@ Output only the index (0-based) of the selected step as a single number:
                 except (ValueError, IndexError):
                     return [0]  # Default to first action if parsing fails
             else:
-                # 使用OpenAI API
                 response_content = self.inference_manager.generate_text(
                     prompt=prompt,
                     system_message="You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON."
@@ -1401,7 +1340,6 @@ Output only a JSON array of selected indices (0-based):
 """
             # Call LLM
             if self.config.externalAPI_generation:
-                # 使用externalAPI API进行目标选择
                 try:
                     response_content = self.inference_manager.generate_text(
                         prompt=prompt,
@@ -1414,7 +1352,6 @@ Output only a JSON array of selected indices (0-based):
                 except (json.JSONDecodeError, ValueError):
                     return [0, len(action_list) - 1]  # Default to first and last actions
             else:
-                # 使用OpenAI API
                 response_content = self.inference_manager.generate_text(
                     prompt=prompt,
                     system_message="You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON."
@@ -1458,7 +1395,6 @@ Output only the index (0-based) of the starting point as a single number:
 """
             # Call LLM
             if self.config.externalAPI_generation:
-                # 使用externalAPI API进行目标选择
                 try:
                     response_content = self.inference_manager.generate_text(
                         prompt=prompt,
@@ -1503,7 +1439,6 @@ Output only the index (0-based) of the starting point as a single number:
 """
             # Call LLM
             if self.config.externalAPI_generation:
-                # 使用externalAPI API进行目标选择
                 try:
                     response_content = self.inference_manager.generate_text(
                         prompt=prompt,
@@ -1515,7 +1450,6 @@ Output only the index (0-based) of the starting point as a single number:
                 except (ValueError, IndexError):
                     return 0  # Default to first action
             else:
-                # 使用OpenAI API
                 response_content = self.inference_manager.generate_text(
                     prompt=prompt,
                     system_message="You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON."
@@ -1540,14 +1474,12 @@ def save_records(records: List[Dict[str, Any]], out_path: str, file_format: str 
     """
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     
-    # Ensure file_format is never None
     if file_format is None:
         file_format = "json"
     
     logger.info(f"Saving {len(records)} records to {out_path} in {file_format.upper()} format")
     
     if file_format == "json":
-        # Save as single JSON array
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(records, f, ensure_ascii=False, indent=2)
     else:

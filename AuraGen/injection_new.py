@@ -371,15 +371,12 @@ class RiskInjectorBase:
             "timestamp": int(time.time())
         }
         
-        # 如果有新函数，添加到注入信息中
         if new_functions:
             injection_info["new_functions"] = new_functions
         
-        # 如果响应被修改，添加修改后的响应内容
         if modified_response is not None:
             injection_info["modified_agent_response"] = modified_response
             
-        # 如果原始响应已保存，添加到元数据中
         if "original_agent_response" in record:
             injection_info["original_agent_response"] = record["original_agent_response"]
         
@@ -482,7 +479,6 @@ class OpenAIRiskInjector(RiskInjectorBase):
     def __init__(self, config: RiskInjectionConfig, constraint_map: Optional[Dict[tuple, Dict[str, Any]]] = None):
         super().__init__(config, constraint_map)
         
-        # 创建InferenceManager实例
         self.inference_manager = InferenceManager(
             use_internal_inference=config.externalAPI_generation,
             openai_config=config.openai,
@@ -1003,7 +999,6 @@ Output only the index (0-based) of the selected step as a single number:
 """
             # Call LLM
             if self.config.externalAPI_generation:
-                # 使用externalAPI API进行目标选择
                 try:
                     response_content = self.inference_manager.generate_text(
                         prompt=prompt,
@@ -1056,7 +1051,6 @@ Output only a JSON array of selected indices (0-based):
                 except (json.JSONDecodeError, ValueError):
                     return [0, len(action_list) - 1]  # Default to first and last actions
             else:
-                # 使用OpenAI API
                 response_content = self.inference_manager.generate_text(
                     prompt=prompt,
                     system_message="You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON."
@@ -1099,7 +1093,6 @@ Output only the index (0-based) of the starting point as a single number:
 """
             # Call LLM
             if self.config.externalAPI_generation:
-                # 使用externalAPI API进行目标选择
                 try:
                     response_content = self.inference_manager.generate_text(
                         prompt=prompt,
@@ -1156,7 +1149,6 @@ Output only the index (0-based) of the starting point as a single number:
                 except (ValueError, IndexError):
                     return 0  # Default to first action
             else:
-                # 使用OpenAI API
                 response_content = self.inference_manager.generate_text(
                     prompt=prompt,
                     system_message="You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON."
@@ -1181,7 +1173,6 @@ def save_records(records: List[Dict[str, Any]], out_path: str, file_format: str 
     """
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     
-    # Ensure file_format is never None
     if file_format is None:
         file_format = "json"
     

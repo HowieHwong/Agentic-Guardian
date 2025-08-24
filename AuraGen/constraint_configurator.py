@@ -280,12 +280,10 @@ class ConcurrentConstraintGenerator:
 def load_yaml(path: str) -> Dict[str, Any]:
     """Load YAML file safely with enhanced error handling."""
     try:
-        # 首先尝试标准加载
         with open(path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
         return data or {}
     except yaml.YAMLError as yaml_error:
-        # YAML格式错误，尝试修复
         st.warning(f"YAML error in {path}, attempting to fix...")
         fixed_content = fix_yaml_file(path)
         if fixed_content:
@@ -298,7 +296,6 @@ def load_yaml(path: str) -> Dict[str, Any]:
         else:
             st.error(f"Failed to fix YAML format in {path}: {yaml_error}")
         
-        # 如果修复失败，返回一个空字典而不是崩溃
         return {}
     except Exception as e:
         st.error(f"Error loading {path}: {e}")
@@ -344,7 +341,6 @@ def load_scenarios_from_folder(scenarios_dir: str) -> List[Dict[str, Any]]:
     
     for scenario_file in scenario_files:
         try:
-            # 使用增强的load_yaml函数，它包含了错误修复功能
             scenario_data = load_yaml(scenario_file)
             
             if scenario_data and "name" in scenario_data:
@@ -367,41 +363,30 @@ def fix_yaml_file(file_path: str) -> Optional[str]:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # 修复常见问题：example_usage的引号问题
         lines = content.split('\n')
         in_example_usage = False
         fixed_lines = []
         
         for i, line in enumerate(lines):
-            # 检测是否进入example_usage部分
             if "example_usage:" in line:
                 in_example_usage = True
                 fixed_lines.append(line)
                 continue
             
-            # 如果在example_usage部分内且行以- 开头
             if in_example_usage and line.strip().startswith("- "):
                 content_part = line.strip()[2:].strip()
-                
-                # 如果内容没有被引号包围，则加上引号
+
                 if not (content_part.startswith("'") and content_part.endswith("'")) and \
                    not (content_part.startswith('"') and content_part.endswith('"')):
-                    # 检查是否包含函数调用格式
                     if "(" in content_part and (")" in content_part or "," in content_part):
-                        # 处理可能的引号不匹配问题
                         content_part = fix_quotes_in_function_call(content_part)
-                        # 确保函数调用结尾有括号
                         if ")" not in content_part:
                             content_part += ")"
-                        # 使用单引号包裹整个函数调用
                         fixed_line = line.replace("- " + line.strip()[2:].strip(), "- '" + content_part + "'")
                     else:
-                        # 根据内容决定使用单引号还是双引号
                         if "'" in content_part and '"' not in content_part:
-                            # 内容含单引号，使用双引号
                             fixed_line = line.replace("- " + content_part, "- \"" + content_part + "\"")
                         else:
-                            # 默认使用单引号
                             fixed_line = line.replace("- " + content_part, "- '" + content_part + "'")
                     fixed_lines.append(fixed_line)
                 else:
@@ -409,15 +394,12 @@ def fix_yaml_file(file_path: str) -> Optional[str]:
             else:
                 fixed_lines.append(line)
                 
-                # 检测是否离开example_usage部分（缩进变回上一级）
                 if in_example_usage and line.strip() and i > 0:
-                    # 通过检查缩进级别来判断是否退出example_usage部分
                     current_indent = len(line) - len(line.lstrip())
                     prev_indent = len(lines[i-1]) - len(lines[i-1].lstrip())
                     if current_indent < prev_indent:
                         in_example_usage = False
         
-        # 返回修复后的内容
         return '\n'.join(fixed_lines)
     
     except Exception as e:
@@ -425,8 +407,6 @@ def fix_yaml_file(file_path: str) -> Optional[str]:
         return None
 
 def fix_quotes_in_function_call(text: str) -> str:
-    """修复函数调用中的引号问题"""
-
     import re
     
     pattern = r'([a-zA-Z0-9_]+)=([\'"])(.*?)(\2)'
