@@ -6,7 +6,7 @@ in detecting safety issues in agentic AI systems.
 """
 
 __version__ = "0.1.0"
-__author__ = "Guardian Team"
+__author__ = "AuraGen Team"
 __description__ = "Agentic Safety Data Generation Engine"
 
 from .config import GuardianConfig

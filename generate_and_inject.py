@@ -17,7 +17,7 @@ from AuraGen.injection import inject_risks_to_file
 def get_all_scenarios(scenarios_dir="config/scenarios_generated"):
     """Return all scenario YAML file paths in the directory."""
     scenarios_dir = Path(scenarios_dir)
-    return list(scenarios_dir.glob("*.yaml"))
+    return list(scenarios_dir.glob("*.yaml"))[:1]
 
 
 def load_scenario(yaml_path: Path):
@@ -67,11 +67,23 @@ def main():
         records = generator.generate_batch_concurrent(scenario, n=20, max_workers=10)
         all_records.extend([r.dict() for r in records])
 
+    # Aggregate token/cost stats (generation stage)
+    try:
+        tracker_summary = generator.inference_manager.token_tracker.summary()
+    except Exception:
+        tracker_summary = None
+
     # Save harmless records
     inference_type = "externalAPI" if use_internal_inference else "openai"
     harmless_file = save_dir / f"all_scenarios_{inference_type}_{timestamp}.json"
     with open(harmless_file, "w", encoding='utf-8') as f:
         json.dump(all_records, f, indent=2, ensure_ascii=False)
+
+    # Save usage summary alongside
+    if tracker_summary:
+        usage_file = save_dir / f"token_usage_{inference_type}_{timestamp}.json"
+        with open(usage_file, "w", encoding="utf-8") as f:
+            json.dump(tracker_summary, f, indent=2)
 
     # Inject risks using the just-saved harmless file
     injected_file = save_dir / f"all_injected_{inference_type}_{timestamp}.json"
@@ -85,6 +97,9 @@ def main():
     )
 
     print(f"Saved harmless records to: {harmless_file}")
+    if tracker_summary:
+        print("Token usage summary (generation stage):")
+        print(json.dumps(tracker_summary, indent=2))
     print(f"Saved injected records to: {injected_file}")
 
 

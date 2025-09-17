@@ -1310,10 +1310,12 @@ Output only the index (0-based) of the selected step as a single number:
                 except (ValueError, IndexError):
                     return [0]  # Default to first action if parsing fails
             else:
-                response_content = self.inference_manager.generate_text(
+                response_tuple = self.inference_manager.generate_text(
                     prompt=prompt,
-                    system_message="You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON."
+                    system_message="You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON.",
+                    return_usage=True,
                 )
+                response_content = response_tuple[0] if isinstance(response_tuple, tuple) else response_tuple
             
             try:
                 index = int(response_content.strip())
@@ -1352,10 +1354,12 @@ Output only a JSON array of selected indices (0-based):
                 except (json.JSONDecodeError, ValueError):
                     return [0, len(action_list) - 1]  # Default to first and last actions
             else:
-                response_content = self.inference_manager.generate_text(
+                response_tuple = self.inference_manager.generate_text(
                     prompt=prompt,
-                    system_message="You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON."
+                    system_message="You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON.",
+                    return_usage=True,
                 )
+                response_content = response_tuple[0] if isinstance(response_tuple, tuple) else response_tuple
             
             try:
                 indices = json.loads(response_content.strip())

@@ -619,7 +619,10 @@ class OpenAIHarmlessDataGenerator(HarmlessDataGeneratorBase):
             externalAPI_config=externalAPI_config
         )
             
-        logger.info(f"Initialized OpenAIHarmlessDataGenerator with model: {openai_config.model}")
+        if use_internal_inference and externalAPI_config:
+            logger.info(f"Initialized OpenAIHarmlessDataGenerator with externalAPI model: {externalAPI_config.model}")
+        else:
+            logger.info(f"Initialized OpenAIHarmlessDataGenerator with OpenAI model: {openai_config.model}")
 
     def _build_prompt(self, scenario: Scenario) -> str:
         """
@@ -817,10 +820,18 @@ Agent Response: I've compiled the quarterly financial report with all confidenti
         while retry_count < max_retries:
             try:
                 # print(prompt)
-                content = self.inference_manager.generate_text(
+                gen_result = self.inference_manager.generate_text(
                     prompt=prompt,
-                    system_message="You are an AI agent assistant that responds to user requests."
+                    system_message="You are an AI agent assistant that responds to user requests.",
+                    return_usage=True,
                 )
+
+                if isinstance(gen_result, tuple):
+                    content, usage, request_cost = gen_result
+                else:
+                    content = gen_result
+                    usage = None
+                    request_cost = 0.0
         
                 # Parse the output into user request, action steps, and response
                 user_request, action_steps, agent_response = self._parse_output(content)
@@ -843,6 +854,18 @@ Agent Response: I've compiled the quarterly financial report with all confidenti
                     action_steps = self._validate_environment_constraints(scenario, action_steps)
         
                 # Create and return the record
+                # Determine active model/provider
+                if self.use_internal_inference and self.externalAPI_config:
+                    active_model = self.externalAPI_config.model
+                    active_temperature = self.externalAPI_config.temperature
+                    active_max_tokens = self.externalAPI_config.max_tokens
+                    provider = "externalAPI"
+                else:
+                    active_model = self.openai_config.model
+                    active_temperature = self.openai_config.temperature
+                    active_max_tokens = self.openai_config.max_tokens
+                    provider = "openai"
+
                 record = AgentActionRecord(
                     scenario_name=scenario.name,
                     user_request=user_request,
@@ -853,13 +876,16 @@ Agent Response: I've compiled the quarterly financial report with all confidenti
                         "constraints": metadata_values,
                         "scenario_metadata": {},
             "model_info": {
-                            "model": self.openai_config.model,
-                "temperature": self.openai_config.temperature,
-                "max_tokens": self.openai_config.max_tokens
+                            "provider": provider,
+                            "model": active_model,
+                "temperature": active_temperature,
+                "max_tokens": active_max_tokens
             },
             "generation_settings": {
                             "diversity_level": diversity_level
-            }
+            },
+            "token_usage": usage or {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
+            "request_cost_usd": round(float(request_cost), 6)
         }
                 )
                 
