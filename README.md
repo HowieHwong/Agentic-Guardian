@@ -9,8 +9,6 @@
 
 **Build foundational guardrails for general agentic systems via synthetic data**
 
-*A toolkit for AI safety research and development*
-
 </div>
 
 ---
