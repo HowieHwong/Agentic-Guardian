@@ -1,59 +1,86 @@
+# 🛡️ Agentic-Guardian
 
+<div align="center">
 
-## Agentic-Guardian
+[![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](LICENSE)
+[![Documentation](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://roaring-capybara-053cbe.netlify.app/)
+[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Safiron-yellow)](https://huggingface.co/Safiron/Safiron)
 
-Build a foundational guardrail for general agentic systems via synthetic data. This repository houses:
-- AuraGen: a configurable synthetic data generator with risk injection
-- Pre-Ex-Bench: a small reference dataset for quick experimentation
-- Safiron: a guardian model for pre-execution safety
+**Build foundational guardrails for general agentic systems via synthetic data**
 
-### Table of Contents
-- [AuraGen](#auragen)
-- [Pre-Ex-Bench](#pre-ex-bench)
-- [Safiron](#safiron)
+*A toolkit for AI safety research and development*
 
-## AuraGen
+</div>
 
-AuraGen provides configurable pipelines to generate harmless records from scenarios and then inject controlled risks for safety research and guardrail development.
+---
 
-### Quick Setup
-Below is a minimal setup.
+## 📋 Table of Contents
 
-1) Prerequisites  
-   - Python 3.9+  
-   - An API key (e.g., OpenAI) depending on your selected generation mode
+- [🌟 Overview](#-overview)
+- [🔧 AuraGen](#-auragen)
+- [📊 Pre-Ex-Bench](#-pre-ex-bench)
+- [🛡️ Safiron](#️-safiron)
+- [📄 License](#-license)
 
-2) Install  
-   ```bash
-   python -m venv .venv
-   .venv\\Scripts\\activate  # Windows
-   # source .venv/bin/activate  # macOS/Linux
-   pip install -r requirements.txt
+## 🌟 Overview
 
+This repository provides an integrated ecosystem for developing and testing pre-execution safety guardrails:
 
-3. Configure API Keys (recommended)
+| Component | Description | Purpose |
+|-----------|-------------|---------|
+| **🔧 AuraGen** | Configurable synthetic data generator with risk injection | Generate training data for guardrail research |
+| **📊 Pre-Ex-Bench** | Reference dataset for quick experimentation | Evaluate pre-execution safety models |
+| **🛡️ Safiron** | Guardian model for pre-execution safety | Detect and explain risks in agent planning |
 
-   ```bash
-   python config/configure_api_keys.py
-   ```
+## 🔧 AuraGen
 
-4. Generate and Inject
+> **Synthetic data engine with configurable risk injection**
 
-   ```bash
-   python generate_and_inject.py
-   ```
+AuraGen generates harmless trajectories from scenarios and then injects controlled risks. These synthetic records are used to train and evaluate safety models.
 
-5. Docs
-   Full documentation is hosted [here](https://roaring-capybara-053cbe.netlify.app/).
+### 🚀 Quick Setup
 
-## Pre-Ex-Bench
+#### 📋 Prerequisites
+- 🐍 **Python 3.9+**
+- 🔑 **API Key** (OpenAI, Anthropic, etc.) depending on generation mode
 
-Pre-Ex-Bench provides a lightweight set of example items for quick tests and demos.
+#### 📦 Installation
+```bash
+python -m venv .venv
+.venv\Scripts\activate     # Windows
+# source .venv/bin/activate  # macOS/Linux
+pip install -r requirements.txt
+````
 
-* Location: `Pre-Ex-Bench/dataset.json`
-* Format: JSON list of entries (fields vary by use case)
+#### ⚙️ Configure API Keys
 
-Minimal usage example:
+```bash
+python config/configure_api_keys.py
+```
+
+#### 🎯 Generate Data
+
+```bash
+python generate_and_inject.py
+```
+
+#### 📚 Documentation
+
+📖 Available at: [https://roaring-capybara-053cbe.netlify.app/](https://roaring-capybara-053cbe.netlify.app/)
+
+## 📊 Pre-Ex-Bench
+
+> **Lightweight benchmark for pre-execution safety**
+
+Pre-Ex-Bench provides a small set of examples for evaluating models on detection, classification, explanation, and generalization across different planners.
+
+### 📁 Dataset
+
+* **Location**: `Pre-Ex-Bench/dataset.json`
+* **Format**: JSON list of entries
+
+### 💻 Usage Example
 
 ```python
 import json
@@ -61,36 +88,63 @@ from pathlib import Path
 
 data = json.loads(Path('Pre-Ex-Bench/dataset.json').read_text(encoding='utf-8'))
 print(f"Loaded {len(data)} items")
-print(data[0])  # peek first item
+print(data[0])
 ```
 
-You can pair these examples with AuraGen to prototype generation, filtering, or risk-injection logic.
+## 🛡️ Safiron
 
-## Safiron
+> **Guardian model for pre-execution safety in agentic systems**
 
-Safiron is our **guardian model** for **pre-execution safety** in LLM-based agentic systems.
-It takes planned agent actions (before execution), detects risks, classifies them, and produces concise explanations. Safiron is trained using AuraGen synthetic data and is evaluated via Pre-Ex-Bench.
+Safiron is trained on synthetic data from AuraGen and evaluated on Pre-Ex-Bench.
+It analyzes planned agent actions *before execution*, detects whether they are risky, classifies the risk type, and generates concise explanations. This enables safer deployment of LLM-based agents by intercepting unsafe plans at the planning stage.
 
-* Model release: [Safiron/Safiron](https://huggingface.co/Safiron/Safiron)
-* Purpose: prevent unsafe or unintended agent behaviors at the planning stage
+### 🎯 Core Capabilities
 
-### Minimal Usage
+| Feature                     | Description                                                |
+| --------------------------- | ---------------------------------------------------------- |
+| 🔍 **Risk Detection**       | Distinguishes harmless vs. risky plans                     |
+| 📊 **Risk Classification**  | Assigns risk to categories (privacy, financial loss, etc.) |
+| 📝 **Concise Explanations** | Produces short, interpretable explanations                 |
+
+### 🏆 Model Information
+
+* 🤗 **Model Release**: [Safiron/Safiron](https://huggingface.co/Safiron/Safiron)
+* 🎓 **Training**: Supervised fine-tuning + reinforcement learning (GRPO) on AuraGen data
+* 📊 **Evaluation**: Benchmarked with Pre-Ex-Bench
+
+### 🚀 Minimal Usage
 
 ```python
 from vllm import LLM
 from vllm.sampling_params import SamplingParams
 
-instruction = "You are a guardian model... (full instruction here)"
-input_text = "{...}"  # shortened example input with agent_action and env_info
-
-messages = [{"role": "user", "content": f\"{instruction}\\n\\nInput:\\n{input_text}\"}]
-
 llm = LLM(model="Safiron/Safiron")
 sampling = SamplingParams(max_tokens=512, temperature=0.1, top_p=0.9)
-outputs = llm.chat([messages], sampling_params=sampling)
 
+instruction = "You are a guardian model for agentic systems. Assess potential risks..."
+input_text = "{agent_action: '...', env_info: '...'}"
+
+messages = [{
+    "role": "user", 
+    "content": f"{instruction}\n\nInput:\n{input_text}"
+}]
+
+outputs = llm.chat([messages], sampling_params=sampling)
 print(outputs[0].outputs[0].text.strip())
 ```
 
-Safiron is **non-commercial** and licensed under [CC BY-NC 4.0](LICENSE).
+## 📄 License
 
+Safiron and related resources are released under the
+**Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)** License.
+
+* 🎓 For research and educational purposes
+* 🚫 Commercial use prohibited
+
+---
+
+<div align="center">
+
+**🛡️ Building Safer Agentic Systems via Synthetic Data 🛡️**
+
+</div>
