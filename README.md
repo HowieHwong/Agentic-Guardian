@@ -133,25 +133,25 @@ print(outputs[0].outputs[0].text.strip())
 ```
 
 
-# 🔧 Evaluation
+## 🔧 Evaluation
 
-## Overview
+### Overview
 Evaluate **risk explanations** only when the model has correctly detected harmful samples.
 
-## Installation
+### Installation
 ```bash
 pip install openai scikit-learn tqdm
 export OPENAI_API_KEY="your_api_key_here"
 ````
 
 
-## Usage
+### Usage
 
 ```bash
 python evaluation/eval.py --test-file path/to/results.json --model gpt-4o-mini --out-file evaluation/eval_results.json
 ```
 
-### Arguments
+#### Arguments
 
 | Argument      | Description                                 |
 | ------------- | ------------------------------------------- |
@@ -160,7 +160,7 @@ python evaluation/eval.py --test-file path/to/results.json --model gpt-4o-mini -
 | `--workers`   | Number of parallel threads for LLM calls.   |
 | `--out-file`  | Output file with annotated evaluation.      |
 
-### Input Format
+#### Input Format
 
 ```json
 {
@@ -169,7 +169,7 @@ python evaluation/eval.py --test-file path/to/results.json --model gpt-4o-mini -
 }
 ```
 
-### Output
+#### Output
 
 * Classification accuracy
 * Harmful detection accuracy
