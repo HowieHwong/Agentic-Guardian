@@ -19,6 +19,7 @@
 - [🔧 AuraGen](#-auragen)
 - [📊 Pre-Ex-Bench](#-pre-ex-bench)
 - [🛡️ Safiron](#️-safiron)
+- [📊 Evaluation](#-evaluation)
 - [📄 License](#-license)
 
 ## 🌟 Overview
@@ -130,6 +131,56 @@ messages = [{
 outputs = llm.chat([messages], sampling_params=sampling)
 print(outputs[0].outputs[0].text.strip())
 ```
+
+
+# 🔧 Evaluation
+
+## Overview
+Evaluate **risk explanations** only when the model has correctly detected harmful samples.
+
+## Installation
+```bash
+pip install openai scikit-learn tqdm
+export OPENAI_API_KEY="your_api_key_here"
+````
+
+
+## Usage
+
+```bash
+python evaluation/eval.py --test-file path/to/results.json --model gpt-4o-mini --out-file evaluation/eval_results.json
+```
+
+### Arguments
+
+| Argument      | Description                                 |
+| ------------- | ------------------------------------------- |
+| `--test-file` | Path to model prediction file (JSON/JSONL). |
+| `--model`     | LLM model for explanation judging.          |
+| `--workers`   | Number of parallel threads for LLM calls.   |
+| `--out-file`  | Output file with annotated evaluation.      |
+
+### Input Format
+
+```json
+{
+  "expected_output": "Expected response text",
+  "predicted_output": "Model predicted response"
+}
+```
+
+### Output
+
+* Classification accuracy
+* Harmful detection accuracy
+* Risk category accuracy
+* Explanation correctness
+* Confusion matrix
+
+Annotated evaluation results are saved to `--out-file`.
+
+
+
 
 ## 📄 License
 
