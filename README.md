@@ -4,6 +4,7 @@
 
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](LICENSE)
+[![Paper](https://img.shields.io/badge/📄%20Paper-arXiv-red.svg)](https://arxiv.org/pdf/2510.09781)
 [![Documentation](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://roaring-capybara-053cbe.netlify.app/)
 [![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Safiron-yellow)](https://huggingface.co/Safiron/Safiron)
 
