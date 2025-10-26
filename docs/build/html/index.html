@@ -105,8 +105,11 @@
 git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;
 <span class="nb">cd</span><span class="w"> </span>Agentic-Guardian
 
+conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>aura<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11<span class="w"> </span>-y
+conda<span class="w"> </span>activate<span class="w"> </span>aura
+
 <span class="c1"># Install dependencies</span>
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt<span class="w"> </span>--upgrade
 
 <span class="c1"># Configure API keys</span>
 python<span class="w"> </span>config/configure_api_keys.py

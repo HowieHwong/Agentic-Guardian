@@ -163,7 +163,6 @@
         <span class="n">openai_cfg</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">externalAPI_cfg</span> <span class="o">=</span> <span class="kc">None</span>
         
-        <span class="c1"># 使用新的配置类</span>
         <span class="k">if</span> <span class="s2">&quot;openai&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="n">openai_section</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;openai&quot;</span><span class="p">,</span> <span class="p">{})</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">openai_section</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;api_key&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">openai_section</span> <span class="ow">and</span> <span class="s2">&quot;api_key_type&quot;</span> <span class="ow">in</span> <span class="n">openai_section</span><span class="p">:</span>
@@ -515,24 +514,18 @@
             <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
         <span class="p">}</span>
         
-        <span class="c1"># 保存修改的函数（包括新函数和参数变化的函数）</span>
         <span class="k">if</span> <span class="n">modified_functions</span><span class="p">:</span>
-            <span class="c1"># 将修改的函数保存到modified_functions字段</span>
             <span class="n">injection_info</span><span class="p">[</span><span class="s2">&quot;modified_functions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modified_functions</span>
             
-            <span class="c1"># 同时保持与旧代码的兼容性，新函数也保存到new_functions字段</span>
             <span class="n">new_funcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">modified_functions</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;is_new&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)]</span>
             <span class="k">if</span> <span class="n">new_funcs</span><span class="p">:</span>
                 <span class="n">injection_info</span><span class="p">[</span><span class="s2">&quot;new_functions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_funcs</span>
-        <span class="c1"># 保持向后兼容 - 如果使用旧的new_functions字段</span>
         <span class="k">elif</span> <span class="n">legacy_new_functions</span><span class="p">:</span>
             <span class="n">injection_info</span><span class="p">[</span><span class="s2">&quot;new_functions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">legacy_new_functions</span>
         
-        <span class="c1"># 如果响应被修改，添加修改后的响应内容</span>
         <span class="k">if</span> <span class="n">modified_response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">injection_info</span><span class="p">[</span><span class="s2">&quot;modified_agent_response&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modified_response</span>
             
-        <span class="c1"># 如果原始响应已保存，添加到元数据中</span>
         <span class="k">if</span> <span class="s2">&quot;original_agent_response&quot;</span> <span class="ow">in</span> <span class="n">record</span><span class="p">:</span>
             <span class="n">injection_info</span><span class="p">[</span><span class="s2">&quot;original_agent_response&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;original_agent_response&quot;</span><span class="p">]</span>
         
@@ -643,7 +636,6 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">RiskInjectionConfig</span><span class="p">,</span> <span class="n">constraint_map</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">constraint_map</span><span class="p">)</span>
         
-        <span class="c1"># 创建InferenceManager实例</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span> <span class="o">=</span> <span class="n">InferenceManager</span><span class="p">(</span>
             <span class="n">use_internal_inference</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">externalAPI_generation</span><span class="p">,</span>
             <span class="n">openai_config</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">openai</span><span class="p">,</span>
@@ -801,9 +793,7 @@
         
         <span class="c1"># STEP 3: Identify and analyze function changes</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_response</span><span class="p">:</span>  <span class="c1"># Only analyze action steps for function changes</span>
-            <span class="c1"># 提取函数调用及其参数</span>
             <span class="k">def</span><span class="w"> </span><span class="nf">extract_function_calls_with_params</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-                <span class="c1"># 匹配函数调用和其参数</span>
                 <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;([a-zA-Z_][a-zA-Z0-9_]*)\s*\((.*?)\)&#39;</span>
                 <span class="n">matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
@@ -811,13 +801,11 @@
                     <span class="n">result</span><span class="p">[</span><span class="n">func_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                 <span class="k">return</span> <span class="n">result</span>
             
-            <span class="c1"># 解析参数字符串为字典 {参数名: 参数值}</span>
             <span class="k">def</span><span class="w"> </span><span class="nf">parse_params</span><span class="p">(</span><span class="n">param_str</span><span class="p">):</span>
                 <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">param_str</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">params</span>
                     
-                <span class="c1"># 处理位置参数和关键字参数</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">in_string</span> <span class="o">=</span> <span class="kc">False</span>
                     <span class="n">in_bracket</span> <span class="o">=</span> <span class="mi">0</span>
@@ -825,41 +813,33 @@
                     <span class="n">current_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
                     
-                    <span class="c1"># 首先尝试解析为关键字参数</span>
                     <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">param_str</span><span class="p">):</span>
                         <span class="n">c</span> <span class="o">=</span> <span class="n">param_str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                         
-                        <span class="c1"># 处理字符串内容</span>
                         <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">]:</span>
                             <span class="n">in_string</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">in_string</span>
                             <span class="n">current_value</span> <span class="o">+=</span> <span class="n">c</span>
-                        <span class="c1"># 处理括号</span>
                         <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_string</span><span class="p">:</span>
                             <span class="n">in_bracket</span> <span class="o">+=</span> <span class="mi">1</span>
                             <span class="n">current_value</span> <span class="o">+=</span> <span class="n">c</span>
                         <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_string</span><span class="p">:</span>
                             <span class="n">in_bracket</span> <span class="o">-=</span> <span class="mi">1</span>
                             <span class="n">current_value</span> <span class="o">+=</span> <span class="n">c</span>
-                        <span class="c1"># 处理参数分隔符</span>
                         <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;,&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_string</span> <span class="ow">and</span> <span class="n">in_bracket</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                             <span class="k">if</span> <span class="n">current_key</span><span class="p">:</span>
                                 <span class="n">params</span><span class="p">[</span><span class="n">current_key</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="n">current_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                             <span class="n">current_key</span> <span class="o">=</span> <span class="kc">None</span>
                             <span class="n">current_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-                        <span class="c1"># 处理参数名与值的分隔符</span>
                         <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;=&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_string</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">current_key</span> <span class="ow">and</span> <span class="n">in_bracket</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                             <span class="n">current_key</span> <span class="o">=</span> <span class="n">current_value</span>
                             <span class="n">current_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-                        <span class="c1"># 普通字符</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">current_value</span> <span class="o">+=</span> <span class="n">c</span>
                         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                     
-                    <span class="c1"># 处理最后一个参数</span>
                     <span class="k">if</span> <span class="n">current_key</span><span class="p">:</span>
                         <span class="n">params</span><span class="p">[</span><span class="n">current_key</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="n">current_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                     
-                    <span class="c1"># 如果没有解析到关键字参数，则可能是位置参数</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="p">:</span>
                         <span class="n">pos_params</span> <span class="o">=</span> <span class="n">param_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
                         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pos_params</span><span class="p">):</span>
@@ -867,7 +847,6 @@
                             
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error parsing params: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="c1"># 回退到简单的分隔处理</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">pos_params</span> <span class="o">=</span> <span class="n">param_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
                         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pos_params</span><span class="p">):</span>
@@ -877,7 +856,6 @@
                 
                 <span class="k">return</span> <span class="n">params</span>
             
-            <span class="c1"># 从原始步骤和修改后的步骤中提取函数调用和参数</span>
             <span class="n">original_funcs</span> <span class="o">=</span> <span class="n">extract_function_calls_with_params</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
             <span class="n">modified_funcs</span> <span class="o">=</span> <span class="n">extract_function_calls_with_params</span><span class="p">(</span><span class="n">modified_content</span><span class="p">)</span>
             
@@ -885,11 +863,9 @@
             <span class="n">builtins</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;print&#39;</span><span class="p">,</span> <span class="s1">&#39;str&#39;</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;dict&#39;</span><span class="p">,</span> <span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="s1">&#39;tuple&#39;</span><span class="p">,</span> <span class="s1">&#39;len&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;range&#39;</span><span class="p">,</span> 
                        <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;hash&#39;</span><span class="p">,</span> <span class="s1">&#39;sorted&#39;</span><span class="p">,</span> <span class="s1">&#39;enumerate&#39;</span><span class="p">,</span> <span class="s1">&#39;zip&#39;</span><span class="p">,</span> <span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="s1">&#39;map&#39;</span><span class="p">,</span> <span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;round&#39;</span><span class="p">,</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
             
-            <span class="c1"># 储存新函数和修改的函数</span>
             <span class="n">new_functions</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">modified_functions</span> <span class="o">=</span> <span class="p">[]</span>
             
-            <span class="c1"># 1. 处理新增的函数</span>
             <span class="n">new_func_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">modified_funcs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> 
                              <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">original_funcs</span> <span class="ow">and</span> 
                              <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">builtins</span> <span class="ow">and</span>
@@ -897,7 +873,6 @@
             
             <span class="k">for</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">new_func_names</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected new function: </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="c1"># 为新函数生成完整定义</span>
                 <span class="n">step3_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">You need to define a new function &#39;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">&#39; that was introduced in this modified action step: </span>
 <span class="si">{</span><span class="n">modified_content</span><span class="si">}</span>
@@ -947,14 +922,12 @@
                     <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a tool that creates YAML function definitions. Return ONLY the requested YAML content with no other text.&quot;</span>
                 <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                 
-                <span class="c1"># 清理格式</span>
                 <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^```yaml\n&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
                 <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^```\n&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
                 <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n```$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
                 <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^`+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
                 <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;`+$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
                 
-                <span class="c1"># 清理额外文本</span>
                 <span class="k">if</span> <span class="s1">&#39;example_usage:&#39;</span> <span class="ow">in</span> <span class="n">function_def</span><span class="p">:</span>
                     <span class="n">parts</span> <span class="o">=</span> <span class="n">function_def</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;example_usage:&#39;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -977,14 +950,11 @@
                         <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;yaml&quot;</span>
                     <span class="p">})</span>
             
-            <span class="c1"># 2. 处理参数修改的函数</span>
             <span class="k">for</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">original_funcs</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">modified_funcs</span> <span class="ow">and</span> <span class="n">func_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">builtins</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">func_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
-                    <span class="c1"># 解析原始参数和修改后的参数</span>
                     <span class="n">original_params</span> <span class="o">=</span> <span class="n">parse_params</span><span class="p">(</span><span class="n">original_funcs</span><span class="p">[</span><span class="n">func_name</span><span class="p">])</span>
                     <span class="n">modified_params</span> <span class="o">=</span> <span class="n">parse_params</span><span class="p">(</span><span class="n">modified_funcs</span><span class="p">[</span><span class="n">func_name</span><span class="p">])</span>
                     
-                    <span class="c1"># 找出新增的参数</span>
                     <span class="n">new_params</span> <span class="o">=</span> <span class="p">{}</span>
                     <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_value</span> <span class="ow">in</span> <span class="n">modified_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                         <span class="k">if</span> <span class="n">param_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">original_params</span><span class="p">:</span>
@@ -992,7 +962,6 @@
                     
                     <span class="k">if</span> <span class="n">new_params</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected modified function with new parameters: </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                        <span class="c1"># 为每个新参数获取信息</span>
                         <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_value</span> <span class="ow">in</span> <span class="n">new_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                             <span class="n">step3_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">You need to analyze a new parameter &#39;</span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2">&#39; added to function &#39;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">&#39; in this modified step:</span>
@@ -1014,7 +983,6 @@
                                 <span class="n">response_format</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;json_object&quot;</span><span class="p">}</span>
                             <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                             
-                            <span class="c1"># 解析参数信息</span>
                             <span class="k">try</span><span class="p">:</span>
                                 <span class="n">param_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">param_info</span><span class="p">)</span>
                                 <span class="n">modified_functions</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
@@ -1024,7 +992,6 @@
                                     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">param_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
                                 <span class="p">})</span>
                             <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
-                                <span class="c1"># 回退到简单信息</span>
                                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to parse parameter info for </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                                 <span class="n">modified_functions</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
                                     <span class="s2">&quot;function_name&quot;</span><span class="p">:</span> <span class="n">func_name</span><span class="p">,</span>
@@ -1033,7 +1000,6 @@
                                     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;unknown&quot;</span>
                                 <span class="p">})</span>
             
-            <span class="c1"># 保存到context_info</span>
             <span class="k">if</span> <span class="n">new_functions</span><span class="p">:</span>
                 <span class="n">context_info</span><span class="p">[</span><span class="s2">&quot;new_functions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_functions</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">new_functions</span><span class="p">)</span><span class="si">}</span><span class="s2"> new function definitions&quot;</span><span class="p">)</span>
@@ -1176,7 +1142,6 @@
         <span class="c1"># STEP 3: Identify and analyze function changes</span>
         <span class="c1"># 提取函数调用及其参数</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">extract_function_calls_with_params</span><span class="p">(</span><span class="n">action_list</span><span class="p">):</span>
-            <span class="c1"># 匹配函数调用和其参数</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">action_list</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -1187,13 +1152,11 @@
                     <span class="n">result</span><span class="p">[</span><span class="n">func_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">result</span>
         
-        <span class="c1"># 解析参数字符串为字典 {参数名: 参数值}</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">parse_params</span><span class="p">(</span><span class="n">param_str</span><span class="p">):</span>
             <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">param_str</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">params</span>
                 
-            <span class="c1"># 处理位置参数和关键字参数</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">in_string</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="n">in_bracket</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1201,41 +1164,33 @@
                 <span class="n">current_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                 <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
                 
-                <span class="c1"># 首先尝试解析为关键字参数</span>
                 <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">param_str</span><span class="p">):</span>
                     <span class="n">c</span> <span class="o">=</span> <span class="n">param_str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                     
-                    <span class="c1"># 处理字符串内容</span>
                     <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">]:</span>
                         <span class="n">in_string</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">in_string</span>
                         <span class="n">current_value</span> <span class="o">+=</span> <span class="n">c</span>
-                    <span class="c1"># 处理括号</span>
                     <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_string</span><span class="p">:</span>
                         <span class="n">in_bracket</span> <span class="o">+=</span> <span class="mi">1</span>
                         <span class="n">current_value</span> <span class="o">+=</span> <span class="n">c</span>
                     <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_string</span><span class="p">:</span>
                         <span class="n">in_bracket</span> <span class="o">-=</span> <span class="mi">1</span>
                         <span class="n">current_value</span> <span class="o">+=</span> <span class="n">c</span>
-                    <span class="c1"># 处理参数分隔符</span>
                     <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;,&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_string</span> <span class="ow">and</span> <span class="n">in_bracket</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">current_key</span><span class="p">:</span>
                             <span class="n">params</span><span class="p">[</span><span class="n">current_key</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="n">current_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                         <span class="n">current_key</span> <span class="o">=</span> <span class="kc">None</span>
                         <span class="n">current_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-                    <span class="c1"># 处理参数名与值的分隔符</span>
                     <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;=&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_string</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">current_key</span> <span class="ow">and</span> <span class="n">in_bracket</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">current_key</span> <span class="o">=</span> <span class="n">current_value</span>
                         <span class="n">current_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-                    <span class="c1"># 普通字符</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">current_value</span> <span class="o">+=</span> <span class="n">c</span>
                     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
                 
-                <span class="c1"># 处理最后一个参数</span>
                 <span class="k">if</span> <span class="n">current_key</span><span class="p">:</span>
                     <span class="n">params</span><span class="p">[</span><span class="n">current_key</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="n">current_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                 
-                <span class="c1"># 如果没有解析到关键字参数，则可能是位置参数</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="p">:</span>
                     <span class="n">pos_params</span> <span class="o">=</span> <span class="n">param_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
                     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pos_params</span><span class="p">):</span>
@@ -1243,7 +1198,6 @@
                         
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error parsing params: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="c1"># 回退到简单的分隔处理</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">pos_params</span> <span class="o">=</span> <span class="n">param_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
                     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pos_params</span><span class="p">):</span>
@@ -1253,7 +1207,6 @@
             
             <span class="k">return</span> <span class="n">params</span>
         
-        <span class="c1"># 从原始动作链和修改后的动作链中提取函数调用和参数</span>
         <span class="n">original_funcs</span> <span class="o">=</span> <span class="n">extract_function_calls_with_params</span><span class="p">(</span><span class="n">original_actions</span><span class="p">)</span>
         <span class="n">modified_funcs</span> <span class="o">=</span> <span class="n">extract_function_calls_with_params</span><span class="p">(</span><span class="n">modified_actions</span><span class="p">)</span>
         
@@ -1261,11 +1214,9 @@
         <span class="n">builtins</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;print&#39;</span><span class="p">,</span> <span class="s1">&#39;str&#39;</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;dict&#39;</span><span class="p">,</span> <span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="s1">&#39;tuple&#39;</span><span class="p">,</span> <span class="s1">&#39;len&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;range&#39;</span><span class="p">,</span> 
                    <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;hash&#39;</span><span class="p">,</span> <span class="s1">&#39;sorted&#39;</span><span class="p">,</span> <span class="s1">&#39;enumerate&#39;</span><span class="p">,</span> <span class="s1">&#39;zip&#39;</span><span class="p">,</span> <span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="s1">&#39;map&#39;</span><span class="p">,</span> <span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;round&#39;</span><span class="p">,</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
         
-        <span class="c1"># 储存新函数和修改的函数</span>
         <span class="n">new_functions</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">modified_functions</span> <span class="o">=</span> <span class="p">[]</span>
         
-        <span class="c1"># 1. 处理新增的函数</span>
         <span class="n">new_func_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">modified_funcs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> 
                          <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">original_funcs</span> <span class="ow">and</span> 
                          <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">builtins</span> <span class="ow">and</span>
@@ -1273,7 +1224,6 @@
         
         <span class="k">for</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">new_func_names</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected new function in chain: </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="c1"># 为新函数生成完整定义</span>
             <span class="n">step3_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">You need to define a new function &#39;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">&#39; that was introduced in this modified action chain: </span>
 <span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">modified_actions</span><span class="p">,</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span>
@@ -1323,14 +1273,12 @@
                 <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a tool that creates YAML function definitions. Return ONLY the requested YAML content with no other text.&quot;</span>
             <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             
-            <span class="c1"># 清理格式</span>
             <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^```yaml\n&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
             <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^```\n&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
             <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n```$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
             <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^`+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
             <span class="n">function_def</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;`+$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">function_def</span><span class="p">)</span>
             
-            <span class="c1"># 清理额外文本</span>
             <span class="k">if</span> <span class="s1">&#39;example_usage:&#39;</span> <span class="ow">in</span> <span class="n">function_def</span><span class="p">:</span>
                 <span class="n">parts</span> <span class="o">=</span> <span class="n">function_def</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;example_usage:&#39;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -1353,14 +1301,11 @@
                     <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;yaml&quot;</span>
                 <span class="p">})</span>
         
-        <span class="c1"># 2. 处理参数修改的函数</span>
         <span class="k">for</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">original_funcs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">modified_funcs</span> <span class="ow">and</span> <span class="n">func_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">builtins</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">func_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
-                <span class="c1"># 解析原始参数和修改后的参数</span>
                 <span class="n">original_params</span> <span class="o">=</span> <span class="n">parse_params</span><span class="p">(</span><span class="n">original_funcs</span><span class="p">[</span><span class="n">func_name</span><span class="p">])</span>
                 <span class="n">modified_params</span> <span class="o">=</span> <span class="n">parse_params</span><span class="p">(</span><span class="n">modified_funcs</span><span class="p">[</span><span class="n">func_name</span><span class="p">])</span>
                 
-                <span class="c1"># 找出新增的参数</span>
                 <span class="n">new_params</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_value</span> <span class="ow">in</span> <span class="n">modified_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="k">if</span> <span class="n">param_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">original_params</span><span class="p">:</span>
@@ -1368,7 +1313,6 @@
                 
                 <span class="k">if</span> <span class="n">new_params</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected modified function with new parameters in chain: </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="c1"># 为每个新参数获取信息</span>
                     <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_value</span> <span class="ow">in</span> <span class="n">new_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                         <span class="n">step3_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">You need to analyze a new parameter &#39;</span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2">&#39; added to function &#39;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">&#39; in this modified action chain:</span>
@@ -1390,7 +1334,6 @@
                             <span class="n">response_format</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;json_object&quot;</span><span class="p">}</span>
                         <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                         
-                        <span class="c1"># 解析参数信息</span>
                         <span class="k">try</span><span class="p">:</span>
                             <span class="n">param_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">param_info</span><span class="p">)</span>
                             <span class="n">modified_functions</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
@@ -1400,7 +1343,6 @@
                                 <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">param_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
                             <span class="p">})</span>
                         <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
-                            <span class="c1"># 回退到简单信息</span>
                             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to parse parameter info for </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                             <span class="n">modified_functions</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
                                 <span class="s2">&quot;function_name&quot;</span><span class="p">:</span> <span class="n">func_name</span><span class="p">,</span>
@@ -1409,7 +1351,6 @@
                                 <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;unknown&quot;</span>
                             <span class="p">})</span>
         
-        <span class="c1"># 保存到chain_context</span>
         <span class="k">if</span> <span class="n">new_functions</span><span class="p">:</span>
             <span class="n">chain_context</span><span class="p">[</span><span class="s2">&quot;new_functions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_functions</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">new_functions</span><span class="p">)</span><span class="si">}</span><span class="s2"> new function definitions&quot;</span><span class="p">)</span>
@@ -1472,7 +1413,6 @@
 <span class="s2">&quot;&quot;&quot;</span>
             <span class="c1"># Call LLM</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">externalAPI_generation</span><span class="p">:</span>
-                <span class="c1"># 使用externalAPI API进行目标选择</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">response_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
                         <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
@@ -1484,11 +1424,12 @@
                 <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
                     <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Default to first action if parsing fails</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># 使用OpenAI API</span>
-                <span class="n">response_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
+                <span class="n">response_tuple</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
                     <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
-                    <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON.&quot;</span>
+                    <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON.&quot;</span><span class="p">,</span>
+                    <span class="n">return_usage</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="p">)</span>
+                <span class="n">response_content</span> <span class="o">=</span> <span class="n">response_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response_tuple</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">response_tuple</span>
             
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response_content</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
@@ -1515,7 +1456,6 @@
 <span class="s2">&quot;&quot;&quot;</span>
             <span class="c1"># Call LLM</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">externalAPI_generation</span><span class="p">:</span>
-                <span class="c1"># 使用externalAPI API进行目标选择</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">response_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
                         <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
@@ -1528,11 +1468,12 @@
                 <span class="k">except</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
                     <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">action_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># Default to first and last actions</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># 使用OpenAI API</span>
-                <span class="n">response_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
+                <span class="n">response_tuple</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
                     <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
-                    <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON.&quot;</span>
+                    <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON.&quot;</span><span class="p">,</span>
+                    <span class="n">return_usage</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="p">)</span>
+                <span class="n">response_content</span> <span class="o">=</span> <span class="n">response_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response_tuple</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">response_tuple</span>
             
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">indices</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response_content</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
@@ -1572,7 +1513,6 @@
 <span class="s2">&quot;&quot;&quot;</span>
             <span class="c1"># Call LLM</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">externalAPI_generation</span><span class="p">:</span>
-                <span class="c1"># 使用externalAPI API进行目标选择</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">response_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
                         <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
@@ -1617,7 +1557,6 @@
 <span class="s2">&quot;&quot;&quot;</span>
             <span class="c1"># Call LLM</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">externalAPI_generation</span><span class="p">:</span>
-                <span class="c1"># 使用externalAPI API进行目标选择</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">response_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
                         <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
@@ -1629,7 +1568,6 @@
                 <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
                     <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># Default to first action</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># 使用OpenAI API</span>
                 <span class="n">response_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
                     <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
                     <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a tool that modifies text according to instructions. You MUST output ONLY valid JSON.&quot;</span>
@@ -1657,14 +1595,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">Path</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     
-    <span class="c1"># Ensure file_format is never None</span>
     <span class="k">if</span> <span class="n">file_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">file_format</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span>
     
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span><span class="si">}</span><span class="s2"> records to </span><span class="si">{</span><span class="n">out_path</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">file_format</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2"> format&quot;</span><span class="p">)</span>
     
     <span class="k">if</span> <span class="n">file_format</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
-        <span class="c1"># Save as single JSON array</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>

@@ -36,8 +36,11 @@ Quick Start
    git clone <repository-url>
    cd Agentic-Guardian
 
+   conda create -n aura python=3.11 -y
+   conda activate aura
+
    # Install dependencies
-   pip install -r requirements.txt
+   pip install -r requirements.txt --upgrade
 
    # Configure API keys
    python config/configure_api_keys.py

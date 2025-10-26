@@ -127,6 +127,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">openai_config</span> <span class="o">=</span> <span class="n">openai_config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">externalAPI_config</span> <span class="o">=</span> <span class="n">externalAPI_config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Initialize token tracking</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_tracker</span> <span class="o">=</span> <span class="n">TokenTracker</span><span class="p">()</span>
         
         <span class="c1"># Setup OpenAI client if not using internal inference</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">use_internal_inference</span><span class="p">:</span>
@@ -150,7 +152,8 @@
                       <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
                       <span class="n">system_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;You are an AI assistant that responds to user requests.&quot;</span><span class="p">,</span>
                       <span class="n">response_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="n">temperature</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+                      <span class="n">temperature</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                      <span class="n">return_usage</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate text using either OpenAI or externalAPI API.</span>
 <span class="sd">        </span>
@@ -161,18 +164,22 @@
 <span class="sd">            temperature: Optional temperature override</span>
 <span class="sd">            </span>
 <span class="sd">        Returns:</span>
-<span class="sd">            Generated text</span>
+<span class="sd">            If return_usage is False: Generated text (str)</span>
+<span class="sd">            If return_usage is True: Tuple of (text, usage_dict, request_cost_usd)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_internal_inference</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_with_externalAPI</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">system_message</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_with_externalAPI</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">system_message</span><span class="p">,</span> <span class="n">return_usage</span><span class="o">=</span><span class="n">return_usage</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_with_openai</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">system_message</span><span class="p">,</span> <span class="n">response_format</span><span class="p">,</span> <span class="n">temperature</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_with_openai</span><span class="p">(</span>
+                <span class="n">prompt</span><span class="p">,</span> <span class="n">system_message</span><span class="p">,</span> <span class="n">response_format</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">return_usage</span><span class="o">=</span><span class="n">return_usage</span>
+            <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_with_openai</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
                              <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
                              <span class="n">system_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;You are an AI assistant that responds to user requests.&quot;</span><span class="p">,</span>
                              <span class="n">response_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                             <span class="n">temperature</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+                             <span class="n">temperature</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                             <span class="n">return_usage</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate text using OpenAI API.</span>
 <span class="sd">        </span>
@@ -207,13 +214,38 @@
         
         <span class="c1"># Call the API</span>
         <span class="n">completion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        
-        <span class="c1"># Return the generated text</span>
-        <span class="k">return</span> <span class="n">completion</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="n">completion</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+
+        <span class="c1"># Extract usage if available</span>
+        <span class="n">usage</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;prompt_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;completion_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;total_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">completion</span><span class="p">,</span> <span class="s2">&quot;usage&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">completion</span><span class="o">.</span><span class="n">usage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">completion</span><span class="o">.</span><span class="n">usage</span><span class="p">,</span> <span class="s2">&quot;prompt_tokens&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span>
+                <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;completion_tokens&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">completion</span><span class="o">.</span><span class="n">usage</span><span class="p">,</span> <span class="s2">&quot;completion_tokens&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span>
+                <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;total_tokens&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">completion</span><span class="o">.</span><span class="n">usage</span><span class="p">,</span> <span class="s2">&quot;total_tokens&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                    <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;completion_tokens&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="c1"># Keep default zeros if structure differs</span>
+            <span class="k">pass</span>
+
+        <span class="c1"># Update tracker and compute cost</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_tracker</span><span class="o">.</span><span class="n">add_usage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">openai_config</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">],</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;completion_tokens&quot;</span><span class="p">])</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_tracker</span><span class="o">.</span><span class="n">compute_cost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">openai_config</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">],</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;completion_tokens&quot;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">return_usage</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="n">usage</span><span class="p">,</span> <span class="n">cost</span>
+        <span class="k">return</span> <span class="n">text</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_with_externalAPI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                        <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                       <span class="n">system_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;You are an AI assistant that responds to user requests.&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+                       <span class="n">system_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;You are an AI assistant that responds to user requests.&quot;</span><span class="p">,</span>
+                       <span class="n">return_usage</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate text using externalAPI API via OpenAI client.</span>
 <span class="sd">        </span>
@@ -246,12 +278,102 @@
                 <span class="n">max_tokens</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">externalAPI_config</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="c1"># Try to read usage if the backend returns it; otherwise leave zeros</span>
+            <span class="n">usage</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;prompt_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;completion_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;total_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="s2">&quot;usage&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">response</span><span class="o">.</span><span class="n">usage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">usage</span><span class="p">,</span> <span class="s2">&quot;prompt_tokens&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span>
+                    <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;completion_tokens&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">usage</span><span class="p">,</span> <span class="s2">&quot;completion_tokens&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span>
+                    <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;total_tokens&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">usage</span><span class="p">,</span> <span class="s2">&quot;total_tokens&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                        <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;completion_tokens&quot;</span><span class="p">]</span>
+                    <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="c1"># Update tracker using external model pricing if configured (often unknown, defaults to 0)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token_tracker</span><span class="o">.</span><span class="n">add_usage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">externalAPI_config</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">],</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;completion_tokens&quot;</span><span class="p">])</span>
+            <span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_tracker</span><span class="o">.</span><span class="n">compute_cost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">externalAPI_config</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">],</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;completion_tokens&quot;</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">return_usage</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="n">usage</span><span class="p">,</span> <span class="n">cost</span>
+            <span class="k">return</span> <span class="n">text</span>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;externalAPI API error: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span> 
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenPricing</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pricing information per 1M tokens for a model.&quot;&quot;&quot;</span>
+    <span class="n">input_per_million</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">output_per_million</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_default_pricing_table</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TokenPricing</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple pricing table. Values are USD per 1M tokens. Extend as needed.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="c1"># Common OpenAI models (prices subject to change)</span>
+        <span class="s2">&quot;gpt-4o&quot;</span><span class="p">:</span> <span class="n">TokenPricing</span><span class="p">(</span><span class="n">input_per_million</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">output_per_million</span><span class="o">=</span><span class="mf">15.0</span><span class="p">),</span>
+        <span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">:</span> <span class="n">TokenPricing</span><span class="p">(</span><span class="n">input_per_million</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">output_per_million</span><span class="o">=</span><span class="mf">0.6</span><span class="p">),</span>
+        <span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">:</span> <span class="n">TokenPricing</span><span class="p">(</span><span class="n">input_per_million</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">output_per_million</span><span class="o">=</span><span class="mf">1.5</span><span class="p">),</span>
+    <span class="p">}</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenTracker</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tracks token usage and estimated costs across requests.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_prompt_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_completion_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_requests</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_cost_usd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_request_usage</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;completion_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;total_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_request_cost_usd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pricing_table</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TokenPricing</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_pricing_table</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_model_pricing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenPricing</span><span class="p">:</span>
+        <span class="c1"># Match by substring to allow variants like gpt-4o-2024-xx</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">pricing</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pricing_table</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="n">model</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">pricing</span>
+        <span class="k">return</span> <span class="n">TokenPricing</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prompt_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">completion_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">pricing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model_pricing</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">input_cost</span> <span class="o">=</span> <span class="p">(</span><span class="n">prompt_tokens</span> <span class="o">/</span> <span class="mi">1_000_000</span><span class="p">)</span> <span class="o">*</span> <span class="n">pricing</span><span class="o">.</span><span class="n">input_per_million</span>
+        <span class="n">output_cost</span> <span class="o">=</span> <span class="p">(</span><span class="n">completion_tokens</span> <span class="o">/</span> <span class="mi">1_000_000</span><span class="p">)</span> <span class="o">*</span> <span class="n">pricing</span><span class="o">.</span><span class="n">output_per_million</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">input_cost</span> <span class="o">+</span> <span class="n">output_cost</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prompt_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">completion_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">total_tokens</span> <span class="o">=</span> <span class="p">(</span><span class="n">prompt_tokens</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">completion_tokens</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_prompt_tokens</span> <span class="o">+=</span> <span class="n">prompt_tokens</span> <span class="ow">or</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_completion_tokens</span> <span class="o">+=</span> <span class="n">completion_tokens</span> <span class="ow">or</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_requests</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_request_usage</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;prompt_tokens&quot;</span><span class="p">:</span> <span class="n">prompt_tokens</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;completion_tokens&quot;</span><span class="p">:</span> <span class="n">completion_tokens</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;total_tokens&quot;</span><span class="p">:</span> <span class="n">total_tokens</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_request_cost_usd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_cost</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">prompt_tokens</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span> <span class="n">completion_tokens</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_cost_usd</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_request_cost_usd</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;total_prompt_tokens&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_prompt_tokens</span><span class="p">,</span>
+            <span class="s2">&quot;total_completion_tokens&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_completion_tokens</span><span class="p">,</span>
+            <span class="s2">&quot;total_tokens&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_prompt_tokens</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_completion_tokens</span><span class="p">,</span>
+            <span class="s2">&quot;total_requests&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_requests</span><span class="p">,</span>
+            <span class="s2">&quot;total_cost_usd&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_cost_usd</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+            <span class="s2">&quot;last_request_usage&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_request_usage</span><span class="p">,</span>
+            <span class="s2">&quot;last_request_cost_usd&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_request_cost_usd</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="p">}</span>
 </pre></div>
 
            </div>

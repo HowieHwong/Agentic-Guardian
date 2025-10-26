@@ -753,7 +753,10 @@
             <span class="n">externalAPI_config</span><span class="o">=</span><span class="n">externalAPI_config</span>
         <span class="p">)</span>
             
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initialized OpenAIHarmlessDataGenerator with model: </span><span class="si">{</span><span class="n">openai_config</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">use_internal_inference</span> <span class="ow">and</span> <span class="n">externalAPI_config</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initialized OpenAIHarmlessDataGenerator with externalAPI model: </span><span class="si">{</span><span class="n">externalAPI_config</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initialized OpenAIHarmlessDataGenerator with OpenAI model: </span><span class="si">{</span><span class="n">openai_config</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_build_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scenario</span><span class="p">:</span> <span class="n">Scenario</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -954,10 +957,18 @@
         <span class="k">while</span> <span class="n">retry_count</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># print(prompt)</span>
-                <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
+                <span class="n">gen_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_manager</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span>
                     <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
-                    <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are an AI agent assistant that responds to user requests.&quot;</span>
+                    <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are an AI agent assistant that responds to user requests.&quot;</span><span class="p">,</span>
+                    <span class="n">return_usage</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gen_result</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                    <span class="n">content</span><span class="p">,</span> <span class="n">usage</span><span class="p">,</span> <span class="n">request_cost</span> <span class="o">=</span> <span class="n">gen_result</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">content</span> <span class="o">=</span> <span class="n">gen_result</span>
+                    <span class="n">usage</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">request_cost</span> <span class="o">=</span> <span class="mf">0.0</span>
         
                 <span class="c1"># Parse the output into user request, action steps, and response</span>
                 <span class="n">user_request</span><span class="p">,</span> <span class="n">action_steps</span><span class="p">,</span> <span class="n">agent_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_output</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
@@ -980,6 +991,18 @@
                     <span class="n">action_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_environment_constraints</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="n">action_steps</span><span class="p">)</span>
         
                 <span class="c1"># Create and return the record</span>
+                <span class="c1"># Determine active model/provider</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_internal_inference</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">externalAPI_config</span><span class="p">:</span>
+                    <span class="n">active_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">externalAPI_config</span><span class="o">.</span><span class="n">model</span>
+                    <span class="n">active_temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">externalAPI_config</span><span class="o">.</span><span class="n">temperature</span>
+                    <span class="n">active_max_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">externalAPI_config</span><span class="o">.</span><span class="n">max_tokens</span>
+                    <span class="n">provider</span> <span class="o">=</span> <span class="s2">&quot;externalAPI&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">active_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">openai_config</span><span class="o">.</span><span class="n">model</span>
+                    <span class="n">active_temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">openai_config</span><span class="o">.</span><span class="n">temperature</span>
+                    <span class="n">active_max_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">openai_config</span><span class="o">.</span><span class="n">max_tokens</span>
+                    <span class="n">provider</span> <span class="o">=</span> <span class="s2">&quot;openai&quot;</span>
+
                 <span class="n">record</span> <span class="o">=</span> <span class="n">AgentActionRecord</span><span class="p">(</span>
                     <span class="n">scenario_name</span><span class="o">=</span><span class="n">scenario</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="n">user_request</span><span class="o">=</span><span class="n">user_request</span><span class="p">,</span>
@@ -990,13 +1013,16 @@
                         <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="n">metadata_values</span><span class="p">,</span>
                         <span class="s2">&quot;scenario_metadata&quot;</span><span class="p">:</span> <span class="p">{},</span>
             <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-                            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">openai_config</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-                <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">openai_config</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
-                <span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">openai_config</span><span class="o">.</span><span class="n">max_tokens</span>
+                            <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="n">provider</span><span class="p">,</span>
+                            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">active_model</span><span class="p">,</span>
+                <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">active_temperature</span><span class="p">,</span>
+                <span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="n">active_max_tokens</span>
             <span class="p">},</span>
             <span class="s2">&quot;generation_settings&quot;</span><span class="p">:</span> <span class="p">{</span>
                             <span class="s2">&quot;diversity_level&quot;</span><span class="p">:</span> <span class="n">diversity_level</span>
-            <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;token_usage&quot;</span><span class="p">:</span> <span class="n">usage</span> <span class="ow">or</span> <span class="p">{</span><span class="s2">&quot;prompt_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;completion_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;total_tokens&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+            <span class="s2">&quot;request_cost_usd&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">request_cost</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span>
         <span class="p">}</span>
                 <span class="p">)</span>
                 
